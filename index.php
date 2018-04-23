@@ -3,11 +3,9 @@
     <header class="promo-header">
       <div class="container">
         <div class="row text-center">
-		
           <div class="col-lg-12 " >
-		  
 		    <img src="img/logo/logo.svg" alt="Logo" class="logo" > 
-            <h1 class="display-3 text-center text-white">Eenmaal andermaal</h1>
+            <h1 class="display-3 text-center text-white"> <b>Eenmaal</b> andermaal</h1>
 			<form action="filmoverzicht.php" method="get">
 				<input list="films" name="search" placeholder="Uw gewenste film" maxlength="50" type="search">
 				<input value="zoeken" type="submit">
@@ -16,7 +14,8 @@
         </div>
       </div>
     </header>
- <!-- Page Content -->
+	
+ <!-- Pagina content -->
     <div class="container">
 
       <div class="row">

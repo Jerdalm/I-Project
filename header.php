@@ -36,9 +36,12 @@
             <li class="nav-item">
               <a class="nav-link" href="#">Inloggen|Registreren</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
-            </li>
+			<li class="no_hover">
+				<form action="filmoverzicht.php" method="get">
+					<input list="films" name="search" placeholder="Uw gewenste film" maxlength="50" type="search">
+					<input value="zoeken" type="submit">
+				</form>
+			</li>
           </ul>
         </div>
       </div>
