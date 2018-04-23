@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f6b5b908-ce9b-4190-878a-17e359894794" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Productpage.php" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.gitattributes" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Backlog.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Plan van aanpak.docx" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/aaa.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/~$an van aanpak.docx" afterPath="" />
-    </list>
+    <list default="true" id="f6b5b908-ce9b-4190-878a-17e359894794" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -102,12 +95,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1524489828887</updated>
-      <workItem from="1524489830279" duration="511000" />
+      <workItem from="1524489830279" duration="681000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="511000" />
+    <option name="totallyTimeSpent" value="681000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-14" y="-14" width="3868" height="2098" extended-state="7" />
