@@ -1,0 +1,48 @@
+/* CSS Document */
+
+body {	background-color: e5e7ec;}
+
+body,td,th {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #666666;
+	line-height: 15px;
+}
+.titel_headlines {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #666666;
+	line-height: 20px;
+}
+.border_tabel {
+	border: 1px solid #666666;
+	background-color: #FFFFFF;
+}
+.titel_content {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 18px;
+	color: ffcc00;
+}
+.bg_menu {
+	background-color: ffcc00;
+	background-image: url(bg_menu.gif);
+	background-repeat: repeat-x;
+}
+.copyright {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: 666666;
+}
+.rechterkant {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: 996600;
+}
+.menu_opties {
+	font-family: Verdana;
+	font-size: 12px;
+	color: 666666;
+	line-height: 18px;
+}
+.style3 {font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: 666666; line-height: 18px; font-weight: bold; }
+.style4 {font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: 996600; font-weight: bold; }
