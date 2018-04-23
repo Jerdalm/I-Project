@@ -22,11 +22,49 @@ nav.navbar a{color:white;}
   -o-background-size: cover;
 }
 
+.promo-header .logo{
+	width:150px;
+	height:auto;
+	
+}
+
 .promo-header h1{
 	font-size:45px;
 	
 }
 
+.promo-header .container{
+	position:relative;
+	top:25%;	
+}
+
+.navbar-dark .navbar-toggler{
+color: white !important;
+border-color: white;
+}
 .card {
   height: 100%;
 }
+
+.navbar-dark .navbar-toggler-icon { 
+background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 0.9)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+ }
+ 
+.navbar-dark .navbar-nav .nav-link{color:white;}
+
+/* Search bar */
+.promo-header input[type="search"]{
+	min-width: 220px;
+    padding: 5px;
+	border: none;
+}
+.promo-header input[type="submit"]{
+
+padding: 5px;
+position: relative;
+right: 5px;
+border: 0px;
+background: #548235;
+color: white;
+}
+
