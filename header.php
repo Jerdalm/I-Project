@@ -14,7 +14,7 @@
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Eigen css bestanden -->
-    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/styles_kevin.css" rel="stylesheet">
 
   </head>
 
