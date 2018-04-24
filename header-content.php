@@ -22,7 +22,7 @@ $header_content = <<<HEAD
       		<input type="text" class="" id="your-product" placeholder="Uw product">
       		<button>Zoeken</button>
       	</form>
-	</header>
+	</header>	
 HEAD;
 
 echo $header_content;
