@@ -1,4 +1,4 @@
- <?php require_once 'header.php'; ?>
+<?php require_once 'header.php'; ?>
  <!-- promotie header -->
     <header class="promo-header">
       <div class="container">
@@ -106,4 +106,3 @@ $(document).ready(function(){
     </div>
     <!-- /.container -->
  <?php require_once 'footer.php'; ?>
- 
