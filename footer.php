@@ -7,10 +7,8 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	   <script src=”https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-   <script src=”scripts.js”></script>
+	<script src="vendor/bootstrap/js/popup.header.js"></script>
   </body>
 </html>
 
