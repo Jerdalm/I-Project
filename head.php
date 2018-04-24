@@ -1,5 +1,5 @@
 <?php
-
+require_once 'mechanic/functions.php'; 
 $head = <<<HEAD
 	
 	<DOCTYPE html>
