@@ -1,0 +1,841 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"wi",
+				"window"
+			],
+			[
+				"nex",
+				"nextIndex"
+			],
+			[
+				"sm",
+				"smoothScroll"
+			],
+			[
+				"mar",
+				"margin-bottom"
+			],
+			[
+				"marg",
+				"margin"
+			],
+			[
+				"margin",
+				"margin-bottom"
+			],
+			[
+				"list",
+				"list-style-type"
+			],
+			[
+				"l",
+				"li\tTag"
+			],
+			[
+				"bac",
+				"background"
+			],
+			[
+				"cl",
+				"class\tAttr"
+			],
+			[
+				"margi",
+				"margin-left"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"small",
+				"small\ttabtrigger_small"
+			],
+			[
+				"di",
+				"div\tTag"
+			],
+			[
+				"te",
+				"text-align-last"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"padd",
+				"padding"
+			],
+			[
+				"fel",
+				"flex-direction"
+			],
+			[
+				"border-r",
+				"border-radius"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"fle",
+				"flex-grow"
+			],
+			[
+				"background",
+				"background-position"
+			],
+			[
+				"backgrou",
+				"background-image"
+			],
+			[
+				"bak",
+				"background-size"
+			],
+			[
+				"edit",
+				"edit-bouwtekening--wrapper"
+			],
+			[
+				"ma",
+				"max-width"
+			],
+			[
+				"fon",
+				"font-size"
+			],
+			[
+				"cont",
+				"content"
+			],
+			[
+				"flex",
+				"flex-wrap"
+			],
+			[
+				"f",
+				"fieldset-wrapper"
+			],
+			[
+				"COLO",
+				"color-main"
+			],
+			[
+				"ct",
+				"cta-button-mail"
+			],
+			[
+				"c",
+				"color"
+			],
+			[
+				"colo",
+				"color-main"
+			],
+			[
+				"field",
+				"fieldset"
+			],
+			[
+				"fir",
+				"form-item"
+			],
+			[
+				"fieldset",
+				"fieldset-wrapper"
+			],
+			[
+				"fieldse",
+				"fieldset-wrapper"
+			],
+			[
+				"fomr",
+				"form-item"
+			],
+			[
+				"form",
+				"form-item"
+			],
+			[
+				"padding",
+				"padding-right"
+			],
+			[
+				"views",
+				"views-field-field-banner-foto"
+			],
+			[
+				"z",
+				"z-index"
+			],
+			[
+				"co",
+				"container\ttabtrigger_container"
+			],
+			[
+				"marign",
+				"margin-bottom"
+			],
+			[
+				"fnt",
+				"font-size"
+			],
+			[
+				"tel",
+				"telefoon-link"
+			],
+			[
+				"MARIGN",
+				"margin-bottom"
+			],
+			[
+				"col",
+				"columns\ttabtrigger_columns"
+			],
+			[
+				"space",
+				"space-between"
+			],
+			[
+				"max",
+				"max-width"
+			],
+			[
+				"text-",
+				"text-decoration"
+			],
+			[
+				"footer",
+				"footer-background"
+			],
+			[
+				"bot",
+				"border-bottom"
+			],
+			[
+				"backg",
+				"background-color"
+			],
+			[
+				"backgr",
+				"background-color"
+			],
+			[
+				"TEXT",
+				"text-decoration"
+			],
+			[
+				"backgrouc",
+				"background-color"
+			],
+			[
+				"logo",
+				"logo-width"
+			],
+			[
+				"overflow",
+				"overflow-x"
+			],
+			[
+				"ext",
+				"extrabuitenschool"
+			],
+			[
+				"p",
+				"padding-top"
+			],
+			[
+				"al",
+				"alt\tAttr"
+			],
+			[
+				"tex",
+				"text-decoration"
+			],
+			[
+				"b",
+				"border-bottom"
+			],
+			[
+				"backgorund",
+				"background-position"
+			],
+			[
+				"box",
+				"box-sizing"
+			],
+			[
+				"MARGIN",
+				"margin-top"
+			],
+			[
+				"v",
+				"vertical-align"
+			],
+			[
+				"header",
+				"header_img"
+			],
+			[
+				"pad",
+				"padding"
+			],
+			[
+				"fot",
+				"font-weight"
+			],
+			[
+				"pagin",
+				"pagina1_wit"
+			],
+			[
+				"bakc",
+				"background"
+			],
+			[
+				"scet",
+				"section2"
+			],
+			[
+				"pagina1",
+				"pagina1_blue"
+			],
+			[
+				"backgor",
+				"background-size"
+			],
+			[
+				"no",
+				"no-repeat"
+			],
+			[
+				"h",
+				"h1\tTag"
+			],
+			[
+				"ex",
+				"examples"
+			],
+			[
+				"de",
+				"text-decoration"
+			],
+			[
+				"align",
+				"align-content"
+			],
+			[
+				"min",
+				"min-width"
+			],
+			[
+				"a",
+				"auto"
+			],
+			[
+				"border",
+				"border-width"
+			],
+			[
+				"bor",
+				"border-radius"
+			],
+			[
+				"tet",
+				"text-align"
+			],
+			[
+				"pop",
+				"popular"
+			],
+			[
+				"backgro",
+				"background-color"
+			],
+			[
+				"film",
+				"Filmoverzicht"
+			],
+			[
+				"spa",
+				"space-between"
+			],
+			[
+				"in",
+				"inline"
+			],
+			[
+				"font-size",
+				"font-size"
+			],
+			[
+				"ali",
+				"text-align"
+			],
+			[
+				"aling",
+				"align-items"
+			],
+			[
+				"re",
+				"rectangle_header"
+			],
+			[
+				"vac",
+				"vacature_bg_bottom"
+			],
+			[
+				"vacature",
+				"vacature_achtergrond"
+			],
+			[
+				"body",
+				"body"
+			],
+			[
+				"la",
+				"large-1"
+			],
+			[
+				"se",
+				"secondary-color"
+			],
+			[
+				"18px",
+				"183px"
+			],
+			[
+				"rg",
+				"right"
+			],
+			[
+				"im",
+				"important"
+			],
+			[
+				"wid",
+				"width"
+			],
+			[
+				"paddin",
+				"padding-bottom"
+			],
+			[
+				"paddi",
+				"padding-bottom"
+			],
+			[
+				"large-",
+				"large-8"
+			],
+			[
+				"larg",
+				"large-8"
+			],
+			[
+				"large",
+				"large-12"
+			],
+			[
+				"pos",
+				"position"
+			],
+			[
+				"line",
+				"line-height"
+			],
+			[
+				"ta",
+				"table"
+			],
+			[
+				"bo",
+				"border-top"
+			],
+			[
+				"borde",
+				"border-color"
+			],
+			[
+				"head",
+				"header\tTag"
+			],
+			[
+				"io",
+				"important"
+			],
+			[
+				"col-",
+				"col-lg-12"
+			],
+			[
+				"inline",
+				"inline-block"
+			],
+			[
+				"tran",
+				"translateX()"
+			],
+			[
+				"pa",
+				"padding-top"
+			],
+			[
+				"backgroud",
+				"background-repeat"
+			],
+			[
+				"i",
+				"important"
+			],
+			[
+				"font-s",
+				"font-size"
+			],
+			[
+				"import",
+				"important"
+			],
+			[
+				"min-",
+				"min-height"
+			],
+			[
+				"bacgr",
+				"background-color"
+			],
+			[
+				"vert",
+				"vertical-center-row"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "Snippet: ",
+		"selected_items":
+		[
+			[
+				"Snippet: ",
+				"Snippet: tabtrigger_container"
+			],
+			[
+				"Snippe",
+				"Snippet: CDATA"
+			],
+			[
+				"Package Control: i",
+				"Package Control: Install Package"
+			],
+			[
+				" Mater",
+				"Material Theme: Activate theme"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 520.0
+	},
+	"console":
+	{
+		"height": 186.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe013ee18cced0ef93d5f746d80ef60'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/xampp/htdocs/I-Project"
+	],
+	"file_history":
+	[
+		"/C/xampp/htdocs/I-Project/header.php",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/index.php",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_layout.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_responsive_desktop_small.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_responsive_tablet_landscape.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/all.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_responsive_tablet_portrait.scss",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/index.html",
+		"/C/xampp/htdocs/I-Project/index.html",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/js/script.js",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/_responsive_tablet_landscape.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_responsive_phone_portrait.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_navigation.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/CLV/openhuisclv/index.html",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_responsive_phone_portrait.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_responsive-tablet-landscape.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_responsive-desktop-small.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_responsive-tablet-portrait.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_icomoon.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_cta.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_variables.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_typography.scss",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/all.scss",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/all.css",
+		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/js/modernizr.js",
+		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/templates/html.html.twig",
+		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/js/owl.carousel.min.js",
+		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/css/custom.css",
+		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/css/all.css",
+		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/scss/_animations.scss",
+		"/C/Users/jdion/OneDrive/Documenten/HBO-ICT/I-PROJECT/root/index.html",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/custom.css",
+		"/C/Users/jdion/OneDrive/Documenten/HBO-ICT/I-PROJECT/root/css/app.css",
+		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/js/script.js",
+		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/templates/page.html.twig",
+		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/scss/all.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/vendors/scrolloverflow.js",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/Gulpfile.js",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/sftp-config.json",
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/php/head.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/head.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/index.php",
+		"/C/Users/jdion/OneDrive/FLETNIX/index.php",
+		"/C/Users/jdion/OneDrive/FLETNIX/php/head.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/style.css",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/CHANGELOG.txt",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_typography.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/templates/html.html.twig",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/robots.txt",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/robots 2.txt",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/custom 2.css",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/html.tpl.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/page.tpl.php",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_form.scss",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/block--block--6.tpl.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/block--block--5.tpl.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/block--block--1.tpl.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/vaandel.png",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/default.services.yml",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_responsive_tablet_portrait.scss",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/page.tpl.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/html.tpl.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/template.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/screenshot.png",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/block--block--3.tpl.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/block--block--1.tpl.php",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_responsive_tablet_landscape.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/css/all.css",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_responsive_big.scss",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/ex.svg",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/CHANGELOG 6.txt",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/settings 4.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/settings 3.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/settings 6.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/settings 5.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/CHANGELOG 5.txt",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/CHANGELOG 4.txt",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/settings 2.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/settings.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/update.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/CHANGELOG 3.txt",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/CHANGELOG 2.txt",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/CHANGELOG.txt",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_footer.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/.htaccess",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_content.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_icomoon.scss",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/.htaccess 2",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/Gulpfile.js",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/.htaccess",
+		"/C/Users/jdion/Documents/Sublime projecten/basiliek.ef2.nl/themes/basiliek/templates/node--contact.tpl.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/jonathan.css",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/pages.css",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/html-reset.css",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/template.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/cms.css",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/htmlmail.tpl.php",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_blocks.scss",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/logo.png",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/settings.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/default.settings.php",
+		"/C/Users/jdion/Desktop/settings.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/index 2.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/stylekees.css",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/responsive.css",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/responsivekees.css",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/script.js",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/views-view-field--teamleden--block_1--uri.html.twig",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/jquery.youtubebackground.js",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/redirect.js",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/block--block--3.tpl.php",
+		"/C/Users/jdion/OneDrive/Documenten/HBO-ICT/I-OOPD/OOPG-1617/OOPDBeroepsproduct/.gitignore",
+		"/C/Users/jdion/AppData/Local/Temp/Rar$DIa37164.29852/README",
+		"/C/Users/jdion/OneDrive/Documenten/HBO-ICT/I-OOPD/OOPG-1617/OOPDBeroepsproduct/.git/config",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/block--block--7.tpl.php",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_homepage.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_usercontent.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_cta.scss",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/selection.json",
+		"/C/Users/jdion/AppData/Local/Temp/Rar$DRa30936.5743/selection.json",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_variables.scss",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/templates/block--openingstijden.html.twig",
+		"/C/Users/jdion/AppData/Local/Temp/Rar$DIa27048.44410/selection.json",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_navigation.scss",
+		"/C/Users/jdion/Desktop/stylesheet.css",
+		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_header.scss",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/ef2.png",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/views-view-field--header--nothing.tpl.php"
+	],
+	"find":
+	{
+		"height": 31.0
+	},
+	"find_in_files":
+	{
+		"height": 229.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 31.0
+	},
+	"input":
+	{
+		"height": 83.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.sftp":
+	{
+		"height": 104.0
+	},
+	"pinned_build_system": "",
+	"project": "school.sublime-project",
+	"replace":
+	{
+		"height": 58.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"C:\\Users\\jdion\\AppData\\Local\\Temp\\fz3temp-2\\page.html.twig"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 363.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -1,6 +1,6 @@
- <?php require_once 'header.php'; ?>
+ <?php require_once 'header-content.php'; ?>
  <!-- promotie header -->
-    <header class="promo-header">
+    <!-- <header class="promo-header">
       <div class="container">
         <div class="row text-center">
           <div class="col-lg-12 " >
@@ -13,7 +13,7 @@
           </div>
         </div>
       </div>
-    </header>
+    </header> -->
 	
  <!-- Pagina content -->
     <div class="container">
@@ -90,4 +90,4 @@
     </div>
     <!-- /.container -->
  <?php require_once 'footer.php'; ?>
- 
+ 
