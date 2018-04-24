@@ -87,19 +87,16 @@
       </div>
 	  
 	  <script>
-		
-$(document).ready(function(){
-  $(window).scroll(function(){
-  	var scroll = $(window).scrollTop();
-	  if (scroll > 300) {
-	    $("nav.navbar").css("background" , "blue");
-	  }
-
-	  else{
-		  $("nav.navbar").css("background" , "#333");  	
-	  }
-  })
-})
+$(function() {
+   $(window).scroll(function () {
+      if ($(this).scrollTop() > 50) {
+         $(‘body’).addClass(‘changeColor’)
+      }
+      if ($(this).scrollTop() < 50) {
+         $(‘body’).removeClass(‘changeColor’)
+      }
+   });
+});
 	  </script>
       <!-- /.row -->
 
