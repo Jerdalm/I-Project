@@ -1,13 +1,38 @@
-<?php include 'head.php';
+<?php
 $_SESSION['error_registration'] = '';
+require_once 'head.php';
+require_once 'header.php';
+$stateEmail = 0;
+$stateCode = 0;
 
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['login'])) {
+        require_once 'login.php';
+    }
+}
+?>
 ?>
 <main>
 
     <div class="container">
         <div class="row">
-            <?php if(isset($_POST['mail'])){?>
-                <p><?=$_SESSION['error_registration']?></p>
+
+
+            <main id="login-registration">
+                <div class="container">
+                    <p><?=$_SESSION['error_registration']?></p>
+                    <div class="row row-left">
+            <form method="post" action="functions/setMail.php">
+                <div class=""form-group>
+                    <label for="inputEmail"> e-mail </label>
+                    <input type="textarea" class="form-control" name="mail" id="id1">
+                </div>
+
+                <input type="submit" name="mail" class="btn btn-primary btn-sm"> code sturen </input>
+            </form>
+
+            <?php if ($stateEmail == 1) {?>
+
                 <form method="post">
                     <div class=""form-group>
                         <label for="inputCode"> uw code </label>
@@ -84,7 +109,6 @@ $_SESSION['error_registration'] = '';
             </form>
 
             <?php } else { ?>
-                <p><?=$_SESSION['error_registration']?></p>
             <form method="post">
                 <div class=""form-group>
                     <label for="inputEmail"> e-mail </label>
@@ -96,7 +120,25 @@ $_SESSION['error_registration'] = '';
             <?php } ?>
 
         </div>
+
+        <div class="row row-right">
+            <form>
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">Email</label>
+                    <input type="email" class="form-control" id="email" placeholder="Email">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4">Password</label>
+                    <input type="password" class="form-control" id="wachtwoord" placeholder="Wachtwoord">
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
     </div>
+
+    <a href="/" class="cta-orange">Klik hier</a>
+    <a href="/" class="cta-white">Klik hier</a>
 </main>
 <?php include 'footer.php'; ?>
 
