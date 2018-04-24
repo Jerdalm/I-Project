@@ -1,6 +1,6 @@
- <?php require_once 'header-content.php'; ?>
+<?php require_once 'header.php'; ?>
  <!-- promotie header -->
-    <!-- <header class="promo-header">
+    <header class="promo-header">
       <div class="container">
         <div class="row text-center">
           <div class="col-lg-12 " >
@@ -13,7 +13,7 @@
           </div>
         </div>
       </div>
-    </header> -->
+    </header>
 	
  <!-- Pagina content -->
     <div class="container">
@@ -85,9 +85,24 @@
         </div>
 
       </div>
+	  
+	  <script>
+		
+$(document).ready(function(){
+  $(window).scroll(function(){
+  	var scroll = $(window).scrollTop();
+	  if (scroll > 300) {
+	    $("nav.navbar").css("background" , "blue");
+	  }
+
+	  else{
+		  $("nav.navbar").css("background" , "#333");  	
+	  }
+  })
+})
+	  </script>
       <!-- /.row -->
 
     </div>
     <!-- /.container -->
  <?php require_once 'footer.php'; ?>
- 
