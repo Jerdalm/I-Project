@@ -65,7 +65,13 @@ footer{
 }
 
 a.cta-orange:hover{
-	color: darken(10, white);
+	color: #F2552C;
+	text-decoration: none;
+	border: 2px solid #F2552C;
+	transition: 0.3s;
+	background-color: transparent;
+	padding: 13px 58px;
+	box-shadow: 0px 0px 30px 1px rgba(0,0,0,0.25);
 }
 
 .cta-white{
@@ -75,6 +81,13 @@ a.cta-orange:hover{
 	font-weight: 600;
 }
 
+.cta-white:hover{
+	color: white;
+	text-decoration: none;
+	background-color: #F2552C;
+	transition: 0.3s;
+	box-shadow: 0px 0px 30px 1px rgba(0,0,0,0.25);
+}
 main{
 	margin-top: 100px;
 }
