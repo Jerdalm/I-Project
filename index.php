@@ -85,6 +85,22 @@
         </div>
 
       </div>
+	  
+	  <script>
+		
+$(document).ready(function(){
+  $(window).scroll(function(){
+  	var scroll = $(window).scrollTop();
+	  if (scroll > 300) {
+	    $("nav.navbar").css("background" , "blue");
+	  }
+
+	  else{
+		  $("nav.navbar").css("background" , "#333");  	
+	  }
+  })
+})
+	  </script>
       <!-- /.row -->
 
     </div>

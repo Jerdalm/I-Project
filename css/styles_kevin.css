@@ -5,8 +5,6 @@
 /* fonts */
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400|Ubuntu');
 
-
-
 body{
 	font-family:'Open Sans';
 }
@@ -24,6 +22,7 @@ nav.navbar a{
    text-align: center;
    vertical-align: middle;}
 /* Header */
+
 .promo-header {
 	height: 500px;
 	min-height: 300px;
@@ -71,17 +70,21 @@ nav.navbar a{
 
 /* Search bar navigation */
 .navbar input[type="search"]{
-	width: 180px;
+	width: 240px;
     padding: 5px;
 	border: none;
 	border-radius: 5px;
+	
+	color:white;
+	background-color:transparent;
+	border: 2px solid white;
 }
 
 .navbar input[type="submit"]{
 	width: 50px;
 	padding: 5px;
 	position: relative;
-	right: 20px;
+	right: 56px;
 	border: 0px;
 	background: #548235;
 	color: white;
