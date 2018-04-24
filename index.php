@@ -53,6 +53,7 @@
                      <div class="card-body">
                         <h4 class="card-title">
                            Roma dresser 35mm
+						   <a href="#" class="cta-white">Bekijk nu</a>
                         </h4>
                         <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
                      </div>
