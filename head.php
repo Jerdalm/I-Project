@@ -3,7 +3,7 @@
 $head = <<<HEAD
 	
 	<DOCTYPE html>
-	<html>
+	<html lang="nl">
 	<head>
 		<link rel="stylesheet" type="text/css" href="../I-Project/vendor/bootstrap/css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="../I-Project/vendor/bootstrap/css/bootstrap-grid.css">

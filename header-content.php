@@ -3,25 +3,31 @@
 $header_content = <<<HEAD
 	<body>
 	<header id="header-content">
-		<div class="logo">
-			<img src="../I-Project/img/logo/logo.svg" class="">
-		</div>
+		<div class="container">
+  			<div class="row">
+  				<div class="col align-middle">
+					<div class="logo">
+						<p><a href="/"><strong>Eenmaal</strong> Andermaal</a></p>
+					</div>
+				</div>
 
-		<nav>
-			<ul>
-				<li>
+				<div class="col align-middle">
 					<a href="/">Alle veilingen</a>
-				</li>
-				<li>
-					<a href="/">Inloggen|Registeren</a>
-				</li>
-			</ul>
-		</nav>
+				</div>
+								
 
-		<form>
-      		<input type="text" class="" id="your-product" placeholder="Uw product">
-      		<button>Zoeken</button>
-      	</form>
+				<div class="col align-middle">
+					<a href="/">Inloggen|Registreren</a>
+				</div>
+
+				<div class="col align-middle">
+					<form>
+			      		<input type="text" class="" id="your-product" placeholder="Uw product">
+			      		<button>Zoeken</button>
+			      	</form>
+			    </div>
+			</div>
+		</div>
 	</header>	
 HEAD;
 
