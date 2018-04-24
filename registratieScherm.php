@@ -2,8 +2,7 @@
 $_SESSION['error_registration'] = '';
 require_once 'head.php';
 require_once 'header.php';
-$stateEmail = 0;
-$stateCode = 0;
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['login'])) {
@@ -11,18 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
-?>
-<main>
+<main id="login-registration">
 
     <div class="container">
-        <div class="row">
-
-
-            <main id="login-registration">
-                <div class="container">
-                    <p><?=$_SESSION['error_registration']?></p>
-                    <div class="row row-left">
-            <form method="post" action="functions/setMail.php">
+        <div class="row row-left">
+            <p><?=$_SESSION['error_registration']?></p>
+            <form method="post" action="">
                 <div class=""form-group>
                     <label for="inputEmail"> e-mail </label>
                     <input type="textarea" class="form-control" name="mail" id="id1">
@@ -31,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <input type="submit" name="mail" class="btn btn-primary btn-sm"> code sturen </input>
             </form>
 
-            <?php if ($stateEmail == 1) {?>
+            <?php if(isset($_POST['mail'])) { ?>
 
                 <form method="post">
                     <div class=""form-group>
@@ -42,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <button type="submit" name="code" class="btn btn-primary btn-sm"> code invoeren </button>
                 </form>
             <?php } elseif(isset($_POST['code'])) { ?>
-                <p><?=$_SESSION['error_registration']?></p>
+
             <form method="post">
                 <div class="form-group">
                     <label for="id1"> gebruikersnaam </label>
@@ -57,7 +50,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </form>
 
             <?php } elseif(isset($_POST['submitNaam'])) { ?>
-                <p><?=$_SESSION['error_registration']?></p>
             <form method ="post">
                 <div class="form-group">
                     <label for="id2"> voornaam </label>
