@@ -110,9 +110,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </form>
         </div>
     </div>
-
-    <a href="/" class="cta-orange">Klik hier</a>
-    <a href="/" class="cta-white">Klik hier</a>
 </main>
 <?php include 'footer.php'; ?>
 
