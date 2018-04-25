@@ -56,7 +56,9 @@
 		}
 	}
 	
-	/* Deze functie handeld elke database query af */
+	/* Deze functie handeld elke database query af 
+		|Voor elke functie kan voor elke functie gebruikt|
+	*/
 	function handlequery($sql, $parameters = false){
 		global $pdo;
 		$first_word = strtok($sql, " ");
@@ -89,9 +91,10 @@
 
 	    // mail( $to, $subject, $message_body ); moet uiteindelijk wel aan!
 
-	    echo '<script type="text/javascript">alert("'.$randomNumber.'");</script>';
-	    // header("location: ./registrationScherm.php");		
-	    
-	}
+        $_SESSION["step1"] = false;
+        $_SESSION["step2"] = true;
+        header("location: ./registratieScherm.php");
+
+    }
 ?>
 

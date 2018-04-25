@@ -2,13 +2,6 @@
 require_once 'header.php';
 
 $_SESSION["error_registration"] = '';
-$_SESSION["submitNaam"] = false;
-$_SESSION["mailButton"] = false;
-
-//if ($_SESSION["submitNaam"] == FALSE) {
-//    echo "FALSE";
-//}
-//print_r ($_SESSION);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['login'])) {
@@ -22,22 +15,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="row row-left">
             <p><?=$_SESSION['error_registration']?></p>
 
-            <?php 
-            if(isset($_POST['mail'])) { 
-                $_SESSION['emailadresControle1'] = ($_POST['email']);
-                header("location: ./mail-check.php"); 
+            <?php
+            if($_SESSION['step1'] == true) {
+                require_once 'form-step-1.php';
 
-            } else if(isset($_POST['code'])) {
+            } else if($_SESSION['step2'] == true) {
+//                echo '<script type="text/javascript">alert("Werkt het beste");</script>';
+//                die();
+                require_once 'form-step-2.php';
+
+            } else if($_SESSION['step3'] == true) {
                 require_once 'form-step-3.php';
-
-            } else if ($_SESSION["mailButton"] == false) {
-                require_once 'form-step-1.php'; 
-
-            } else if(isset($_POST['mail'])) {
-                $_SESSION["mailButton"] = true;
-                $_SESSION["submitButton"] = true;
-        
             }
+
+
+//            if(isset($_POST['mail'])) {
+//                $_SESSION['emailadresControle1'] = ($_POST['email']);
+//                header("location: ./mail-check.php");
+//
+//            } else if(isset($_POST['code'])) {
+//                require_once 'form-step-3.php';
+//
+//            } else if ($_SESSION["mailButton"] == false) {
+//                require_once 'form-step-1.php';
+//
+//            } else if(isset($_POST['mail'])) {
+//                $_SESSION["mailButton"] = true;
+//                $_SESSION["submitButton"] = true;
+//                echo "test";
+//
+//            }
             ?>
         </div>
 
