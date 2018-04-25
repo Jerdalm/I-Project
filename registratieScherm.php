@@ -13,9 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <div class="container">
         <div class="row row-left">
-            <p><?=$_SESSION['error_registration']?></p>
+              <p><?=$_SESSION['error_registration']?></p>
 
-            <?php if(isset($_POST['mail'])) { ?>
+            <?php if(isset($_POST['mail'])) { 
+            $_SESSION['emailadresControle1'] = ($_POST['email']);
+            header("location: ./mail-check.php"); 
+            ?>
 
                 <form method="post">
                     <div class=""form-group>
@@ -94,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <?php } else { ?>
 
-            <form method="post">
+            <form method="POST">
                 <div class=""form-group>
                     <label for="inputEmail"> e-mail </label>
                     <input type="textarea" class="form-control" name="email" id="id1">
