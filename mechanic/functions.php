@@ -90,7 +90,8 @@
 	    // mail( $to, $subject, $message_body ); moet uiteindelijk wel aan!
 
 	    echo '<script type="text/javascript">alert("'.$randomNumber.'");</script>';
-	    // header("location: ./registrationScherm.php");		
+        $_SESSION['mailButton'] = true;
+        header("location: ./registratieScherm.php");
 	    
 	}
 ?>
