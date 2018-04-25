@@ -1,87 +1,122 @@
- <?php require_once 'header.php'; ?>
- <!-- promotie header -->
-    <header class="promo-header">
-      <div class="container">
-        <div class="row align-baseline">
-          <div class="col-lg-12 " >
-            <h1 class="display-3 text-center text-white mt-4">Eenmaal andermaal</h1>
-          </div>
-        </div>
+<?php require_once 'header.php'; ?>
+<!-- promotie header -->
+<header class="promo-header">
+   <div class="container">
+      <div class="row text-center">
+         <div class="col-lg-12 " >
+            <img src="img/logo/logo.svg" alt="Logo" class="logo" > 
+            <h1 class="display-3 text-center text-white"> <b>Eenmaal</b> andermaal</h1>
+            <form action="filmoverzicht.php" method="get">
+               <input list="films" name="search" placeholder="Uw gewenste film" maxlength="50" type="search">
+               <input value="zoeken" type="submit">
+            </form>
+         </div>
       </div>
-    </header>
- <!-- Page Content -->
-    <div class="container">
-
+   </div>
+</header>
+<!-- Pagina content -->
+<section class="homepage">
+   <div class="container">
       <div class="row">
-        <div class="col-sm-8">
-          <h2 class="mt-4">What We Do</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A deserunt neque tempore recusandae animi soluta quasi? Asperiores rem dolore eaque vel, porro, soluta unde debitis aliquam laboriosam. Repellat explicabo, maiores!</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis optio neque consectetur consequatur magni in nisi, natus beatae quidem quam odit commodi ducimus totam eum, alias, adipisci nesciunt voluptate. Voluptatum.</p>
-          <p>
-            <a class="btn btn-primary btn-lg" href="#">Call to Action &raquo;</a>
-          </p>
-        </div>
-        <div class="col-sm-4">
-          <h2 class="mt-4">Contact Us</h2>
-          <address>
-            <strong>Start Bootstrap</strong>
-            <br>3481 Melrose Place
-            <br>Beverly Hills, CA 90210
-            <br>
-          </address>
-          <address>
-            <abbr title="Phone">P:</abbr>
-            (123) 456-7890
-            <br>
-            <abbr title="Email">E:</abbr>
-            <a href="mailto:#">name@example.com</a>
-          </address>
-        </div>
+         <div class="col-md-12 text-center">
+            <h2 class="mt-4">Nieuwe veilingen</h2>
+         </div>
       </div>
-      <!-- /.row -->
-
-      <div class="row">
-        <div class="col-sm-4 my-4">
-          <div class="card">
-            <img class="card-img-top" src="http://placehold.it/300x200" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Card title</h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus.</p>
+         <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner row w-100 mx-auto">
+               <div class="carousel-item col-md-4 active">
+                  <div class="product card">
+                     <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
+                     <div class="card-body">
+                        <h4 class="card-title">
+                           Roma dresser 35mm
+                        </h4>
+                        <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="carousel-item col-md-4">
+                  <div class="product card">
+                     <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
+                     <div class="card-body">
+                        <h4 class="card-title">
+                           Roma dresser 35mm
+                        </h4>
+                        <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="carousel-item col-md-4">
+                  <div class="product card">
+                     <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
+                     <div class="card-body">
+                        <h4 class="card-title">
+                           Roma dresser 35mm
+                        </h4>
+                        <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+						
+                     </div>
+					  <a href="#" class="btn cta-white">Bekijk nu</a>
+                  </div>
+               </div>
+               <div class="carousel-item col-md-4">
+                  <div class="product card">
+                     <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
+                     <div class="card-body">
+                        <h4 class="card-title">
+                           Roma dresser 35mm
+                        </h4>
+                        <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="carousel-item col-md-4">
+                  <div class="product card">
+                     <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
+                     <div class="card-body">
+                        <h4 class="card-title">
+                           Roma dresser 35mm
+                        </h4>
+                        <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="carousel-item col-md-4">
+                  <div class="product card">
+                     <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
+                     <div class="card-body">
+                        <h4 class="card-title">
+                           Roma dresser 35mm
+                        </h4>
+                        <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="carousel-item col-md-4">
+                  <div class="product card">
+                     <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
+                     <div class="card-body">
+                        <h4 class="card-title">
+                           Roma dresser 35mm
+                        </h4>
+                        <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+                     </div>
+                  </div>
+               </div>
             </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">Find Out More!</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-4 my-4">
-          <div class="card">
-            <img class="card-img-top" src="http://placehold.it/300x200" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Card title</h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus totam ut praesentium aut.</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">Find Out More!</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-sm-4 my-4">
-          <div class="card">
-            <img class="card-img-top" src="http://placehold.it/300x200" alt="">
-            <div class="card-body">
-              <h4 class="card-title">Card title</h4>
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-            </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-primary">Find Out More!</a>
-            </div>
-          </div>
-        </div>
-
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+            </a>
+        
       </div>
-      <!-- /.row -->
+	  <a href="#" class="btn cta-white">Bekijk nu</a>
+   </div>
+</section>
+<!-- /.container -->
+<?php require_once 'footer.php'; ?>
 
-    </div>
-    <!-- /.container -->
- <?php require_once 'footer.php'; ?>
- 

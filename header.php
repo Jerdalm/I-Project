@@ -1,27 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-
-  <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Eenmaal andermaal</title>
-
-    <!-- Bootstrap bestanden -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Eigen css bestanden -->
-    <link href="css/styles_kevin.css" rel="stylesheet">
-
-  </head>
-
+<?php require_once 'head.php'; ?>
   <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="black navbar navbar-expand-lg navbar-dark fixed-top">
       <div class="container">
         <a class="navbar-brand" href="#"><b>Eenmaal</b> andermaal</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,20 +10,19 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Home
-                <span class="sr-only">(current)</span>
-              </a>
+			
+            <li class="nav-item">
+              <a class="nav-link" href="#">Alle veilingen</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
+              <a class="nav-link" href="#">Inloggen|Registreren</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
-            </li>
+			<li class="no_hover">
+				<form action="filmoverzicht.php" method="get">
+					<input list="films" name="search" placeholder="Uw gewenste film" maxlength="50" type="search">
+					<input value="zoeken" type="submit">
+				</form>
+			</li>
           </ul>
         </div>
       </div>

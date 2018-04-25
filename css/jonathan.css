@@ -1,0 +1,93 @@
+	/*#header-content{
+	height: 55px;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	padding: 10px 0;
+	background-color: white;
+}
+
+#header-content .logo{
+	width: 100px;
+}
+
+button{
+	width: 75px;
+	height: 35px;
+	background-color: green;
+	color: white;
+	font-size: 1.2em;
+	border: none;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+}			
+
+#header-content input{
+	width: 125px;
+	height: 35px;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+#header-content .col{
+	display: inline-block;
+
+}*/
+
+#login-registration .row{
+	width: 50%;
+}
+
+#login-registration .row-left{
+	float: left;
+}
+
+#login-registration .row-right{
+	float: left;
+}
+
+footer{
+/* 	position: absolute;
+	bottom: 0;
+	left: 0;		
+	width: 100%; */
+}
+
+#login-registration7 main{
+		margin-top: 100px;
+}
+
+.cta-orange{
+	padding: 15px 60px;
+	background-color: #F2552C;
+	color: white;
+	font-weight: 600;
+}
+
+a.cta-orange:hover{
+	color: #F2552C;
+	text-decoration: none;
+	border: 2px solid #F2552C;
+	transition: 0.3s;
+	background-color: transparent;
+	padding: 13px 58px;
+	box-shadow: 0px 0px 30px 1px rgba(0,0,0,0.25);
+}
+
+.cta-white{
+	padding: 13px 58px;
+	border: 2px solid #F2552C;
+	color: #F2552C;
+	font-weight: 600;
+}
+
+.cta-white:hover{
+	color: white;
+	text-decoration: none;
+	background-color: #F2552C;
+	transition: 0.3s;
+	box-shadow: 0px 0px 30px 1px rgba(0,0,0,0.25);
+}
+main{
+	margin-top: 100px;
+}
