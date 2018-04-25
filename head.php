@@ -1,8 +1,7 @@
 <?php
-require_once 'mechanic/functions.php'; 
 $head = <<<HEAD
 	
-	<DOCTYPE html>
+	<!DOCTYPE html>
 	<html lang="nl">
 	<head>
 		<meta charset="utf-8">
@@ -23,5 +22,6 @@ $head = <<<HEAD
 HEAD;
 
 echo $head;
+require_once 'mechanic/functions.php'; 
 ?>
 

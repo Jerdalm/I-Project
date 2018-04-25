@@ -42,7 +42,7 @@
                 </tr>
                   <tr>
                     <th scope="row">Wachtwoord</th>
-                <td> <a href=""> <b><i>Wachtwoord wijzigen</i></b> </a></td>
+                <td> <a href="wachtwoordVergeten.php"> <b><i>Wachtwoord wijzigen</i></b> </a></td>
                 </tr>
             </tbody>    
         </table> 

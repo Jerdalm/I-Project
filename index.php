@@ -22,7 +22,6 @@
             <h2 class="mt-4">Nieuwe veilingen</h2>
          </div>
       </div>
-      <div class="container-fluid">
          <div id="myCarousel" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner row w-100 mx-auto">
                <div class="carousel-item col-md-4 active">
@@ -33,6 +32,7 @@
                            Roma dresser 35mm
                         </h4>
                         <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+						<a href="#" class="btn cta-white">Bekijk nu</a>
                      </div>
                   </div>
                </div>
@@ -44,18 +44,7 @@
                            Roma dresser 35mm
                         </h4>
                         <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
-                     </div>
-                  </div>
-               </div>
-               <div class="carousel-item col-md-4">
-                  <div class="product card">
-                     <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
-                     <div class="card-body">
-                        <h4 class="card-title">
-                           Roma dresser 35mm
-						   <a href="#" class="cta-white">Bekijk nu</a>
-                        </h4>
-                        <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+						<a href="#" class="btn cta-white">Bekijk nu</a>
                      </div>
                   </div>
                </div>
@@ -67,6 +56,20 @@
                            Roma dresser 35mm
                         </h4>
                         <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+						<a href="#" class="btn cta-white">Bekijk nu</a>
+                     </div>
+					  
+                  </div>
+               </div>
+               <div class="carousel-item col-md-4">
+                  <div class="product card">
+                     <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
+                     <div class="card-body">
+                        <h4 class="card-title">
+                           Roma dresser 35mm
+                        </h4>
+                        <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+						<a href="#" class="btn cta-white">Bekijk nu</a>
                      </div>
                   </div>
                </div>
@@ -78,6 +81,7 @@
                            Roma dresser 35mm
                         </h4>
                         <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+						<a href="#" class="btn cta-white">Bekijk nu</a>
                      </div>
                   </div>
                </div>
@@ -89,6 +93,7 @@
                            Roma dresser 35mm
                         </h4>
                         <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+						<a href="#" class="btn cta-white">Bekijk nu</a>
                      </div>
                   </div>
                </div>
@@ -100,6 +105,7 @@
                            Roma dresser 35mm
                         </h4>
                         <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+						<a href="#" class="btn cta-white">Bekijk nu</a>
                      </div>
                   </div>
                </div>
@@ -112,7 +118,7 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
             </a>
-         </div>
+        
       </div>
    </div>
 </section>

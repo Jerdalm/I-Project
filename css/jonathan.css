@@ -69,7 +69,7 @@ a.cta-orange:hover{
 	text-decoration: none;
 	border: 2px solid #F2552C;
 	transition: 0.3s;
-	background-color: transparent;
+	background-color: white;
 	padding: 13px 58px;
 	box-shadow: 0px 0px 30px 1px rgba(0,0,0,0.25);
 }
@@ -78,6 +78,7 @@ a.cta-orange:hover{
 	padding: 13px 58px;
 	border: 2px solid #F2552C;
 	color: #F2552C;
+	background-color: white;
 	font-weight: 600;
 }
 

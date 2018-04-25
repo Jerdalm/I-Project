@@ -18,134 +18,109 @@
 
 </head>
 
-<body>
+<body class="bg-secondary bg-light text-dark">
+<?php require_once ('header.php'); ?>
 
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="#">Start Bootstrap</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<div class="container border-primary">
 
-<!-- Header with Background Image -->
-<header class="business-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="display-3 text-center text-white mt-4">Business Name or Tagline</h1>
+        <div class="container border border-primary">
+            <div class="row">
+                <div class="col-lg-6 border border-danger p-3 mb-2 bg-secondary text-white" style="text-align: center">
+                    <figure class="figure" style= "position: relative;
+                        text-align: center;
+                        top: 10%;">
+                        <img src="media/WatchTestJEREMY.jpg" width="400px" height="200px" alt="..." class="figure-img img-fluid rounded" style = "position: relative" >
+                        <figcaption class="figure-caption"><img src="media/WatchTestJEREMY.jpg" width="50px" height="50px" alt="..." class="figure-img img-fluid rounded" style = "position: relative" ><img src="media/WatchTestJEREMY.jpg" width="50px" height="50px" alt="..." class="figure-img img-fluid rounded" style = "position: relative" ><img src="media/WatchTestJEREMY.jpg" width="50px" height="50px" alt="..." class="figure-img img-fluid rounded" style = "position: relative" ></figcaption>
+                    </figure>
+                </div>
+                <div class="col-lg-6">
+                    <div class="alert alert-dark" role="alert">
+                        <h4 class="alert-heading">Omega Horloge(Breu-0282)</h4>
+                        <p>Hoogste bod</p>
+                        <hr>
+                        <div class="card bg-light mb-5" >
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">45€</th>
+                                        <th scope="col">Schevin van Kaijk</th>
+                                        <th scope="col">15-04-2018</th>
+                                    </tr>
+                                    </thead>
+                                    <tr>
+                                        <th scope="col">40€</th>
+                                        <th scope="col">Part Bolman</th>
+                                        <th scope="col">14-04-2018</th>
+                                    </tr>
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">35€</th>
+                                        <th scope="col">Vonathan Jandionant</th>
+                                        <th scope="col">14-04-2018</th>
+                                    </tr>
+                                    </thead>
+                                    <tr>
+                                        <th scope="col">30€</th>
+                                        <th scope="col">Buard Edakouev</th>
+                                        <th scope="col">13-04-2018</th>
+                                    </tr>
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">25€</th>
+                                        <th scope="col">Limo Tintsen</th>
+                                        <th scope="col">13-04-2018</th>
+                                    </tr>
+                                    </thead>
+                                    <tr>
+                                        <th scope="col">20€</th>
+                                        <th scope="col">Deremy Jalm</th>
+                                        <th scope="col">12-04-2018</th>
+                                    </tr>
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">15€</th>
+                                        <th scope="col">Thaksha Pullner</th>
+                                        <th scope="col">12-04-2018</th>
+                                    </tr>
+                                    </thead>
+                                    <tr>
+                                        <th scope="col">10€</th>
+                                        <th scope="col">Mark dan ver Maas</th>
+                                        <th scope="col">11-04-2018</th>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <p>Dit is een stukje text onder het bodenoverzicht en de foto</p>
             </div>
-        </div>
-    </div>
-</header>
-
-<!-- Page Content -->
-<div class="container">
-
-    <div class="row">
-        <div class="col-sm-8">
-            <h2 class="mt-4">What We Do</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A deserunt neque tempore recusandae animi soluta quasi? Asperiores rem dolore eaque vel, porro, soluta unde debitis aliquam laboriosam. Repellat explicabo, maiores!</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis optio neque consectetur consequatur magni in nisi, natus beatae quidem quam odit commodi ducimus totam eum, alias, adipisci nesciunt voluptate. Voluptatum.</p>
-            <p>
-                <a class="btn btn-primary btn-lg" href="#">Call to Action &raquo;</a>
-            </p>
-        </div>
-        <div class="col-sm-4">
-            <h2 class="mt-4">Contact Us</h2>
-            <address>
-                <strong>Start Bootstrap</strong>
-                <br>3481 Melrose Place
-                <br>Beverly Hills, CA 90210
-                <br>
-            </address>
-            <address>
-                <abbr title="Phone">P:</abbr>
-                (123) 456-7890
-                <br>
-                <abbr title="Email">E:</abbr>
-                <a href="mailto:#">name@example.com</a>
-            </address>
-        </div>
-    </div>
-    <!-- /.row -->
-
-    <div class="row">
-        <div class="col-sm-4 my-4">
-            <div class="card">
-                <img class="card-img-top" src="http://placehold.it/300x200" alt="">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus.</p>
+            <div class="row">
+                <div class="col">
+                    <img src="media/WatchTestJEREMY.jpg" width="400px" height="200px" alt="..." class="figure-img img-fluid rounded" style = "position: relative" >
                 </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary">Find Out More!</a>
+                <div class="col">
+                    <img src="media/WatchTestJEREMY.jpg" width="400px" height="200px" alt="..." class="figure-img img-fluid rounded" style = "position: relative" >
                 </div>
-            </div>
-        </div>
-        <div class="col-sm-4 my-4">
-            <div class="card">
-                <img class="card-img-top" src="http://placehold.it/300x200" alt="">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque sequi doloribus totam ut praesentium aut.</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary">Find Out More!</a>
+                <div class="col">
+                    <img src="media/WatchTestJEREMY.jpg" width="400px" height="200px" alt="..." class="figure-img img-fluid rounded" style = "position: relative" >
                 </div>
             </div>
         </div>
-        <div class="col-sm-4 my-4">
-            <div class="card">
-                <img class="card-img-top" src="http://placehold.it/300x200" alt="">
-                <div class="card-body">
-                    <h4 class="card-title">Card title</h4>
-                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn btn-primary">Find Out More!</a>
-                </div>
-            </div>
-        </div>
-
-    </div>
-    <!-- /.row -->
-
 </div>
-<!-- /.container -->
 
-<!-- Footer -->
 <footer class="py-5 bg-dark">
     <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+        <p class="m-0 text-center text-white">Copyright &copy; Eenmaal Andermaal 2018</p>
     </div>
     <!-- /.container -->
 </footer>
 
 <!-- Bootstrap core JavaScript -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-</body>
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-</html>
+</body>
