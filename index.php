@@ -15,113 +15,131 @@
    </div>
 </header>
 <!-- Pagina content -->
-<section class="homepage">
+<section class="products">
    <div class="container">
       <div class="row">
          <div class="col-md-12 text-center">
             <h2 class="mt-4">Nieuwe veilingen</h2>
          </div>
       </div>
-         <div id="myCarousel" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner row w-100 mx-auto">
-               <div class="carousel-item col-md-4 active">
-                  <div class="product card">
-                     <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
-                     <div class="card-body">
-                        <h4 class="card-title">
-                           Roma dresser 35mm
-                        </h4>
-                        <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
-						<a href="#" class="btn cta-white">Bekijk nu</a>
-                     </div>
-                  </div>
-               </div>
-               <div class="carousel-item col-md-4">
-                  <div class="product card">
-                     <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
-                     <div class="card-body">
-                        <h4 class="card-title">
-                           Roma dresser 35mm
-                        </h4>
-                        <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
-						<a href="#" class="btn cta-white">Bekijk nu</a>
-                     </div>
-                  </div>
-               </div>
-               <div class="carousel-item col-md-4">
-                  <div class="product card">
-                     <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
-                     <div class="card-body">
-                        <h4 class="card-title">
-                           Roma dresser 35mm
-                        </h4>
-                        <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
-						<a href="#" class="btn cta-white">Bekijk nu</a>
-                     </div>
-					  
-                  </div>
-               </div>
-               <div class="carousel-item col-md-4">
-                  <div class="product card">
-                     <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
-                     <div class="card-body">
-                        <h4 class="card-title">
-                           Roma dresser 35mm
-                        </h4>
-                        <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
-						<a href="#" class="btn cta-white">Bekijk nu</a>
-                     </div>
-                  </div>
-               </div>
-               <div class="carousel-item col-md-4">
-                  <div class="product card">
-                     <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
-                     <div class="card-body">
-                        <h4 class="card-title">
-                           Roma dresser 35mm
-                        </h4>
-                        <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
-						<a href="#" class="btn cta-white">Bekijk nu</a>
-                     </div>
-                  </div>
-               </div>
-               <div class="carousel-item col-md-4">
-                  <div class="product card">
-                     <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
-                     <div class="card-body">
-                        <h4 class="card-title">
-                           Roma dresser 35mm
-                        </h4>
-                        <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
-						<a href="#" class="btn cta-white">Bekijk nu</a>
-                     </div>
-                  </div>
-               </div>
-               <div class="carousel-item col-md-4">
-                  <div class="product card">
-                     <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
-                     <div class="card-body">
-                        <h4 class="card-title">
-                           Roma dresser 35mm
-                        </h4>
-                        <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
-						<a href="#" class="btn cta-white">Bekijk nu</a>
-                     </div>
+      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+         <div class="carousel-inner row w-100 mx-auto">
+            <div class="carousel-item col-md-4 active">
+               <div class="product card">
+                  <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
+                  <div class="card-body">
+                     <h4 class="card-title">
+                        Roma dresser 35mm
+                     </h4>
+                     <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+                     <a href="#" class="btn cta-white">Bekijk nu</a>
                   </div>
                </div>
             </div>
-            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-            </a>
-        
+            <div class="carousel-item col-md-4">
+               <div class="product card">
+                  <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
+                  <div class="card-body">
+                     <h4 class="card-title">
+                        Roma dresser 35mm
+                     </h4>
+                     <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+                     <a href="#" class="btn cta-white">Bekijk nu</a>
+                  </div>
+               </div>
+            </div>
+            <div class="carousel-item col-md-4">
+               <div class="product card">
+                  <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
+                  <div class="card-body">
+                     <h4 class="card-title">
+                        Roma dresser 35mm
+                     </h4>
+                     <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+                     <a href="#" class="btn cta-white">Bekijk nu</a>
+                  </div>
+               </div>
+            </div>
+            <div class="carousel-item col-md-4">
+               <div class="product card">
+                  <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
+                  <div class="card-body">
+                     <h4 class="card-title">
+                        Roma dresser 35mm
+                     </h4>
+                     <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+                     <a href="#" class="btn cta-white">Bekijk nu</a>
+                  </div>
+               </div>
+            </div>
+            <div class="carousel-item col-md-4">
+               <div class="product card">
+                  <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
+                  <div class="card-body">
+                     <h4 class="card-title">
+                        Roma dresser 35mm
+                     </h4>
+                     <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+                     <a href="#" class="btn cta-white">Bekijk nu</a>
+                  </div>
+               </div>
+            </div>
+            <div class="carousel-item col-md-4">
+               <div class="product card">
+                  <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
+                  <div class="card-body">
+                     <h4 class="card-title">
+                        Roma dresser 35mm
+                     </h4>
+                     <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+                     <a href="#" class="btn cta-white">Bekijk nu</a>
+                  </div>
+               </div>
+            </div>
+            <div class="carousel-item col-md-4">
+               <div class="product card">
+                  <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
+                  <div class="card-body">
+                     <h4 class="card-title">
+                        Roma dresser 35mm
+                     </h4>
+                     <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
+                     <a href="#" class="btn cta-white">Bekijk nu</a>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="clearfix">
+            <div class="sliderbuttons">
+               <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+               <span class="sr-only">Previous</span>
+               </a>
+               <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+               <span class="carousel-control-next-icon" aria-hidden="true"></span>
+               <span class="sr-only">Next</span>
+               </a>
+            </div>
+         </div>
       </div>
    </div>
 </section>
+<section class="userExperience">
+<div class="container">
+<div class="row">
+	<div class="col-md-4">
+	<div class="col-md-2">
+	</div>
+		<img  class="rounded-circle" src="https://media.nu.nl/m/o5mx3i7aqf41_wd640.jpeg">
+	</div>
+	
+	<div class="col-md-8">
+	<h2> "We have THE BEST website" </h2>
+	</div>
+</div>
+</div>
+</section>
+
 <!-- /.container -->
 <?php require_once 'footer.php'; ?>
 

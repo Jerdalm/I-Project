@@ -54,7 +54,9 @@
 		}else{return 'Opdracht kon niet worden volbracht.';}
 	}
 	
-	/* Deze functie handeld elke database query af */
+	/* Deze functie handeld elke database query af 
+		|Voor elke functie kan voor elke functie gebruikt|
+	*/
 	function handlequery($sql, $parameters = false){
 		global $pdo;
 		$first_word = strtok($sql, " ");
