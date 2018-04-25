@@ -1,6 +1,5 @@
 <?php
 $_SESSION['error_registration'] = '';
-require_once 'head.php';
 require_once 'header.php';
 
 
@@ -15,14 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div class="container">
         <div class="row row-left">
             <p><?=$_SESSION['error_registration']?></p>
-            <form method="post" action="">
-                <div class=""form-group>
-                    <label for="inputEmail"> e-mail </label>
-                    <input type="textarea" class="form-control" name="mail" id="id1">
-                </div>
-
-                <input type="submit" name="mail" class="btn btn-primary btn-sm"> code sturen </input>
-            </form>
 
             <?php if(isset($_POST['mail'])) { ?>
 
@@ -32,8 +23,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <input type="textarea" class="form-control" name="code" id="id1">
                     </div>
 
-                    <button type="submit" name="code" class="btn btn-primary btn-sm"> code invoeren </button>
+                    <button type="submit" name="code" class="btn btn-primary btn-sm">Code invoeren</button>
                 </form>
+
             <?php } elseif(isset($_POST['code'])) { ?>
 
             <form method="post">
@@ -46,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="password" class="form-control" name="password" id=id2>
                 </div>
 
-                <button type="submit" name="submitNaam" class="btn btn-primary btn-sm"> verzenden </button>
+                <button type="submit" name="submitNaam" class="btn btn-primary btn-sm">Verzenden</button>
             </form>
 
             <?php } elseif(isset($_POST['submitNaam'])) { ?>
@@ -97,18 +89,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="text" class="form-control" name="secretanswer" id=id2>
                 </div>
 
-                <button type="submit" name="registrate" class="btn btn-primary btn-sm"> registreren </button>
+                <button type="submit" name="registrate" class="btn btn-primary btn-sm">Registreren</button>
             </form>
 
             <?php } else { ?>
+
             <form method="post">
                 <div class=""form-group>
                     <label for="inputEmail"> e-mail </label>
                     <input type="textarea" class="form-control" name="email" id="id1">
                 </div>
 
-                <button type="submit" name="mail" class="btn btn-primary btn-sm"> code sturen </button>
+                <button type="submit" name="mail" class="btn btn-primary btn-sm">Code sturen</button>
             </form>
+
             <?php } ?>
 
         </div>
