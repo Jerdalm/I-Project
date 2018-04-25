@@ -1,4 +1,5 @@
 <?php require_once 'head.php'; ?>
+<?php require_once 'db.php'; ?>
   <body>
 
     <!-- Navigation -->

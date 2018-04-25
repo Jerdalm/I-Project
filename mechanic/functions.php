@@ -3,12 +3,12 @@
 	/* Deze functie zorgt voor de connectie met de Database */	
 	function ConnectToDatabase(){
 		$hostname = "(local)";
-		$dbname = "fletnix";
-		$username = "sa";
-		$pw = "root";
+		$dbname = "EENMAALANDERMAAL";
+		$dbusername = "sa";
+		$dbpw = "12345";
 		
 		try {$pdo = new PDO("sqlsrv:Server=$hostname;Database=$dbname;
-			ConnectionPooling=0", "$username", "$pw");
+			ConnectionPooling=0", "$dbusername", "$dbpw");
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			return $pdo;	
 		}
