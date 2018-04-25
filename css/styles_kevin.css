@@ -13,6 +13,9 @@ body{
 	font-size:16px;	
 }
 
+section{padding:50px;}
+
+
 /* Page navigation */
 nav.navbar{
 	background-color:transparent;
@@ -139,7 +142,17 @@ font-weight:bold;
 }
 
 .product div.card-body h5 .time{
+}
 
+.product div.card-body a .btn{
+	
+}
+
+.product.card .card-body .btn .cta-white{
+	width:50%;
+	margin:0 auto;
+	text-align:center;
+	padding:15px;
 }
 
 .product div.card-title h4{
@@ -224,3 +237,5 @@ text-align:center;
     display: block;
     visibility: visible;
   }
+  
+  
