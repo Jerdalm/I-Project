@@ -87,10 +87,11 @@
 	    Voer deze code in op de site:
 	    ' .$randomNumber.'.';
 
-	    // mail( $to, $subject, $message_body );
+	    // mail( $to, $subject, $message_body ); moet uiteindelijk wel aan!
 
 	    echo '<script type="text/javascript">alert("'.$randomNumber.'");</script>';
 	    // header("location: ./registrationScherm.php");		
+	    
 	}
 ?>
 

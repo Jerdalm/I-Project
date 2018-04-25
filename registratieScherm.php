@@ -52,12 +52,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </form>
 
             <?php } elseif(isset($_POST['submitNaam'])) {
-                $_SESSION["sumbitNaam"] = true;
+                $_SESSION["submitNaam"] = true;
                 header("location: ./nameAndPasswordCheck");
                 }
             ?>
 
-            <?php if($_SESSION['sumbitNaam'] == true) { ?>
+            <?php if($_SESSION['submitNaam'] == true) { ?>
             <form method ="post" action="registrationInsertInfo.php">
                 <div class="form-group">
                     <label for="id2"> voornaam </label>
