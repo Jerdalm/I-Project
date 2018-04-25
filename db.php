@@ -1,3 +1,4 @@
 <?php
-	ConnectToDatabase();
+	session_start();
+	$pdo = ConnectToDatabase();
 ?>

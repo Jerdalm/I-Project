@@ -1,6 +1,14 @@
 <?php
-$_SESSION['error_registration'] = '';
 require_once 'header.php';
+
+$_SESSION["error_registration"] = '';
+$_SESSION["submitNaam"] = false;
+$_SESSION["mailButton"] = false;
+
+//if ($_SESSION["submitNaam"] == FALSE) {
+//    echo "FALSE";
+//}
+//print_r ($_SESSION);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['login'])) {
@@ -40,7 +48,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <button type="submit" name="submitNaam" class="btn btn-primary btn-sm">Verzenden</button>
             </form>
 
-            <?php } elseif(isset($_POST['submitNaam'])) { ?>
+            <?php } elseif(isset($_POST['submitNaam'])) {
+                $_SESSION["sumbitNaam"] = true;
+                header("location: ./nameAndPasswordCheck");
+                }
+            ?>
+
+            <?php if($_SESSION['sumbitNaam'] == true) { ?>
             <form method ="post" action="registrationInsertInfo.php">
                 <div class="form-group">
                     <label for="id2"> voornaam </label>
@@ -51,8 +65,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <input type="text" class="form-control" name="lastname" id=id2>
                 </div>
                 <div class="form-group">
-                    <label for="id2"> adres </label>
-                    <input type="text" class="form-control" name="adres" id=id2>
+                    <label for="id2"> adresregel1 </label>
+                    <input type="text" class="form-control" name="adres1" id=id2>
+                </div>
+                <div class="form-group">
+                    <label for="id2"> adresregel2 </label>
+                    <input type="text" class="form-control" name="adres2" id=id2>
                 </div>
                 <div class="form-group">
                     <label for="id2"> postcode </label>
@@ -96,7 +114,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <button type="submit" name="registrate" class="btn btn-primary btn-sm">Registreren</button>
             </form>
 
-            <?php } else { ?>
+            <?php }
+            if ($_SESSION["mailButton"] == false) { ?>
 
             <form method="post">
                 <div class=""form-group>
@@ -107,7 +126,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <button type="submit" name="mail" class="btn btn-primary btn-sm">Code sturen</button>
             </form>
 
-            <?php } ?>
+            <?php }
+            if(isset($_POST['mail'])) {
+                $_SESSION["mailButton"] = true;
+//                header("REFRESH:0");
+                $_SESSION["submitButton"] = true;
+            }?>
 
         </div>
 
