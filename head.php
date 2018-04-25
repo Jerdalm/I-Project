@@ -1,5 +1,4 @@
 <?php
-require_once 'mechanic/functions.php'; 
 $head = <<<HEAD
 	
 	<DOCTYPE html>
@@ -22,5 +21,6 @@ $head = <<<HEAD
 HEAD;
 
 echo $head;
+require_once 'mechanic/functions.php'; 
 ?>
 
