@@ -1,7 +1,7 @@
 <?php
 $head = <<<HEAD
 	
-	<DOCTYPE html>
+	<!DOCTYPE html>
 	<html lang="nl">
 	<head>
 		<meta charset="utf-8">
