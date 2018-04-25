@@ -1,6 +1,8 @@
 <?php
 $emailCheck = ($POST['email']);
-$email_unique = $dbh->query("SELECT * FROM Account WHERE email='$emailCheck'"); //check hier of alles wel klopt
+//$email = $mysqli->escape_string($_POST['email']); sq injection tegengaan
+
+$email_unique = $pdo->query("SELECT * FROM Account WHERE email='$emailCheck'"); //check hier of alles wel klopt
 if(strlen($emailCheck) != 0 ){
     if($email_unique->rowCount() == 0) {
         if (!filter_var($emailaddress, FILTER_VALIDATE_EMAIL)) {

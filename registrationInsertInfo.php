@@ -1,5 +1,4 @@
 <?php
-require_once "db.php";
 var_dump($_SESSION);
 if (isset($_POST['registrate'])) {
     // zijn de velden ingevuld?
@@ -21,17 +20,19 @@ if (isset($_POST['registrate'])) {
         // voer query uit in de database voor tabel gebruikers
         $sql1 = "SELECT username FROM Gebruikers WHERE username = ?";
 
-        $opdracht1 = $dbh->prepare($sql1);
+        $opdracht1 = $pdo->prepare($sql1);
         $opdracht1->execute(array($gebruiker));
         $result = $opdracht1->fetch();
 
 
         if (!isset($result['name'])) {
-            $sql2 = "update gebruikers set voornaam = $firstname, achternaam = $lastname, adresregel1 = $adres, postcode = $postalcode,
-            plaats = $residence, land = $country, GeboorteDag = $birthdate, ";
+            $sql2 = "update gebruikers set voornaam = ?, achternaam = ?, adresregel1 = ?, postcode = ?,
+            plaats = ?, land = ?, GeboorteDag = ?, Vraag = ?, antwoordtekst = ?, Verkoper = 0 
+            WHERE gebruikersnaam = ?";
 
-            $opdracht2 = $dbh->prepare($sql2);
-            $opdracht2->execute(array($username, $firstname, $lastname, $adres));
+            $opdracht2 = $pdo->prepare($sql2);
+            $opdracht2->execute(array($firstname, $lastname, $adres, $postalcode, $residence, $country, $birthdate, $secretquestion,
+                $secretanswer, $username));
             header('Refresh:0; url=../inlogScherm.php');
 
         } else {

@@ -2,7 +2,6 @@
 $_SESSION['error_registration'] = '';
 require_once 'header.php';
 
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['login'])) {
         require_once 'login.php';
@@ -28,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <?php } elseif(isset($_POST['code'])) { ?>
 
-            <form method="post">
+            <form method="post" action="nameAndPasswordCheck.php">
                 <div class="form-group">
                     <label for="id1"> gebruikersnaam </label>
                     <input type="textarea" class="form-control" name="name" id=id1>
@@ -42,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </form>
 
             <?php } elseif(isset($_POST['submitNaam'])) { ?>
-            <form method ="post">
+            <form method ="post" action="registrationInsertInfo.php">
                 <div class="form-group">
                     <label for="id2"> voornaam </label>
                     <input type="text" class="form-control" name="firstname" id=id2>
@@ -79,11 +78,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label for="id2"> geboortedatum </label>
                     <input type="text" class="form-control" name="birthdate" id=id2>
                 </div>
+                <p> geef een geheime vraag op voor de beveiliging van uw account</p>
                 <div class="form-group">
                     <select class="form-control">
-                        <option> geheime vraag </option>
-                    <input type="text" class="form-control" name="secretquestion" id=id2>
+                        <option value="1"> In welke straat ben je geboren? </option>
+                        <option value="2"> Wat is de meisjesnaam van je moeder? </option>
+                        <option value="3"> Wat is je lievelingsgerecht? </option>
+                        <option value="4"> Hoe heet je oudste zus? </option>
+                        <option value="5"> Hoe heet je huisdier? </option>
                 </div>
+
                 <div class="form-group">
                     <label for="id2"> geheim antwoord </label>
                     <input type="text" class="form-control" name="secretanswer" id=id2>
