@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="75ac47ec-2c77-4a20-a5b9-f925d906c17d" name="localhost" url="http://localhost/EenmaalAndermaal/GitHub/I-Project">
+        <fileTransfer port="0" mountedRoot="C:\xampp\htdocs\EenmaalAndermaal\GitHub\I-Project" accessType="MOUNT" />
+      </webServer>
+    </option>
+  </component>
+</project>
