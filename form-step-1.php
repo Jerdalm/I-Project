@@ -11,12 +11,11 @@ echo('
 </form>
 ');
 
-if (isset($_POST['mail'])) {
-    $_SESSION['email'] = $_POST['email'];
-    $_SESSION["step1"] = false;
-    $_SESSION["step2"] = true;
-
-    header("location: ./mail-check.php");
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['mail'])) {
+        $_SESSION['email'] = $_POST['email'];
+        header("location: ./mail-check.php");
+    }
 }
 
 ?>

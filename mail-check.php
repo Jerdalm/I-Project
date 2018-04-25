@@ -15,10 +15,11 @@ if(strlen($emailCheck) != 0){
     if (filter_var($emailCheck, FILTER_VALIDATE_EMAIL)) {
         handleQuery("INSERT INTO ActivatieCode(code, mailadres) VALUES ($randomCode ,:mailadres)",$emailParameters);
         sendCode($randomCode, $emailCheck);
-        } else {
-            $_SESSION['error_registatrion'] = 'Geen gelding e-mailadres.';
-            header("location: ./registratieScherm.php");
-        }
+
+    } else {
+        $_SESSION['error_registatrion'] = 'Geen gelding e-mailadres.';
+        header("location: ./registratieScherm.php");
+    }
 //    } else {
 //        $_SESSION['error_registatrion'] = 'Er bestaat al een account met dit emailadres.';
 //        header("location: ./registratieScherm.php");
