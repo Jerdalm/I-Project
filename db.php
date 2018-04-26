@@ -1,3 +1,5 @@
+
 <?php
-	ConnectToDatabase();
+	$pdo = ConnectToDatabase();
 ?>
+
