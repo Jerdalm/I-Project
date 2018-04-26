@@ -70,30 +70,16 @@
 		return $data;
 	}
 
+	function sendMail($to, $subject, $body, $message = "Fout"){
+		$emailTo      = $to;
+	    $subjectEmail = $subject;
+	    $message_body = $body;
 
-	/* Deze functie stuurt een verificatiecode naar de opgegeven emaildres */
-	function sendCode($randomNumber, $email){
-	    $_SESSION['message'] =
-	            
-	             "Er is een verficatiecode naar $email gestuurd, 
-	              voer de code in om het account te activeren!";
-	    
-	    $to      = $email;
-	    $subject = 'Account activatie';
-	    $message_body = '
-	    Beste,
 
-	    Bedankt voor het registreren!
+	    //mail( $emailTo, $subjectEmail, $message_body ); moet uiteindelijk wel aan!
+	    echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
 
-	    Voer deze code in op de site:
-	    ' .$randomNumber.'.';
-
-	    // mail( $to, $subject, $message_body ); moet uiteindelijk wel aan!
-
-        $_SESSION["step1"] = false;
-        $_SESSION["step2"] = true;
-        header("location: ./registratieScherm.php");
-
-    }
+	    $_SESSION['message'] = $message;
+	}
 ?>
 
