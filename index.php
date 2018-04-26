@@ -1,7 +1,9 @@
 <?php require_once 'header.php';
-$_SESSION["step1"] = true;
+$_SESSION["step1"] = false;
 $_SESSION["step2"] = false;
 $_SESSION["step3"] = false;
+$_SESSION["step4"] = true;
+$_SESSION["error_registration"] = '';
 ?>
 <!-- promotie header -->
 <header class="promo-header">

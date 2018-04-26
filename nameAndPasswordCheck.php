@@ -18,15 +18,19 @@ if (isset($_POST['submitNaam'])) {
 
         if (isset($result['gebruikersnaam'])) {
             // schrijf een foutmeldingstekst
-            $_SESSION['error_registatrion'] = 'uw ingevoerde gebruikersnaam bestaat al';
+            $_SESSION['error_registatrion'] = "uw ingevoerde gebruikersnaam bestaat al";
             header("location: ./registratieScherm.php");
         }
         else {
+            $_SESSION['username'] = $username;
+            $_SESSION['password'] = $password;
+
+            $_SESSION["error_registration"] = '';
             header("location: ./registratieScherm.php");
         }
     }
     else {
-        $_SESSION['error_registatrion'] = 'gebruikersnaam of wachtwoord is niet ingevoerd';
+        $_SESSION['error_registatrion'] = "gebruikersnaam of wachtwoord is niet ingevoerd";
         header("location: ./registratieScherm.php");
     }
 }

@@ -1,5 +1,5 @@
 <?php require_once 'header.php'; 
-session_start();
+//session_start();
 $_SESSION['ingelogdeGebruiker'] = 'admin';
 $gebruikersnaam = $_SESSION['ingelogdeGebruiker'];
 
@@ -15,7 +15,12 @@ $gebruiker = handlequery("SELECT *
  and
  Gebruiker.vraag = GeheimeVraag.ID", $emailParameters);
 
+$email = $gebruiker[0]['mailadres'];
+$subject = 'Wachtwoord wijzigen';
+$message = 'U heeft aangegeven dat u het wachtwoord wilt wijzigen. Uw nieuwe code is =';
 
+$randomPassword = createRandomPassword(); 
+$messageCode = $message . $randomPassword;
 
 
 ?>
@@ -112,6 +117,10 @@ if (count($antwoord) == 1){
     }
 
 if ($correct == true){
+
+sendMail($email,$subject,$messageCode);
+
+handlequery("UPDATE Gebruiker SET wachtwoord = '$randomPassword' WHERE gebruikersnaam = '$gebruikersnaam' ");
 
 
 

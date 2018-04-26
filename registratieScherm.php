@@ -1,7 +1,10 @@
 <?php
 require_once 'header.php';
 
-$_SESSION["error_registration"] = '';
+$_SESSION["step1"] = false;
+$_SESSION["step2"] = false;
+$_SESSION["step3"] = false;
+$_SESSION["step4"] = true;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['login'])) {
@@ -26,6 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             } else if($_SESSION['step3'] == true) {
                 require_once 'form-step-3.php';
+
+            } else if($_SESSION['step4'] == true) {
+                require_once 'form-step-4.php';
             }
 
 
