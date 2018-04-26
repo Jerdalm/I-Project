@@ -57,7 +57,7 @@ if (isset($_POST['registrate'])) {
             $opdracht3->execute(array($username, $phonenumber));
             $_SESSION['step4'] = false;
             $_SESSION['step1'] = true;
-
+            session_destroy();
             header('Refresh:0; url=./registratieScherm.php');
 
     } else{

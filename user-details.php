@@ -1,5 +1,5 @@
 <?php require_once 'header.php'; 
-//session_start();
+
 $_SESSION['ingelogdeGebruiker'] = 'admin';
 $gebruikersnaam = $_SESSION['ingelogdeGebruiker'];
 
