@@ -73,7 +73,6 @@
 
 	/* Deze functie stuurt een verificatiecode naar de opgegeven emaildres */
 	function sendCode($randomNumber, $email){
-	    $_SESSION['active'] = 0; //0 until user activates their account with verify.php
 	    $_SESSION['message'] =
 	            
 	             "Er is een verficatiecode naar $email gestuurd, 

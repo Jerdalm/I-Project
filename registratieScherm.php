@@ -20,8 +20,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 require_once 'form-step-1.php';
 
             } else if($_SESSION['step2'] == true) {
-//                echo '<script type="text/javascript">alert("Werkt het beste");</script>';
-//                die();
+               // echo '<script type="text/javascript">alert("Werkt het beste");</script>';
+               // die();
                 require_once 'form-step-2.php';
 
             } else if($_SESSION['step3'] == true) {
