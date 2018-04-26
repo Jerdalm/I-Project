@@ -1,11 +1,6 @@
 <?php
 require_once 'header.php';
 
-$_SESSION["step1"] = false;
-$_SESSION["step2"] = false;
-$_SESSION["step3"] = false;
-$_SESSION["step4"] = true;
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['login'])) {
         require_once 'login.php';
@@ -23,8 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 require_once 'form-step-1.php';
 
             } else if($_SESSION['step2'] == true) {
-               // echo '<script type="text/javascript">alert("Werkt het beste");</script>';
-               // die();
                 require_once 'form-step-2.php';
 
             } else if($_SESSION['step3'] == true) {
@@ -33,24 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else if($_SESSION['step4'] == true) {
                 require_once 'form-step-4.php';
             }
-
-
-//            if(isset($_POST['mail'])) {
-//                $_SESSION['emailadresControle1'] = ($_POST['email']);
-//                header("location: ./mail-check.php");
-//
-//            } else if(isset($_POST['code'])) {
-//                require_once 'form-step-3.php';
-//
-//            } else if ($_SESSION["mailButton"] == false) {
-//                require_once 'form-step-1.php';
-//
-//            } else if(isset($_POST['mail'])) {
-//                $_SESSION["mailButton"] = true;
-//                $_SESSION["submitButton"] = true;
-//                echo "test";
-//
-//            }
+            
             ?>
         </div>
 
