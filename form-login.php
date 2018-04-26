@@ -9,7 +9,7 @@ echo('
         <label for="inputPassword">Password</label>
         <input type="password" class="form-control" id="wachtwoord" name="wachtwoord" placeholder="Wachtwoord">
     </div>
-    
+    <a href= "wachtwoord-vergeten.php"> Wachtwoord Vergeten? </a><br><br>
     <button type="submit" name="login-submit" class="btn btn-primary">Login</button>
 </form>
 ');

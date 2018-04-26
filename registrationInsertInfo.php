@@ -20,6 +20,16 @@ if (isset($_POST['registrate'])) {
         $country = $_POST['country'];
         $phonenumber = $_POST['phonenumber'];
         $birthdate = $_POST['birthdate'];
+
+        $date = $_POST['birthdate'];
+        //$date = DateTime::createFromFormat('j-M-Y', $_POST['birthdate']);
+        //$birthdate = date_format($date,'Y-m-d');
+
+        $myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
+        $birthdate = $myDateTime->format('Y-m-d');
+
+        echo $birthdate;
+
         $secretquestion = $_POST['secretquestion'];
         $secretanswer = $_POST['secretanswer'];
 
@@ -32,11 +42,9 @@ if (isset($_POST['registrate'])) {
 
             $sql2 = "INSERT INTO Gebruiker VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-//gebruikersnaam = ?, voornaam = ?, achternaam = ?, adresregel1 = ?, adresregel2 = ?, postcode = ?,
-  //          plaatsnaam = ?, land = ?, geboortDag = ?, mailadres = ?, wachtwoord = ?, Vraag = ?, antwoordtekst = ?, Verkoper = 0
 
             $opdracht2 = $pdo->prepare($sql2);
-            $opdracht2->execute(array($username,
+            $opdracht2->execute(array($_SESSION['username'],
                 $firstname,
                 $lastname,
                 $adres1,
@@ -46,7 +54,7 @@ if (isset($_POST['registrate'])) {
                 $country,
                 $birthdate,
                 $emailCheck,
-                $password,
+                $_SESSION['password'],
                 $secretquestion,
                 $secretanswer,
                 $verkoper));
@@ -54,12 +62,15 @@ if (isset($_POST['registrate'])) {
             $sql3 = "INSERT INTO gebruikerstelefoon VALUES(?, ?)";
 
             $opdracht3 = $pdo->prepare($sql3);
-            $opdracht3->execute(array($username, $phonenumber));
+            $opdracht3->execute(array($_SESSION['username'], $phonenumber));
+
             $_SESSION['step4'] = false;
             $_SESSION['step1'] = true;
             session_destroy();
             header('Refresh:0; url=./registratieScherm.php');
+            $_SESSION["error_registration"] = '';
 
+        header('Refresh:0; url=./registratieScherm.php');
     } else{
         // schrijf een foutmeldingstekst
         $_SESSION['error_registration'] = "een van de invoervelden is niet correct ingevoerd";
@@ -67,4 +78,3 @@ if (isset($_POST['registrate'])) {
 
     }
 }
-

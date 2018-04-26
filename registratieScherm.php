@@ -1,6 +1,13 @@
 <?php
 require_once 'header.php';
 session_start();
+// de error regisration werkt niet
+// als we het wachtwoord willen checken op nummer, dan moeten we javascript gebruiken
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['login'])) {
+        require_once 'login.php';
+    }
+}
 ?>
 <main id="login-registration">
 
@@ -27,7 +34,6 @@ session_start();
             <?php
                 require_once './form-login.php';
             ?>
-
         </div>
     </div>
 </main>

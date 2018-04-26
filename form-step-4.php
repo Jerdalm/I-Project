@@ -31,11 +31,11 @@ echo('
     </div>
     <div class="form-group">
         <label for="id2"> telefoonNr </label>
-        <input type="text" class="form-control" name="phonenumber" id=id2 required>
+        <input type="tel" class="form-control" name="phonenumber" id=id2 required>
     </div>
     <div class="form-group">
         <label for="id2"> geboortedatum </label>
-        <input type="text" class="form-control" name="birthdate" id=id2 required>
+        <input type="date" class="form-control" name="birthdate" required>
     </div>
     <p> geef een geheime vraag op voor de beveiliging van uw account</p>
     <div class="form-group">
