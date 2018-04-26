@@ -70,11 +70,11 @@
 		return $data;
 	}
 
-
 	function sendMail($to, $subject, $body, $message = "Fout"){
 		$emailTo      = $to;
 	    $subjectEmail = $subject;
 	    $message_body = $body;
+
 
 	    //mail( $emailTo, $subjectEmail, $message_body ); moet uiteindelijk wel aan!
 	    echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat

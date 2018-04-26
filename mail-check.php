@@ -2,7 +2,7 @@
 require_once './head.php';
 require_once './db.php';
 
-$emailCheck = ($_SESSION['email']);
+$emailCheck = ($_SESSION['emailRegistration']);
 
 $_SESSION['randomVerificationCode'] = rand(100000,900000);
 $randomCode = ($_SESSION['randomVerificationCode']);
