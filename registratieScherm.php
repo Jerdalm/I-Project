@@ -64,8 +64,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label for="inputPassword4">Password</label>
                     <input type="password" class="form-control" id="wachtwoord" placeholder="Wachtwoord">
                 </div>
-                
-                <button type="submit" class="btn btn-primary">Login</button>
+                <a href= "wachtwoordVergeten.php"> Wachtwoord Vergeten? </a><br><br>
+                <button type="submit" class="btn btn-primary"> Login</button>
             </form>
         </div>
     </div>
