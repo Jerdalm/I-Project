@@ -1,4 +1,5 @@
 <?php
+echo('
 <form method="post" action="nameAndPasswordCheck.php">
     <div class="form-group">
         <label for="id1"> gebruikersnaam </label>
@@ -11,4 +12,5 @@
 
     <button type="submit" name="submitNaam" class="btn btn-primary btn-sm">Verzenden</button>
 </form>
+');
 ?>
