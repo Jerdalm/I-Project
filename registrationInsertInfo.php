@@ -32,11 +32,9 @@ if (isset($_POST['registrate'])) {
 
             $sql2 = "INSERT INTO Gebruiker VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-//gebruikersnaam = ?, voornaam = ?, achternaam = ?, adresregel1 = ?, adresregel2 = ?, postcode = ?,
-  //          plaatsnaam = ?, land = ?, geboortDag = ?, mailadres = ?, wachtwoord = ?, Vraag = ?, antwoordtekst = ?, Verkoper = 0
 
             $opdracht2 = $pdo->prepare($sql2);
-            $opdracht2->execute(array($username,
+            $opdracht2->execute(array($username,$_SESSION['username'],
                 $firstname,
                 $lastname,
                 $adres1,
@@ -47,6 +45,7 @@ if (isset($_POST['registrate'])) {
                 $birthdate,
                 $emailCheck,
                 $password,
+                $_SESSION['password'],
                 $secretquestion,
                 $secretanswer,
                 $verkoper));
@@ -55,10 +54,12 @@ if (isset($_POST['registrate'])) {
 
             $opdracht3 = $pdo->prepare($sql3);
             $opdracht3->execute(array($username, $phonenumber));
+
             $_SESSION['step4'] = false;
             $_SESSION['step1'] = true;
+            $_SESSION["error_registration"] = '';
 
-            header('Refresh:0; url=./registratieScherm.php');
+        header('Refresh:0; url=./registratieScherm.php');
 
     } else{
         // schrijf een foutmeldingstekst
@@ -67,4 +68,3 @@ if (isset($_POST['registrate'])) {
 
     }
 }
-

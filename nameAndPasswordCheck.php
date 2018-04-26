@@ -24,6 +24,8 @@ if (isset($_POST['submitNaam'])) {
         else {
             $_SESSION['username'] = $username;
             $_SESSION['password'] = $password;
+            $_SESSION['step3'] = false;
+            $_SESSION['step4'] = true;
 
             $_SESSION["error_registration"] = '';
             header("location: ./registratieScherm.php");
