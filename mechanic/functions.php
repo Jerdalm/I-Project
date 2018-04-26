@@ -10,7 +10,7 @@
 		try {$pdo = new PDO("sqlsrv:Server=$hostname;Database=$dbname;
 			ConnectionPooling=0", "$dbusername", "$dbpw");
 			$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			return $pdo;	
+			return $pdo;
 		}
 		catch(PDOException $e)
 		{
@@ -51,10 +51,14 @@
 		
 		if($data){
 			return 'Opdracht volbracht!';
-		}else{return 'Opdracht kon niet worden volbracht.';}
+		}else {
+			return 'Opdracht kon niet worden volbracht.';
+		}
 	}
 	
-	/* Deze functie handeld elke database query af */
+	/* Deze functie handeld elke database query af 
+		|Voor elke functie kan voor elke functie gebruikt|
+	*/
 	function handlequery($sql, $parameters = false){
 		global $pdo;
 		$first_word = strtok($sql, " ");
@@ -65,5 +69,32 @@
 		
 		return $data;
 	}
+
+
+	/* Deze functie stuurt een verificatiecode naar de opgegeven emaildres */
+	function sendCode($randomNumber, $email){
+	    $_SESSION['active'] = 0; //0 until user activates their account with verify.php
+	    $_SESSION['message'] =
+	            
+	             "Er is een verficatiecode naar $email gestuurd, 
+	              voer de code in om het account te activeren!";
+	    
+	    $to      = $email;
+	    $subject = 'Account activatie';
+	    $message_body = '
+	    Beste,
+
+	    Bedankt voor het registreren!
+
+	    Voer deze code in op de site:
+	    ' .$randomNumber.'.';
+
+	    // mail( $to, $subject, $message_body ); moet uiteindelijk wel aan!
+
+        $_SESSION["step1"] = false;
+        $_SESSION["step2"] = true;
+        header("location: ./registratieScherm.php");
+
+    }
 ?>
 

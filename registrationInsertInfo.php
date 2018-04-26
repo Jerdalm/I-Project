@@ -8,7 +8,8 @@ if (isset($_POST['registrate'])) {
         // de ingevoerde gegevens opslaan in variabelen
         $firstname = $_POST['firstname'];
         $lastname = $_POST['lastname'];
-        $adres = $_POST['adres'];
+        $adres1 = $_POST['adres1'];
+        $adres2 = $_POST['adres2'];
         $postalcode = $_POST['postalcode'];
         $residence = $_POST['residence'];
         $country = $_POST['country'];
@@ -26,13 +27,18 @@ if (isset($_POST['registrate'])) {
 
 
         if (!isset($result['name'])) {
-            $sql2 = "update gebruikers set voornaam = ?, achternaam = ?, adresregel1 = ?, postcode = ?,
+            $sql2 = "INSERT INTO gebruikers VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) voornaam = ?, achternaam = ?, adresregel1 = ?, postcode = ?,
             plaats = ?, land = ?, GeboorteDag = ?, Vraag = ?, antwoordtekst = ?, Verkoper = 0 
             WHERE gebruikersnaam = ?";
 
             $opdracht2 = $pdo->prepare($sql2);
-            $opdracht2->execute(array($firstname, $lastname, $adres, $postalcode, $residence, $country, $birthdate, $secretquestion,
-                $secretanswer, $username));
+            $opdracht2->execute(array($username, $firstname, $lastname, $adres1, $adres2, $postalcode, $residence, $country,
+                $birthdate, $emailCheck, $password, $secretquestion, $secretanswer, 1));
+
+            $sql3 = "INSERT INTO gebruikerstelefoon VALUES(?, ?, ?)";
+
+            $opdracht3 = $pdo->prepare($sql3);
+            $opdracht3->execute(array(1, $username, $phonenumber));
             header('Refresh:0; url=../inlogScherm.php');
 
         } else {
@@ -44,3 +50,4 @@ if (isset($_POST['registrate'])) {
 
     }
 }
+

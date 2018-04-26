@@ -1,6 +1,6 @@
 <?php
 require_once 'mechanic/functions.php';
-ConnectToDatabase();
+require_once 'db.php';
 //var_dump($_SESSION);
 if (isset($_POST['submitNaam'])) {
     // zijn de velden gebruiker en wachtwoord ingevuld?
@@ -16,24 +16,18 @@ if (isset($_POST['submitNaam'])) {
         $opdracht1->execute(array($username));
         $result = $opdracht1->fetch();
 
-
-        if (!isset($result['gebruikersnaam'])) {
-            $sql2 = "INSERT INTO Gebruikers VALUES(?, ?)";
-
-            $opdracht2 = $pdo->prepare($sql2);
-            $opdracht2->execute(array($username, $password));
-            header('Refresh:0; url=registratieScherm.php');
-
-        }
         if (isset($result['gebruikersnaam'])) {
             // schrijf een foutmeldingstekst
             $_SESSION['error_registatrion'] = 'uw ingevoerde gebruikersnaam bestaat al';
-            header('Refresh:0; url=registratieScherm.php');
+            header("location: ./registratieScherm.php");
         }
-        if (isset($result['wachtwoord'])) {
-            $_Session['error_registration'] = 'uw ingevoerde wachtwoord bestaat al';
-            header('Refresh:0; url=registratieScherm.php');
+        else {
+            header("location: ./registratieScherm.php");
         }
     }
+    else {
+        $_SESSION['error_registatrion'] = 'gebruikersnaam of wachtwoord is niet ingevoerd';
+        header("location: ./registratieScherm.php");
+    }
 }
-?>
+
