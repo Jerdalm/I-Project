@@ -71,6 +71,16 @@
 	}
 
 
+	function sendMail($to, $subject, $body){
+		$emailTo      = $to;
+	    $subjectEmail = $subject;
+	    $message_body = $body;
+
+	    //mail( $emailTo, $subjectEmail, $message_body ); moet uiteindelijk wel aan!
+
+	    echo ;
+	}
+
 	/* Deze functie stuurt een verificatiecode naar de opgegeven emaildres */
 	function sendCode($randomNumber, $email){
 	    $_SESSION['active'] = 0; //0 until user activates their account with verify.php
