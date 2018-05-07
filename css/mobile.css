@@ -1,0 +1,77 @@
+
+
+/* small devices (landscape phones, 576px and up) */
+@media (max-width: 576px) {
+}
+
+@media screen and (min-width: 300px) and (max-width: 576px) {
+	.header input[type="search"]{
+		min-width:150px;
+		width:150px;
+	}
+	.navbar input[type="search"] {
+    width: 200px;
+	
+	}
+
+}
+
+/* Medium devices (tablets, 768px and smaller) */
+@media (max-width: 768px) { 
+
+	section{
+		padding:10px;
+	}
+	
+	
+	.userExperience img{
+		width:20vw;
+		height:20vw;
+	}
+	.userExperience h2{
+		font-size:20px;
+		font-family: 'open sans';
+		
+	}
+	.navbar input[type="search"] {
+		margin:10px 0px;
+	}
+	
+
+}
+
+
+/* Large devices (desktops, 992px and up) */
+@media (max-width: 992px) { 
+.sliderbuttons{display:none;}
+.carousel.slide div.carousel-inner div.carousel-item.col-lg-4.col-md-6.col-sm-6.col-xs-12{display:block;}
+	nav.navbar{
+		background-color: rgba(0, 0, 0, 0.4) !important;
+	}
+	.navbar-nav .dropdown-menu {
+		background-color: rgba(0, 0, 0, 0.1) !important;
+		padding:0;
+		
+	}
+	nav.navbar .dropdown a{
+		color:white;
+		padding-left:5;
+	}
+	nav.navbar a.dropdown-item:hover{
+		background-color:rgba(0, 0, 0, 0.2);
+	}
+
+	.navbar input[type="submit"]{
+		height: 30px;
+		right: 53px;
+	}
+	
+	.navbar input[type="search"]{
+		background: white;
+		color: black;	
+	}
+	
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {}
