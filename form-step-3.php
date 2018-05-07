@@ -4,11 +4,8 @@ require_once './db.php';
 $_SESSION['message_login'] = ' ';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {   
-    echo checkIfFieldsFilledIn($_POST);
-
-    if (checkIfFieldsFilledIn($_POST)) {
-    echo 'aanwezig';
-
+    if (checkIfFieldsFilledIn()) {
+        
         $_SESSION['username'] = $_POST['username']; 
         $_SESSION['password'] = $_POST['password'];
         $_SESSION['password-repeat'] = $_POST['password-repeat'];

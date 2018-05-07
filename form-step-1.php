@@ -3,7 +3,7 @@ require_once './head.php';
 require_once './db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
-	if (checkIfFieldsFilledIn($_POST)) {
+	if (checkIfFieldsFilledIn()) {
 	    $_SESSION['email-registration'] = $_POST['email'];      
 	    sendRegistrationCode(($_POST['email']));
 	} else {
