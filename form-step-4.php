@@ -17,40 +17,40 @@ echo '
 
 <form method ="post">
     <div class="form-group">
-        <label for="id2">Voornaam</label>
-        <input type="text" class="form-control" name="firstname" id=id2 required>
+        <label for="firstname">Voornaam</label>
+        <input type="text" class="form-control" name="firstname" id="firstname" required>
     </div>
     <div class="form-group">
-        <label for="id2">Achternaam</label>
-        <input type="text" class="form-control" name="lastname" id=id2 required>
+        <label for="lastname">Achternaam</label>
+        <input type="text" class="form-control" name="lastname" id="lastname" required>
     </div>
     <div class="form-group">
-        <label for="id2">Adresregel 1</label>
-        <input type="text" class="form-control" name="adres1" id=id2 required>
+        <label for="adres1">Adresregel 1</label>
+        <input type="text" class="form-control" name="adres1" id="adres1" required>
     </div>
     <div class="form-group">
-        <label for="id2">Adresregel 2</label>
-        <input type="text" class="form-control" name="adres2" id=id2>
+        <label for="adres1">Adresregel 2</label>
+        <input type="text" class="form-control" name="adres2" id="adres1">
     </div>
     <div class="form-group">
-        <label for="id2">Postcode</label>
-        <input type="text" class="form-control" name="postalcode" id=id2 required>
+        <label for="postalcode">Postcode</label>
+        <input type="text" class="form-control" name="postalcode" id="postalcode" required>
     </div>
     <div class="form-group">
-        <label for="id2">Plaats</label>
-        <input type="text" class="form-control" name="residence" id=id2 required>
+        <label for="residence">Plaats</label>
+        <input type="text" class="form-control" name="residence" id="residence" required>
     </div>
     <div class="form-group">
-        <label for="id2">Land</label>
-        <input type="text" class="form-control" name="country" id=id2 required>
+        <label for="country">Land</label>
+        <input type="text" class="form-control" name="country" id="country" required>
     </div>
     <div class="form-group">
-        <label for="id2">Telefoonnummer</label>
-        <input type="tel" class="form-control" name="phonenumber" id=id2 required>
+        <label for="phonenumber">Telefoonnummer</label>
+        <input type="tel" class="form-control" name="phonenumber" id="phonenumber" required>
     </div>
     <div class="form-group">
-        <label for="id2">Geboortedatum</label>
-        <input type="date" class="form-control" name="birthdate" required>
+        <label for="birthdate">Geboortedatum</label>
+        <input type="date" class="form-control" name="birthdate" id ="birthdate" required>
     </div>
     <p>Geef een geheime vraag op voor de beveiliging van uw account</p>
     <div class="form-group">
@@ -63,8 +63,8 @@ echo '
         </select>
     </div>
     <div class="form-group">
-        <label for="id2">Geheim antwoord</label>
-        <input type="text" class="form-control" name="secretanswer" id=id2 required>
+        <label for="secretanswer">Geheim antwoord</label>
+        <input type="text" class="form-control" name="secretanswer" id="secretanswer" required>
     </div>
 
     <button type="submit" name="registratie" class="btn btn-primary btn-sm">Registreren</button>

@@ -11,7 +11,7 @@ echo '
 <form method="post">
     <div class="form-group">
         <label for="code">uw code</label>
-        <input type="textarea" class="form-control" name="code" id="id1">
+        <input type="textarea" class="form-control" name="code" id="code">
     </div>
 
      <button type="submit" name="code-button" class="btn btn-primary btn-sm">Code invoeren</button>
