@@ -1,10 +1,14 @@
     <!-- Footer -->
-    <pre><code>
+    <!-- <pre><code> -->
       <?php
-        print_r($_SESSION); 
-        echo session_status();
+        // if (isset($_SESSION)){
+          // print_r($_SESSION);         
+        // } else {
+          // echo 'ECHO NIET BEZIG';
+        //}
+      // 
       ?>
-    </code></pre>
+    <!-- </code></pre> -->
     
     <footer class="py-5 bg-dark">
       <div class="container">

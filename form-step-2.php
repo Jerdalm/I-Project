@@ -1,7 +1,7 @@
 <?php
+require_once './db.php';
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
-	if(checkIfFieldsFilledIn($_POST['code-button'])){   	
-    	session_start();
+	if(checkIfFieldsFilledIn($_POST)){   	    	
     	$_SESSION['hashedcode'] = md5($_POST['code']);
         validateCode($_POST['code'], $_SESSION['email-registration']);
     }

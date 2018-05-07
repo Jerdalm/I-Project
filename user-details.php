@@ -1,19 +1,12 @@
-<?php require_once 'header.php'; 
+<?php
+require_once 'header.php'; 
 
 $_SESSION['ingelogdeGebruiker'] = 'admin';
-$gebruikersnaam = $_SESSION['ingelogdeGebruiker'];
 
+$gebruikersnaam = $_SESSION['ingelogdeGebruiker'];
 $emailParameters = array(':gebruikersnaam' => "$gebruikersnaam");
 
-
-
-
-$gebruiker = handlequery("SELECT *
- FROM Gebruiker JOIN GeheimeVraag
- on Gebruiker.vraag = GeheimeVraag.ID
- where gebruikersnaam = :gebruikersnaam 
- and
- Gebruiker.vraag = GeheimeVraag.ID", $emailParameters);
+$gebruiker = handlequery("SELECT * FROM Gebruiker JOIN Vraag ON Gebruiker.vraag = Vraag.vraagnummer WHERE gebruikersnaam = :gebruikersnaam AND Gebruiker.vraag = Vraag.vraagnummer", $emailParameters);
 
 $email = $gebruiker[0]['mailadres'];
 $subject = 'Wachtwoord wijzigen';
@@ -21,7 +14,6 @@ $message = 'U heeft aangegeven dat u het wachtwoord wilt wijzigen. Uw nieuwe cod
 
 $randomPassword = createRandomPassword(); 
 $messageCode = $message . $randomPassword;
-
 
 ?>
 
@@ -38,13 +30,13 @@ $messageCode = $message . $randomPassword;
             <thead>
                 <tr>
                      <th scope="col">Gebruikersnaam </th>
-                     <td> <?php echo $gebruikersnaam ?> </td>
+                     <td> <?= $gebruikersnaam ?> </td>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <th scope="row">Land</th>
-                        <td><?php echo $gebruiker[0]['land'] ?> </td>
+                        <td><?= $gebruiker[0]['land'] ?> </td>
                 </tr>
                 <tr>
                     <th scope="row">Woonplaats</th>
@@ -66,7 +58,7 @@ $messageCode = $message . $randomPassword;
                 </tr>
                   <tr>
                     <th scope="row">Wachtwoord</th>
-                <td>  <a  href=<?="?changePass=ok" ?>  > <b><i>Wachtwoord wijzigen</i></b> </a></td>
+                <td>  <a  href= <?="?changePass=ok" ?>  > <b><i>Wachtwoord wijzigen</i></b> </a></td>
                 </tr>
             </tbody>    
         </table>

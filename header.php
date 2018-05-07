@@ -19,15 +19,15 @@
           <li class="nav-item">
             <a class="nav-link" href="
             <?php 
-              if($_SESSION['logged-in'] == false){ 
-                echo './registration_login-page.php';
+              if(isset($_SESSION['ingelogdeGebruiker']) && !empty($_SESSION['ingelogdeGebruiker'])){ 
+                echo './user.php';
               } else {
                 echo './logout.php';
               }
             ?>
             ">
-              <?php if($_SESSION['logged-in'] == false){
-                  echo 'Inloggen|Registreren';
+              <?php if(isset($_SESSION['ingelogdeGebruiker']) && !empty($_SESSION['ingelogdeGebruiker'])){ 
+                  echo '  |Registreren';
                 } else {
                   echo 'Uitloggen';
                 }

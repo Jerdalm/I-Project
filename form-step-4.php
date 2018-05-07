@@ -1,6 +1,6 @@
 <?php
 require_once './db.php';
-session_start();
+
 
 $required = array('firstname', 'lastname', 'adres1', 'postalcode', 'residence', 'country', 'phonenumber', 'birthdate', 'secretanswer'); 
 $fields = array('firstname', 'lastname', 'adres1', 'adres2', 'postalcode', 'residence', 'country', 'phonenumber', 'birthdate', 'secretquestion', 'secretanswer');
@@ -70,5 +70,3 @@ echo '
     <button type="submit" name="registratie" class="btn btn-primary btn-sm">Registreren</button>
 </form>
 ';
-
-require_once './footer.php';

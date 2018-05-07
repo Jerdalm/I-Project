@@ -102,22 +102,28 @@
 	}
 
 	function checkIfFieldsFilledIn($fields){ // returnt true als de meegegeven velden gevuld zijn 
-		if(is_array($fields)){
+		$fieldfilled = false;
+		// echo '<pre>';
+		// print_r($fields);
+		// echo '</pre>';
+		// die();
+		if($fields){
 			foreach($fields as $field) {
-			  if (empty($_POST[$field])) {
-			  	return false;
-			  } else {
-			    return true;
+			  if (empty($field)) {
+			  	$fieldfilled = false;
+				break;
+
+			  } else {			
+				// echo "Ik kom hier naar voren";
+				// die();
+			  	$fieldfilled = true;			  			 
 			  }
-			}
-		} else {
-			if (empty($_POST[$fields])) {
-				return true;
-			} else {
-				return false;
-			}
+			return $fieldfilled;
+			}		
+		} else { 			
 		}
 	}
+
 
 	function sendRegistrationCode($emailCheck){
 		// $randomVerificationCode = uniqueid(rand(100000,900000), true);
@@ -240,22 +246,17 @@
 		// $query1 = handlequery("SELECT gebruikersnaam FROM Gebruiker WHERE gebruikersnaam = :username", $query1parameters);
 
 		// $query2 = handlequery("INSERT INTO Gebruiker VALUES", $query1parameters);		
-		$insertInfoParam = array(':gebruikersnaam' => $_SESSION['$username'], ':voornaam' => $firstname, 'achternaam' => $lastname, 'adresregel1' => $adres1, 'adresregel2' => $adres2, 'postcode' => $postalcode, 'plaatsnaam' => $residence, 'land' => $country, 'geboortedag' => $birthdate, 'mailadres' => $_SESSION['email-registration'], 'wachtwoord' => $password, 'vraag' => $secretquestion, 'antwoordtekst' => $secretanswer);
+		$insertInfoParam = array(':gebruikersnaam' => $_SESSION['username'], ':voornaam' => $firstname, 'achternaam' => $lastname, 'adresregel1' => $adres1, 'adresregel2' => $adres2, 'postcode' => $postalcode, 'plaatsnaam' => $residence, 'land' => $country, 'geboortedag' => $birthdate, 'mailadres' => $_SESSION['email-registration'], 'vraag' => $secretquestion, 'antwoordtekst' => $secretanswer);
 	    
-	    handlequery("INSERT INTO Gebruiker VALUES(:username, :firstname, :lastname, :adres1, :adres2, :postalcode, :residence, :country, :phonenumber, :birthdate, :mailadres, :password, :secretquestion, :secretanswer, 1)", $insertInfoParam);
+	    handlequery("INSERT INTO Gebruiker VALUES(:gebruikersnaam, :firstname, :lastname, :adres1, :adres2, :postalcode, :residence, :country, :phonenumber, :birthdate, :mailadres, :secretquestion, :secretanswer, 1)", $insertInfoParam);
 
+	    $insertTelParam = array(':gebruikersnaam' => $_SESSION['username'], ':telefoonnummer' => $phonenumber);
 
-	    $opdracht2 = $pdo->prepare($sql2);
-	    $opdracht2->execute(array($_SESSION['username'], $firstname, $lastname, $adres1, $adres2, $postalcode, $residence, $country, $birthdate, $emailCheck, $_SESSION['password'], $secretquestion, $secretanswer, $verkoper));
-
-	    $sql3 = "INSERT INTO gebruikerstelefoon VALUES(?, ?)";
-
-	    $opdracht3 = $pdo->prepare($sql3);
-	    $opdracht3->execute(array($_SESSION['username'], $phonenumber));
+	    handlequery("INSERT INTO gebruikerstelefoon VALUES(:gebruikersnaam, :telefoonnummer)", $insertTelParam);
 
 	    session_destroy();
 	    header('Refresh:0; url=./user.php');
-	    $_SESSION["error_registration"] = '';
+	    $_SESSION["error_registration"] = ' ';
 
 	}
 ?>

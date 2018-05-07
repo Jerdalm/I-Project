@@ -3,8 +3,7 @@ require_once './head.php';
 require_once './db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
-	if (checkIfFieldsFilledIn($_POST['email'])) {
-	    session_start();
+	if (checkIfFieldsFilledIn($_POST)) {
 	    $_SESSION['email-registration'] = $_POST['email'];      
 	    sendRegistrationCode(($_POST['email']));
 	} else {
@@ -19,7 +18,7 @@ echo '
         <input type="textarea" class="form-control" name="email" id="registration-email">
     </div>
 
-    <button type="submit" name="submit-mail" class="btn btn-primary btn-sm">Code sturen</button>
+    <button type="submit" name="submit-mail" value="send-code" class="btn btn-primary btn-sm">Code sturen</button>
 </form>
 ';
 
