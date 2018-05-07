@@ -40,21 +40,32 @@ $messageCode = $message . $randomPassword;
                 </tr>
                 <tr>
                     <th scope="row">Woonplaats</th>
+                    <td><?php echo $gebruiker[0]['plaatsnaam'] ?> </td>
                 </tr>
+                 <tr>
+                    <th scope="row">Geboortedatum</th>
+                    <td><?php echo $gebruiker[0]['geboortDag'] ?> </td>
+                </tr>    
+
                 <tr>
                     <th scope="row">E-mailadres</th>
+                    <td><?php echo $gebruiker[0]['mailadres'] ?> </td>
                 </tr>
                 <tr>
                     <th scope="row">Voornaam</th>
+                    <td><?php echo $gebruiker[0]['voornaam'] ?> </td>
                 </tr>
                  <tr>
                     <th scope="row">Achternaam</th>
+                    <td><?php echo $gebruiker[0]['achternaam'] ?> </td>
                 </tr>
                  <tr>
                     <th scope="row">Telefoonnummer</th>
+
                 </tr>
                  <tr>
                     <th scope="row">Postcode</th>
+                     <td><?php echo $gebruiker[0]['postcode'] ?> </td>
                 </tr>
                   <tr>
                     <th scope="row">Wachtwoord</th>
