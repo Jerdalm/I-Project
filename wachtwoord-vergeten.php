@@ -19,11 +19,11 @@ if (isset($_POST['check'])) {
 $emailParameters = array(':mailadres' => "$emailAdres");
 
 $gebruiker = handlequery("SELECT *
- FROM Gebruiker JOIN GeheimeVraag
- on Gebruiker.vraag = GeheimeVraag.ID
+ FROM Gebruiker JOIN Vraag
+ on Gebruiker.vraag = Vraag.vraagnummer
  where mailadres = :mailadres 
  and
- Gebruiker.vraag = GeheimeVraag.ID", $emailParameters);
+ Gebruiker.vraag = Vraag.vraagnummer", $emailParameters);
 
 
 // $_SESSION['mailadres'] = $gebruiker['mailadres']; 
@@ -47,7 +47,7 @@ $messageCode = $message . $randomPassword;
 
 
 
-<main>
+
 
 
 <form method="POST" class="form-group">
@@ -68,7 +68,7 @@ $messageCode = $message . $randomPassword;
 <?php }  ?>
 
 
-</main>
+
 
  <?php     if (isset ($_POST['verzenden'])){
 
@@ -87,28 +87,21 @@ $antwoord = handlequery("SELECT antwoordtekst
 
 if (count($antwoord) == 1) {
 
-    $correct = true;
-
-} else {
-
-    $correct = false;
-
-    }
-
-if ($correct == true){
-
-sendMail($email,$subject,$messageCode);
+    sendMail($email,$subject,$messageCode);
 
 handlequery("UPDATE Gebruiker SET wachtwoord = '$randomPassword' WHERE mailadres = '$emailAdres' ");
 
-
-
-
-} else {echo 'shit';}
+} else {
+  echo 'shit';}
 }
+
+    
+
+
+
 
 
 
 ?>
-
+</main>
 <?php require_once 'footer.php'; ?>
