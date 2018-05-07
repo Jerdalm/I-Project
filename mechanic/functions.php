@@ -99,6 +99,164 @@
 
     return $pass; 
 
-} 
+	}
+
+	function checkIfFieldsFilledIn($fields){ // returnt true als de meegegeven velden gevuld zijn 
+		if(is_array($fields)){
+			foreach($fields as $field) {
+			  if (empty($_POST[$field])) {
+			  	return false;
+			  } else {
+			    return true;
+			  }
+			}
+		} else {
+			if (empty($_POST[$fields])) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
+
+	function sendRegistrationCode($emailCheck){
+		// $randomVerificationCode = uniqueid(rand(100000,900000), true);
+		$randomVerificationCode = 111111;
+		$emailControl = handleQuery("SELECT * FROM Gebruiker WHERE mailadres = :mailadres",array(':mailadres' => $emailCheck));
+
+		$to      = $emailCheck;
+		$subject = 'Account activatie';
+		$message_body = '
+		Beste,
+
+		Bedankt voor het registreren!
+
+		Voer deze code in op de site:
+		' . $randomVerificationCode .'.';
+		$message = 'Er is een email met de verificatiecode naar het opgegeven emailadres gestuurt.';
+
+		$randomVerificationCode_hashed = md5($randomVerificationCode);
+
+		$_SESSION['code'] = $randomVerificationCode; 	
+		if(count($emailControl) == 0) {
+		    if (filter_var($emailCheck, FILTER_VALIDATE_EMAIL)) {
+		    	
+		    	setCodeInDB($emailCheck, $randomVerificationCode_hashed);
+
+		        sendMail($to, $subject, $message_body, $message);
+		        header("Location: ./user.php?step=2");
+		        // echo '<script>alert('. $randomVerificationCode .')</script>';
+		    } else {
+		        $_SESSION['error_registration'] = 'Geen geldig e-mailadres.';
+		        header("Location: ./index.php");
+		    }
+		} else {
+			header("Location: ./index.php");
+		}
+		
+	} 
+
+	function setCodeInDB($email, $hashed_code){
+		$parameters = array(':mailadres' => "$email");
+		$emailUnique = handleQuery("SELECT * FROM ActivatieCode WHERE mailadres = :mailadres", $parameters);
+
+		if (count($emailUnique) > 0){ //kijkt of de email al bestaat in het tabel activatiecode, indien ja: update het mialadres met een 
+			$parameters = array(':mailadres' => "$email", ':verifycode' => "$hashed_code"); //nieuwe code & de nieuwe tijd
+			handleQuery("UPDATE ActivatieCode 
+				         SET code = :verifycode, tijdAangevraagd = GETDATE() 
+				         WHERE mailadres = :mailadres", $parameters);
+		} else {
+			$parameters = array(':mailadres' => "$email", ':verifycode' => "$hashed_code");
+			handleQuery("INSERT INTO ActivatieCode VALUES (0 ,:verifycode ,:mailadres, GETDATE())",$parameters);
+		}
+	}
+
+	function validateCode($inputCode, $email_registration){		
+
+		$emailParameters = array(':mailadres' => "$email_registration");
+		$emailEquivalent = handleQuery("SELECT * FROM ActivatieCode WHERE mailadres = :mailadres",$emailParameters)[0];
+     	
+		// $emailEquivalent['code'] =  trim($emailEquivalent['code']);
+		
+		$hashedCode = md5($inputCode); //hashed de code, zodat deze gecontroleerd kan worden met de gesahesde code binnen de database
+		
+		if ($emailEquivalent['code'] == $hashedCode){
+		    header("Location: ./user.php?step=3");
+		} 
+		else{
+			$_SESSION['error_registration'] = 'De code klopt niet, probeer opnieuw!'; 
+			header("Location: ./user.php?step=2");
+			
+		}
+	}
+
+	function checkUsernamePassword($username, $password, $passwordrepeat){
+		// echo "aanwezig";
+		// die();
+		if ($password != $passwordrepeat) {
+		    $_SESSION['error_registration'] = "de wachtwoorden komen niet overeen";
+		    header("Location: ./user.php?step=3");
+		} else {		   
+		    $getUserParameters = array(':gebruikersnaam' => $username);
+		    $getUserQuery =  handleQuery("SELECT * FROM Gebruiker WHERE gebruikersnaam = :gebruikersnaam", $getUserParameters);
+
+		    if(count($getUserQuery) > 0) {
+		        $_SESSION['error_registration'] = "uw ingevoerde gebruikersnaam bestaat al";
+		        header("Location: ./user.php?step=3");
+		    } else {
+		        $_SESSION['username'] = $username;
+		        $_SESSION['password'] = $password;
+
+		        $_SESSION["error_registration"] = '';
+		        header("Location: ./user.php?step=4");
+		    }
+		}
+	}
+
+
+	function insertRegistrationnfoInDB(){
+		$firstname = $_POST['firstname'];
+		$lastname = $_POST['lastname'];
+		$adres1 = $_POST['adres1'];
+		$adres2 = $_POST['adres2'];
+		$postalcode = $_POST['postalcode'];
+		$residence = $_POST['residence'];
+		$country = $_POST['country'];
+		$phonenumber = $_POST['phonenumber'];
+		$birthdate = $_POST['birthdate']; //deze snap ik niet
+
+		$date = $_POST['birthdate']; //deze snap ik niet
+		// $date = DateTime::createFromFormat('j-M-Y', $_POST['birthdate']);		
+		
+		$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
+		$birthdate = $myDateTime->format('Y-m-d');
+
+		$secretquestion = $_POST['secretquestion'];
+		$secretanswer = $_POST['secretanswer'];
+
+		// voer query uit in de database voor tabel gebruikers
+
+		// $query1parameters = array(':gebruikersnaam' => $_SESSION['username']);
+		// $query1 = handlequery("SELECT gebruikersnaam FROM Gebruiker WHERE gebruikersnaam = :username", $query1parameters);
+
+		// $query2 = handlequery("INSERT INTO Gebruiker VALUES", $query1parameters);		
+		$insertInfoParam = array(':gebruikersnaam' => $_SESSION['$username'], ':voornaam' => $firstname, 'achternaam' => $lastname, 'adresregel1' => $adres1, 'adresregel2' => $adres2, 'postcode' => $postalcode, 'plaatsnaam' => $residence, 'land' => $country, 'geboortedag' => $birthdate, 'mailadres' => $_SESSION['email-registration'], 'wachtwoord' => $password, 'vraag' => $secretquestion, 'antwoordtekst' => $secretanswer);
+	    
+	    handlequery("INSERT INTO Gebruiker VALUES(:username, :firstname, :lastname, :adres1, :adres2, :postalcode, :residence, :country, :phonenumber, :birthdate, :mailadres, :password, :secretquestion, :secretanswer, 1)", $insertInfoParam);
+
+
+	    $opdracht2 = $pdo->prepare($sql2);
+	    $opdracht2->execute(array($_SESSION['username'], $firstname, $lastname, $adres1, $adres2, $postalcode, $residence, $country, $birthdate, $emailCheck, $_SESSION['password'], $secretquestion, $secretanswer, $verkoper));
+
+	    $sql3 = "INSERT INTO gebruikerstelefoon VALUES(?, ?)";
+
+	    $opdracht3 = $pdo->prepare($sql3);
+	    $opdracht3->execute(array($_SESSION['username'], $phonenumber));
+
+	    session_destroy();
+	    header('Refresh:0; url=./user.php');
+	    $_SESSION["error_registration"] = '';
+
+	}
 ?>
 

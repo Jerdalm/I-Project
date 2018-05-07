@@ -4,8 +4,24 @@ $_SESSION['mailAdres'] = '';
 if (isset($_POST['check'])) {
 	$_SESSION['mailAdres'] = $_POST['mailadres'];
 	$emailAdres = $_POST['mailadres'];
+<<<<<<< HEAD:wachtwoordVergeten.php
 
 
+=======
+}
+
+?>
+<main>
+
+<form method="POST" class="form-group">
+    <label for="E-mailadres"> Voer hier uw E-mailadres in: </label>
+        <input type="text" name="mailadres" class="form-control" id="mailadres" placeholder="E-mailadres" value="<?php echo $_SESSION['mailAdres'] ?>" >
+        <input class="cta-orange btn" type="submit" name="check" value="Controlleer">
+
+ <?php 
+
+ 
+>>>>>>> db145cdc80013c9de57cdf5da85a2602359ff9ef:wachtwoord-vergeten.php
 $emailParameters = array(':mailadres' => "$emailAdres");
 
 $gebruiker = handlequery("SELECT *
@@ -14,10 +30,13 @@ $gebruiker = handlequery("SELECT *
  where mailadres = :mailadres 
  and
  Gebruiker.vraag = GeheimeVraag.ID", $emailParameters);
+<<<<<<< HEAD:wachtwoordVergeten.php
 }
 // $_SESSION['mailadres'] = $gebruiker['mailadres']; 
 
 
+=======
+>>>>>>> db145cdc80013c9de57cdf5da85a2602359ff9ef:wachtwoord-vergeten.php
 
 $email = $mailAdres;
 $subject = 'Wachtwoord wijzigen';
@@ -27,6 +46,7 @@ $randomPassword = createRandomPassword();
 $messageCode = $message . $randomPassword;
 ?>
 
+<<<<<<< HEAD:wachtwoordVergeten.php
 
 
 
@@ -43,6 +63,9 @@ $messageCode = $message . $randomPassword;
         <input class="cta-orange btn" type="submit" name="check" value="Controlleer">
 
  <?php  if( isset($_POST['mailadres']) && count($gebruiker) == 1 ) { ?>
+=======
+<?php if( isset($_POST['mailadres']) && count($gebruiker) == 1 ) { ?>
+>>>>>>> db145cdc80013c9de57cdf5da85a2602359ff9ef:wachtwoord-vergeten.php
 <form method="POST" class="form-group">
     <label for="testvoorvraag">  <?php echo $gebruiker[0]['vraag']?> </label>
         <input type="text" name="antwoord" class="form-control" id="testAntwoordvakje" placeholder="Antwoord">
@@ -50,7 +73,6 @@ $messageCode = $message . $randomPassword;
 </form>
 
 <?php }  ?>
-
 
 
 </main>

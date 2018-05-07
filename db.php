@@ -1,5 +1,4 @@
-
 <?php
-	session_start();
 	$pdo = ConnectToDatabase();
+	$_SESSION['logged-in'] = false;
 ?>

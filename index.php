@@ -1,10 +1,4 @@
-<?php require_once 'header.php';
-$_SESSION["step1"] = false;
-$_SESSION["step2"] = false;
-$_SESSION["step3"] = false;
-$_SESSION["step4"] = true;
-$_SESSION["error_registration"] = '';
-?>
+<?php require_once 'header.php'; $_SESSION['email-registration'] = ' ';?>
 <!-- promotie header -->
 <header class="promo-header">
    <div class="container">

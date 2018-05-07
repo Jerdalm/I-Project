@@ -1,19 +1,20 @@
 <?php
-echo('
+if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
+	if(checkIfFieldsFilledIn($_POST['code-button'])){   	
+    	session_start();
+    	$_SESSION['hashedcode'] = md5($_POST['code']);
+        validateCode($_POST['code'], $_SESSION['email-registration']);
+    }
+}
+
+echo '
 <form method="post">
-    <div class=""form-group>
-        <label for="inputCode">uw code</label>
+    <div class="form-group">
+        <label for="code">uw code</label>
         <input type="textarea" class="form-control" name="code" id="id1">
     </div>
 
      <button type="submit" name="code-button" class="btn btn-primary btn-sm">Code invoeren</button>
 </form>
-');
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['code-button'])) {
-        $_SESSION['code'] = $_POST['code'];
-        header("location: ./code-check.php");
-    }
-}
+';
 ?>

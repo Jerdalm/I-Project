@@ -1,10 +1,18 @@
     <!-- Footer -->
+    <pre><code>
+      <?php
+        print_r($_SESSION); 
+        echo session_status();
+      ?>
+    </code></pre>
+    
     <footer class="py-5 bg-dark">
       <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
       </div>
       <!-- /.container -->
     </footer>
+
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

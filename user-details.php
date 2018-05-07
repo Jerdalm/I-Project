@@ -1,5 +1,5 @@
 <?php require_once 'header.php'; 
-//session_start();
+
 $_SESSION['ingelogdeGebruiker'] = 'admin';
 $gebruikersnaam = $_SESSION['ingelogdeGebruiker'];
 
@@ -29,9 +29,6 @@ $messageCode = $message . $randomPassword;
 <main>
 <section class="userDetail">
 <div class="container">
-   
-
-
         <div class="row row-left">
             <div class="plaatje">
                 <img src="img/geit.jpg">
@@ -81,67 +78,34 @@ $messageCode = $message . $randomPassword;
         <input type="text" name="antwoord" class="form-control" id="testAntwoordvakje" placeholder="Antwoord">
         <input class="cta-orange btn" type="submit" name="verzenden" value="Verzenden">
 </form>
+
+       <?php }
        
-    
-
-       <?php } ?>
-
-
-       <?php 
-
-
-
-
        if (isset ($_POST['verzenden'])){
-
-$antwoordtekst = $_POST['antwoord'];
-
-$answerParameters = array(':antwoord' => "$antwoordtekst" , 
+            $antwoordtekst = $_POST['antwoord'];
+            $answerParameters = array(':antwoord' => "$antwoordtekst" , 
                           ':gebruiker' => "$gebruikersnaam" );
-
-$antwoord = handlequery("SELECT antwoordtekst
+            $antwoord = handlequery("SELECT antwoordtekst
                          FROM Gebruiker
                          WHERE antwoordtekst = :antwoord
                          AND gebruikersnaam = :gebruiker" , $answerParameters);
-
-
-
-if (count($antwoord) == 1){
-
-    $correct = true;
-
-} else {
-
-    $correct = false;
-
-    }
-
-if ($correct == true){
-
-sendMail($email,$subject,$messageCode);
-
-handlequery("UPDATE Gebruiker SET wachtwoord = '$randomPassword' WHERE gebruikersnaam = '$gebruikersnaam' ");
-
-
-
-
-} else {echo 'shit';}
-
-
-}
-    
-
-
-       ?>
-
-
-        
+            if (count($antwoord) == 1){
+                $correct = true;
+            } else {
+                $correct = false;
+            }
+            if ($correct == true){
+                sendMail($email,$subject,$messageCode);
+                handlequery("UPDATE Gebruiker SET wachtwoord = '$randomPassword' WHERE gebruikersnaam = '$gebruikersnaam' ");
+            } else {
+                echo 'shit';
+            }
+        }
+        ?>       
         </div>
     </div>
 </section>
-
-
-
 </main>
+
 <?php require_once 'footer.php'; ?>
 

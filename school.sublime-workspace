@@ -4,6 +4,78 @@
 		"selected_items":
 		[
 			[
+				"sessio",
+				"session_start"
+			],
+			[
+				"session_",
+				"session_destroy"
+			],
+			[
+				"tr",
+				"trim"
+			],
+			[
+				"pass",
+				"password"
+			],
+			[
+				"_",
+				"_POST"
+			],
+			[
+				"header",
+				"headers_sent"
+			],
+			[
+				"em",
+				"emailaddress"
+			],
+			[
+				"php",
+				"php"
+			],
+			[
+				"code",
+				"codeControl"
+			],
+			[
+				"print",
+				"print_r"
+			],
+			[
+				"email",
+				"emailEquivalent"
+			],
+			[
+				"cod",
+				"codeControl"
+			],
+			[
+				"backgrou",
+				"background-color"
+			],
+			[
+				"trans",
+				"transition"
+			],
+			[
+				"textdec",
+				"text-decoration"
+			],
+			[
+				"main",
+				"margin"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"padding",
+				"padding-top"
+			],
+			[
 				"wi",
 				"window"
 			],
@@ -80,20 +152,12 @@
 				"border-radius"
 			],
 			[
-				"back",
-				"background-color"
-			],
-			[
 				"fle",
 				"flex-grow"
 			],
 			[
 				"background",
 				"background-position"
-			],
-			[
-				"backgrou",
-				"background-image"
 			],
 			[
 				"bak",
@@ -162,10 +226,6 @@
 			[
 				"form",
 				"form-item"
-			],
-			[
-				"padding",
-				"padding-right"
 			],
 			[
 				"views",
@@ -278,10 +338,6 @@
 			[
 				"v",
 				"vertical-align"
-			],
-			[
-				"header",
-				"header_img"
 			],
 			[
 				"pad",
@@ -458,62 +514,6 @@
 			[
 				"bo",
 				"border-top"
-			],
-			[
-				"borde",
-				"border-color"
-			],
-			[
-				"head",
-				"header\tTag"
-			],
-			[
-				"io",
-				"important"
-			],
-			[
-				"col-",
-				"col-lg-12"
-			],
-			[
-				"inline",
-				"inline-block"
-			],
-			[
-				"tran",
-				"translateX()"
-			],
-			[
-				"pa",
-				"padding-top"
-			],
-			[
-				"backgroud",
-				"background-repeat"
-			],
-			[
-				"i",
-				"important"
-			],
-			[
-				"font-s",
-				"font-size"
-			],
-			[
-				"import",
-				"important"
-			],
-			[
-				"min-",
-				"min-height"
-			],
-			[
-				"bacgr",
-				"background-color"
-			],
-			[
-				"vert",
-				"vertical-center-row"
 			]
 		]
 	},
@@ -577,11 +577,45 @@
 	},
 	"expanded_folders":
 	[
-		"/C/xampp/htdocs/I-Project"
 	],
 	"file_history":
 	[
+		"/C/xampp/htdocs/I-Project/registratieScherm.php",
+		"/C/xampp/htdocs/I-Project/form-login.php",
+		"/C/xampp/htdocs/I-Project/css/jonathan.css",
+		"/C/xampp/htdocs/I-Project/footer.php",
+		"/C/xampp/htdocs/I-Project/form-step-1.php",
+		"/C/xampp/htdocs/I-Project/mail-check.php",
+		"/C/xampp/htdocs/I-Project/index.php",
+		"/C/xampp/htdocs/I-Project/login.php",
 		"/C/xampp/htdocs/I-Project/header.php",
+		"/C/xampp/htdocs/I-Project/code-check.php",
+		"/C/xampp/htdocs/I-Project/user-details.php",
+		"/C/xampp/htdocs/I-Project/logout.php",
+		"/C/xampp/htdocs/I-Project/registrationInsertInfo.php",
+		"/C/Users/jdion/Documents/Sublime projecten/EF2/ef2_nieuwsbrief/src/pages/Nieuwsbrief2.0.html",
+		"/C/xampp/htdocs/I-Project/wachtwoord-vergeten.php",
+		"/C/xampp/htdocs/I-Project/form-step-4.php",
+		"/C/xampp/htdocs/I-Project/db.php",
+		"/C/xampp/htdocs/I-Project/head.php",
+		"/C/xampp/htdocs/I-Project/form-step-2.php",
+		"/C/xampp/htdocs/I-Project/mechanic/functions.php",
+		"/C/xampp/htdocs/I-Project/form-step-3.php",
+		"/C/Users/jdion/OneDrive/I-Project/SQL/Create Script.sql",
+		"/C/Users/jdion/Documents/Sublime projecten/EF2/ef2_opleveringsemail/src/pages/ef2_e-mailtemplate.html",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/script.js",
+		"/C/xampp/htdocs/I-Project/verification-code.php",
+		"/C/Users/jdion/AppData/Local/Temp/Rar$DRa17940.47079/FLETNIX/php/db.php",
+		"/C/Users/jdion/AppData/Local/Temp/Rar$DRa14916.22295/verify.php",
+		"/C/Users/jdion/AppData/Local/Temp/Rar$DRa14916.40705/register.php",
+		"/C/Users/jdion/AppData/Local/Temp/Rar$DRa17940.22266/FLETNIX/account.php",
+		"/C/Users/jdion/AppData/Local/Temp/Rar$DRa17940.27129/FLETNIX/php/registratie.php",
+		"/C/Users/jdion/AppData/Local/Temp/Rar$DRa17940.26313/FLETNIX/php/login.php",
+		"/C/xampp/htdocs/I-Project/css/styles_kevin.css",
+		"/C/xampp/htdocs/I-Project/header-content-page.php",
+		"/C/Users/jdion/AppData/Local/Temp/Rar$DRa17940.37728/FLETNIX/account.php",
+		"/C/xampp/htdocs/I-Project/header-content.php",
+		"/C/xampp/htdocs/I-Project/header-page.php",
 		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/index.php",
 		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_layout.scss",
 		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_responsive_desktop_small.scss",
@@ -673,46 +707,11 @@
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/.htaccess",
 		"/C/Users/jdion/Documents/Sublime projecten/basiliek.ef2.nl/themes/basiliek/templates/node--contact.tpl.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/jonathan.css",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/pages.css",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/html-reset.css",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/template.php",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/cms.css",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/htmlmail.tpl.php",
-		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_blocks.scss",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/logo.png",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/settings.php",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/default.settings.php",
-		"/C/Users/jdion/Desktop/settings.php",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/index 2.php",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/stylekees.css",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/responsive.css",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/responsivekees.css",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/script.js",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/views-view-field--teamleden--block_1--uri.html.twig",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/jquery.youtubebackground.js",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/redirect.js",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/block--block--3.tpl.php",
-		"/C/Users/jdion/OneDrive/Documenten/HBO-ICT/I-OOPD/OOPG-1617/OOPDBeroepsproduct/.gitignore",
-		"/C/Users/jdion/AppData/Local/Temp/Rar$DIa37164.29852/README",
-		"/C/Users/jdion/OneDrive/Documenten/HBO-ICT/I-OOPD/OOPG-1617/OOPDBeroepsproduct/.git/config",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/block--block--7.tpl.php",
-		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_homepage.scss",
-		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_usercontent.scss",
-		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_cta.scss",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/selection.json",
-		"/C/Users/jdion/AppData/Local/Temp/Rar$DRa30936.5743/selection.json",
-		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_variables.scss",
-		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/templates/block--openingstijden.html.twig",
-		"/C/Users/jdion/AppData/Local/Temp/Rar$DIa27048.44410/selection.json",
-		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_navigation.scss",
-		"/C/Users/jdion/Desktop/stylesheet.css",
-		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_header.scss",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/ef2.png",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/views-view-field--header--nothing.tpl.php"
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/pages.css"
 	],
 	"find":
 	{
-		"height": 31.0
+		"height": 76.0
 	},
 	"find_in_files":
 	{
@@ -726,6 +725,13 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"randomCode",
+			"emailunique",
+			"HEAD",
+			"HEAF",
+			"HEAD",
+			"code sturen",
+			"verzenden"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -750,7 +756,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 31.0
+		"height": 48.0
 	},
 	"input":
 	{
@@ -791,7 +797,7 @@
 	"project": "school.sublime-project",
 	"replace":
 	{
-		"height": 58.0
+		"height": 92.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -833,7 +839,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 363.0,
+	"side_bar_width": 309.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
