@@ -13,7 +13,8 @@ echo('
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['mail'])) {
-        $_SESSION['email'] = $_POST['email'];
+	    session_start();
+        $_SESSION['emailRegistration'] = $_POST['email'];
         header("location: ./mail-check.php");
     }
 }

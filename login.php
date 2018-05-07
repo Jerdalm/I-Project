@@ -1,23 +1,37 @@
 <?php
-session_start();
-require_once 'db.php';
+require_once './head.php';
+require_once './db.php';
 
-$emailaddress = ($_POST['emailaddress']);
-$gebruiker = query("SELECT * FROM account WHERE emailaddress=:emailaddress", array(':emailaddress'=>$emailaddress))[0];
+$emailadres = ($_SESSION['email-login']);
+$wachtwoord = ($_SESSION['wachtwoord']);
 
-if (password_verify($_POST['password'], $gebruiker['password']) ) {
-	$_SESSION['email'] = $gebruiker["emailaddress"];
-	$_SESSION['firstname'] = $gebruiker["firstname"];
-	$_SESSION['lastname'] = $gebruiker["lastname"];
-	$_SESSION['accountnumber'] = $gebruiker["accountnumber"];
-	$_SESSION['land'] = $gebruiker["country"];
-	$_SESSION['geboortedatum'] = $gebruiker["birthdate"];
-	$_SESSION['abbonement'] = $gebruiker["contract_type"];
-	$_SESSION['login_time'] = time();
-	$_SESSION['logged_in'] = true;
-	header("location: ./profiel.php");
+$emailParam = array(':mailadres'=>$emailadres);
+$gebruiker = handleQuery("SELECT * FROM Gebruiker WHERE mailadres=:mailadres", $emailParam)[0];
+
+$wachtwoord = trim($wachtwoord);
+$gebruiker['wachtwoord'] = trim($gebruiker['wachtwoord']);
+
+if (password_verify($wachtwoord, $gebruiker['wachtwoord']) || $wachtwoord == $gebruiker['wachtwoord']) {
+	echo '<script type="text/javascript">alert("Werkt het beste");</script>';
+    
+	$_SESSION['email'] = $gebruiker["mailadres"];
+	$_SESSION['gebruikersnaam'] = $gebruiker["gebruikersnaam"];
+	$_SESSION['voornaam'] = $gebruiker["voornaam"];
+	$_SESSION['achternaam'] = $gebruiker["achternaam"];
+	$_SESSION['adresregel1'] = $gebruiker["adresregel1"];
+	$_SESSION['adresregel2'] = $gebruiker["adresregel2"];
+	$_SESSION['postcode'] = $gebruiker["postcode"];
+	$_SESSION['plaatsnaam'] = $gebruiker["plaatsnaam"];
+	$_SESSION['land'] = $gebruiker["land"];
+	$_SESSION['geboortedag'] = $gebruiker["geboortedag"];
+	$_SESSION['wachtwoord'] = $gebruiker["wachtwoord"];
+	$_SESSION['vraag'] = $gebruiker["vraag"];
+	$_SESSION['antwoordtekst'] = $gebruiker["antwoordtekst"];
+	$_SESSION['soortGebruiker'] = $gebruiker["soortGebruiker"];
+	$_SESSION['logged-in'] = true;
+	header("location: ./user-details.php");
 }
 else {
-$_SESSION['message_login'] = "Verkeerd wachtwoord of onbekende e-mail, probeer opnieuw!";
+	$_SESSION['message_login'] = "Verkeerd wachtwoord of onbekende e-mail, probeer opnieuw!";
 }
 ?>

@@ -2,6 +2,8 @@
 $_SESSION["step1"] = true;
 $_SESSION["step2"] = false;
 $_SESSION["step3"] = false;
+$_SESSION["step4"] = false;
+$_SESSION["error_registration"] = '';
 ?>
 <!-- promotie header -->
 <header class="header promo-header">

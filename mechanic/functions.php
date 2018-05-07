@@ -70,6 +70,7 @@
 		return $data;
 	}
 
+<<<<<<< HEAD
 	/* Deze functie stuurt een verificatiecode naar de opgegeven emaildres */
 	function sendCode($randomNumber, $email){
 	    $_SESSION['active'] = 0; //0 until user activates their account with verify.php
@@ -82,18 +83,38 @@
 	    $subject = 'Account activatie';
 	    $message_body = '
 	    Beste,
+=======
+	function sendMail($to, $subject, $body, $message = "Fout"){
+		$emailTo      = $to;
+	    $subjectEmail = $subject;
+	    $message_body = $body;
 
-	    Bedankt voor het registreren!
+>>>>>>> a63c69ba4ee1635cdc539b699cfdeefbee5bcf8e
 
-	    Voer deze code in op de site:
-	    ' .$randomNumber.'.';
+	    //mail( $emailTo, $subjectEmail, $message_body ); moet uiteindelijk wel aan!
+	    echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
 
-	    // mail( $to, $subject, $message_body ); moet uiteindelijk wel aan!
+	    $_SESSION['message'] = $message;
+	}
 
-        $_SESSION["step1"] = false;
-        $_SESSION["step2"] = true;
-        header("location: ./registratieScherm.php");
 
+	function createRandomPassword() { 
+
+    $chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
+    srand((double)microtime()*1000000); 
+    $i = 0; 
+    $pass = '' ; 
+
+    while ($i <= 7) { 
+        $num = rand() % 33; 
+        $tmp = substr($chars, $num, 1); 
+        $pass = $pass . $tmp; 
+        $i++; 
+    } 
+
+    return $pass; 
+
+<<<<<<< HEAD
     }
 	
 	/* Deze functie returnt de verschillende rubrieken voor in het submenu */
@@ -215,6 +236,8 @@
 	$interval = $datetime1->diff($datetime2);
 
 	return $interval->format('%d dagen <br> %H:%i:%s uur');
+=======
+>>>>>>> a63c69ba4ee1635cdc539b699cfdeefbee5bcf8e
 } 
 ?>
 

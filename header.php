@@ -22,7 +22,20 @@
 					</div>
 				  </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Inloggen|Registreren</a>
+                <a class="nav-link" href="
+                <?php if($_SESSION['logged-in'] == false){ 
+                  echo './registratieScherm.php';
+                } else {
+                  echo './logout.php';
+                }
+                ?>">
+                  <?php if($_SESSION['logged-in'] == false){
+                    echo 'Inloggen|Registreren';
+                  } else {
+                    echo 'Uitloggen';
+                  }
+                  ?>
+                  </a>
               </li>
   			<li class="no_hover">
   				<form action="overview.php" method="get">
