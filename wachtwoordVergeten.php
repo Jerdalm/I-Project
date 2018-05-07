@@ -4,23 +4,6 @@ $_SESSION['mailAdres'] = '';
 if (isset($_POST['check'])) {
 	$_SESSION['mailAdres'] = $_POST['mailadres'];
 	$emailAdres = $_POST['mailadres'];
-}
-
-?>
-
-
-
-<main>
-
-
-<form method="POST" class="form-group">
-    <label for="E-mailadres"> Voer hier uw E-mailadres in: </label>
-        <input type="text" name="mailadres" class="form-control" id="mailadres" placeholder="E-mailadres" value="<?php echo $_SESSION['mailAdres'] ?>" >
-        <input class="cta-orange btn" type="submit" name="check" value="Controlleer">
-
- <?php 
-
- 
 
 
 $emailParameters = array(':mailadres' => "$emailAdres");
@@ -31,7 +14,7 @@ $gebruiker = handlequery("SELECT *
  where mailadres = :mailadres 
  and
  Gebruiker.vraag = GeheimeVraag.ID", $emailParameters);
-
+}
 // $_SESSION['mailadres'] = $gebruiker['mailadres']; 
 
 
@@ -46,7 +29,20 @@ $messageCode = $message . $randomPassword;
 
 
 
-<?php if( isset($_POST['mailadres']) && count($gebruiker) == 1 ) { ?>
+
+
+
+
+
+<main>
+
+
+<form method="POST" class="form-group">
+    <label for="E-mailadres"> Voer hier uw E-mailadres in: </label>
+        <input type="text" name="mailadres" class="form-control" id="mailadres" placeholder="E-mailadres" value="<?php echo $_SESSION['mailAdres'] ?>" >
+        <input class="cta-orange btn" type="submit" name="check" value="Controlleer">
+
+ <?php  if( isset($_POST['mailadres']) && count($gebruiker) == 1 ) { ?>
 <form method="POST" class="form-group">
     <label for="testvoorvraag">  <?php echo $gebruiker[0]['vraag']?> </label>
         <input type="text" name="antwoord" class="form-control" id="testAntwoordvakje" placeholder="Antwoord">
