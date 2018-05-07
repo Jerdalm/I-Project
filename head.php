@@ -22,6 +22,7 @@ $head = <<<HEAD
 HEAD;
 
 echo $head;
+
 require_once 'mechanic/functions.php'; 
 ?>
 
