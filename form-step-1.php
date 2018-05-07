@@ -15,7 +15,7 @@ echo '
 <form method="post">
     <div class="form-group">
         <label for="inputEmail"> e-mail </label>
-        <input type="textarea" class="form-control" name="email" id="registration-email">
+        <input type="textarea" class="form-control" name="email" id="inputEmail">
     </div>
 
     <button type="submit" name="submit-mail" value="send-code" class="btn btn-primary btn-sm">Code sturen</button>
