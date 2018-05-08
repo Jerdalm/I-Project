@@ -1,22 +1,25 @@
 <?php
+require_once './head.php';
+require_once './db.php';
 
-echo('
-<form method="POST">
-    <div class=""form-group>
+if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
+	if (checkIfFieldsFilledIn()) {
+	    $_SESSION['email-registration'] = $_POST['email'];      
+	    sendRegistrationCode(($_POST['email']));
+	} else {
+		$_SESSION['error-registration'] = 'U heeft het veld nog niet ingevuld';
+	}
+}
+
+echo '
+<form method="post">
+    <div class="form-group">
         <label for="inputEmail"> e-mail </label>
-        <input type="textarea" class="form-control" name="email" id="id1">
+        <input type="textarea" class="form-control" name="email" id="inputEmail">
     </div>
 
-    <button type="submit" name="mail" class="btn btn-primary btn-sm">Code sturen</button>
+    <button type="submit" name="submit-mail" value="send-code" class="btn btn-primary btn-sm">Code sturen</button>
 </form>
-');
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['mail'])) {
-	    session_start();
-        $_SESSION['emailRegistration'] = $_POST['email'];
-        header("location: ./mail-check.php");
-    }
-}
+';
 
 ?>

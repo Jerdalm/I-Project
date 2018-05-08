@@ -1,20 +1,37 @@
 <?php
-echo('
-<form method="post" action="nameAndPasswordCheck.php">
+require_once './db.php';
+
+$_SESSION['message_login'] = ' ';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {   
+    if (checkIfFieldsFilledIn()) {
+        
+        $_SESSION['username'] = $_POST['username']; 
+        $_SESSION['password'] = $_POST['password'];
+        $_SESSION['password-repeat'] = $_POST['password-repeat'];
+        checkUsernamePassword($_POST['username'], $_POST['password'], $_POST['password-repeat']);        
+    } else {
+        
+        $_SESSION['error_registration'] = "Gebruikersnaam of wachtwoord is niet ingevoerd";
+    }
+}
+
+echo '
+<form method="post">
     <div class="form-group">
-        <label for="id1"> gebruikersnaam </label>
-        <input type="textarea" class="form-control" name="name" id=id1>
+        <label for="registration-username"> Gebruikersnaam </label>
+        <input type="textarea" class="form-control" name="username" id="registration-username">
     </div>
     <div class="form-group">
-        <label for="id2"> wachtwoord </label>
-        <input type="password" class="form-control" name="password" id=id2>
+        <label for="registration-password"> Wachtwoord </label>
+        <input type="password" class="form-control" name="password" id="registration-password">
     </div>
     <div class="form-group">
-        <label for="id2"> herhaal wachtwoord </label>
-        <input type="password" class="form-control" name="passwordRepeat" id=id2>
+        <label for="password-repeat"> Herhaal wachtwoord </label>
+        <input type="password" class="form-control" name="password-repeat" id="password-repeat">
     </div>
 
-    <button type="submit" name="submitNaam" class="btn btn-primary btn-sm">Verzenden</button>
+    <button type="submit" name="submit-naam" value="Register" class="btn btn-primary btn-sm">Verzenden</button>
 </form>
-');
+';
 ?>

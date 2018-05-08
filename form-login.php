@@ -1,5 +1,16 @@
 <?php
-echo('
+// session_stop();
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['login-submit'])) {
+    	session_start();
+        $_SESSION['email-login'] = $_POST['email-login'];
+        $_SESSION['wachtwoord'] = $_POST['wachtwoord'];
+        echo '<script> location.replace("./login.php"); </script>';
+        // header("Location: ./user-details.php");
+    }
+}
+
+echo '
 <form method="post">
     <div class="form-group">
         <label for="inputEmail">Email</label>
@@ -12,14 +23,5 @@ echo('
     <a href= "wachtwoord-vergeten.php"> Wachtwoord Vergeten? </a><br><br>
     <button type="submit" name="login-submit" class="btn btn-primary">Login</button>
 </form>
-');
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_POST['login-submit'])) {
-    	session_start();
-        $_SESSION['email-login'] = $_POST['email-login'];
-        $_SESSION['wachtwoord'] = $_POST['wachtwoord'];
-        echo '<script> location.replace("./login.php"); </script>';
-    }
-}
+';
 ?>
