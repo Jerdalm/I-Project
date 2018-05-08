@@ -2,19 +2,20 @@
 require_once './head.php';
 require_once './db.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
-	if (checkIfFieldsFilledIn()) {
+if (isset($_POST['submit-mail'])){
+	if (checkIfFieldsFilledIn()) {		
 	    $_SESSION['email-registration'] = $_POST['email'];      
 	    sendRegistrationCode(($_POST['email']));
 	} else {
-		$_SESSION['error-registration'] = 'U heeft het veld nog niet ingevuld';
+		$message_registration = 'U heeft het veld nog niet ingevuld';
+
 	}
 }
 
 echo '
-<form method="post">
+<form method="post" class="form-steps">
     <div class="form-group">
-        <label for="inputEmail"> e-mail </label>
+        <label for="inputEmail">E-mail</label>
         <input type="textarea" class="form-control" name="email" id="inputEmail">
     </div>
 

@@ -5,13 +5,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     	session_start();
         $_SESSION['email-login'] = $_POST['email-login'];
         $_SESSION['wachtwoord'] = $_POST['wachtwoord'];
-        echo '<script> location.replace("./login.php"); </script>';
-        // header("Location: ./user-details.php");
+        loginControl($_POST['email-login'], $_POST['wachtwoord']);
     }
 }
 
 echo '
-<form method="post">
+<form method="post" id="login-form">
     <div class="form-group">
         <label for="inputEmail">Email</label>
         <input type="email" class="form-control" id="email-login" name="email-login" placeholder="Email">

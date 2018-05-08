@@ -59,21 +59,21 @@ function executequery($sql, $parameters = false){
 	/* Deze functie handeld elke database query af 
 		|Voor elke functie kan voor elke functie gebruikt|
 	*/
-		function handlequery($sql, $parameters = false){
-			global $pdo;
-			$first_word = strtok($sql, " ");
-			$type = preg_replace('/\s+/', '', $first_word);
+	function handlequery($sql, $parameters = false){
+		global $pdo;
+		$first_word = strtok($sql, " ");
+		$type = preg_replace('/\s+/', '', $first_word);
 
-			if($type == 'SELECT'){ $data = FetchSelectData($sql,$parameters);}
-			else{$data = executequery($sql,$parameters);}
+		if($type == 'SELECT'){ $data = FetchSelectData($sql,$parameters);}
+		else{$data = executequery($sql,$parameters);}
 
-			return $data;
-		}
+		return $data;
+	}
 
-		function sendMail($to, $subject, $body, $message = "Fout"){
-			$emailTo      = $to;
-			$subjectEmail = $subject;
-			$message_body = $body;
+	function sendMail($to, $subject, $body, $message = "Fout"){
+		$emailTo      = $to;
+		$subjectEmail = $subject;
+		$message_body = $body;
 
 
 	    //mail( $emailTo, $subjectEmail, $message_body ); moet uiteindelijk wel aan!
@@ -109,11 +109,27 @@ function executequery($sql, $parameters = false){
 		}
 	}
 
+	function checkEmailUnique($emailCheck){
+		$emailControl = handleQuery("SELECT * FROM Gebruiker WHERE mailadres = :mailadres",array(':mailadres' => $emailCheck));
+		
+		if(count($emailControl) == 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	function is_Char_Only($Invoer){
+		return (bool)(preg_match("/^[a-zA-Z ]*$/", $Invoer)) ;
+	}
+			
+	function is_email($Invoer){
+		return (bool)(preg_match("/^([a-z0-9+-]+)(.[a-z0-9+-]+)*@([a-z0-9-]+.)+[a-z]{2,6}$/ix",$Invoer));
+	}
 
 	function sendRegistrationCode($emailCheck){
 		// $randomVerificationCode = uniqueid(rand(100000,900000), true);
 		$randomVerificationCode = 111111;
-		$emailControl = handleQuery("SELECT * FROM Gebruiker WHERE mailadres = :mailadres",array(':mailadres' => $emailCheck));
 
 		$to      = $emailCheck;
 		$subject = 'Account activatie';
@@ -124,28 +140,105 @@ function executequery($sql, $parameters = false){
 
 		Voer deze code in op de site:
 		' . $randomVerificationCode .'.';
-		$message = 'Er is een email met de verificatiecode naar het opgegeven emailadres gestuurt.';
 
 		$randomVerificationCode_hashed = md5($randomVerificationCode);
 
 		$_SESSION['code'] = $randomVerificationCode; 	
-		if(count($emailControl) == 0) {
+		
+		if (checkEmailUnique($emailCheck)){
 			if (filter_var($emailCheck, FILTER_VALIDATE_EMAIL)) {
-
+			
 				setCodeInDB($emailCheck, $randomVerificationCode_hashed);
-
 				sendMail($to, $subject, $message_body, $message);
-				header("Location: ./user.php?step=2");
-		        // echo '<script>alert('. $randomVerificationCode .')</script>';
+				header("Location: ./user.php?step=2");		        
+				$message_registration0 = 'Er is een email met de verificatiecode naar het opgegeven emailadres gestuurd.';
 			} else {
-				$_SESSION['error_registration'] = 'Geen geldig e-mailadres.';
-				header("Location: ./index.php");
+				header("Location: ./user.php");
+				$message_registration = 'Geen geldig e-mailadres.';
 			}
 		} else {
-			header("Location: ./index.php");
+			header("Location: ./user.php");
+			$message_registration = 'Er bestaat al een account met dit e-mailadres.';
 		}
-		
+		return $message_registration;
 	} 
+
+
+	function validateCode($inputCode, $email_registration){		
+
+		$emailParameters = array(':mailadres' => "$email_registration");
+		$emailEquivalent = handleQuery("SELECT * FROM ActivatieCode WHERE mailadres = :mailadres",$emailParameters)[0];
+
+		// $emailEquivalent['code'] =  trim($emailEquivalent['code']);
+		
+		$hashedCode = md5($inputCode); //hashed de code, zodat deze gecontroleerd kan worden met de gesahesde code binnen de database
+		
+		if ($emailEquivalent['code'] == $hashedCode){
+			header("Location: ./user.php?step=3");
+		} 
+		else{
+			$message_registration = 'De code klopt niet, probeer opnieuw!'; 
+			header("Location: ./user.php?step=2");
+			
+		}
+	}
+
+	function checkUsernamePassword($username, $password, $passwordrepeat){
+		if ($password != $passwordrepeat) {
+			$message_registration = "de wachtwoorden komen niet overeen";
+			header("Location: ./user.php?step=3");
+		} else {		   
+			$getUserParameters = array(':gebruikersnaam' => $username);
+			$getUserQuery =  handleQuery("SELECT * FROM Gebruiker WHERE gebruikersnaam = :gebruikersnaam", $getUserParameters);
+
+			if(count($getUserQuery) > 0) {
+				$message_registration = "uw ingevoerde gebruikersnaam bestaat al";
+				header("Location: ./user.php?step=3");
+			} else {
+
+				$password_hashed = password_hash($password , PASSWORD_DEFAULT);
+
+				$_SESSION['username'] = $username;
+				$_SESSION['password'] = $password_hashed;
+
+				$_SESSION["message_registration"] = '';
+				header("Location: ./user.php?step=4");
+			}
+		}
+	}
+
+	function insertRegistrationinfoInDB(){
+		$voornaam = $_POST['firstname'];
+		$achternaam = $_POST['lastname'];
+		$adresregel1 = $_POST['adres1'];
+		$adresregel2 = $_POST['adres2'];
+		$postcode = $_POST['postalcode'];
+		$plaatsnaam = $_POST['residence'];
+		$land = $_POST['country'];
+		$telefoonnummer = $_POST['phonenumber'];
+		$birthdate = $_POST['birthdate'];
+		$geboortedag = $_POST['birthdate']; 
+		$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
+		$geboortedag = $myDateTime->format('Y-m-d');
+		$vraag = $_POST['secretquestion'];
+		$antwoordtekst = $_POST['secretanswer'];
+		
+		if(is_numeric($telefoonnummer)){
+			$insertInfoParam = array(':voornaam' => $voornaam, ':achternaam' => $achternaam, ':adresregel1' => $adresregel1, ':adresregel2' => $adresregel2, ':postcode' => $postcode, ':plaatsnaam' => $plaatsnaam, ':land' => $land, ':geboortedag' => $geboortedag,':vraag' => $vraag, ':antwoordtekst' => $antwoordtekst);
+			$insertInfoQuery = handlequery("INSERT INTO Gebruiker VALUES('".$_SESSION['username']."', :voornaam, :achternaam, :adresregel1, :adresregel2, :postcode, :plaatsnaam, :land, :geboortedag, '".$_SESSION['email-registration']."', '".$_SESSION['password']."', :vraag, :antwoordtekst, 1)", $insertInfoParam);
+
+			$insertTelParam = array(':gebruikersnaam' => $_SESSION['username'], ':telefoonnummer' => $telefoonnummer);
+
+			$insertTelQuery = handlequery("INSERT INTO gebruikerstelefoon VALUES(:gebruikersnaam, :telefoonnummer)", $insertTelParam);
+
+			session_destroy();
+			header('Refresh:0; url=./user.php');
+			$message_registration = ' ';
+		} else {
+			$message_registration = 'Het opgegeven telefoonnummer klopt niet.';
+		}
+		return $message_registration;
+	}
 
 	function setCodeInDB($email, $hashed_code){
 		$parameters = array(':mailadres' => "$email");
@@ -162,87 +255,38 @@ function executequery($sql, $parameters = false){
 		}
 	}
 
-	function validateCode($inputCode, $email_registration){		
 
-		$emailParameters = array(':mailadres' => "$email_registration");
-		$emailEquivalent = handleQuery("SELECT * FROM ActivatieCode WHERE mailadres = :mailadres",$emailParameters)[0];
+	function loginControl($email, $wachtwoord){
 
-		// $emailEquivalent['code'] =  trim($emailEquivalent['code']);
-		
-		$hashedCode = md5($inputCode); //hashed de code, zodat deze gecontroleerd kan worden met de gesahesde code binnen de database
-		
-		if ($emailEquivalent['code'] == $hashedCode){
-			header("Location: ./user.php?step=3");
-		} 
-		else{
-			$_SESSION['error_registration'] = 'De code klopt niet, probeer opnieuw!'; 
-			header("Location: ./user.php?step=2");
-			
-		}
-	}
+		$emailParam = array(':mailadres'=>$email);
+		$gebruiker = handleQuery("SELECT * FROM Gebruiker WHERE mailadres=:mailadres", $emailParam)[0];
 
-	function checkUsernamePassword($username, $password, $passwordrepeat){
-		// echo "aanwezig";
-		// die();
-		if ($password != $passwordrepeat) {
-			$_SESSION['error_registration'] = "de wachtwoorden komen niet overeen";
-			header("Location: ./user.php?step=3");
-		} else {		   
-			$getUserParameters = array(':gebruikersnaam' => $username);
-			$getUserQuery =  handleQuery("SELECT * FROM Gebruiker WHERE gebruikersnaam = :gebruikersnaam", $getUserParameters);
+		$wachtwoord = trim($wachtwoord);
+		$gebruiker['wachtwoord'] = trim($gebruiker['wachtwoord']);
 
-			if(count($getUserQuery) > 0) {
-				$_SESSION['error_registration'] = "uw ingevoerde gebruikersnaam bestaat al";
-				header("Location: ./user.php?step=3");
-			} else {
-				$_SESSION['username'] = $username;
-				$_SESSION['password'] = $password;
+		if (password_verify($wachtwoord, $gebruiker['wachtwoord']) || $wachtwoord == $gebruiker['wachtwoord']) {
 
-				$_SESSION["error_registration"] = '';
-				header("Location: ./user.php?step=4");
+			$_SESSION['email'] = $gebruiker["mailadres"];
+			$_SESSION['gebruikersnaam'] = $gebruiker["gebruikersnaam"];
+			$_SESSION['voornaam'] = $gebruiker["voornaam"];
+			$_SESSION['achternaam'] = $gebruiker["achternaam"];
+			$_SESSION['adresregel1'] = $gebruiker["adresregel1"];
+			if(!empty($gebruiker['adresregel2'])){
+				$_SESSION['adresregel2'] = $gebruiker["adresregel2"];
 			}
+			$_SESSION['postcode'] = $gebruiker["postcode"];
+			$_SESSION['plaatsnaam'] = $gebruiker["plaatsnaam"];
+			$_SESSION['land'] = $gebruiker["land"];
+			$_SESSION['geboortedag'] = $gebruiker["geboortedag"];
+			$_SESSION['wachtwoord'] = $gebruiker["wachtwoord"];
+			$_SESSION['vraag'] = $gebruiker["vraag"];
+			$_SESSION['antwoordtekst'] = $gebruiker["antwoordtekst"];
+			$_SESSION['soortGebruiker'] = $gebruiker["soortGebruiker"];			
+			header("location: ./user-details.php");
 		}
-	}
-
-
-	function insertRegistrationnfoInDB(){
-		$firstname = $_POST['firstname'];
-		$lastname = $_POST['lastname'];
-		$adres1 = $_POST['adres1'];
-		$adres2 = $_POST['adres2'];
-		$postalcode = $_POST['postalcode'];
-		$residence = $_POST['residence'];
-		$country = $_POST['country'];
-		$phonenumber = $_POST['phonenumber'];
-		$birthdate = $_POST['birthdate']; //deze snap ik niet
-
-		$date = $_POST['birthdate']; //deze snap ik niet
-		// $date = DateTime::createFromFormat('j-M-Y', $_POST['birthdate']);		
-		
-		$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
-		$birthdate = $myDateTime->format('Y-m-d');
-
-		$secretquestion = $_POST['secretquestion'];
-		$secretanswer = $_POST['secretanswer'];
-
-		// voer query uit in de database voor tabel gebruikers
-
-		// $query1parameters = array(':gebruikersnaam' => $_SESSION['username']);
-		// $query1 = handlequery("SELECT gebruikersnaam FROM Gebruiker WHERE gebruikersnaam = :username", $query1parameters);
-
-		// $query2 = handlequery("INSERT INTO Gebruiker VALUES", $query1parameters);		
-		$insertInfoParam = array(':gebruikersnaam' => $_SESSION['username'], ':voornaam' => $firstname, 'achternaam' => $lastname, 'adresregel1' => $adres1, 'adresregel2' => $adres2, 'postcode' => $postalcode, 'plaatsnaam' => $residence, 'land' => $country, 'geboortedag' => $birthdate, 'mailadres' => $_SESSION['email-registration'], 'vraag' => $secretquestion, 'antwoordtekst' => $secretanswer);
-
-		handlequery("INSERT INTO Gebruiker VALUES(:gebruikersnaam, :firstname, :lastname, :adres1, :adres2, :postalcode, :residence, :country, :phonenumber, :birthdate, :mailadres, :secretquestion, :secretanswer, 1)", $insertInfoParam);
-
-		$insertTelParam = array(':gebruikersnaam' => $_SESSION['username'], ':telefoonnummer' => $phonenumber);
-
-		handlequery("INSERT INTO gebruikerstelefoon VALUES(:gebruikersnaam, :telefoonnummer)", $insertTelParam);
-
-		session_destroy();
-		header('Refresh:0; url=./user.php');
-		$_SESSION["error_registration"] = ' ';
-
+		else {
+			$_SESSION['message_login'] = "Verkeerd wachtwoord of onbekende e-mail, probeer opnieuw!";
+		}
 	}
 	?>
 
