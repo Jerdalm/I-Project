@@ -254,8 +254,7 @@ function executequery($sql, $parameters = false){
 			handleQuery("INSERT INTO ActivatieCode VALUES (0 ,:verifycode ,:mailadres, GETDATE())",$parameters);
 		}
 	}
-
-
+	
 	function loginControl($email, $wachtwoord){
 
 		$emailParam = array(':mailadres'=>$email);
@@ -288,5 +287,59 @@ function executequery($sql, $parameters = false){
 			$_SESSION['message_login'] = "Verkeerd wachtwoord of onbekende e-mail, probeer opnieuw!";
 		}
 	}
-	?>
+
+	function insertUpgradeinfoInDB(){
+		$username = 'testnaam';
+		$bank = $_SESSION['bank'];
+		$banknumber = $_SESSION['banknumber'];
+		$verificationMethod = $_SESSION['verificationMethod'];
+		$creditcardnumber = $_SESSION['creditcardnumber'];
+
+
+		$insertInfoParam = array(':gebruikersnaam' => $username, ':bank' => $bank, ':rekeningnummer' => $banknumber, ':controleOptie' => $verificationMethod, ':creditcardnumber' => $creditcardnumber);
+
+		$melding = handlequery("INSERT INTO Verkoper VALUES(:gebruikersnaam, :bank, :rekeningnummer, :controleOptie, :creditcardnumber)", $insertInfoParam);
+
+		$parameters = array(':username' => "$username");
+		handleQuery("UPDATE Gebruiker
+					SET soortGebruiker = 2 
+					WHERE gebruikersnaam = :username", $parameters);
+
+		//header('Refresh:0; url=./user.php');
+		$_SESSION["error_upgrade"] = ' ';
+	}
+
+	function sendUpgradeCode($email){
+		$randomVerificationCode = 111111;
+        // $randomVerificationCode = uniqueid(rand(100000,900000), true);
+		$emailControl = handleQuery("SELECT * FROM Gebruiker WHERE mailadres = :mailadres",array(':mailadres' => $email));
+
+		$to      = $email;
+		$subject = 'Account upgrade';
+		$message_body = '
+				Beste,
+		
+				Bedankt voor het upgraden van uw account naar verkoper!
+		
+				Voer deze code in op de site:
+				' . $randomVerificationCode .'.';
+		$message = 'Er is een email met de verificatiecode naar het opgegeven emailadres gestuurt.';
+
+		$randomVerificationCode_hashed = md5($randomVerificationCode);
+
+		$_SESSION['upgradeCode'] = $randomVerificationCode;
+
+			if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+				setCodeInDB($email, $randomVerificationCode_hashed);
+
+				sendMail($to, $subject, $message_body, $message);
+				header("Location: ./upgrade-user.php?step=2");
+				// echo '<script>alert('. $randomVerificationCode .')</script>';
+			} else {
+				$_SESSION['error_upgrade'] = 'Geen geldig e-mailadres.';
+				header("Location: ./upgrade-user.php?step=1");
+			}
+	}
+?>
 
