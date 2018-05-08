@@ -230,7 +230,7 @@ function executequery($sql, $parameters = false){
 		// $query1parameters = array(':gebruikersnaam' => $_SESSION['username']);
 		// $query1 = handlequery("SELECT gebruikersnaam FROM Gebruiker WHERE gebruikersnaam = :username", $query1parameters);
 
-		// $query2 = handlequery("INSERT INTO Gebruiker VALUES", $query1parameters);		
+		// $query2 = handlequery("INSERT INTO Gebruiker VALUES", $query1parameters);
 		$insertInfoParam = array(':gebruikersnaam' => $_SESSION['username'], ':voornaam' => $firstname, 'achternaam' => $lastname, 'adresregel1' => $adres1, 'adresregel2' => $adres2, 'postcode' => $postalcode, 'plaatsnaam' => $residence, 'land' => $country, 'geboortedag' => $birthdate, 'mailadres' => $_SESSION['email-registration'], 'vraag' => $secretquestion, 'antwoordtekst' => $secretanswer);
 
 		handlequery("INSERT INTO Gebruiker VALUES(:gebruikersnaam, :firstname, :lastname, :adres1, :adres2, :postalcode, :residence, :country, :phonenumber, :birthdate, :mailadres, :secretquestion, :secretanswer, 1)", $insertInfoParam);
@@ -244,5 +244,22 @@ function executequery($sql, $parameters = false){
 		$_SESSION["error_registration"] = ' ';
 
 	}
+
+function insertUpgradeinfoInDB(){
+    $username = 'username123';
+    $bank = $_SESSION['bank'];
+    $banknumber = $_SESSION['banknumber'];
+    $verificationMethod = $_SESSION['verificationMethod'];
+    $creditcardnumber = $_SESSION['creditcardnumber'];
+
+    $insertInfoParam = array(':gebruikersnaam' => $username, ':bank' => $bank, ':rekeningnummer' => $banknumber, ':controleOptie' => $verificationMethod, ':creditcardnumber' => $creditcardnumber);
+
+    handlequery("INSERT INTO Verkoper VALUES(:gebruikersnaam, :bank, :banknummer, :controleOptie, :creditcardnummer)", $insertInfoParam);
+
+    session_destroy();
+    header('Refresh:0; url=./user.php');
+    $_SESSION["error_upgrade"] = ' ';
+
+}
 	?>
 
