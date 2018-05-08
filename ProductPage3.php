@@ -26,9 +26,8 @@ V.titel, V.startprijs
 from voorwerp V 
 inner join gebruiker G on V.verkoper = G.gebruikersnaam
 inner join verkoper VK on V.verkoper = VK.gebruikersnaam
-where voorwerpnummer = 1
 ");
-print_r($productdata);
+
 
 foreach ($productdata as $item) {
 
@@ -95,22 +94,35 @@ Order By 2 desc
                         <img src="media/WatchTestJEREMY.jpg" alt="..." width= 70px height= 70px class="rounded-circle float-right" style="margin: -15px 15px 0 0">
                     </div>
                 </div>
-            </div>
+                <form method="post" action="">
+                    <div class="form-row align-items-center">
+                        <div class="col-sm-9">
+                            <input type="number" class="form-control form-control-lg" name="bidAmount" id="colFormLabelLg" placeholder="Geef uw gewenste bedrag in.">
+                            <div class="col-auto">
+                                <button type="submit" name="sumbit-bidamount" class="btn btn-primary mb-2">Bied!</button>
+                            </div>
+                    </div>
+                </div>
+                </form>
             <div>
-                <?php
 
-                $Parameters = array
-                (":productID" => '$productID', ':bidAmount' => "$bidAmount", ":username" => '$username', ":bidDay" => '$bidDay', ":bidTIme" => '$bidTIme');
-                $PlaceBid = handlequery("
-INSERT INTO Bod (voorwerpnummer, bodbedrag, gebruikersnaam, bodDag, bodTijdstip)
-VALUES (:bidAmount, :username)", $parameters);
+            <?php
+            $bidAmount = "";
+
+            if(isset($_POST['sumbit-bidamount'])) {
+                if (!empty($_POST['bidAmount'])) {
+                    $Parameters = array
+                    (":productID" => '$productID', ':bidAmount' => "$bidAmount", ":username" => '$username', ":bidDay" => '$bidDay', ":bidTIme" => '$bidTIme');
+                    handlequery("INSERT INTO Bod (voorwerpnummer, bodbedrag, gebruikersnaam, bodDag, bodTijdstip) VALUES ($productdata[1] ,:bidAmount, :username)", $parameters);
+                }
+            }
 
                 ?>
             </div>
         </div>
-        <div class="col-lg-6 p-3 mb-2 bg-secondary text-white" style="text-align: center">
-                <p>Dit is een stukje text onder het bodenoverzicht en de foto</p>
-            </div>
+<!--        <div class="col-lg-6 p-3 mb-2 bg-secondary text-white" style="text-align: center">-->
+<!--                <p>Dit is een stukje text onder het bodenoverzicht en de foto</p>-->
+<!--            </div>-->
         <section class="products">
             <div class="container">
                 <div class="row">
