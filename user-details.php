@@ -1,9 +1,7 @@
 <?php
 require_once 'header.php'; 
 
-$_SESSION['ingelogdeGebruiker'] = 'admin';
-
-$gebruikersnaam = $_SESSION['ingelogdeGebruiker'];
+$gebruikersnaam = $_SESSION['gebruikersnaam'];
 $emailParameters = array(':gebruikersnaam' => "$gebruikersnaam");
 
 $gebruiker = handlequery("SELECT * FROM Gebruiker JOIN Vraag ON Gebruiker.vraag = Vraag.vraagnummer WHERE gebruikersnaam = :gebruikersnaam AND Gebruiker.vraag = Vraag.vraagnummer", $emailParameters);
@@ -44,7 +42,7 @@ $messageCode = $message . $randomPassword;
                 </tr>
                  <tr>
                     <th scope="row">Geboortedatum</th>
-                    <td><?php echo $gebruiker[0]['geboortDag'] ?> </td>
+                    <td><?php echo $gebruiker[0]['geboortedag'] ?> </td>
                 </tr>    
 
                 <tr>

@@ -19,17 +19,17 @@
           <li class="nav-item">
             <a class="nav-link" href="
             <?php 
-              if(isset($_SESSION['ingelogdeGebruiker']) && !empty($_SESSION['ingelogdeGebruiker'])){ 
-                echo './user.php';
-              } else {
+              if(isset($_SESSION['gebruikersnaam']) && !empty($_SESSION['gebruikersnaam'])){ 
                 echo './logout.php';
+              } else {
+                echo './user.php';
               }
             ?>
             ">
-              <?php if(isset($_SESSION['ingelogdeGebruiker']) && !empty($_SESSION['ingelogdeGebruiker'])){ 
-                  echo '  |Registreren';
-                } else {
+              <?php if(isset($_SESSION['gebruikersnaam']) && !empty($_SESSION['gebruikersnaam'])){ 
                   echo 'Uitloggen';
+                } else {
+                  echo 'Inloggen|Registreren';
                 }
               ?>
               </a>

@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 echo '
-<form method="post">
+<form method="post" class="form-steps">
     <div class="form-group">
         <label for="code">uw code</label>
         <input type="textarea" class="form-control" name="code" id="code">
