@@ -99,7 +99,7 @@ $messageCode = $message . $randomPassword;
                 sendMail($email,$subject,$messageCode);
                 handlequery("UPDATE Gebruiker SET wachtwoord = '$randomPassword' WHERE gebruikersnaam = '$gebruikersnaam' ");
             } else {
-                echo 'shit';
+                echo 'er is wat fout gegaan';
             }
         }
         ?>       
