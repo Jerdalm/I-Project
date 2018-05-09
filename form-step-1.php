@@ -3,8 +3,8 @@ require_once './head.php';
 require_once './db.php';
 
 if (isset($_POST['submit-mail'])){
-	if (checkIfFieldsFilledIn()) {		
-	    $_SESSION['email-registration'] = $_POST['email'];      
+	if (checkIfFieldsFilledIn()) {
+	    $_SESSION['email-registration'] = $_POST['email'];
 	    sendRegistrationCode(($_POST['email']));
 	} else {
 		$message_registration = 'U heeft het veld nog niet ingevuld';

@@ -122,6 +122,20 @@ function is_Char_Only($Invoer){
 	return (bool)(preg_match("/^[a-zA-Z ]*$/", $Invoer)) ;
 }
 		
+function showLoginMenu(){
+	$htmlLogin = ' ';
+	if(isset($_SESSION['gebruikersnaam']) && !empty($_SESSION['gebruikersnaam'])){ 
+        $htmlLogin = '<li class="nav-item">';
+        $htmlLogin .= '<a class="nav-link" href="./logout.php">Uitloggen</a>';
+        $htmlLogin .= '</li>';
+    } else {
+	    $htmlLogin = '<li class="nav-item">';
+        $htmlLogin .= '<a class="nav-link" href="./user.php">Inloggen|Registreren</a>';
+        $htmlLogin .= '</li>';
+    }
+    return $htmlLogin;
+}
+
 function is_email($Invoer){
 	return (bool)(preg_match("/^([a-z0-9+-]+)(.[a-z0-9+-]+)*@([a-z0-9-]+.)+[a-z]{2,6}$/ix",$Invoer));
 }
@@ -130,7 +144,7 @@ function generateRandomCode(){
 	return uniqueid(rand(100000,900000),true);
 }
 
-function ($emailCheck){
+function sendRegistrationCode($emailCheck){
 	// $randomVerificsendRegistrationCodeationCode = generateRandomCode();
 	$randomVerificationCode = 111111;
 
@@ -161,27 +175,7 @@ function ($emailCheck){
 		$message_registration = 'Er bestaat al een account met dit e-mailadres.';
 	}
 	return $message_registration;
-} 
-
-
-function validateCode($inputCode, $email_registration){		
-
-	$emailParameters = array(':mailadres' => "$email_registration");
-	$emailEquivalent = handleQuery("SELECT * FROM ActivatieCode WHERE mailadres = :mailadres",$emailParameters)[0];
-
-	// $emailEquivalent['code'] =  trim($emailEquivalent['code']);
-	
-	$hashedCode = md5($inputCode); //hashed de code, zodat deze gecontroleerd kan worden met de gesahesde code binnen de database
-	
-	if ($emailEquivalent['code'] == $hashedCode){
-		header("Location: ./user.php?step=3");
-	} 
-	else{
-		$message_registration = 'De code klopt niet, probeer opnieuw!'; 
-		header("Location: ./user.php?step=2");
-		
-	}
-}
+}  
 
 function checkUsernamePassword($username, $password, $passwordrepeat){
 	if ($password != $passwordrepeat) {
@@ -295,7 +289,6 @@ function insertUpgradeinfoInDB(){
 	$verificationMethod = $_SESSION['verificationMethod'];
 	$creditcardnumber = $_SESSION['creditcardnumber'];
 
-
 	$insertInfoParam = array(':gebruikersnaam' => $username, ':bank' => $bank, ':rekeningnummer' => $banknumber, ':controleOptie' => $verificationMethod, ':creditcardnumber' => $creditcardnumber);
 
 	$melding = handlequery("INSERT INTO Verkoper VALUES(:gebruikersnaam, :bank, :rekeningnummer, :controleOptie, :creditcardnumber)", $insertInfoParam);
@@ -309,37 +302,44 @@ function insertUpgradeinfoInDB(){
 	$_SESSION["error_upgrade"] = ' ';
 }
 
-function sendUpgradeCode($email){
+function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLocationElse){
 	$randomVerificationCode = 111111;
-    // $randomVerificationCode = uniqueid(rand(100000,900000), true);
-	$emailControl = handleQuery("SELECT * FROM Gebruiker WHERE mailadres = :mailadres",array(':mailadres' => $email));
+    // $randomVerificsendRegistrationCodeationCode = generateRandomCode();
 
 	$to      = $email;
-	$subject = 'Account upgrade';
-	$message_body = '
-			Beste,
-	
-			Bedankt voor het upgraden van uw account naar verkoper!
-	
-			Voer deze code in op de site:
-			' . $randomVerificationCode .'.';
-	$message = 'Er is een email met de verificatiecode naar het opgegeven emailadres gestuurt.';
+	$subject = $subjectText;
+	$message_body = $bodyText;
 
 	$randomVerificationCode_hashed = md5($randomVerificationCode);
 
-	$_SESSION['upgradeCode'] = $randomVerificationCode;
-
-		if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-
-			setCodeInDB($email, $randomVerificationCode_hashed);
-
-			sendMail($to, $subject, $message_body, $message);
-			header("Location: ./upgrade-user.php?step=2");
-			// echo '<script>alert('. $randomVerificationCode .')</script>';
-		} else {
-			$_SESSION['error_upgrade'] = 'Geen geldig e-mailadres.';
-			header("Location: ./upgrade-user.php?step=1");
-		}
+	if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+		setCodeInDB($email, $randomVerificationCode_hashed);
+		sendMail($to, $subject, $message_body, $message);
+		header("Location: ./".$headerLocationIf);
+		// echo '<script>alert('. $randomVerificationCode .')</script>';
+	} else {
+		$_SESSION['error_upgrade'] = 'Geen geldig e-mailadres.';
+		header("Location: ./". $headerLocationElse);
+	}
 }
 
 
+function validateCode($inputCode, $email, $headerLocationIf, $headerLocationElse){		
+
+	$emailParameters = array(':mailadres' => "$email");
+	$emailEquivalent = handleQuery("SELECT * FROM ActivatieCode WHERE mailadres = :mailadres",$emailParameters)[0];
+
+	// $emailEquivalent['code'] =  trim($emailEquivalent['code']);
+	
+	$hashedCode = md5($inputCode); //hashed de code, zodat deze gecontroleerd kan worden met de gesahesde code binnen de database
+	
+	if ($emailEquivalent['code'] == $hashedCode){
+		return true;
+		header("Location: ./".$headerLocationIf);
+	} 
+	else{
+		return false;
+		$message_registration = 'De code klopt niet, probeer opnieuw!'; 
+		header("Location: ./".$headerLocationElse);
+	}
+}
