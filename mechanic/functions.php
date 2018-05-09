@@ -112,10 +112,11 @@ function checkEmailUnique($emailCheck){
 	$emailControl = handleQuery("SELECT * FROM Gebruiker WHERE mailadres = :mailadres",array(':mailadres' => $emailCheck));
 	
 	if(count($emailControl) == 0) {
-		return true;
+		$state = true;
 	} else {
-		return false;
+		$state = false;
 	}
+	return $state;
 }
 
 function is_Char_Only($Invoer){
@@ -302,10 +303,7 @@ function insertUpgradeinfoInDB(){
 	$_SESSION["error_upgrade"] = ' ';
 }
 
-function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLocationElse){
-	$randomVerificationCode = 111111;
-    // $randomVerificsendRegistrationCodeationCode = generateRandomCode();
-
+function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLocationElse, $randomVerificationCode){
 	$to      = $email;
 	$subject = $subjectText;
 	$message_body = $bodyText;
@@ -334,12 +332,10 @@ function validateCode($inputCode, $email, $headerLocationIf, $headerLocationElse
 	$hashedCode = md5($inputCode); //hashed de code, zodat deze gecontroleerd kan worden met de gesahesde code binnen de database
 	
 	if ($emailEquivalent['code'] == $hashedCode){
-		return true;
-		header("Location: ./".$headerLocationIf);
+		$state = true;
 	} 
 	else{
-		return false;
-		$message_registration = 'De code klopt niet, probeer opnieuw!'; 
-		header("Location: ./".$headerLocationElse);
+		$state = false;
 	}
+	return $state;
 }
