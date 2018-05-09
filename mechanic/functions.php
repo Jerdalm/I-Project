@@ -303,8 +303,7 @@ function insertUpgradeinfoInDB(){
 }
 
 function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLocationElse){
-	$randomVerificationCode = 111111;
-    // $randomVerificsendRegistrationCodeationCode = generateRandomCode();
+
 
 	$to      = $email;
 	$subject = $subjectText;
