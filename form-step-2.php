@@ -1,6 +1,6 @@
 <?php
 require_once './db.php';
-if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
+if (isset($_POST['submit-code-registration'])){
 	if (checkIfFieldsFilledIn()) {
 
     	$_SESSION['hashedcode'] = md5($_POST['code']);
@@ -15,7 +15,7 @@ echo '
         <input type="textarea" class="form-control" name="code" id="code">
     </div>
 
-     <button type="submit" name="code-button" value="Register" class="btn btn-primary btn-sm">Code invoeren</button>
+     <button type="submit" name="submit-code-registration" value="Register" class="btn btn-primary btn-sm">Code invoeren</button>
 </form>
 ';
 ?>
