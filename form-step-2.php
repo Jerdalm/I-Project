@@ -1,10 +1,15 @@
 <?php
 require_once './db.php';
+
+
 if (isset($_POST['submit-code-registration'])){
 	if (checkIfFieldsFilledIn()) {
-
     	$_SESSION['hashedcode'] = md5($_POST['code']);
-        validateCode($_POST['code'], $_SESSION['email-registration']);
+        if (validateCode($_POST['code'], $_SESSION['email-registration']) {
+        	header("Location: ./".$headerLocationIf);
+        } else {
+        	header("Location: ./".$headerLocationElse);
+        }
     }
 }
 
