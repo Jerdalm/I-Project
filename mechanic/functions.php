@@ -321,8 +321,7 @@ function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLoc
 	}
 }
 
-
-function validateCode($inputCode, $email, $headerLocationIf, $headerLocationElse){		
+function validateCode($inputCode, $email){		
 
 	$emailParameters = array(':mailadres' => "$email");
 	$emailEquivalent = handleQuery("SELECT * FROM ActivatieCode WHERE mailadres = :mailadres",$emailParameters)[0];
