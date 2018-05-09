@@ -1,8 +1,6 @@
 <?php
 require_once './db.php';
 
-$_SESSION['message_login'] = ' ';
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {   
     if (checkIfFieldsFilledIn()) {
         
@@ -12,12 +10,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         checkUsernamePassword($_POST['username'], $_POST['password'], $_POST['password-repeat']);        
     } else {
         
-        $_SESSION['error_registration'] = "Gebruikersnaam of wachtwoord is niet ingevoerd";
+        $message_registration = "Gebruikersnaam of wachtwoord is niet ingevoerd";
     }
 }
 
 echo '
-<form method="post">
+<form method="post" class="form-steps">
     <div class="form-group">
         <label for="registration-username"> Gebruikersnaam </label>
         <input type="textarea" class="form-control" name="username" id="registration-username">

@@ -16,24 +16,7 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Alle veilingen</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="
-            <?php 
-              if(isset($_SESSION['ingelogdeGebruiker']) && !empty($_SESSION['ingelogdeGebruiker'])){ 
-                echo './user.php';
-              } else {
-                echo './logout.php';
-              }
-            ?>
-            ">
-              <?php if(isset($_SESSION['ingelogdeGebruiker']) && !empty($_SESSION['ingelogdeGebruiker'])){ 
-                  echo '  |Registreren';
-                } else {
-                  echo 'Uitloggen';
-                }
-              ?>
-              </a>
-          </li>
+          <?=showLoginMenu()?>
     			<li class="no_hover">
     				<form action="filmoverzicht.php" method="get">
     					<input list="films" name="search" placeholder="Uw gewenste film" maxlength="50" type="search">

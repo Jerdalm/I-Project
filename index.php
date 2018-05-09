@@ -1,4 +1,7 @@
-<?php require_once 'header.php'; $_SESSION['email-registration'] = ' ';?>
+<?php 
+require_once 'header.php'; 
+$_SESSION['email-registration'] = ' ';
+?>
 <!-- promotie header -->
 <header class="promo-header">
    <div class="container">
@@ -112,12 +115,12 @@
          <div class="clearfix">
             <div class="sliderbuttons">
                <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-               <span class="sr-only">Previous</span>
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
                </a>
                <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-               <span class="carousel-control-next-icon" aria-hidden="true"></span>
-               <span class="sr-only">Next</span>
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
                </a>
             </div>
          </div>
@@ -125,19 +128,19 @@
    </div>
 </section>
 <section class="userExperience">
-<div class="container">
-<div class="row">
-	<div class="col-md-4">
-	<div class="col-md-2">
-	</div>
-		<img  class="rounded-circle" src="https://media.nu.nl/m/o5mx3i7aqf41_wd640.jpeg">
-	</div>
-	
-	<div class="col-md-8">
-	<h2> "We have THE BEST website" </h2>
-	</div>
-</div>
-</div>
+   <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+           <div class="col-md-2">
+           </div>
+           <img  class="rounded-circle" src="https://media.nu.nl/m/o5mx3i7aqf41_wd640.jpeg">
+        </div>
+
+        <div class="col-md-8">
+           <h2> "We have THE BEST website" </h2>
+        </div>
+     </div>
+  </div>
 </section>
 
 <!-- /.container -->

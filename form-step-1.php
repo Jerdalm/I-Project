@@ -2,19 +2,34 @@
 require_once './head.php';
 require_once './db.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
+//$randomVerificationCode = generateRandomCode();
+$randomVerificationCode = 111111;
+$subject = 'Activatiecode';
+$body = 'Bedankt voor het registreren,
+Voer de volgende activatiecode in het formulier in:' . $randomVerificationCode;
+$headerLocationIf = "user.php?step=2";
+$headerLocationElse = "user.php";
+
+if (isset($_POST['submit-mail'])){
 	if (checkIfFieldsFilledIn()) {
-	    $_SESSION['email-registration'] = $_POST['email'];      
-	    sendRegistrationCode(($_POST['email']));
+		if (checkEmailUnique($_POST['email'])) {
+			// echo 'aanwezig';
+			// die();
+		    $_SESSION['email-registration'] = $_POST['email'];
+		    sendCode($_POST['email'], $subject, $body, $headerLocationIf, $headerLocationElse, $randomVerificationCode);
+		} else {
+			$message_registration = 'Er bestaat al een account met dit e-mailadres.';
+		}
 	} else {
-		$_SESSION['error-registration'] = 'U heeft het veld nog niet ingevuld';
+		$message_registration = 'U heeft het veld nog niet ingevuld.';
+
 	}
 }
 
 echo '
-<form method="post">
+<form method="post" class="form-steps">
     <div class="form-group">
-        <label for="inputEmail"> e-mail </label>
+        <label for="inputEmail">E-mail</label>
         <input type="textarea" class="form-control" name="email" id="inputEmail">
     </div>
 

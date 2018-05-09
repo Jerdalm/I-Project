@@ -12,3 +12,23 @@ section.userDetail .cta-orange.btn{
 padding: 8px;
 
 }
+
+.inputMailadres{
+	margin-bottom: 2eM;
+
+}
+
+#formMail.form-group input.cta-orange.btn{
+margin-top: 5px;
+padding: 10px;
+
+}
+
+
+.inputAntwoord.col-md-6 input.cta-orange.btn{
+margin-top: 5px;
+padding: 10px;
+
+}
+
+
