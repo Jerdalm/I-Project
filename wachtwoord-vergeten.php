@@ -20,19 +20,24 @@ $messageCode = $message . $randomPassword;
 ?>
 
 <main>
-    <form method="POST" class="form-group">
+  <div class="container">
+    <div class="inputMailadres col-md-6">
+    <form id="formMail" method="POST" class="form-group">
         <label for="E-mailadres">Voer hier uw E-mailadres in: </label>
         <input type="text" name="mailadres" class="form-control" id="mailadres" placeholder="E-mailadres" value="<?= $_SESSION['mailAdres'] ?>" >
         <input class="cta-orange btn" type="submit" name="check" value="Controlleer">
-
+ </div>
         <?php 
         if( isset($_POST['mailadres']) && count($gebruiker) == 1 ) { 
             ?>
-            <form method="POST" class="form-group">
+             <div class="inputAntwoord col-md-6">
+
+            <form id="formAntwoord" method="POST" class="form-group">
                 <label for="testvoorvraag">  <?= $gebruiker[0]['vraag']?> </label>
                 <input type="text" name="antwoord" class="form-control" id="testAntwoordvakje" placeholder="Antwoord">
                 <input class="cta-orange btn" type="submit" name="verzenden" value="Verzenden">
             </form>
+          </div>
             <?php 
         }  
         if (isset ($_POST['verzenden'])){
@@ -51,5 +56,7 @@ $messageCode = $message . $randomPassword;
         }
         ?>
     </form>
+  </div>
+ 
 </main>
 <?php require_once 'footer.php'; ?>
