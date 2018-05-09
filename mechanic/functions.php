@@ -284,23 +284,27 @@ function loginControl($email, $wachtwoord){
 }
 
 function insertUpgradeinfoInDB(){
-	$username = 'testnaam';
-	$bank = $_SESSION['bank'];
-	$banknumber = $_SESSION['banknumber'];
-	$verificationMethod = $_SESSION['verificationMethod'];
-	$creditcardnumber = $_SESSION['creditcardnumber'];
+	$state = false;
 
-	$insertInfoParam = array(':gebruikersnaam' => $username, ':bank' => $bank, ':rekeningnummer' => $banknumber, ':controleOptie' => $verificationMethod, ':creditcardnumber' => $creditcardnumber);
 
-	$melding = handlequery("INSERT INTO Verkoper VALUES(:gebruikersnaam, :bank, :rekeningnummer, :controleOptie, :creditcardnumber)", $insertInfoParam);
+    $username = 'testnaam';
+    $bank = $_SESSION['bank'];
+    $banknumber = $_SESSION['banknumber'];
+    $verificationMethod = $_SESSION['verificationMethod'];
+    $creditcardnumber = $_SESSION['creditcardnumber'];
 
-	$parameters = array(':username' => "$username");
-	handleQuery("UPDATE Gebruiker
+    $insertInfoParam = array(':gebruikersnaam' => $username, ':bank' => $bank, ':rekeningnummer' => $banknumber, ':controleOptie' => $verificationMethod, ':creditcardnumber' => $creditcardnumber);
+
+    $melding = handlequery("INSERT INTO Verkoper VALUES(:gebruikersnaam, :bank, :rekeningnummer, :controleOptie, :creditcardnumber)", $insertInfoParam);
+
+    $parameters = array(':username' => "$username");
+    handleQuery("UPDATE Gebruiker
 				SET soortGebruiker = 2 
 				WHERE gebruikersnaam = :username", $parameters);
 
-	//header('Refresh:0; url=./user.php');
-	$_SESSION["error_upgrade"] = ' ';
+    $_SESSION["error_upgrade"] = ' ';
+    header("Location: ./user.php");
+    //echo '<script>window.location="./user.php";</script>';
 }
 
 function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLocationElse, $randomVerificationCode){
