@@ -24,9 +24,10 @@
 
         <div class="row row-right">
             <?php
-            echo '<p>'. $message_login .'</p>';
-
             require_once './form-login.php';
+            if (isset($message_login)){
+                echo '<p class="error error-warning">' . $message_login . '</p>';
+            }
             ?>
         </div>
     </div>

@@ -1,16 +1,15 @@
 <?php
 require_once './db.php';
 
-
 $required = array('firstname', 'lastname', 'adres1', 'postalcode', 'residence', 'country', 'phonenumber', 'birthdate', 'secretanswer'); 
-$fields = array('firstname', 'lastname', 'adres1', 'adres2', 'postalcode', 'residence', 'country', 'phonenumber', 'birthdate', 'secretquestion', 'secretanswer');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {     
-    if (isset($_POST['firstname'])) { // fix deze nog
-    	insertRegistrationinfoInDB();
-    } else {
-    	$message_registration = "gebruikersnaam of wachtwoord is niet ingevoerd";
-    }
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+	if (fieldsFilledIn($required)){
+		insertRegistrationinfoInDB();
+		$message_registration = insertRegistrationinfoInDB();
+	} else {
+		$message_registration = "U moet alle velden invullen.";
+	}
 }
 
 echo '

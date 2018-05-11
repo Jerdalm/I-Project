@@ -15,8 +15,8 @@ if (isset($_POST['submit-mail'])){
 		if (checkEmailUnique($_POST['email'])) {
 			// echo 'aanwezig';
 			// die();
-		    $_SESSION['email-registration'] = $_POST['email'];
-		    sendCode($_POST['email'], $subject, $body, $headerLocationIf, $headerLocationElse, $randomVerificationCode);
+			$_SESSION['email-registration'] = $_POST['email'];
+			sendCode($_POST['email'], $subject, $body, $headerLocationIf, $headerLocationElse, $randomVerificationCode);
 		} else {
 			$message_registration = 'Er bestaat al een account met dit e-mailadres.';
 		}
@@ -28,12 +28,12 @@ if (isset($_POST['submit-mail'])){
 
 echo '
 <form method="post" class="form-steps">
-    <div class="form-group">
-        <label for="inputEmail">E-mail</label>
-        <input type="textarea" class="form-control" name="email" id="inputEmail">
-    </div>
+<div class="form-group">
+<label for="inputEmail">E-mail</label>
+<input type="textarea" class="form-control" name="email" id="inputEmail">
+</div>
 
-    <button type="submit" name="submit-mail" value="send-code" class="btn btn-primary btn-sm">Code sturen</button>
+<button type="submit" name="submit-mail" value="send-code" class="btn btn-primary btn-sm">Code sturen</button>
 </form>
 ';
 

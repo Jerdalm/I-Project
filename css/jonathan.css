@@ -118,6 +118,7 @@ pre{
 }
 
 .error-warning{
+	margin-top: 10px;
 	display: inline-block;
 	color: red;
 }
