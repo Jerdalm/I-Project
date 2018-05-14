@@ -41,13 +41,11 @@ foreach ($productdata as $item) {
     <div>
         <div class="row">
             <div class="col-lg-6 p-3 mb-2 bg-secondary text-white" style="text-align: center">
-                <figure class="figure" style="position: relative;
-                        text-align: center;
-                        ">
+                <figure class="figure" style="position: relative; text-align: center;">
                     <img src="media/WatchTestJEREMY.jpg" width="400px" height="200px" alt="..."
                          class="figure-img img-fluid rounded">
-
-                    <img src="media/WatchTestJEREMY.jpg" alt="..." class="col-lg-2 col-md-offset-1 rounded">   //afbeelding vanuit de webserver moet nog ingevoerd worden
+<!--                    afbeelding vanuit de webserver moet nog ingevoerd worden-->
+                    <img src="media/WatchTestJEREMY.jpg" alt="..." class="col-lg-2 col-md-offset-1 rounded">
                     <img src="media/WatchTestJEREMY.jpg" alt="..." class="col-lg-2 col-md-offset-1 rounded">
                     <img src="media/WatchTestJEREMY.jpg" alt="..." class="col-lg-2 col-md-offset-1 rounded">
 
@@ -107,10 +105,15 @@ Order By 2 desc
 
             <?php
             $bidAmount = "";
-           $HighestBid = handlequery("select max(B.bodbedrag) from Bod B");
-
+            $HighestBid = handlequery("select max(B.bodbedrag) from Bod B");
+//echo $HighestBid;
+echo '<pre>';
+var_dump($HighestBid);
+echo '</pre>';
+die();
             if(isset($_POST['submit-bidamount']) && !empty($_POST['bidAmount'])) {
-                if($_POST['bidAmount']>$HighestBid){
+                $HighestBid = handlequery("select max(B.bodbedrag) from Bod B");
+                if ($_POST['bidAmount'] > $HighestBid) {
 
                     $bidAmount = $_POST['bidAmount'];
                     $username = "gebruiker";
@@ -119,11 +122,10 @@ Order By 2 desc
 
 
                     $Parameters = array
-                   (":productID" => 1, ':bidAmount' => "$bidAmount", ":username" => $username, ":bidDay" => $bidDay, ":bidTime" => $bidTime);
-                    
-                    handlequery("INSERT INTO Bod (voorwerpnummer,bodbedrag,gebruikersnaam,bodDag,bodTijdstip) VALUES(:productID,:bidAmount, :username,:bidDay,:bidTime)",$Parameters);
-                }
-                else{
+                    (":productID" => 1, ':bidAmount' => "$bidAmount", ":username" => $username, ":bidDay" => $bidDay, ":bidTime" => $bidTime);
+
+                    handlequery("INSERT INTO Bod (voorwerpnummer,bodbedrag,gebruikersnaam,bodDag,bodTijdstip) VALUES(:productID,:bidAmount, :username,:bidDay,:bidTime)", $Parameters);
+                } else {
                     echo "Sorry, u moet een hoger bedrag invoeren.";
                 }
             }
