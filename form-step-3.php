@@ -2,9 +2,6 @@
 require_once './db.php';
 
 if (isset($_POST['username'])){
-    // echo 'kutje';
-    // echo checkUsernamePassword($_POST['username'], $_POST['password'], $_POST['password-repeat']);
-    // die();
     if (checkIfFieldsFilledIn()) {
         
         $_SESSION['username'] = $_POST['username']; 
@@ -14,7 +11,6 @@ if (isset($_POST['username'])){
         checkUsernamePassword($_POST['username'], $_POST['password'], $_POST['password-repeat']);        
         $message_registration = checkUsernamePassword($_POST['username'], $_POST['password'], $_POST['password-repeat']);
     } else {
-        
         $message_registration = "Gebruikersnaam of wachtwoord is niet ingevoerd";
     }
 }

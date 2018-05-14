@@ -4,11 +4,27 @@
 		"selected_items":
 		[
 			[
-				"mess",
-				"message_login"
+				"margin",
+				"margin-right\tproperty"
+			],
+			[
+				"flex",
+				"flex-direction\tproperty"
+			],
+			[
+				"messa",
+				"message_registration"
 			],
 			[
 				"message",
+				"message_registration"
+			],
+			[
+				"filter",
+				"filter_var"
+			],
+			[
+				"mess",
 				"message_login"
 			],
 			[
@@ -166,10 +182,6 @@
 			[
 				"rand",
 				"randomVerificationCode"
-			],
-			[
-				"margin",
-				"margin-top"
 			],
 			[
 				"sessio",
@@ -330,10 +342,6 @@
 			[
 				"cont",
 				"content"
-			],
-			[
-				"flex",
-				"flex-wrap"
 			],
 			[
 				"f",
@@ -506,19 +514,38 @@
 			[
 				"scet",
 				"section2"
-			],
-			[
-				"pagina1",
-				"pagina1_blue"
-			],
-			[
-				"backgor",
-				"background-size"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "css/jonathan.css",
+			"settings":
+			{
+				"buffer_size": 2091,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "css/stylesheet_Edje.css",
+			"settings":
+			{
+				"buffer_size": 326,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "user-details.php",
+			"settings":
+			{
+				"buffer_size": 4400,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -578,21 +605,20 @@
 	"expanded_folders":
 	[
 		"/C/xampp/htdocs/I-Project",
-		"/C/xampp/htdocs/I-Project/css",
-		"/C/xampp/htdocs/I-Project/mechanic"
+		"/C/xampp/htdocs/I-Project/css"
 	],
 	"file_history":
 	[
+		"/C/xampp/htdocs/I-Project/form-step-3.php",
+		"/C/xampp/htdocs/I-Project/mechanic/functions.php",
+		"/C/xampp/htdocs/I-Project/form-step-1.php",
 		"/C/xampp/htdocs/I-Project/user.php",
 		"/C/xampp/htdocs/I-Project/css/jonathan.css",
 		"/C/xampp/htdocs/I-Project/form-login.php",
 		"/C/xampp/htdocs/I-Project/form-step-2.php",
-		"/C/xampp/htdocs/I-Project/mechanic/functions.php",
 		"/C/xampp/htdocs/I-Project/login.php",
 		"/C/xampp/htdocs/I-Project/form-step-4.php",
 		"/C/xampp/htdocs/I-Project/mechanic/test.php",
-		"/C/xampp/htdocs/I-Project/form-step-3.php",
-		"/C/xampp/htdocs/I-Project/form-step-1.php",
 		"/C/xampp/htdocs/I-Project/header.php",
 		"/C/xampp/htdocs/I-Project/footer.php",
 		"/C/xampp/htdocs/I-Project/logout.php",
@@ -714,7 +740,7 @@
 	],
 	"find":
 	{
-		"height": 76.0
+		"height": 70.641509434
 	},
 	"find_in_files":
 	{
@@ -729,6 +755,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"sendcode",
+			"sendRegistrationCode(",
+			"sendRegistrationCode",
+			"Geen geldig e-mailadres.",
 			"session_start()",
 			"insertInfo",
 			"insertinto",
@@ -798,8 +828,105 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "css/jonathan.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2091,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2029,
+								2029
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/CSS/CSS.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2196.22641509,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "css/stylesheet_Edje.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 326,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								117,
+								117
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/CSS/CSS.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "user-details.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4400,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								781,
+								781
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
 			]
 		}
 	],

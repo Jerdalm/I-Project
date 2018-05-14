@@ -132,6 +132,14 @@ function checkEmailUnique($emailCheck){
 function is_Char_Only($Invoer){
 	return (bool)(preg_match("/^[a-zA-Z ]*$/", $Invoer)) ;
 }
+
+function contains_number($string){
+	return 1 === preg_match('~[0-9]~', $string);
+}
+
+function contains_capital($string){
+	return preg_match('/[A-Z]/', $string);
+}
 		
 function showLoginMenu(){
 	$htmlLogin = ' ';
@@ -155,57 +163,37 @@ function generateRandomCode(){
 	return uniqueid(rand(100000,900000),true);
 }
 
-function sendRegistrationCode($emailCheck){
-	// $randomVerificsendRegistrationCodeationCode = generateRandomCode();
-	$randomVerificationCode = 111111;
-
-	$to      = $emailCheck;
-	$subject = 'Account activatie';
-	$message_body = '
-	Beste,
-
-	Bedankt voor het registreren!
-
-	Voer deze code in op de site:
-	' . $randomVerificationCode .'.';
-
-	$randomVerificationCode_hashed = md5($randomVerificationCode);	
-	
-	if (checkEmailUnique($emailCheck)){
-		if (filter_var($emailCheck, FILTER_VALIDATE_EMAIL)) {
-			setCodeInDB($emailCheck, $randomVerificationCode_hashed);
-			sendMail($to, $subject, $message_body, $message);
-			header("Location: ./user.php?step=2");		        
-			$message_registration0 = 'Er is een email met de verificatiecode naar het opgegeven emailadres gestuurd.';
-		} else {
-			header("Location: ./user.php");
-			$message_registration = 'Geen geldig e-mailadres.';
-		}
-	} else {
-		header("Location: ./user.php");
-		$message_registration = 'Er bestaat al een account met dit e-mailadres.';
-	}
-	return $message_registration;
-}  
-
 function checkUsernamePassword($username, $password, $passwordrepeat){
-	if ($password != $passwordrepeat) {
-		$message_registration = "De wachtwoorden komen niet overeen";
+	$getUserParameters = array(':gebruikersnaam' => $username);
+	$getUserQuery =  handleQuery("SELECT * FROM Gebruiker WHERE gebruikersnaam = :gebruikersnaam", $getUserParameters);
+
+	if(count($getUserQuery) > 0) {
+		$message_registration = "Uw ingevoerde gebruikersnaam bestaat al";
 	} else {		   
-		$getUserParameters = array(':gebruikersnaam' => $username);
-		$getUserQuery =  handleQuery("SELECT * FROM Gebruiker WHERE gebruikersnaam = :gebruikersnaam", $getUserParameters);
+		if ($password == $passwordrepeat) {
 
-		if(count($getUserQuery) > 0) {
-			$message_registration = "Uw ingevoerde gebruikersnaam bestaat al";
+			if (strlen($password) >= 4 || strlen($password) <= 16 && contains_number($password) && contains_capital($password)) {
+					$password_hashed = password_hash($password , PASSWORD_DEFAULT);
+					$_SESSION['username'] = $username;
+					$_SESSION['password'] = $password_hashed;
+					header("Location: ./user.php?step=4");											
+			} else if (strlen($password) < 4 || strlen($password) > 16 && !preg_match('/[A-Z]/', $password) && 0 === preg_match('~[0-9]~', $password)) {
+				$message_registration = "Uw wachtwoord moet minstens 4 tot maximaal 16 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 hoofdletter bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";	
+			} else if (strlen($password) < 4 || strlen($password) > 16 && !preg_match('/[A-Z]/', $password)) {
+				$message_registration = "Uw wachtwoord moet minstens 4 tot maximaal 16 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 hoofdletter bevatten.";	
+			} else if (strlen($password) < 4 || strlen($password) > 16 && 0 === preg_match('~[0-9]~', $password)) {
+				$message_registration = "Uw wachtwoord moet minstens 4 tot maximaal 16 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";	
+			} else if (!preg_match('/[A-Z]/', $password) && 0 === preg_match('~[0-9]~', $password)) {
+				$message_registration = "Uw wachtwoord moet minimaal 1 hoofdletter bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";
+			} else if (!preg_match('/[A-Z]/', $password)) {
+				$message_registration = "Uw wachtwoord moet minimaal 1 hoofdletter bevatten.";
+			} else if (strlen($password) < 4 && strlen($password) > 16){
+				$message_registration = "Uw wachtwoord moet minstens 4 tot maximaal 16 tekens bevatten.";
+			} else if (0 === preg_match('~[0-9]~', $password)) {
+				$message_registration = "Uw wachtwoord moet minimaal 1 cijfer bevatten.";
+			}
 		} else {
-
-			$password_hashed = password_hash($password , PASSWORD_DEFAULT);
-
-			$_SESSION['username'] = $username;
-			$_SESSION['password'] = $password_hashed;
-
-			$_SESSION["message_registration"] = '';
-			header("Location: ./user.php?step=4");
+			$message_registration = "De wachtwoorden komen niet overeen";
 		}
 	}
 	return $message_registration;

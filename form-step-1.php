@@ -13,10 +13,12 @@ $headerLocationElse = "user.php";
 if (isset($_POST['submit-mail'])){
 	if (checkIfFieldsFilledIn()) {
 		if (checkEmailUnique($_POST['email'])) {
-			// echo 'aanwezig';
-			// die();
-			$_SESSION['email-registration'] = $_POST['email'];
-			sendCode($_POST['email'], $subject, $body, $headerLocationIf, $headerLocationElse, $randomVerificationCode);
+			if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+				$_SESSION['email-registration'] = $_POST['email'];
+				sendCode($_POST['email'], $subject, $body, $headerLocationIf, $headerLocationElse, $randomVerificationCode);
+			} else {
+				$message_registration = 'Dit is geen geldig e-mailadres';
+			}
 		} else {
 			$message_registration = 'Er bestaat al een account met dit e-mailadres.';
 		}
