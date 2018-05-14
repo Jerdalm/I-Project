@@ -111,9 +111,9 @@ if (isset($_GET['zoekenGebruiker'])){
 							<label> Beschrijving </label>
 							<input type="text" name="beschrijving" value="<?php echo $voorwerpen[0]['beschrijving'] ?>"><br>
 							<label> Startprijs </label>
-							<input type="text" name="startprijs" value="<?php echo $voorwerpen[0]['startprijs'] ?>"><br>
+							<input type="number" name="startprijs" value="<?php echo $voorwerpen[0]['startprijs'] ?>"><br>
 							<label> Betalingswijze </label>
-							<input type="text" name="betalingswijze" value="<?php echo $voorwerpen[0]['betalingswijze'] ?>"><br>
+							<input type="number" name="betalingswijze" value="<?php echo $voorwerpen[0]['betalingswijze'] ?>"><br>
 							<label> Betalingsinstructie </label>
 							<input type="text" name="betalingsinstructie" value="<?php echo $voorwerpen[0]['betalingsinstructie'] ?>"><br>
 							<label> Plaatsnaam </label>
@@ -141,21 +141,56 @@ if (isset($_GET['zoekenGebruiker'])){
 							<label> veilingGesloten</label>
 							<input type="text" name="veilingGesloten" value="<?php echo $voorwerpen[0]['veilingGesloten'] ?>"><br>
 							<label>verkoopPrijs</label>
-							<input type="text" name="verkoopPrijs" value="<?php echo $voorwerpen[0]['verkoopPrijs'] ?>"><br>
+							<input type="number" name="verkoopPrijs" value="<?php echo $voorwerpen[0]['verkoopPrijs'] ?>"><br>
 							<input class="cta-orange" type="submit" name="verzenden" value="verzenden">
 
 						</form>
 
 						<?php }
- 						// nog niet helemaal werkend
+ 						// nog niet helemaal werkend. dit is de query om de tabel te updaten.
 						if (isset($_GET['verzenden'])) {
 
-							$parametersUpdate = array(':titel' => $_GET['titel'] , ':beschrijving' => $_GET['beschrijving'] , ':startprijs' => $_GET['startprijs'] , ':betalingswijze' => $_GET['betalingswijze'], ':betalingsinstructie' => $_GET['betalingsinstructie'] , ':plaatsnaam' => $_GET['plaatsnaam'] , ':land' => $_GET['land'], ':looptijd' => $_GET['looptijd'],':looptijdbeginDag' => $_GET['looptijdbeginDag'],':looptijdbeginTijdstip' => $_GET['looptijdbeginTijdstip'] , ':verzendkosten' => $_GET['verzendkosten'], ':verzendinstructies' => $_GET['verzendinstructies'], ':verkoper' => $_GET['verkoper'],':koper' => $_GET['koper'],':looptijdeindeDag' => $_GET['looptijdeindeDag'], ':looptijdeindeTijdstip' => $_GET['looptijdeindeTijdstip'] ,':veilingGesloten' => $_GET['veilingGesloten'],':verkoopPrijs' => $_GET['verkoopPrijs']);
+							$parametersUpdate = array(
+								':titel' => $_GET['titel'], 
+								':beschrijving' => $_GET['beschrijving'],
+								':startprijs' => $_GET['startprijs'],
+								':betalingswijze' => $_GET['betalingswijze'],
+								':betalingsinstructie' => $_GET['betalingsinstructie'],
+								':plaatsnaam' => $_GET['plaatsnaam'],
+								':land' => $_GET['land'],
+								':looptijd' => $_GET['looptijd'],
+								':looptijdbeginDag' => $_GET['looptijdbeginDag'],
+								':looptijdbeginTijdstip' => $_GET['looptijdbeginTijdstip'],
+								':verzendkosten' => $_GET['verzendkosten'],
+								':verzendinstructies' => $_GET['verzendinstructies'],
+								':verkoper' => $_GET['verkoper'],
+								':koper' => $_GET['koper'],
+								':looptijdeindeDag' => $_GET['looptijdeindeDag'],
+								':looptijdeindeTijdstip' => $_GET['looptijdeindeTijdstip'],
+								':veilingGesloten' => $_GET['veilingGesloten'],
+								':verkoopPrijs' => $_GET['verkoopPrijs']);
 
 
-							handlequery("UPDATE Voorwerp SET titel = :titel , beschrijving = :beschrijving , startprijs = :startprijs , betalingswijze = :betalingswijze , betalingsinstructie = :betalingsinstructie, plaatsnaam = :plaatsnaam, land = :land , looptijd = :looptijd , looptijdbeginDag = :looptijdbeginDag , looptijdbeginTijdstip = :looptijdbeginTijdstip , verzendkosten = :verzendkosten , verzendinstructies = :verzendinstructies , verkoper = :verkoper , koper = :koper , looptijdeindeDag = :looptijdeindeDag , looptijdeindeTijdstip = :looptijdeindeTijdstip , veilingGesloten = :veilingGesloten , verkoopPrijs = :verkoopPrijs WHERE titel = :titel  ",$parametersUpdate);
-
-
+							handlequery("UPDATE Voorwerp SET
+								titel = :titel,
+								beschrijving = :beschrijving,
+								startprijs = CONVERT(NUMERIC(8,2), :startprijs),
+								betalingswijze = CONVERT(INT, :betalingswijze),
+								betalingsinstructie = :betalingsinstructie,
+								plaatsnaam = :plaatsnaam,
+								land = :land,
+								looptijd = :looptijd,
+								looptijdbeginDag = :looptijdbeginDag,
+								looptijdbeginTijdstip = :looptijdbeginTijdstip,
+								verzendkosten = CONVERT(NUMERIC(5,2), :verzendkosten),
+								verzendinstructies = :verzendinstructies,
+								verkoper = :verkoper,
+								koper = :koper,
+								looptijdeindeDag = :looptijdeindeDag,
+								looptijdeindeTijdstip = :looptijdeindeTijdstip,
+								veilingGesloten = :veilingGesloten,
+								verkoopPrijs = CONVERT(NUMERIC(8,2), :verkoopPrijs)",
+								$parametersUpdate);
 						}
 
 						?>
