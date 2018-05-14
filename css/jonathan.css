@@ -38,8 +38,12 @@ button{
 	width: 50%;
 }
 
-#login-registration .row-left, #login-registration .row-right{
-	float: left;
+
+#login-registration .container, .user-details .container{
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+
 }
 
 footer{
@@ -105,7 +109,7 @@ pre{
 
 .form-steps > *, #login-form > *{
 	float: left;
-	width: 90%;
+	width: 100%;
 }
 
 .form-steps{
@@ -118,6 +122,20 @@ pre{
 }
 
 .error-warning{
+	margin-top: 10px;
 	display: inline-block;
 	color: red;
+}
+
+@media screen and (max-width: 500px){
+	#login-registration .container, .user-details .container{
+		padding: 0 20px;
+		flex-direction: column;
+	}
+
+	#login-registration .container .row, .user-details .container .row{
+		width: 100%;
+		margin-left: 0px;
+		margin-right: 0px;
+	}
 }

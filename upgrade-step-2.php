@@ -1,9 +1,14 @@
 <?php
 require_once './head.php';
 require_once './db.php';
-// op regel 15 moet insertupgradeinfoindb in de functie validatecode worden gezet, zo word eerste de code gecheckt en dan wordt de data in de database gezet
+
+// na het upgraden van de gebruiker wordt de gebruiker niet doorgestuurd als er voor post gekozen is
+// hij wordt wel doorgestuurd als de gebruiker voor credit card kiest
+
+$state = false; // boolean voor debuggen van de header in de insertUpgradeinfoInDb
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if($_SESSION['verificationMethod'] == '4') {
+    if($_SESSION['verificationMethod'] == 'Post') {
         if (isset($_POST['creditcardnumber'])) {
             $_SESSION['creditcardnumber'] = $_POST['creditcardnumber'];
         } else {
@@ -11,16 +16,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         if (isset($_POST['upgradeCode'])) {
+
             $_SESSION['upgradeCode'] = $_POST['upgradeCode'];
-            validateCode($_POST['upgradeCode'], $_SESSION['email-registration']);
-            insertUpgradeinfoInDB();
+
+            if (validateCode($_SESSION['upgradeCode'], $_SESSION['email-upgrade'])) {
+                $validateCodeCorrect = true;
+                insertUpgradeinfoInDB();
+            } else {
+                $_SESSION["error_upgrade"] = 'upgradeCode komt niet overeen met de toegestuurde code';
+                header("Location: ./upgrade-user.php?step=2");
+            }
         } else {
             $_SESSION["error_upgrade"] = 'upgradeCode niet ingevoerd';
             header("Location: ./upgrade-user.php?step=2");
         }
     }
 
-    if($_SESSION['verificationMethod'] == '5') {
+    if($_SESSION['verificationMethod'] == 'Credit Card') {
         if (isset($_POST['creditcardnumber'])) {
             $_SESSION['creditcardnumber'] = $_POST['creditcardnumber'];
             insertUpgradeinfoInDB();
@@ -31,25 +43,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-
-
-if($_SESSION['verificationMethod'] == '4') {
+if($_SESSION['verificationMethod'] == 'Post') {
     echo '
     <form method="post">
         <div class="form-group">
-            <label for="upgrade-code">uw code</label>
+            <label for="upgrade-code">Uw code</label>
             <input type="textarea" class="form-control" name="upgradeCode" id="upgrade-code">
         </div>
         
         <div class="form-group">
-            <label for="Creditcardnumber"> creditcardnummer (optioneel) </label>
+            <label for="Creditcardnumber"> Creditcardnummer (optioneel) </label>
             <input type="textarea" class="form-control" name="creditcardnumber" id="Creditcardnumber">
         </div>
     
          <button type="submit" name="code-button" class="btn btn-primary btn-sm">Code invoeren</button>
     </form>
 ';
-} elseif($_SESSION['verificationMethod'] == '5') {
+} elseif($_SESSION['verificationMethod'] == 'Credit Card') {
     echo '
     <form method="post">
         <div class="form-group">
@@ -58,7 +68,7 @@ if($_SESSION['verificationMethod'] == '4') {
         </div>
         
     
-         <button type="submit" name="creditcardnumber-button" class="btn btn-primary btn-sm">doorgaan</button>
+         <button type="submit" name="creditcardnumber-button" class="btn btn-primary btn-sm">Doorgaan</button>
     </form>
 ';
 }

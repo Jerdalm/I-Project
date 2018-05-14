@@ -13,10 +13,12 @@ $headerLocationElse = "user.php";
 if (isset($_POST['submit-mail'])){
 	if (checkIfFieldsFilledIn()) {
 		if (checkEmailUnique($_POST['email'])) {
-			// echo 'aanwezig';
-			// die();
-		    $_SESSION['email-registration'] = $_POST['email'];
-		    sendCode($_POST['email'], $subject, $body, $headerLocationIf, $headerLocationElse, $randomVerificationCode);
+			if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+				$_SESSION['email-registration'] = $_POST['email'];
+				sendCode($_POST['email'], $subject, $body, $headerLocationIf, $headerLocationElse, $randomVerificationCode);
+			} else {
+				$message_registration = 'Dit is geen geldig e-mailadres';
+			}
 		} else {
 			$message_registration = 'Er bestaat al een account met dit e-mailadres.';
 		}
@@ -28,12 +30,12 @@ if (isset($_POST['submit-mail'])){
 
 echo '
 <form method="post" class="form-steps">
-    <div class="form-group">
-        <label for="inputEmail">E-mail</label>
-        <input type="textarea" class="form-control" name="email" id="inputEmail">
-    </div>
+<div class="form-group">
+<label for="inputEmail">E-mail</label>
+<input type="textarea" class="form-control" name="email" id="inputEmail">
+</div>
 
-    <button type="submit" name="submit-mail" value="send-code" class="btn btn-primary btn-sm">Code sturen</button>
+<button type="submit" name="submit-mail" value="send-code" class="btn btn-primary btn-sm">Code sturen</button>
 </form>
 ';
 
