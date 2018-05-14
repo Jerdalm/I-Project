@@ -15,7 +15,6 @@ $messageCode = $message . $randomPassword;
 
 ?>
 
-
 <main class="user-details">
     <div class="container">
         

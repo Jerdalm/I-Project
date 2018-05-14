@@ -240,6 +240,11 @@ function insertRegistrationinfoInDB(){
 			':vraag' => $vraag, 
 			':antwoordtekst' => $antwoordtekst);
 
+		echo '<pre>';
+		var_dump($insertInfoParam);
+		echo '</pre>';
+		die();
+
 		$insertInfoQuery = handlequery("INSERT INTO Gebruiker VALUES(:gebruikersnaam, 
 			:voornaam, 
 			:achternaam, 
@@ -487,4 +492,3 @@ function validateCode($inputCode, $email){
 	}
 	return $state;
 }
-
