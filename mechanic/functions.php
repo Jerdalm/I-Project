@@ -279,10 +279,33 @@ function setCodeInDB($email, $hashed_code){
 	}
 }
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+	/* Deze functie stuurt een verificatiecode naar de opgegeven emaildres */
+	function sendCode($randomNumber, $email){
+	    $_SESSION['active'] = 0; //0 until user activates their account with verify.php
+	    $_SESSION['message'] =
+	            
+	             "Er is een verficatiecode naar $email gestuurd, 
+	              voer de code in om het account te activeren!";
+	    
+	    $to      = $email;
+	    $subject = 'Account activatie';
+	    $message_body = '
+	    Beste,
+=======
+	function sendMail($to, $subject, $body, $message = "Fout"){
+		$emailTo      = $to;
+	    $subjectEmail = $subject;
+	    $message_body = $body;
+
+>>>>>>> a63c69ba4ee1635cdc539b699cfdeefbee5bcf8e
+=======
 function loginControl($email, $wachtwoord){
 
 	$emailParam = array(':mailadres'=>$email);
 	$gebruiker = handleQuery("SELECT * FROM Gebruiker WHERE mailadres=:mailadres", $emailParam);
+>>>>>>> 9a85f69325f0ef8a22afddbdf5105cfe6cff7731
 
 	if (count($gebruiker) == 0) {
 		$message_login = 'Er bestaat geen account met het opgegeven mailadres';
@@ -336,6 +359,137 @@ function insertUpgradeinfoInDB(){
 				SET soortGebruiker = 2 
 				WHERE gebruikersnaam = :username", $parameters);
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+    }
+	
+	/* Deze functie returnt de verschillende rubrieken voor in het submenu */
+	function showMenuRubrieken(){
+	$html = '';
+	$rubrieken = handlequery("SELECT * from Rubriek where Rubriek.rubriek is NULL");
+
+	foreach($rubrieken as $rubriek){
+	$html .= '<a class="dropdown-item" href="overview.php?rub='.$rubriek['rubrieknummer'].'">'.$rubriek['rubrieknaam'].'</a>';
+	}
+	return $html;
+	}
+	
+	/* Deze functie returnt de rubriekenlijst in submenu's */
+	function showRubriekenlist(){
+	
+	$html = '<ul class="list-group">';
+	$rubrieken = FetchSelectData("EXEC SHOW_RUBRIEK_TREE @rubriek = null");
+	$previouslevel = $rubrieken[0]['Lvl'];
+	
+	foreach($rubrieken as $rubriek){
+	
+	$rubriekparameters = array(':rubriek' => $rubriek['rubrieknummer']);
+	$subrubrieken = handlequery("SELECT * from Rubriek where Rubriek.rubriek = :rubriek",$rubriekparameters);
+	
+	if($rubriek['Lvl'] < $previouslevel){
+	$html .= '</ul>';
+	}
+	
+	if($subrubrieken){
+	$html .= '<li class="list-group-item d-flex justify-content-between align-items-center">
+	<a href="#'.$rubriek['rubrieknummer'].'" data-toggle="collapse" aria-expanded="false">'.$rubriek['rubrieknaam'].'
+	<span class="badge badge-primary badge-pill">14</span>
+	</a></li>
+	<ul class="collapse list-unstyled" id="'.$rubriek['rubrieknummer'].'">';
+	}
+	else{
+	$html .= 
+	'<li class="list-group-item d-flex justify-content-between align-items-center ">
+	<a href="overview.php?rub='.$rubriek['rubrieknummer'].'">'.$rubriek['rubrieknaam'].'
+	<span class="badge badge-primary badge-pill">14</span>
+	</a></li>';
+	}
+	
+	$Previouslevel = $rubriek['Lvl'];
+	}
+	$html .= '</ul>';
+	return $html;
+	}
+	
+	
+	/* Deze functie toont alle producten */
+	function showProducts($carrousel = false, $query = false){
+	
+	if($query == false){
+		$query = "SELECT * from currentAuction";
+	}
+	
+	$producten = handlequery($query);
+	$beforeInput = '';
+	$afterInput = '';
+	$html = '';
+	$itemcount = 0;
+	
+	if($carrousel){
+		$beforeFirstInput = '<div class="carousel-item col-lg-4 col-md-6 col-sm-6 col-xs-12 active">';
+		$beforeInput = '<div class="carousel-item col-lg-4 col-md-6 col-sm-6 col-xs-12">';
+		$afterInput = '</div>';
+	}
+	else{
+		$beforeInput = '<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">';
+		$afterInput = '</div>';
+	}
+	
+	foreach($producten as $product)
+	{
+		$itemcount++;
+		if(!$product['bodbedrag']){
+			$product['bodbedrag'] = 0;
+		}
+		
+		if($carrousel){
+			if($itemcount == 1){
+				$html .= $beforeFirstInput;
+			}
+			else{$html .= $beforeInput;}
+		}
+		else{
+		$html .= $beforeInput;
+		}
+		
+		$timediff = calculateTimeDiffrence(date('Y-m-d h:i:s'),
+		$product['einddag'].' '.$product['eindtijdstip']
+		);
+
+		$html .= '
+			   <div class="product card">
+					  <img class="card-img-top img-fluid" src="img/products/'.$product['bestand'].'" alt="">
+					  <div class="card-body">
+						 <h4 class="card-title">
+							'.$product['titel'].'
+						 </h4>
+						 <h5 class="product-data"><span class="time">'.$timediff.'</span>|<span class="price">&euro;'.$product['bodbedrag'].'</span></h5>
+						 <a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a>
+					  </div>
+				   </div>
+			';
+		$html .= $afterInput;
+	}
+	/* Returns product cards html */
+	return $html;
+}
+	
+	/* Deze functie berekend het verschil tussen 2 data */
+	function calculateTimeDiffrence($timestamp1, $timestamp2){
+
+	$datetime1 = new DateTime($timestamp1);//start time
+	$datetime2 = new DateTime($timestamp2);//end time
+	$interval = $datetime1->diff($datetime2);
+
+	return $interval->format('%d dagen <br> %H:%i:%s uur');
+=======
+>>>>>>> a63c69ba4ee1635cdc539b699cfdeefbee5bcf8e
+} 
+?>
+
+
+
+=======
     $_SESSION["error_upgrade"] = ' ';
     header("Location: ./user.php");
     //echo '<script>window.location="./user.php";</script>';
@@ -376,3 +530,4 @@ function validateCode($inputCode, $email){
 	}
 	return $state;
 }
+>>>>>>> 9a85f69325f0ef8a22afddbdf5105cfe6cff7731

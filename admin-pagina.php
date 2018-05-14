@@ -34,6 +34,7 @@ if (isset($_GET['zoekenGebruiker'])){
 			<div class="col-lg-2">
 			</div>
 			<div class="artikelnummer">
+			<!-- form om te zoeken op artikelnummer -->
 				<div class="col-lg-4">
 					<form class="form-group" method="GET" action=""> 
 						<input type="number" name="voorwerp" placeholder="Voorwerpnummer"> <br>
@@ -46,8 +47,8 @@ if (isset($_GET['zoekenGebruiker'])){
 			</div>
 
 			<div class="gebruiker">
+					<!-- for om te zoeken op gebruiker -->
 				<div class="col-lg-4">
-
 					<form class="form-group" method="GET" action=""> 
 						<input type="text" name="gebruiker" placeholder="Gebruikersnaam"> <br>
 						<input class="cta-orange" name="zoekenGebruiker" type="submit" value="Zoeken">
@@ -61,6 +62,8 @@ if (isset($_GET['zoekenGebruiker'])){
 
 		if (isset($_GET['zoekenGebruiker'])){ ?>
 
+
+		<!-- In deze tabel word de data geshowed en word er vervolgens gekeken of er op word geklikt. -->
 		<table class="table"> 
 			<thead>
 				<tr>
@@ -99,7 +102,9 @@ if (isset($_GET['zoekenGebruiker'])){
 
 
 						if (isset($_GET['voorwerpForm'])) { ?>
-	
+
+						<!-- Voor nu op deze manier gedaan, kan met een foreach. Later nog naar kijken maar aangezien de tijdslimiet zo gedaan om geen tijd te verspillen. -->
+
 						<form class="form-group" method="GET" action=""> 
 							<label> Titel </label>
 							<input type="text" name="titel" value="<?php echo $voorwerpen[0]['titel'] ?>"> <br>
@@ -142,7 +147,7 @@ if (isset($_GET['zoekenGebruiker'])){
 						</form>
 
 						<?php }
-
+ 						// nog niet helemaal werkend
 						if (isset($_GET['verzenden'])) {
 
 							$parametersUpdate = array(':titel' => $_GET['titel'] , ':beschrijving' => $_GET['beschrijving'] , ':startprijs' => $_GET['startprijs'] , ':betalingswijze' => $_GET['betalingswijze'], ':betalingsinstructie' => $_GET['betalingsinstructie'] , ':plaatsnaam' => $_GET['plaatsnaam'] , ':land' => $_GET['land'], ':looptijd' => $_GET['looptijd'],':looptijdbeginDag' => $_GET['looptijdbeginDag'],':looptijdbeginTijdstip' => $_GET['looptijdbeginTijdstip'] , ':verzendkosten' => $_GET['verzendkosten'], ':verzendinstructies' => $_GET['verzendinstructies'], ':verkoper' => $_GET['verkoper'],':koper' => $_GET['koper'],':looptijdeindeDag' => $_GET['looptijdeindeDag'], ':looptijdeindeTijdstip' => $_GET['looptijdeindeTijdstip'] ,':veilingGesloten' => $_GET['veilingGesloten'],':verkoopPrijs' => $_GET['verkoopPrijs']);

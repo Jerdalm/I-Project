@@ -9,14 +9,18 @@ $head = <<<HEAD
 		<meta name="description" content="">
 		<meta name="author" content="">
 		
+		<script src="vendor/jquery/jquery.min.js"></script>
+		
 		<link rel="stylesheet" type="text/css" href="../I-Project/vendor/bootstrap/css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="../I-Project/vendor/bootstrap/css/bootstrap-grid.css">
 		<link rel="stylesheet" type="text/css" href="../I-Project/vendor/bootstrap/css/bootstrap-reboot.css">
 		<link rel="stylesheet" type="text/css" href="../I-Project/css/jonathan.css">
 		<link rel="stylesheet" type="text/css" href="../I-Project/css/style.css">
 		<link rel="stylesheet" type="text/css" href="../I-Project/css/stylesheet_Edje.css">
-		<link href="css/styles_kevin.css" rel="stylesheet">
-		 <script src="vendor/jquery/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="../I-Project/css/styles_kevin.css">
+		<link rel="stylesheet" type="text/css" href="../I-Project/css/mobile.css">
+		
+		
 		<title>EenmaalAndermaal</title>
 	</head>	
 HEAD;
