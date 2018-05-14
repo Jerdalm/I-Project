@@ -1,5 +1,5 @@
 <?php
-$_SESSION['logged-in'] = false;
+session_start();
 session_destroy();
 header("location: ./");
 ?>

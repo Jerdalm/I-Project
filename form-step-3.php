@@ -1,20 +1,36 @@
 <?php
-echo('
-<form method="post" action="nameAndPasswordCheck.php">
-    <div class="form-group">
-        <label for="id1"> gebruikersnaam </label>
-        <input type="textarea" class="form-control" name="name" id=id1>
-    </div>
-    <div class="form-group">
-        <label for="id2"> wachtwoord </label>
-        <input type="password" class="form-control" name="password" id=id2>
-    </div>
-    <div class="form-group">
-        <label for="id2"> herhaal wachtwoord </label>
-        <input type="password" class="form-control" name="passwordRepeat" id=id2>
-    </div>
+require_once './db.php';
 
-    <button type="submit" name="submitNaam" class="btn btn-primary btn-sm">Verzenden</button>
+if (isset($_POST['username'])){
+    if (checkIfFieldsFilledIn()) {
+        
+        $_SESSION['username'] = $_POST['username']; 
+        $_SESSION['password'] = $_POST['password'];
+        $_SESSION['password-repeat'] = $_POST['password-repeat'];
+        
+        checkUsernamePassword($_POST['username'], $_POST['password'], $_POST['password-repeat']);        
+        $message_registration = checkUsernamePassword($_POST['username'], $_POST['password'], $_POST['password-repeat']);
+    } else {
+        $message_registration = "Gebruikersnaam of wachtwoord is niet ingevoerd";
+    }
+}
+
+echo '
+<form method="post" class="form-steps" action="">
+<div class="form-group">
+<label for="registration-username">Gebruikersnaam</label>
+<input type="textarea" class="form-control" name="username" id="registration-username">
+</div>
+<div class="form-group">
+<label for="registration-password">Wachtwoord</label>
+<input type="password" class="form-control" name="password" id="registration-password">
+</div>
+<div class="form-group">
+<label for="password-repeat">Herhaal wachtwoord</label>
+<input type="password" class="form-control" name="password-repeat" id="password-repeat">
+</div>
+
+<button type="submit" name="submit-username-password" value="Register" class="btn btn-primary btn-sm">Verzenden</button>
 </form>
-');
+';
 ?>
