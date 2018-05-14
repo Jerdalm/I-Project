@@ -62,7 +62,7 @@ foreach ($productdata as $item) {
                     <div class="card bg-light mb-4">
                         <div class="card-body">
                             <table class="table">
-                    <?php 
+                    <?php
                     $bodData = handlequery("SELECT *
 from Bod
 Order By 2 desc
@@ -75,6 +75,7 @@ Order By 2 desc
                                     <th scope="col"><?= $Boditem['bodbedrag']?>€</th>
                                     <th scope="col"><?= $Boditem['gebruikersnaam']?></th>
                                     <th scope="col"><?= $Boditem['bodDag']?></th>
+                                    <th scope"col"><?=  $Boditem['bodTijdstip']?></th>
                                 </tr>
                                 </thead>
 
