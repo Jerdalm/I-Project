@@ -68,6 +68,7 @@ function handlequery($sql, $parameters = false){
 	return $data;
 }
 
+/* Deze functie verzend een mail naar de aangegeven parameters */
 function sendMail($to, $subject, $body, $message = "Fout"){
 	$emailTo      = $to;
 	$subjectEmail = $subject;
@@ -80,6 +81,7 @@ function sendMail($to, $subject, $body, $message = "Fout"){
     $_SESSION['message'] = $message;
 }
 
+/* Creeert een random wachtwoord */
 function createRandomPassword() { 
 
 	$chars = "abcdefghijkmnopqrstuvwxyz023456789"; 
@@ -98,6 +100,7 @@ function createRandomPassword() {
 
 }
 
+/* Deze functie geeft true of fasle terug, a.d.h.v. de POST informatie */
 function checkIfFieldsFilledIn(){ // returnt true als de meegegeven velden gevuld zijn 
 	if (count(array_filter($_POST)) == count($_POST)) {
 		return true;
@@ -105,7 +108,8 @@ function checkIfFieldsFilledIn(){ // returnt true als de meegegeven velden gevul
 		return false;
 	}
 }
-
+/* Deze functie checkt of de velden binnen de  meegegeven array
+   allemaal ingevult zijn */
 function fieldsFilledIn($array){
 	foreach ($array as $field) {
     	if (!empty($_POST[$field])){
@@ -118,6 +122,8 @@ function fieldsFilledIn($array){
     return $state;
 }
 
+/* Deze functie controleert of de meegegeven email nog niet bestaat
+   binnen het gebruikerstabel */
 function checkEmailUnique($emailCheck){
 	$emailControl = handleQuery("SELECT * FROM Gebruiker WHERE mailadres = :mailadres",array(':mailadres' => $emailCheck));
 	
@@ -129,18 +135,22 @@ function checkEmailUnique($emailCheck){
 	return $state;
 }
 
+/* Deze functie checkt of de meegegeven invoer alleen uit karakters bestaat */
 function is_Char_Only($Invoer){
 	return (bool)(preg_match("/^[a-zA-Z ]*$/", $Invoer)) ;
 }
 
+/* Deze functie checkt of er in de meegegeven invoer een getal zit */ 
 function contains_number($string){
 	return 1 === preg_match('~[0-9]~', $string);
 }
 
+/* Deze functie checkt of er in de meegegeven invoer een hoofdletter zit */
 function contains_capital($string){
 	return preg_match('/[A-Z]/', $string);
 }
 		
+/* Deze functie toont tekst en link wordt bepaalt a.d.h.v. of je ingelogt of uitlogt bent */		
 function showLoginMenu(){
 	$htmlLogin = ' ';
 	if(isset($_SESSION['gebruikersnaam']) && !empty($_SESSION['gebruikersnaam'])){ 
@@ -155,15 +165,16 @@ function showLoginMenu(){
     return $htmlLogin;
 }
 
-function is_email($Invoer){
-	return (bool)(preg_match("/^([a-z0-9+-]+)(.[a-z0-9+-]+)*@([a-z0-9-]+.)+[a-z]{2,6}$/ix",$Invoer));
-}
-
+/* Deze functie genereert een random code */
 function generateRandomCode(){
 	return uniqueid(rand(100000,900000),true);
 }
 
+/* Deze functie checkt of de username nog niet bestaat,
+   en of de wachtwoorden overeen komen, en aan de 
+   regels voldoen */
 function checkUsernamePassword($username, $password, $passwordrepeat){
+	$passwordMinimumLength = 7;
 	$getUserParameters = array(':gebruikersnaam' => $username);
 	$getUserQuery =  handleQuery("SELECT * FROM Gebruiker WHERE gebruikersnaam = :gebruikersnaam", $getUserParameters);
 
@@ -172,23 +183,15 @@ function checkUsernamePassword($username, $password, $passwordrepeat){
 	} else {		   
 		if ($password == $passwordrepeat) {
 
-			if (strlen($password) >= 4 || strlen($password) <= 16 && contains_number($password) && contains_capital($password)) {
+			if (strlen($password) >= $passwordMinimumLength && contains_number($password)) {
 					$password_hashed = password_hash($password , PASSWORD_DEFAULT);
 					$_SESSION['username'] = $username;
 					$_SESSION['password'] = $password_hashed;
 					header("Location: ./user.php?step=4");											
-			} else if (strlen($password) < 4 || strlen($password) > 16 && !preg_match('/[A-Z]/', $password) && 0 === preg_match('~[0-9]~', $password)) {
-				$message_registration = "Uw wachtwoord moet minstens 4 tot maximaal 16 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 hoofdletter bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";	
-			} else if (strlen($password) < 4 || strlen($password) > 16 && !preg_match('/[A-Z]/', $password)) {
-				$message_registration = "Uw wachtwoord moet minstens 4 tot maximaal 16 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 hoofdletter bevatten.";	
-			} else if (strlen($password) < 4 || strlen($password) > 16 && 0 === preg_match('~[0-9]~', $password)) {
-				$message_registration = "Uw wachtwoord moet minstens 4 tot maximaal 16 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";	
-			} else if (!preg_match('/[A-Z]/', $password) && 0 === preg_match('~[0-9]~', $password)) {
-				$message_registration = "Uw wachtwoord moet minimaal 1 hoofdletter bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";
-			} else if (!preg_match('/[A-Z]/', $password)) {
-				$message_registration = "Uw wachtwoord moet minimaal 1 hoofdletter bevatten.";
-			} else if (strlen($password) < 4 && strlen($password) > 16){
-				$message_registration = "Uw wachtwoord moet minstens 4 tot maximaal 16 tekens bevatten.";
+			} else if (strlen($password) < $passwordMinimumLength &&  0 === preg_match('~[0-9]~', $password)) {
+				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";	
+			} else if (strlen($password) < $passwordMinimumLength) {
+				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.";	
 			} else if (0 === preg_match('~[0-9]~', $password)) {
 				$message_registration = "Uw wachtwoord moet minimaal 1 cijfer bevatten.";
 			}
