@@ -3,7 +3,7 @@ $(window).scroll(function() {
     $("nav.navbar").css('background-color', scrolled ? 'rgba(0, 0, 0, 0.4)' : "rgba(0, 0, 0, 0)");
 });
 
-$("#myCarousel").on("slide.bs.carousel", function(e) {
+ $("#myCarousel").on("slide.bs.carousel", function(e) {
   var $e = $(e.relatedTarget);
   var idx = $e.index();
   var itemsPerSlide = 3;
@@ -24,4 +24,4 @@ $("#myCarousel").on("slide.bs.carousel", function(e) {
       }
     }
   }
-});
+}); 

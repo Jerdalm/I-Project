@@ -3,14 +3,14 @@ require_once 'header.php';
 $_SESSION['email-registration'] = ' ';
 ?>
 <!-- promotie header -->
-<header class="promo-header">
+<header class="header promo-header">
    <div class="container">
       <div class="row text-center">
          <div class="col-lg-12 " >
             <img src="img/logo/logo.svg" alt="Logo" class="logo" > 
             <h1 class="display-3 text-center text-white"> <b>Eenmaal</b> andermaal</h1>
-            <form action="filmoverzicht.php" method="get">
-               <input list="films" name="search" placeholder="Uw gewenste film" maxlength="50" type="search">
+            <form action="overview.php" method="get">
+               <input list="films" name="search" placeholder="Het gewenste product" maxlength="50" type="search">
                <input value="zoeken" type="submit">
             </form>
          </div>
@@ -25,92 +25,10 @@ $_SESSION['email-registration'] = ' ';
             <h2 class="mt-4">Nieuwe veilingen</h2>
          </div>
       </div>
-      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+	  <div class="product-container">
+      <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
          <div class="carousel-inner row w-100 mx-auto">
-            <div class="carousel-item col-md-4 active">
-               <div class="product card">
-                  <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
-                  <div class="card-body">
-                     <h4 class="card-title">
-                        Roma dresser 35mm
-                     </h4>
-                     <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
-                     <a href="#" class="btn cta-white">Bekijk nu</a>
-                  </div>
-               </div>
-            </div>
-            <div class="carousel-item col-md-4">
-               <div class="product card">
-                  <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
-                  <div class="card-body">
-                     <h4 class="card-title">
-                        Roma dresser 35mm
-                     </h4>
-                     <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
-                     <a href="#" class="btn cta-white">Bekijk nu</a>
-                  </div>
-               </div>
-            </div>
-            <div class="carousel-item col-md-4">
-               <div class="product card">
-                  <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
-                  <div class="card-body">
-                     <h4 class="card-title">
-                        Roma dresser 35mm
-                     </h4>
-                     <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
-                     <a href="#" class="btn cta-white">Bekijk nu</a>
-                  </div>
-               </div>
-            </div>
-            <div class="carousel-item col-md-4">
-               <div class="product card">
-                  <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
-                  <div class="card-body">
-                     <h4 class="card-title">
-                        Roma dresser 35mm
-                     </h4>
-                     <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
-                     <a href="#" class="btn cta-white">Bekijk nu</a>
-                  </div>
-               </div>
-            </div>
-            <div class="carousel-item col-md-4">
-               <div class="product card">
-                  <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
-                  <div class="card-body">
-                     <h4 class="card-title">
-                        Roma dresser 35mm
-                     </h4>
-                     <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
-                     <a href="#" class="btn cta-white">Bekijk nu</a>
-                  </div>
-               </div>
-            </div>
-            <div class="carousel-item col-md-4">
-               <div class="product card">
-                  <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
-                  <div class="card-body">
-                     <h4 class="card-title">
-                        Roma dresser 35mm
-                     </h4>
-                     <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
-                     <a href="#" class="btn cta-white">Bekijk nu</a>
-                  </div>
-               </div>
-            </div>
-            <div class="carousel-item col-md-4">
-               <div class="product card">
-                  <img class="card-img-top img-fluid" src="img/products/horloge_example.jpg" alt="">
-                  <div class="card-body">
-                     <h4 class="card-title">
-                        Roma dresser 35mm
-                     </h4>
-                     <h5><span class="time">01:25:27</span>|<span class="price">$25.00</span></h5>
-                     <a href="#" class="btn cta-white">Bekijk nu</a>
-                  </div>
-               </div>
-            </div>
+		<?= showProducts(true); ?>		
          </div>
          <div class="clearfix">
             <div class="sliderbuttons">
@@ -126,8 +44,41 @@ $_SESSION['email-registration'] = ' ';
          </div>
       </div>
    </div>
+   </div>
 </section>
 <section class="userExperience">
+<<<<<<< HEAD
+<div class="container">
+<div class="row text-center">
+
+ <div class="col-lg-1">
+  </div>
+  <div class="col-lg-3">
+  <img  class="rounded-circle" src="https://media.nu.nl/m/o5mx3i7aqf41_wd640.jpeg">
+  </div>
+
+  <div class="col-lg-5">
+  <h2> "We have THE BEST website" </h2>
+  </div>
+  <div class="col-lg-3">
+  </div>
+  
+  <!--
+	<div class="col-md-2 ">
+	<img  class="rounded-circle" src="https://media.nu.nl/m/o5mx3i7aqf41_wd640.jpeg">
+	</div>
+		<div class="col-md-6">
+	<h2> "We have THE BEST website" </h2>
+	</div>
+-->
+	
+	
+	
+</div>
+	
+	
+</div>
+=======
    <div class="container">
       <div class="row">
         <div class="col-md-4">
@@ -141,7 +92,23 @@ $_SESSION['email-registration'] = ' ';
         </div>
      </div>
   </div>
+>>>>>>> 9a85f69325f0ef8a22afddbdf5105cfe6cff7731
 </section>
+
+
+
+<!--
+<script>
+setInterval(function()
+{
+$('.product-data').load(document.URL +  ' .product-data');
+   
+}, 1000); 
+</script>
+-->
+
+
+
 
 <!-- /.container -->
 <?php require_once 'footer.php'; ?>
