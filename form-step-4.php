@@ -53,11 +53,8 @@ echo '
 <p>Geef een geheime vraag op voor de beveiliging van uw account</p>
 <div class="form-group">
 <select name ="secretquestion" class="form-control" required>
-<option value="1">In welke straat ben je geboren?</option>
-<option value="2">Wat is de meisjesnaam van je moeder?</option>
-<option value="3">Wat is je lievelingsgerecht?</option>
-<option value="4">Hoe heet je oudste zus?</option>
-<option value="5">Hoe heet je huisdier?</option>
+<option value="1">Wat is uw lievelingsdrankje?</option>
+<option value="2">Wat is uw lievelingskleur?</option>
 </select>
 </div>
 <div class="form-group">

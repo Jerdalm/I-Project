@@ -15,7 +15,6 @@ $messageCode = $message . $randomPassword;
 
 ?>
 
-
 <main class="user-details">
     <div class="container">
         
@@ -23,6 +22,7 @@ $messageCode = $message . $randomPassword;
                 <img src="img/geit.jpg" class="profile-pic">                
             </div>
             <div class="row row-right">
+                <!-- alle gegevens van de gebruiker worden met een echo in een tabel gezet -->
                 <table class="table"> 
                     <thead>
                         <tr>
@@ -72,7 +72,7 @@ $messageCode = $message . $randomPassword;
             </table>
 
             <?php if(isset($_GET['changePass'])){?>
-
+          <!--    als er op de knop word geklikt van wachtwoord wijzigen dan komt er een form met de geheime vraag erin daarvoor is de code hieronder. -->
                 <form method="POST" class="form-group">
                     <label for="testvoorvraag">  <?php echo $gebruiker[0]['vraag']?> </label>
                     <input type="text" name="antwoord" class="form-control" id="testAntwoordvakje" placeholder="Antwoord">
@@ -80,7 +80,7 @@ $messageCode = $message . $randomPassword;
                 </form>
 
                 <?php }
-
+                // de query om de geheime vraag op te halen en te checken of het antwoord klopt. Ook om de mail te verzenden met de nieuwe wachtwoord. 
                 if (isset ($_POST['verzenden'])){
                     $antwoordtekst = $_POST['antwoord'];
                     $answerParameters = array(':antwoord' => "$antwoordtekst" , 
