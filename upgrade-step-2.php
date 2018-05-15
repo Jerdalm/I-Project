@@ -7,39 +7,41 @@ require_once './db.php';
 
 $state = false; // boolean voor debuggen van de header in de insertUpgradeinfoInDb
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if($_SESSION['verificationMethod'] == 'Post') {
-        if (isset($_POST['creditcardnumber'])) {
-            $_SESSION['creditcardnumber'] = $_POST['creditcardnumber'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') { // is er op de knop gedrukt
+    if($_SESSION['verificationMethod'] == 'Post') { // is de validatie methode post
+        if (isset($_POST['creditcardnumber'])) { // als het creditcardnummer is ingevoert sla het op in een variabele,
+            $_SESSION['creditcardnumber'] = $_POST['creditcardnumber']; // anders sla NULL op
         } else {
             $_SESSION['creditcardnumber'] = NULL;
         }
 
-        if (isset($_POST['upgradeCode'])) {
+        if (isset($_POST['upgradeCode'])) { // is de upgrade code ingevoerd
 
-            $_SESSION['upgradeCode'] = $_POST['upgradeCode'];
+            $_SESSION['upgradeCode'] = $_POST['upgradeCode']; // sla de ingevoerde code op in een variabele
 
-            if (validateCode($_SESSION['upgradeCode'], $_SESSION['email-upgrade'])) {
+            if (validateCode($_SESSION['upgradeCode'], $_SESSION['email-upgrade'])) { // is de ingevoerde code correct voer dan alle gegevens in in de database
                 $validateCodeCorrect = true;
-                insertUpgradeinfoInDB();
+                //insertUpgradeinfoInDB();
+                header("Location: /I-project/index.php");
+                exit();
             } else {
                 $_SESSION["error_upgrade"] = 'upgradeCode komt niet overeen met de toegestuurde code';
-                header("Location: ./upgrade-user.php?step=2");
+                header("Location: upgrade-user.php?step=2");
             }
         } else {
             $_SESSION["error_upgrade"] = 'upgradeCode niet ingevoerd';
-            header("Location: ./upgrade-user.php?step=2");
+            header("Location: upgrade-user.php?step=2");
         }
     }
 
-    if($_SESSION['verificationMethod'] == 'Credit Card') {
-        if (isset($_POST['creditcardnumber'])) {
-            $_SESSION['creditcardnumber'] = $_POST['creditcardnumber'];
+    if($_SESSION['verificationMethod'] == 'Credit Card') { // is de validatie methode credit card
+        if (isset($_POST['creditcardnumber'])) { // is het creditcardnummer ingevoerd
+            $_SESSION['creditcardnumber'] = $_POST['creditcardnumber']; // sla het nummer op in een variabele en voer alle gegevens in in de database
             insertUpgradeinfoInDB();
         }
     } else {
         $_SESSION["error_upgrade"] = 'creditcardnummer niet ingevoerd';
-        header("Location: ./upgrade-user.php?step=2");
+        header("Location: upgrade-user.php?step=2");
     }
 }
 
@@ -63,7 +65,7 @@ if($_SESSION['verificationMethod'] == 'Post') {
     echo '
     <form method="post">
         <div class="form-group">
-            <label for="Creditcardnumber"> creditcardnummer </label>
+            <label for="Creditcardnumber"> Creditcardnummer </label>
             <input type="textarea" class="form-control" name="creditcardnumber" id="Creditcardnumber">
         </div>
         
