@@ -204,6 +204,32 @@ function checkUsernamePassword($username, $password, $passwordrepeat){
 	return $message_registration;
 }
 
+//Deze functie word gebruikt bij het checken of de nieuwe wachtwoord aan de eisen voldoet als de gebruiker zijn wachtwoord wilt wijzigen.
+// function checkNewPassword ($password, $passwordrepeat){
+// 	$passwordMinimumLength = 7;
+// 	 $message_passwordChange = '';
+// 		if ($password == $passwordrepeat) {
+
+// 			if (strlen($password) >= $passwordMinimumLength && contains_number($password)) {
+// 				$password_hashed = password_hash($password , PASSWORD_DEFAULT);
+				
+// 				$_SESSION['password'] = $password_hashed;
+														
+// 			} else if (strlen($password) < $passwordMinimumLength &&  0 === preg_match('~[0-9]~', $password)) {
+// 				$message_passwordChange = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";	
+// 			} else if (strlen($password) < $passwordMinimumLength) {
+// 				$message_passwordChange = "Uw wachtwoord moet minstens 7 tekens bevatten.";	
+// 			} else if (0 === preg_match('~[0-9]~', $password)) {
+// 				$message_passwordChange = "Uw wachtwoord moet minimaal 1 cijfer bevatten.";
+// 			}
+// 		} else {
+// 			$message_passwordChange = "De wachtwoorden komen niet overeen";
+// 		}
+// 	}
+// 	return $message_passwordChange;
+
+
+
 /* Deze functie zet de registratieinformatie ook daadwerkelijk
    in de database */
 function insertRegistrationinfoInDB(){
