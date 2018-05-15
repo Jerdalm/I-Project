@@ -120,7 +120,7 @@ Order By 2 desc
 
             <?php
             if(isset($_POST['bidAmount-Submit'])){
-                msql_query('CALL pcd_hogerBod(28, 1, "gebruiker")');
+                $result = mysqli::query('CALL pcd_hogerBod(28, 1, "gebruiker")');
             }
 //            if(isset($_POST['bidAmount-Submit']) && !empty($_POST['bidAmount'])) {
 //                $HighestBid = handlequery("SELECT max(B.bodbedrag) as MaxBod from Bod B");
