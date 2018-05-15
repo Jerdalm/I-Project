@@ -368,6 +368,8 @@ function insertUpgradeinfoInDB(){
 	handleQuery("UPDATE Gebruiker
 		SET soortGebruiker = 2 
 		WHERE gebruikersnaam = :username", $parameters);
+
+    header("Location: ./index.php", false);
 }
 
 /* Deze functie returnt de verschillende rubrieken voor in het submenu */
