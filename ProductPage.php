@@ -19,14 +19,15 @@
 
 <body class="bg-secondary bg-light text-dark"<body onload="startTime()">
 <?php require_once ('header.php');
-
+$Vwnummer = 1;
 $productdata = handlequery("
 SELECT V.voorwerpnummer, G.voornaam, G.achternaam, G.plaatsnaam, 
 V.titel, V.startprijs
 from voorwerp V 
 inner join gebruiker G on V.verkoper = G.gebruikersnaam
 inner join verkoper VK on V.verkoper = VK.gebruikersnaam
-");
+WHERE voorwerpnummer = $Vwnummer
+");//voorwerpnummer moet meegegeven worden vanuit de site
 
 
 foreach ($productdata as $item) {
@@ -73,15 +74,19 @@ Order By 2 desc
 ");
 
                                 foreach ($bodData as $Boditem) {
-                                $bodTijdstip= $Boditem['bodTijdstip'];
-                                $bodTijd= date_create("$bodTijdstip");
+                                $bodHi= $Boditem['bodTijdstip'];
+                                $bodTijdstip= date_create("$bodHi");
+
+                                $boddcY= $Boditem['bodDag'];
+                                $bodDag= date_create("$boddcY");
                                 ?>
                                 <thead class="thead-dark">
                                 <tr class="table-danger">
-                                    <th scope="col"><?= $Boditem['bodbedrag']?>€</th>
+                                    <th scope="col">€ <?= $Boditem['bodbedrag']?></th>
                                     <th scope="col"><?= $Boditem['gebruikersnaam']?></th>
-                                    <th scope="col"><?= $Boditem['bodDag']?></th>
-                                    <th scope="col"><?= date_format($bodTijd, "H:i:s")?></th>
+                                    <th scope="col"><?= date_format($bodDag, "d-m-Y")?></th>
+                                    <th scope="col"><?= date_format($bodTijdstip, "H:i")?></th>
+<!--                                <th scope="col">--><?//= date_format($bodTijd, "H:i:s")?><!--</th>Secondenteller bij het bod-->
                                     <?php } ?>
                                 </tr>
                                 </thead>
@@ -106,7 +111,7 @@ Order By 2 desc
                         <div class="col-sm-9">
                             <input type="number" class="form-control form-control-lg" name="bidAmount" id="colFormLabelLg" placeholder="Geef uw gewenste bedrag in.">
                             <div class="col-auto">
-                                <button type="submit" name="submit-bidamount" class="btn btn-primary mb-2">Bied!</button>
+                                <button type="submit" name="bidAmount-Submit" class="btn btn-primary mb-2">Bied!</button>
                             </div>
                     </div>
                 </div>
@@ -114,30 +119,24 @@ Order By 2 desc
             <div>
 
             <?php
-            $bidAmount = "";
-            $HighestBid = handlequery("select max(B.bodbedrag) as bodHoogte from Bod B");
-//echo $HighestBid;
-echo '<pre>';
-var_dump($HighestBid['bodHoogte']);
-echo '</pre>';
-            if(isset($_POST['submit-bidamount']) && !empty($_POST['bidAmount'])) {
-                $HighestBid = handlequery("select max(B.bodbedrag) from Bod B");
-                if ($_POST['bidAmount'] > $HighestBid) {
-
-                    $bidAmount = $_POST['bidamount'];
-                    $username = "gebruiker";
-                    $bidDay = date('Y-d-m');
-                    $bidTime = date('H:i:s');
-
-
-                    $Parameters = array
-                    (":productID" => 1, ':bidAmount' => "$bidAmount", ":username" => $username, ":bidDay" => $bidDay, ":bidTime" => $bidTime);
-
-                    handlequery("INSERT INTO Bod (voorwerpnummer,bodbedrag,gebruikersnaam,bodDag,bodTijdstip) VALUES(:productID,:bidAmount, :username,:bidDay,:bidTime)", $Parameters);
-                } else {
-                    echo "Sorry, u moet een hoger bedrag invoeren.";
-                }
+            if(isset($_POST['bidAmount-Submit'])){
+                msql_query('CALL pcd_hogerBod(28, 1, "gebruiker")');
             }
+//            if(isset($_POST['bidAmount-Submit']) && !empty($_POST['bidAmount'])) {
+//                $HighestBid = handlequery("SELECT max(B.bodbedrag) as MaxBod from Bod B");
+//echo 'taart';
+//                if ($_POST['bidAmount'] > $HighestBid[0][0]) {
+//                    echo 'taart2';
+//                    $bidAmount = $_POST['bidAmount'];
+//                    $username = "gebruiker";
+//                    $bidDay = date('Y-m-d');
+//                    $bidTime = date('H:i:s');
+//
+//                    handlequery("INSERT INTO Bod (voorwerpnummer, bodbedrag, gebruikersnaam, bodDag, bodTijdstip) VALUES ($Vwnummer, $bidAmount, $username, $bidDay,$bidTime");
+//                } else {
+//                    echo "Sorry, u moet een hoger bedrag invoeren.";
+//                }
+//            }
             ?>
             </div>
         </div>
@@ -256,4 +255,5 @@ echo '</pre>';
 <?php
 }
 require_once 'footer.php'; ?>
+
 </body>
