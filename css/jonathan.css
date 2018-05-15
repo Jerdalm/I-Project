@@ -62,6 +62,7 @@ footer{
 	background-color: #F2552C;
 	color: white;
 	font-weight: 600;
+	display: block;
 }
 
 a.cta-orange:hover{
@@ -80,6 +81,7 @@ a.cta-orange:hover{
 	color: #F2552C;
 	background-color: white;
 	font-weight: 600;
+	display: block;
 }
 
 .cta-white:hover{

@@ -3,7 +3,7 @@
 /* Deze functie zorgt voor de connectie met de Database */	
 function ConnectToDatabase(){
 	$hostname = "(local)";
-	$dbname = "EENMAALANDERMAAL";
+	$dbname = "iproject34";
 	$dbusername = "sa";
 	$dbpw = "12345";
 
@@ -58,28 +58,24 @@ function executequery($sql, $parameters = false){
 /* Deze functie handeld elke database query af 
 	|Voor elke functie kan voor elke functie gebruikt|
 */
-	function handlequery($sql, $parameters = false){
-		global $pdo;
-		$first_word = strtok($sql, " ");
-		$type = preg_replace('/\s+/', '', $first_word);
+function handlequery($sql, $parameters = false){
+	global $pdo;
+	$first_word = strtok($sql, " ");
+	$type = preg_replace('/\s+/', '', $first_word);
 
-		if($type == 'SELECT'){ $data = FetchSelectData($sql,$parameters);}
-		else{$data = executequery($sql,$parameters);}
+	if($type == 'SELECT'){ $data = FetchSelectData($sql,$parameters);}
+	else{$data = executequery($sql,$parameters);}
 
-		return $data;
-	}
+	return $data;
+}
 
 	/* Deze functie verzend een mail naar de aangegeven parameters */
-	function sendMail($to, $subject, $body, $message = "Fout"){
+function sendMail($to, $subject, $body, $message = "Fout"){
 		$emailTo      = $to;
 		$subjectEmail = $subject;
 		$message_body = $body;
-
-
-    //mail( $emailTo, $subjectEmail, $message_body ); moet uiteindelijk wel aan!
-    echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
-
-    $_SESSION['message'] = $message;
+	//mail( $emailTo, $subjectEmail, $message_body ); moet uiteindelijk wel aan!
+	echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
 }
 
 /* Creeert een random wachtwoord */
@@ -161,7 +157,7 @@ function showLoginMenu(){
 		$htmlLogin .= '</li>';
 	} else {
 		$htmlLogin = '<li class="nav-item">';
-		$htmlLogin .= '<a class="nav-link" href="./user.php">Inloggen|Registreren</a>';
+		$htmlLogin .= '<a class="nav-link" href="./user.php">Inloggen</a>';
 		$htmlLogin .= '</li>';
 	}
 	return $htmlLogin;
@@ -175,34 +171,34 @@ function generateRandomCode(){
 /* Deze functie checkt of de username nog niet bestaat,
    en of de wachtwoorden overeen komen, en aan de 
    regels voldoen */
-   function checkUsernamePassword($username, $password, $passwordrepeat){
-   	$passwordMinimumLength = 7;
-   	$getUserParameters = array(':gebruikersnaam' => $username);
-   	$getUserQuery =  handleQuery("SELECT * FROM Gebruiker WHERE gebruikersnaam = :gebruikersnaam", $getUserParameters);
+function checkUsernamePassword($username, $password, $passwordrepeat){
+	$passwordMinimumLength = 7;
+	$getUserParameters = array(':gebruikersnaam' => $username);
+	$getUserQuery =  handleQuery("SELECT * FROM Gebruiker WHERE gebruikersnaam = :gebruikersnaam", $getUserParameters);
 
-   	if(count($getUserQuery) > 0) {
-   		$message_registration = "Uw ingevoerde gebruikersnaam bestaat al";
-   	} else {		   
-   		if ($password == $passwordrepeat) {
+	if(count($getUserQuery) > 0) {
+		$message_registration = "Uw ingevoerde gebruikersnaam bestaat al";
+	} else {		   
+		if ($password == $passwordrepeat) {
 
-   			if (strlen($password) >= $passwordMinimumLength && contains_number($password)) {
-   				$password_hashed = password_hash($password , PASSWORD_DEFAULT);
-   				$_SESSION['username'] = $username;
-   				$_SESSION['password'] = $password_hashed;
-   				header("Location: ./user.php?step=4");											
-   			} else if (strlen($password) < $passwordMinimumLength &&  0 === preg_match('~[0-9]~', $password)) {
-   				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";	
-   			} else if (strlen($password) < $passwordMinimumLength) {
-   				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.";	
-   			} else if (0 === preg_match('~[0-9]~', $password)) {
-   				$message_registration = "Uw wachtwoord moet minimaal 1 cijfer bevatten.";
-   			}
-   		} else {
-   			$message_registration = "De wachtwoorden komen niet overeen";
-   		}
-   	}
-   	return $message_registration;
-   }
+			if (strlen($password) >= $passwordMinimumLength && contains_number($password)) {
+				$password_hashed = password_hash($password , PASSWORD_DEFAULT);
+				$_SESSION['username'] = $username;
+				$_SESSION['password'] = $password_hashed;
+				header("Location: ./registreren.php?step=4");											
+			} else if (strlen($password) < $passwordMinimumLength &&  0 === preg_match('~[0-9]~', $password)) {
+				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";	
+			} else if (strlen($password) < $passwordMinimumLength) {
+				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.";	
+			} else if (0 === preg_match('~[0-9]~', $password)) {
+				$message_registration = "Uw wachtwoord moet minimaal 1 cijfer bevatten.";
+			}
+		} else {
+			$message_registration = "De wachtwoorden komen niet overeen";
+		}
+	}
+	return $message_registration;
+}
 
 /* Deze functie zet de registratieinformatie ook daadwerkelijk
 in de database */
@@ -240,11 +236,6 @@ function insertRegistrationinfoInDB(){
 			':vraag' => $vraag, 
 			':antwoordtekst' => $antwoordtekst);
 
-		echo '<pre>';
-		var_dump($insertInfoParam);
-		echo '</pre>';
-		die();
-
 		$insertInfoQuery = handlequery("INSERT INTO Gebruiker VALUES(:gebruikersnaam, 
 			:voornaam, 
 			:achternaam, 
@@ -266,7 +257,7 @@ function insertRegistrationinfoInDB(){
 
 		session_destroy();
 		$message_registration = 'Registratie voltooit!';
-		header('Refresh:0; url=./user.php');
+		header('Location: ./user.php');
 	} else {
 		$message_registration = 'Het opgegeven telefoonnummer klopt niet.';
 	}
@@ -278,15 +269,15 @@ function setCodeInDB($email, $hashed_code){
 	$parameters = array(':mailadres' => "$email");
 	$emailUnique = handleQuery("SELECT * FROM ActivatieCode WHERE mailadres = :mailadres", $parameters);
 
-if (count($emailUnique) > 0){ //kijkt of de email al bestaat in het tabel activatiecode, indien ja: update het mialadres met een 
-	$parameters = array(':mailadres' => "$email", ':verifycode' => "$hashed_code"); //nieuwe code & de nieuwe tijd
-	handleQuery("UPDATE ActivatieCode 
-		SET code = :verifycode, tijdAangevraagd = GETDATE() 
-		WHERE mailadres = :mailadres", $parameters);
-} else {
-	$parameters = array(':mailadres' => "$email", ':verifycode' => "$hashed_code");
-	handleQuery("INSERT INTO ActivatieCode VALUES (0 ,:verifycode ,:mailadres, GETDATE())",$parameters);
-}
+	if (count($emailUnique) > 0){ //kijkt of de email al bestaat in het tabel activatiecode, indien ja: update het mialadres met een 
+		$parameters = array(':mailadres' => "$email", ':verifycode' => "$hashed_code"); //nieuwe code & de nieuwe tijd
+		handleQuery("UPDATE ActivatieCode 
+			SET code = :verifycode, tijdAangevraagd = GETDATE() 
+			WHERE mailadres = :mailadres", $parameters);
+	} else {
+		$parameters = array(':mailadres' => "$email", ':verifycode' => "$hashed_code");
+		handleQuery("INSERT INTO ActivatieCode VALUES (0 ,:verifycode ,:mailadres, GETDATE())",$parameters);
+	}
 }
 
 /* Deze functie verzendt de code naar de klant (email) */
@@ -369,7 +360,7 @@ function insertUpgradeinfoInDB(){
 		SET soortGebruiker = 2 
 		WHERE gebruikersnaam = :username", $parameters);
 
-    header("Location: ./index.php", false);
+	header("Location: ./index.php", false);
 }
 
 /* Deze functie returnt de verschillende rubrieken voor in het submenu */
