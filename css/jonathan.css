@@ -106,7 +106,12 @@ pre{
 }
 
 #login-form{
+	margin-bottom: 15px;
 	width: 100%;
+}
+
+#login-form button[name="login-submit"]{
+	margin-top: 10px;
 }
 
 .form-steps > *, #login-form > *{

@@ -33,6 +33,19 @@ function FetchSelectData($sql, $parameters = false){
 	return $result;
 }
 
+function FetchAssocSelectData($sql, $parameters = false){
+	global $pdo;
+	$qry = $pdo->prepare("$sql");	
+
+	if($parameters){
+
+		$qry->execute($parameters);
+	}else{$qry->execute();}
+
+	$result = $qry->fetch(PDO::FETCH_ASSOC);
+	return $result;
+}
+
 /* Deze fucntie voert een sql query uit en geeft een resultaatmelding terug */
 function executequery($sql, $parameters = false){
 
@@ -74,8 +87,7 @@ function sendMail($to, $subject, $body, $message = "Fout"){
 		$emailTo      = $to;
 		$subjectEmail = $subject;
 		$message_body = $body;
-	//mail( $emailTo, $subjectEmail, $message_body ); moet uiteindelijk wel aan!
-	echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
+		echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
 }
 
 /* Creeert een random wachtwoord */
@@ -172,36 +184,24 @@ function generateRandomCode(){
    en of de wachtwoorden overeen komen, en aan de 
    regels voldoen */
 function checkUsernamePassword($username, $password, $passwordrepeat){
-	$passwordMinimumLength = 7;
+	$messageReturn = ' ';
 	$getUserParameters = array(':gebruikersnaam' => $username);
 	$getUserQuery =  handleQuery("SELECT * FROM Gebruiker WHERE gebruikersnaam = :gebruikersnaam", $getUserParameters);
 
 	if(count($getUserQuery) > 0) {
-		$message_registration = "Uw ingevoerde gebruikersnaam bestaat al";
-	} else {		   
-		if ($password == $passwordrepeat) {
-
-			if (strlen($password) >= $passwordMinimumLength && contains_number($password)) {
-				$password_hashed = password_hash($password , PASSWORD_DEFAULT);
-				$_SESSION['username'] = $username;
-				$_SESSION['password'] = $password_hashed;
-				header("Location: ./registreren.php?step=4");											
-			} else if (strlen($password) < $passwordMinimumLength &&  0 === preg_match('~[0-9]~', $password)) {
-				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";	
-			} else if (strlen($password) < $passwordMinimumLength) {
-				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.";	
-			} else if (0 === preg_match('~[0-9]~', $password)) {
-				$message_registration = "Uw wachtwoord moet minimaal 1 cijfer bevatten.";
-			}
+		$messageReturn = "Uw ingevoerde gebruikersnaam bestaat al";
+	} else {
+		if(checkNewPassword($password, $passwordrepeat) == "Wachtwoord zit in de database"){
+			header("Location: ./registreren.php?step=4");
 		} else {
-			$message_registration = "De wachtwoorden komen niet overeen";
+			$messageReturn = checkNewPassword($password, $passwordrepeat);
 		}
 	}
-	return $message_registration;
+	return $messageReturn;
 }
 
 // Deze functie word gebruikt bij het checken of de nieuwe wachtwoord aan de eisen voldoet als de gebruiker zijn wachtwoord wilt wijzigen.
-function checkNewPassword ($password, $passwordrepeat){
+function checkNewPassword($password, $passwordrepeat){
 	$passwordMinimumLength = 7;
 	$messageReturn = '';
 	if ($password == $passwordrepeat) {
@@ -221,9 +221,6 @@ function checkNewPassword ($password, $passwordrepeat){
 	}
 	return $messageReturn;
 }
-
-
-
 
 /* Deze functie zet de registratieinformatie ook daadwerkelijk
 in de database */

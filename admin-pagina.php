@@ -15,7 +15,7 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 			$getpath = "$_SERVER[QUERY_STRING]";
 			$artikelResultaten .= "<tr>" . "<td>" . "<a href='?".$getpath."&voorwerpForm=" . $voorwerp['titel'] . "'>" .  $voorwerp['titel'] ."</a>". "</td>" . "</tr>"; 
 
-		
+
 		} 
 		$artikelResultaten .= '</tr></table>';
 	} else if (isset($_GET['zoekenGebruiker'])) {
@@ -63,55 +63,24 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 
 		<?php }
 		if (isset($_GET['voorwerpForm'])) {?>
-
-
 			<!-- Voor nu op deze manier gedaan, kan met een foreach. Later nog naar kijken maar aangezien de tijdslimiet zo gedaan om geen tijd te verspillen. -->
 
 			<form class="form-group" method="GET" action=""> 
-				<label>Titel</label>
-				<input type="text" name="titel" value="<?=$voorwerpen[0]['titel']?>"> <br>
-				<label>Beschrijving</label>
-				<input type="text" name="beschrijving" value="<?=$voorwerpen[0]['beschrijving']?>"><br>
-				<label>Startprijs</label>
-				<input type="number" name="startprijs" value="<?=$voorwerpen[0]['startprijs']?>"><br>
-				<label>Betalingswijze</label>
-				<input type="number" name="betalingswijze" value="<?=$voorwerpen[0]['betalingswijze']?>"><br>
-				<label>Betalingsinstructie</label>
-				<input type="text" name="betalingsinstructie" value="<?=$voorwerpen[0]['betalingsinstructie']?>"><br>
-				<label>Plaatsnaam</label>
-				<input type="text" name="plaatsnaam" value="<?=$voorwerpen[0]['plaatsnaam']?>"><br>
-				<label>Land</label>
-				<input type="text" name="land" value="<?=$voorwerpen[0]['land']?>"><br>
-				<label>Looptijd</label>
-				<input type="text" name="looptijd" value="<?=$voorwerpen[0]['looptijd']?>"><br>
-				<label>looptijdbeginDag</label>
-				<input type="text" name="looptijdbeginDag" value="<?=$voorwerpen[0]['looptijdbeginDag']?>"><br>
-				<label>looptijdbeginTijdstip</label>
-				<input type="text" name="looptijdbeginTijdstip" value="<?=$voorwerpen[0]['looptijdbeginTijdstip']?>"><br>
-				<label>verzendkosten</label>
-				<input type="text" name="verzendkosten" value="<?=$voorwerpen[0]['verzendkosten']?>"><br>
-				<label>verzendinstructies</label>
-				<input type="text" name="verzendinstructies" value="<?=$voorwerpen[0]['verzendinstructies']?>"><br>
-				<label>verkoper</label>
-				<input type="text" name="verkoper" value="<?=$voorwerpen[0]['verkoper']?>"><br>
-				<label>koper</label>
-				<input type="text" name="koper" value="<?=$voorwerpen[0]['koper']?>"><br>
-				<label>looptijdeindeDag</label>
-				<input type="text" name="looptijdeindeDag" value="<?=$voorwerpen[0]['looptijdeindeDag']?>"><br>
-				<label>looptijdeindeTijdstip</label>
-				<input type="text" name="looptijdeindeTijdstip" value="<?=$voorwerpen[0]['looptijdeindeTijdstip']?>"><br>
-				<label>veilingGesloten</label>
-				<input type="text" name="veilingGesloten" value="<?=$voorwerpen[0]['veilingGesloten']?>"><br>
-				<label>verkoopPrijs</label>
-				<input type="number" name="verkoopPrijs" value="<?=$voorwerpen[0]['verkoopPrijs']?>"><br>
-				<input class="cta-orange" type="submit" name="verzenden" value="verzenden">
+				
+				<?php 
+				$kweerie = "SELECT * FROM Voorwerp WHERE voorwerpnummer = :voorwerpnummer";
+				$query = FetchAssocSelectData($kweerie, $parametersVoorwerp);
+				foreach ($query as $key => $value) {
+					echo '<label>'. $key . '</label>';
+					echo '<input type="text" name="'.$value.'" value="'.$value.'"><br>';
+				}
+			}
+				echo '</form>';
+				?>
+			
 
-			</form>
-
-
-	
-		<?php }
 		// nog niet helemaal werkend. dit is de query om de tabel te updaten.
+		<?php
 		if (isset($_GET['verzenden'])) {
 			$parametersUpdate = array(
 				':titel' => $_GET['titel'], 
@@ -157,5 +126,5 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 		</div>
 	</main>
 	
-<?php require_once './footer.php'; ?>
+	<?php require_once './footer.php'; ?>
 
