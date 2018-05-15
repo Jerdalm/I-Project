@@ -58,22 +58,22 @@ function executequery($sql, $parameters = false){
 /* Deze functie handeld elke database query af 
 	|Voor elke functie kan voor elke functie gebruikt|
 */
-function handlequery($sql, $parameters = false){
-	global $pdo;
-	$first_word = strtok($sql, " ");
-	$type = preg_replace('/\s+/', '', $first_word);
+	function handlequery($sql, $parameters = false){
+		global $pdo;
+		$first_word = strtok($sql, " ");
+		$type = preg_replace('/\s+/', '', $first_word);
 
-	if($type == 'SELECT'){ $data = FetchSelectData($sql,$parameters);}
-	else{$data = executequery($sql,$parameters);}
+		if($type == 'SELECT'){ $data = FetchSelectData($sql,$parameters);}
+		else{$data = executequery($sql,$parameters);}
 
-	return $data;
-}
+		return $data;
+	}
 
-/* Deze functie verzend een mail naar de aangegeven parameters */
-function sendMail($to, $subject, $body, $message = "Fout"){
-	$emailTo      = $to;
-	$subjectEmail = $subject;
-	$message_body = $body;
+	/* Deze functie verzend een mail naar de aangegeven parameters */
+	function sendMail($to, $subject, $body, $message = "Fout"){
+		$emailTo      = $to;
+		$subjectEmail = $subject;
+		$message_body = $body;
 
 
     //mail( $emailTo, $subjectEmail, $message_body ); moet uiteindelijk wel aan!
@@ -175,34 +175,34 @@ function generateRandomCode(){
 /* Deze functie checkt of de username nog niet bestaat,
    en of de wachtwoorden overeen komen, en aan de 
    regels voldoen */
-function checkUsernamePassword($username, $password, $passwordrepeat){
-	$passwordMinimumLength = 7;
-	$getUserParameters = array(':gebruikersnaam' => $username);
-	$getUserQuery =  handleQuery("SELECT * FROM Gebruiker WHERE gebruikersnaam = :gebruikersnaam", $getUserParameters);
+   function checkUsernamePassword($username, $password, $passwordrepeat){
+   	$passwordMinimumLength = 7;
+   	$getUserParameters = array(':gebruikersnaam' => $username);
+   	$getUserQuery =  handleQuery("SELECT * FROM Gebruiker WHERE gebruikersnaam = :gebruikersnaam", $getUserParameters);
 
-	if(count($getUserQuery) > 0) {
-		$message_registration = "Uw ingevoerde gebruikersnaam bestaat al";
-	} else {		   
-		if ($password == $passwordrepeat) {
+   	if(count($getUserQuery) > 0) {
+   		$message_registration = "Uw ingevoerde gebruikersnaam bestaat al";
+   	} else {		   
+   		if ($password == $passwordrepeat) {
 
-			if (strlen($password) >= $passwordMinimumLength && contains_number($password)) {
-				$password_hashed = password_hash($password , PASSWORD_DEFAULT);
-				$_SESSION['username'] = $username;
-				$_SESSION['password'] = $password_hashed;
-				header("Location: ./user.php?step=4");											
-			} else if (strlen($password) < $passwordMinimumLength &&  0 === preg_match('~[0-9]~', $password)) {
-				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";	
-			} else if (strlen($password) < $passwordMinimumLength) {
-				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.";	
-			} else if (0 === preg_match('~[0-9]~', $password)) {
-				$message_registration = "Uw wachtwoord moet minimaal 1 cijfer bevatten.";
-			}
-		} else {
-			$message_registration = "De wachtwoorden komen niet overeen";
-		}
-	}
-	return $message_registration;
-}
+   			if (strlen($password) >= $passwordMinimumLength && contains_number($password)) {
+   				$password_hashed = password_hash($password , PASSWORD_DEFAULT);
+   				$_SESSION['username'] = $username;
+   				$_SESSION['password'] = $password_hashed;
+   				header("Location: ./user.php?step=4");											
+   			} else if (strlen($password) < $passwordMinimumLength &&  0 === preg_match('~[0-9]~', $password)) {
+   				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";	
+   			} else if (strlen($password) < $passwordMinimumLength) {
+   				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.";	
+   			} else if (0 === preg_match('~[0-9]~', $password)) {
+   				$message_registration = "Uw wachtwoord moet minimaal 1 cijfer bevatten.";
+   			}
+   		} else {
+   			$message_registration = "De wachtwoorden komen niet overeen";
+   		}
+   	}
+   	return $message_registration;
+   }
 
 //Deze functie word gebruikt bij het checken of de nieuwe wachtwoord aan de eisen voldoet als de gebruiker zijn wachtwoord wilt wijzigen.
 // function checkNewPassword ($password, $passwordrepeat){
@@ -231,7 +231,7 @@ function checkUsernamePassword($username, $password, $passwordrepeat){
 
 
 /* Deze functie zet de registratieinformatie ook daadwerkelijk
-   in de database */
+in de database */
 function insertRegistrationinfoInDB(){
 	$voornaam = $_POST['firstname'];
 	$achternaam = $_POST['lastname'];
@@ -346,25 +346,30 @@ function loginControl($email, $wachtwoord){
 
 		if (password_verify($wachtwoord, $gebruiker[0]['wachtwoord']) || $wachtwoord == $gebruiker[0]['wachtwoord']) {
 
-			$_SESSION['email'] = $gebruiker[0]["mailadres"];
-			$_SESSION['gebruikersnaam'] = $gebruiker[0]["gebruikersnaam"];
-			$_SESSION['voornaam'] = $gebruiker[0]["voornaam"];
-			$_SESSION['achternaam'] = $gebruiker[0]["achternaam"];
-			$_SESSION['adresregel1'] = $gebruiker[0]["adresregel1"];
-			if(!empty($gebruiker[0]['adresregel2'])){
-				$_SESSION['adresregel2'] = $gebruiker[0]["adresregel2"];
+			if($email == "admin@root.com"){
+				$_SESSION['gebruikersnaam'] = $gebruiker[0]["gebruikersnaam"];
+				header("Location: ./admin-pagina.php");
+			} else {
+
+				$_SESSION['email'] = $gebruiker[0]["mailadres"];
+				$_SESSION['gebruikersnaam'] = $gebruiker[0]["gebruikersnaam"];
+				$_SESSION['voornaam'] = $gebruiker[0]["voornaam"];
+				$_SESSION['achternaam'] = $gebruiker[0]["achternaam"];
+				$_SESSION['adresregel1'] = $gebruiker[0]["adresregel1"];
+				if(!empty($gebruiker[0]['adresregel2'])){
+					$_SESSION['adresregel2'] = $gebruiker[0]["adresregel2"];
+				}
+				$_SESSION['postcode'] = $gebruiker[0]["postcode"];
+				$_SESSION['plaatsnaam'] = $gebruiker[0]["plaatsnaam"];
+				$_SESSION['land'] = $gebruiker[0]["land"];
+				$_SESSION['geboortedag'] = $gebruiker[0]["geboortedag"];
+				$_SESSION['wachtwoord'] = $gebruiker[0]["wachtwoord"];
+				$_SESSION['vraag'] = $gebruiker[0]["vraag"];
+				$_SESSION['antwoordtekst'] = $gebruiker[0]["antwoordtekst"];
+				$_SESSION['soortGebruiker'] = $gebruiker[0]["soortGebruiker"];			
+				header("location: ./user-details.php");
 			}
-			$_SESSION['postcode'] = $gebruiker[0]["postcode"];
-			$_SESSION['plaatsnaam'] = $gebruiker[0]["plaatsnaam"];
-			$_SESSION['land'] = $gebruiker[0]["land"];
-			$_SESSION['geboortedag'] = $gebruiker[0]["geboortedag"];
-			$_SESSION['wachtwoord'] = $gebruiker[0]["wachtwoord"];
-			$_SESSION['vraag'] = $gebruiker[0]["vraag"];
-			$_SESSION['antwoordtekst'] = $gebruiker[0]["antwoordtekst"];
-			$_SESSION['soortGebruiker'] = $gebruiker[0]["soortGebruiker"];			
-			header("location: ./user-details.php");
-		}
-		else {
+		} else {
 			$message_login = "Verkeerd wachtwoord of onbekende e-mail, probeer opnieuw!";
 		}
 	}
@@ -389,6 +394,8 @@ function insertUpgradeinfoInDB(){
 	handleQuery("UPDATE Gebruiker
 		SET soortGebruiker = 2 
 		WHERE gebruikersnaam = :username", $parameters);
+
+    header("Location: ./index.php", false);
 }
 
 /* Deze functie returnt de verschillende rubrieken voor in het submenu */
@@ -454,14 +461,14 @@ function showProducts($carrousel = false, $query = false){
 		$beforeInput = '<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">';
 		$afterInput = '</div>';
 	}
-	
+
 	foreach($producten as $product)
 	{
 		$itemcount++;
 		if(!$product['bodbedrag']){
 			$product['bodbedrag'] = 0;
 		}
-		
+
 		if($carrousel){
 			if($itemcount == 1){
 				$html .= $beforeFirstInput;
@@ -471,7 +478,7 @@ function showProducts($carrousel = false, $query = false){
 		else{
 			$html .= $beforeInput;
 		}
-		
+
 		$timediff = calculateTimeDiffrence(date('Y-m-d h:i:s'),
 			$product['einddag'].' '.$product['eindtijdstip']
 		);

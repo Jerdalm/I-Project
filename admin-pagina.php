@@ -11,8 +11,11 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 		echo print_r($voorwerpen);
 		$artikelResultaten = '<table class="table"><tr><th scope="col">Voorwerp</th></tr><tr>';
 		foreach($voorwerpen as $voorwerp){
+
 			$getpath = "$_SERVER[QUERY_STRING]";
 			$artikelResultaten .= "<tr>" . "<td>" . "<a href='?".$getpath."&voorwerpForm=" . $voorwerp['titel'] . "'>" .  $voorwerp['titel'] ."</a>". "</td>" . "</tr>"; 
+
+		
 		} 
 		$artikelResultaten .= '</tr></table>';
 	} else if (isset($_GET['zoekenGebruiker'])) {
@@ -58,8 +61,9 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 				}?>
 			</div>
 
-			<?php }
-			if (isset($_GET['voorwerpForm'])) {?>
+		<?php }
+		if (isset($_GET['voorwerpForm'])) {?>
+
 
 			<!-- Voor nu op deze manier gedaan, kan met een foreach. Later nog naar kijken maar aangezien de tijdslimiet zo gedaan om geen tijd te verspillen. -->
 
@@ -104,50 +108,54 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 
 			</form>
 
-			<?php }
-// nog niet helemaal werkend. dit is de query om de tabel te updaten.
-			if (isset($_GET['verzenden'])) {
-				$parametersUpdate = array(
-					':titel' => $_GET['titel'], 
-					':beschrijving' => $_GET['beschrijving'],
-					':startprijs' => $_GET['startprijs'],
-					':betalingswijze' => $_GET['betalingswijze'],
-					':betalingsinstructie' => $_GET['betalingsinstructie'],
-					':plaatsnaam' => $_GET['plaatsnaam'],
-					':land' => $_GET['land'],
-					':looptijd' => $_GET['looptijd'],
-					':looptijdbeginDag' => $_GET['looptijdbeginDag'],
-					':looptijdbeginTijdstip' => $_GET['looptijdbeginTijdstip'],
-					':verzendkosten' => $_GET['verzendkosten'],
-					':verzendinstructies' => $_GET['verzendinstructies'],
-					':verkoper' => $_GET['verkoper'],
-					':koper' => $_GET['koper'],
-					':looptijdeindeDag' => $_GET['looptijdeindeDag'],
-					':looptijdeindeTijdstip' => $_GET['looptijdeindeTijdstip'],
-					':veilingGesloten' => $_GET['veilingGesloten'],
-					':verkoopPrijs' => $_GET['verkoopPrijs']);
 
-				handlequery("UPDATE Voorwerp SET
-					titel = :titel,
-					beschrijving = :beschrijving,
-					startprijs = CONVERT(NUMERIC(8,2), :startprijs),
-					betalingswijze = CONVERT(INT, :betalingswijze),
-					betalingsinstructie = :betalingsinstructie,
-					plaatsnaam = :plaatsnaam,
-					land = :land,
-					looptijd = :looptijd,
-					looptijdbeginDag = :looptijdbeginDag,
-					looptijdbeginTijdstip = :looptijdbeginTijdstip,
-					verzendkosten = CONVERT(NUMERIC(5,2), :verzendkosten),
-					verzendinstructies = :verzendinstructies,
-					verkoper = :verkoper,
-					koper = :koper,
-					looptijdeindeDag = :looptijdeindeDag,
-					looptijdeindeTijdstip = :looptijdeindeTijdstip,
-					veilingGesloten = :veilingGesloten,
-					verkoopPrijs = CONVERT(NUMERIC(8,2), :verkoopPrijs)",
-					$parametersUpdate);
-				}?>
-			</div>
-		</main>
-		<?php require_once './footer.php'; ?>
+	
+		<?php }
+		// nog niet helemaal werkend. dit is de query om de tabel te updaten.
+		if (isset($_GET['verzenden'])) {
+			$parametersUpdate = array(
+				':titel' => $_GET['titel'], 
+				':beschrijving' => $_GET['beschrijving'],
+				':startprijs' => $_GET['startprijs'],
+				':betalingswijze' => $_GET['betalingswijze'],
+				':betalingsinstructie' => $_GET['betalingsinstructie'],
+				':plaatsnaam' => $_GET['plaatsnaam'],
+				':land' => $_GET['land'],
+				':looptijd' => $_GET['looptijd'],
+				':looptijdbeginDag' => $_GET['looptijdbeginDag'],
+				':looptijdbeginTijdstip' => $_GET['looptijdbeginTijdstip'],
+				':verzendkosten' => $_GET['verzendkosten'],
+				':verzendinstructies' => $_GET['verzendinstructies'],
+				':verkoper' => $_GET['verkoper'],
+				':koper' => $_GET['koper'],
+				':looptijdeindeDag' => $_GET['looptijdeindeDag'],
+				':looptijdeindeTijdstip' => $_GET['looptijdeindeTijdstip'],
+				':veilingGesloten' => $_GET['veilingGesloten'],
+				':verkoopPrijs' => $_GET['verkoopPrijs']);
+
+			handlequery("UPDATE Voorwerp SET
+				titel = :titel,
+				beschrijving = :beschrijving,
+				startprijs = CONVERT(NUMERIC(8,2), :startprijs),
+				betalingswijze = CONVERT(INT, :betalingswijze),
+				betalingsinstructie = :betalingsinstructie,
+				plaatsnaam = :plaatsnaam,
+				land = :land,
+				looptijd = :looptijd,
+				looptijdbeginDag = :looptijdbeginDag,
+				looptijdbeginTijdstip = :looptijdbeginTijdstip,
+				verzendkosten = CONVERT(NUMERIC(5,2), :verzendkosten),
+				verzendinstructies = :verzendinstructies,
+				verkoper = :verkoper,
+				koper = :koper,
+				looptijdeindeDag = :looptijdeindeDag,
+				looptijdeindeTijdstip = :looptijdeindeTijdstip,
+				veilingGesloten = :veilingGesloten,
+				verkoopPrijs = CONVERT(NUMERIC(8,2), :verkoopPrijs)",
+				$parametersUpdate);
+			}?>
+		</div>
+	</main>
+	
+<?php require_once './footer.php'; ?>
+

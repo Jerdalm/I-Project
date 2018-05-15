@@ -21,30 +21,32 @@ $headerLocationIf ='upgrade-user.php?step=2';
 $headerLocationElse ='upgrade-user.php?step=1';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { // nadat er op de knop gedrukt wordt
-    if(isset($_POST['bank'])) {
+    if(isset($_POST['bank'])) { // als de bank is ingevuld sla die waarde op in een variabele anders sla NULL op
         $_SESSION['bank'] = $_POST['bank'];
     } else {
         $_SESSION['bank'] = NULL;
     }
-    if(isset($_POST['banknumber'])) {
+    if(isset($_POST['banknumber'])) { // als het banknummer is ingevoerd sla die waarde op in een variabele anders sla NULL op
         $_SESSION['banknumber'] = $_POST['banknumber'];
     } else {
         $_SESSION['banknumber'] = NULL;
     }
 
     if($_POST['verificationMethod'] == 'Post') { // is er gekozen voor de post
-        if($_SESSION['banknumber'] == NULL || ($_SESSION['bank'] == NULL)) {
-            $_SESSION["error_upgrade"] = 'bank en rekeningnummer moeten worden ingevoerd als u voor de post verificatie kiest';
-            header("Location: ./upgrade-user.php");
+        if($_SESSION['banknumber'] == NULL || ($_SESSION['bank'] == NULL)) { // is banknummer of bank niet ingevoerd schrijf een error en stuur de gebruiker naar stap 1,
+            $message_upgrade = 'bank en rekeningnummer moeten worden ingevoerd als u voor de post verificatie kiest'; // anders stuur een mail met de validatiecode
+
+            //header("Location: upgrade-user.php");
+
         } else {
             $_SESSION['verificationMethod'] = $_POST['verificationMethod'];
             sendCode($_SESSION['email-upgrade'], $subjectText, $bodyText, $headerLocationIf, $headerLocationElse, $randomVerificationCode);
         }
     }
 
-    if($_POST['verificationMethod'] == 'Credit Card') { // is er gekozen voor de creditcard
+    if($_POST['verificationMethod'] == 'Credit Card') { // is er gekozen voor de creditcard stuur de gebruiker door naar stap 2
         $_SESSION['verificationMethod'] = $_POST['verificationMethod'];
-        header("Location: ./upgrade-user.php?step=2");
+        header("Location: upgrade-user.php?step=2");
     }
 }
 
@@ -79,5 +81,4 @@ echo '
     <button type="submit" name="submit-upgrade" class="btn btn-primary btn-sm"> Doorgaan </button>
 </form> 
 ';
-
 ?>
