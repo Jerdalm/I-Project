@@ -38,47 +38,55 @@ foreach ($productdata as $item) {
 
 <div class="container border-primary">
 
-    <div>
         <div class="row">
-            <div class="col-lg-6 p-3 mb-2 bg-secondary text-white" style="text-align: center">
+            <div class="col-lg-6 p-3 bg-secondary text-white">
                 <figure class="figure" style="position: relative; text-align: center;">
-                    <img src="media/WatchTestJEREMY.jpg" width="400px" height="200px" alt="..."
+                    <img src="media/WatchTestJEREMY.jpg" alt="..."
                          class="figure-img img-fluid rounded">
 <!--                    afbeelding vanuit de webserver moet nog ingevoerd worden-->
+                    <div class="row">
+                    <img src="media/WatchTestJEREMY.jpg" alt="..." class="col-2 col-md-offset-1 rounded">
                     <img src="media/WatchTestJEREMY.jpg" alt="..." class="col-lg-2 col-md-offset-1 rounded">
                     <img src="media/WatchTestJEREMY.jpg" alt="..." class="col-lg-2 col-md-offset-1 rounded">
-                    <img src="media/WatchTestJEREMY.jpg" alt="..." class="col-lg-2 col-md-offset-1 rounded">
-
+                    </div>
                 </figure>
+                <div class="col p-3 mb-2 bg-secondary text-white" style="text-align: center">
+                    <p>Description:</p>
+                </div>
             </div>
             <div class="col-lg-6 p-3 mb-2 bg-secondary text-white">
                 <div class="alert alert-dark" role="alert">
                     <h4 class="alert-heading"><?= $item['titel']?></h4>
                     <p>Startprijs: <?= $item['startprijs']?>€</p>
-                    <p id="demo"></p>
+                    <p>Voorwerpnummer: <?= $item['voorwerpnummer']?></p>
                     <div id="txt"></div>
                     <hr>
                     <p>Hoogste bod:</p>
                     <div class="card bg-light mb-4">
                         <div class="card-body">
                             <table class="table">
-                    <?php 
-                    $bodData = handlequery("SELECT *
+
+                                <?php
+                                $bodData = handlequery("SELECT *
 from Bod
 Order By 2 desc
 ");
 
-                    foreach ($bodData as $Boditem) {
-                    ?>
+                                foreach ($bodData as $Boditem) {
+                                $bodTijdstip= $Boditem['bodTijdstip'];
+                                $bodTijd= date_create("$bodTijdstip");
+                                ?>
                                 <thead class="thead-dark">
                                 <tr class="table-danger">
                                     <th scope="col"><?= $Boditem['bodbedrag']?>€</th>
                                     <th scope="col"><?= $Boditem['gebruikersnaam']?></th>
                                     <th scope="col"><?= $Boditem['bodDag']?></th>
+                                    <th scope="col"><?= date_format($bodTijd, "H:i:s")?></th>
+                                    <?php } ?>
                                 </tr>
                                 </thead>
 
-                                <?php } ?>
+
 
                             </table>
                         </div>
@@ -91,6 +99,8 @@ Order By 2 desc
                         <img src="media/WatchTestJEREMY.jpg" alt="..." width= 70px height= 70px class="rounded-circle float-right" style="margin: -15px 15px 0 0">
                     </div>
                 </div>
+
+
                 <form method="post" action="">
                     <div class="form-row align-items-center">
                         <div class="col-sm-9">
@@ -105,17 +115,16 @@ Order By 2 desc
 
             <?php
             $bidAmount = "";
-            $HighestBid = handlequery("select max(B.bodbedrag) from Bod B");
+            $HighestBid = handlequery("select max(B.bodbedrag) as bodHoogte from Bod B");
 //echo $HighestBid;
 echo '<pre>';
-var_dump($HighestBid);
+var_dump($HighestBid['bodHoogte']);
 echo '</pre>';
-die();
             if(isset($_POST['submit-bidamount']) && !empty($_POST['bidAmount'])) {
                 $HighestBid = handlequery("select max(B.bodbedrag) from Bod B");
                 if ($_POST['bidAmount'] > $HighestBid) {
 
-                    $bidAmount = $_POST['bidAmount'];
+                    $bidAmount = $_POST['bidamount'];
                     $username = "gebruiker";
                     $bidDay = date('Y-d-m');
                     $bidTime = date('H:i:s');
@@ -132,9 +141,6 @@ die();
             ?>
             </div>
         </div>
-<!--        <div class="col-lg-6 p-3 mb-2 bg-secondary text-white" style="text-align: center">-->
-<!--                <p>Dit is een stukje text onder het bodenoverzicht en de foto</p>-->
-<!--            </div>-->
         <section class="products">
             <div class="container">
                 <div class="row">
