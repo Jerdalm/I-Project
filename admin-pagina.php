@@ -4,13 +4,18 @@ require_once 'header.php';
 if($_SESSION['gebruikersnaam'] == "admin") { 
 
 	if (isset($_GET['zoekenVoorwerp'])){
+
 		$voorwerpNummer = $_GET['voorwerp'];
 		$parametersVoorwerp = array(':voorwerpnummer' => $voorwerpNummer);
 		$voorwerpen = handlequery("SELECT * FROM Voorwerp WHERE voorwerpnummer = :voorwerpnummer",$parametersVoorwerp);
 		echo print_r($voorwerpen);
 		$artikelResultaten = '<table class="table"><tr><th scope="col">Voorwerp</th></tr><tr>';
 		foreach($voorwerpen as $voorwerp){
-			$artikelResultaten .= "<tr>" . "<td>" . "<a href='?voorwerpForm=" . $voorwerp['titel'] . "'>" .  $voorwerp['titel'] ."</a>". "</td>" . "</tr>";
+
+			$getpath = "$_SERVER[QUERY_STRING]";
+			$artikelResultaten .= "<tr>" . "<td>" . "<a href='?".$getpath."&voorwerpForm=" . $voorwerp['titel'] . "'>" .  $voorwerp['titel'] ."</a>". "</td>" . "</tr>"; 
+
+		
 		} 
 		$artikelResultaten .= '</tr></table>';
 	} else if (isset($_GET['zoekenGebruiker'])) {
@@ -59,6 +64,7 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 		<?php }
 		if (isset($_GET['voorwerpForm'])) {?>
 
+
 			<!-- Voor nu op deze manier gedaan, kan met een foreach. Later nog naar kijken maar aangezien de tijdslimiet zo gedaan om geen tijd te verspillen. -->
 
 			<form class="form-group" method="GET" action=""> 
@@ -102,6 +108,8 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 
 			</form>
 
+
+	
 		<?php }
 		// nog niet helemaal werkend. dit is de query om de tabel te updaten.
 		if (isset($_GET['verzenden'])) {
@@ -150,3 +158,4 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 	</main>
 	
 <?php require_once './footer.php'; ?>
+

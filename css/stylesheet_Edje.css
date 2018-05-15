@@ -30,4 +30,6 @@ img{
 
 }
 
-
+.formWachtwoordHuidig {
+	flex-direction: column;
+}
