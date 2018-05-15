@@ -8,7 +8,7 @@ require_once './db.php';
 $state = false; // boolean voor debuggen van de header in de insertUpgradeinfoInDb
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { // is er op de knop gedrukt
-    if($_SESSION['verificationMethod'] == 'Post') { // is de validatie methode post
+    if ($_SESSION['verificationMethod'] == 'Post') { // is de validatie methode post
         if (isset($_POST['creditcardnumber'])) { // als het creditcardnummer is ingevoert sla het op in een variabele,
             $_SESSION['creditcardnumber'] = $_POST['creditcardnumber']; // anders sla NULL op
         } else {
@@ -21,27 +21,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // is er op de knop gedrukt
 
             if (validateCode($_SESSION['upgradeCode'], $_SESSION['email-upgrade'])) { // is de ingevoerde code correct voer dan alle gegevens in in de database
                 $validateCodeCorrect = true;
-                //insertUpgradeinfoInDB();
-                header("Location: /I-project/index.php");
-                exit();
+                insertUpgradeinfoInDB();
             } else {
-                $_SESSION["error_upgrade"] = 'upgradeCode komt niet overeen met de toegestuurde code';
-                header("Location: upgrade-user.php?step=2");
+                $message_upgrade = 'upgradeCode komt niet overeen met de gemailde code';
             }
         } else {
-            $_SESSION["error_upgrade"] = 'upgradeCode niet ingevoerd';
-            header("Location: upgrade-user.php?step=2");
+            $message_upgrade = 'upgradeCode niet ingevoerd';
         }
     }
 
-    if($_SESSION['verificationMethod'] == 'Credit Card') { // is de validatie methode credit card
+    if ($_SESSION['verificationMethod'] == 'Credit Card') { // is de validatie methode credit card
         if (isset($_POST['creditcardnumber'])) { // is het creditcardnummer ingevoerd
             $_SESSION['creditcardnumber'] = $_POST['creditcardnumber']; // sla het nummer op in een variabele en voer alle gegevens in in de database
             insertUpgradeinfoInDB();
+        } else {
+            $message_upgrade = 'creditcardnummer niet ingevoerd';
+            header("Location: upgrade-user.php?step=2");
         }
-    } else {
-        $_SESSION["error_upgrade"] = 'creditcardnummer niet ingevoerd';
-        header("Location: upgrade-user.php?step=2");
     }
 }
 
