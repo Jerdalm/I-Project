@@ -13,10 +13,6 @@ $_SESSION['email-upgrade'] = $_SESSION['email-upgradeDB'][0]['mailadres'];
         <div class="row row-left">
             <?php
 
-            if (isset($message_upgrade)) { // het tonen van een error bericht boven de pagina
-                echo '<p class="error error-warning">' . $message_upgrade . '</p>';
-            }
-
             if($_SERVER['REQUEST_URI'] == '/I-project/upgrade-user.php' || $_SERVER['REQUEST_URI'] == 'user.php?step=1') {
                 require_once 'upgrade-step-1.php';
             } elseif ($_SERVER['REQUEST_URI'] == '/I-project/upgrade-user.php?step=2') {
@@ -24,9 +20,18 @@ $_SESSION['email-upgrade'] = $_SESSION['email-upgradeDB'][0]['mailadres'];
             }
             ?>
         </div>
+
+        <?php
+        if (isset($message_upgrade)) { // het tonen van een error bericht boven de pagina
+            echo '<p class="error error-warning">' . $message_upgrade . '</p>';
+        }
+        ?>
     </div>
 </main>
 
+<?php
+require_once 'footer.php';
+?>
 
 
 

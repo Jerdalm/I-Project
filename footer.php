@@ -1,15 +1,4 @@
     <!-- Footer -->
-    <pre><code>
-      <?php
-        if (isset($_SESSION)){
-          print_r($_SESSION);         
-        } else {
-          echo 'ECHO NIET BEZIG';
-        }
-      
-      ?>
-      </code></pre>
-      
       <footer class="py-5 bg-dark">
         <div class="container">
           <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>

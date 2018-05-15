@@ -36,8 +36,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // nadat er op de knop gedrukt wordt
         if($_SESSION['banknumber'] == NULL || ($_SESSION['bank'] == NULL)) { // is banknummer of bank niet ingevoerd schrijf een error en stuur de gebruiker naar stap 1,
             $message_upgrade = 'bank en rekeningnummer moeten worden ingevoerd als u voor de post verificatie kiest'; // anders stuur een mail met de validatiecode
 
-            //header("Location: upgrade-user.php");
-
         } else {
             $_SESSION['verificationMethod'] = $_POST['verificationMethod'];
             sendCode($_SESSION['email-upgrade'], $subjectText, $bodyText, $headerLocationIf, $headerLocationElse, $randomVerificationCode);
