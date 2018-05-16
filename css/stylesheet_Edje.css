@@ -1,0 +1,56 @@
+body {
+    background-color: #D9D9D9;
+}
+
+
+section.userDetail .cta-orange.btn{
+padding: 8px;
+
+}
+
+section.forgotpass .container{
+	margin-top:50px;
+
+}
+
+section.user-details div.container{margin-top:50px;}
+.inputMailadres{
+	margin-bottom: 2eM;
+
+}
+
+#formMail.form-group input.cta-orange.btn{
+margin-top: 5px;
+padding: 10px;
+
+}
+
+
+.inputAntwoord.col-md-6 input.cta-orange.btn{
+margin-top: 5px;
+padding: 10px;
+
+}
+
+.formWachtwoordHuidig {
+	flex-direction: column;
+}
+
+#profile-picture{
+	max-width: 400px;
+	max-height: 200px;
+	height: 100%;
+	width: 100%;
+
+}
+
+#editUserInfo{
+	text-align: right;
+
+
+}
+
+#detailsForm{
+	float: left;
+	width: 100%;
+}

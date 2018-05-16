@@ -1,0 +1,443 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"_",
+				"_SESSION"
+			],
+			[
+				"S",
+				"_SESSION"
+			],
+			[
+				"mail",
+				"mailAdres"
+			],
+			[
+				"mai",
+				"mailAdres"
+			],
+			[
+				"gebrui",
+				"gebruiker"
+			],
+			[
+				"geb",
+				"gebruikersnaam"
+			],
+			[
+				"antwo",
+				"antwoord"
+			],
+			[
+				"ant",
+				"antwoordtekst"
+			],
+			[
+				"antwoo",
+				"antwoordtekst"
+			],
+			[
+				"gebruik",
+				"gebruiker"
+			],
+			[
+				"vraag",
+				"vraagUser"
+			],
+			[
+				"session",
+				"session_start"
+			],
+			[
+				"print",
+				"print_r"
+			],
+			[
+				"margin",
+				"margin-bottom"
+			],
+			[
+				"mar",
+				"margin-right"
+			],
+			[
+				"te",
+				"text-align"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "db.php",
+			"settings":
+			{
+				"buffer_size": 57,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "registratieScherm.php",
+			"settings":
+			{
+				"buffer_size": 1555,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "wachtwoordVergeten.php",
+			"settings":
+			{
+				"buffer_size": 2281,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "<?php require_once 'header.php'; \n//session_start();\n$_SESSION['ingelogdeGebruiker'] = 'admin';\n\n$gebruikersnaam = $_SESSION['ingelogdeGebruiker'];\n\n$emailParameters = array(':gebruikersnaam' => \"$gebruikersnaam\");\n\n\n\n\n$gebruiker = handlequery(\"SELECT *\n FROM Gebruiker JOIN GeheimeVraag\n on Gebruiker.vraag = GeheimeVraag.ID\n where gebruikersnaam = :gebruikersnaam \n and\n Gebruiker.vraag = GeheimeVraag.ID\", $emailParameters);\n\n$email = $gebruiker[0]['mailadres'];\n$subject = 'Wachtwoord wijzigen';\n$message = 'U heeft aangegeven dat u het wachtwoord wilt wijzigen. Uw nieuwe code is =';\n\n$randomPassword = createRandomPassword(); \n$messageCode = $message . $randomPassword;\n\n\n?>\n\n\n<main>\n<section class=\"userDetail\">\n<div class=\"container\">\n   \n\n\n        <div class=\"row row-left\">\n            <div class=\"plaatje\">\n                <img src=\"img/geit.jpg\">\n            </div>\n        <div class=\"row row-right\">\n        <table class=\"table\"> \n            <thead>\n                <tr>\n                     <th scope=\"col\">Gebruikersnaam </th>\n                     <td> <?php echo $gebruikersnaam ?> </td>\n                </tr>\n            </thead>\n            <tbody>\n                <tr>\n                    <th scope=\"row\">Land</th>\n                        <td><?php echo $gebruiker[0]['land'] ?> </td>\n                </tr>\n                <tr>\n                    <th scope=\"row\">Woonplaats</th>\n                </tr>\n                <tr>\n                    <th scope=\"row\">E-mailadres</th>\n                </tr>\n                <tr>\n                    <th scope=\"row\">Voornaam</th>\n                </tr>\n                 <tr>\n                    <th scope=\"row\">Achternaam</th>\n                </tr>\n                 <tr>\n                    <th scope=\"row\">Telefoonnummer</th>\n                </tr>\n                 <tr>\n                    <th scope=\"row\">Postcode</th>\n                </tr>\n                  <tr>\n                    <th scope=\"row\">Wachtwoord</th>\n                <td>  <a  href=<?=\"?changePass=ok\" ?>  > <b><i>Wachtwoord wijzigen</i></b> </a></td>\n                </tr>\n            </tbody>    \n        </table>\n\n        <?php if(isset($_GET['changePass'])){?>\n        \n<form method=\"POST\" class=\"form-group\">\n    <label for=\"testvoorvraag\">  <?php echo $gebruiker[0]['vraag']?> </label>\n        <input type=\"text\" name=\"antwoord\" class=\"form-control\" id=\"testAntwoordvakje\" placeholder=\"Antwoord\">\n        <input class=\"cta-orange btn\" type=\"submit\" name=\"verzenden\" value=\"Verzenden\">\n</form>\n       \n    \n\n       <?php } ?>\n\n\n       <?php \n\n\n\n\n       if (isset ($_POST['verzenden'])){\n\n$antwoordtekst = $_POST['antwoord'];\n\n$answerParameters = array(':antwoord' => \"$antwoordtekst\" , \n                          ':gebruiker' => \"$gebruikersnaam\" );\n\n$antwoord = handlequery(\"SELECT antwoordtekst\n                         FROM Gebruiker\n                         WHERE antwoordtekst = :antwoord\n                         AND gebruikersnaam = :gebruiker\" , $answerParameters);\n\n\n\nif (count($antwoord) == 1){\n\n    $correct = true;\n\n} else {\n\n    $correct = false;\n\n    }\n\nif ($correct == true){\n\nsendMail($email,$subject,$messageCode);\n\nhandlequery(\"UPDATE Gebruiker SET wachtwoord = '$randomPassword' WHERE gebruikersnaam = '$gebruikersnaam' \");\n\n\n\n\n} else {echo 'shit';}\n\n\n}\n    \n\n\n       ?>\n\n\n        \n        </div>\n    </div>\n</section>\n\n\n\n</main>\n<?php require_once 'footer.php'; ?>\n\n",
+			"file": "userDetails.php",
+			"file_size": 3563,
+			"file_write_time": 131692073468337813,
+			"settings":
+			{
+				"buffer_size": 3417,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "mail-check.php",
+			"settings":
+			{
+				"buffer_size": 1655,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/xampp/htdocs/EenmaalAndermaal/GitHub/I-Project",
+		"/C/xampp/htdocs/EenmaalAndermaal/GitHub/I-Project/css",
+		"/C/xampp/htdocs/EenmaalAndermaal/GitHub/I-Project/mechanic"
+	],
+	"file_history":
+	[
+		"/C/xampp/htdocs/EenmaalAndermaal/GitHub/I-Project/wachtwoordVergeten.php",
+		"/C/xampp/htdocs/EenmaalAndermaal/GitHub/I-Project/userDetails.php",
+		"/C/xampp/htdocs/EenmaalAndermaal/GitHub/I-Project/css/stylesheet_Edje.css",
+		"/C/xampp/htdocs/EenmaalAndermaal/GitHub/I-Project/mechanic/functions.php",
+		"/C/xampp/htdocs/EenmaalAndermaal/GitHub/I-Project/registratieScherm.php",
+		"/C/xampp/htdocs/EenmaalAndermaal/GitHub/I-Project/gegevensOphalen.php",
+		"/C/xampp/htdocs/EenmaalAndermaal/GitHub/I-Project/head.php",
+		"/C/xampp/htdocs/EenmaalAndermaal/GitHub/I-Project/school.sublime-project"
+	],
+	"find":
+	{
+		"height": 40.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"br",
+			"gebruiker"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"folders":
+	[
+		{
+			"path": "C:\\xampp\\htdocs\\EenmaalAndermaal\\GitHub\\I-Project"
+		}
+	],
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "db.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 57,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								56,
+								53
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "registratieScherm.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1555,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1555,
+								1555
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 405.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "wachtwoordVergeten.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2281,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								797,
+								787
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 135.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "userDetails.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3417,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								95,
+								95
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "mail-check.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1655,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								938,
+								938
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 23.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "",
+	"replace":
+	{
+		"height": 42.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 229.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
