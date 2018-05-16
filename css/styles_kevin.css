@@ -198,10 +198,7 @@ section.userExperience{
 
 .userExperience h2{
 	color:white;
-	text-shadow: 1px 1px 1px #262626;
-
-	position: relative;
-	top: 25%;
+	text-shadow: 1px 1px 1px #262626;	
 }
 
 /* Section products */

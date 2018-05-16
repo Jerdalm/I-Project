@@ -1,4 +1,5 @@
     <!-- Footer -->
+<<<<<<< HEAD
     <footer class="py-3 bg-dark">
       <div class="container">
        <div class="row ">
@@ -47,5 +48,20 @@
 	  <script src="vendor/bootstrap/js/popup.header.js"></script>
   </body>
 </html>
+=======
+      <footer class="py-5 bg-dark">
+        <div class="container">
+          <p class="m-0 text-center text-white">Copyright &copy; Your Website 2018</p>
+        </div>
+        <!-- /.container -->
+      </footer>
+
+
+      <!-- Bootstrap core JavaScript -->
+      <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <script src="vendor/bootstrap/js/popup.header.js"></script>
+    </body>
+    </html>
+>>>>>>> 531673006e4de34ccc865c9246f04be90795d13b
 
 

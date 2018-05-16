@@ -62,6 +62,7 @@ footer{
 	background-color: #F2552C;
 	color: white;
 	font-weight: 600;
+	display: block;
 }
 
 a.cta-orange:hover{
@@ -80,6 +81,7 @@ a.cta-orange:hover{
 	color: #F2552C;
 	background-color: white;
 	font-weight: 600;
+	display: block;
 }
 
 .cta-white:hover{
@@ -89,6 +91,7 @@ a.cta-orange:hover{
 	transition: 0.3s;
 	box-shadow: 0px 0px 30px 1px rgba(0,0,0,0.25);
 }
+<<<<<<< HEAD
 
 section.register{
 	min-height: 80vh;
@@ -114,6 +117,31 @@ pre{
 	width: 100%;
 }
 
+=======
+main{
+	margin-top: 100px;
+	min-height: 35vh;
+}
+
+header, main, footer{
+	float: left;
+	width: 100%;
+}
+
+pre{
+	float: left;
+}
+
+#login-form{
+	margin-bottom: 15px;
+	width: 100%;
+}
+
+#login-form button[name="login-submit"]{
+	margin-top: 10px;
+}
+
+>>>>>>> 531673006e4de34ccc865c9246f04be90795d13b
 .form-steps > *, #login-form > *{
 	float: left;
 	width: 100%;

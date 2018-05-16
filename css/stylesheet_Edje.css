@@ -1,11 +1,59 @@
 body {
-    background-color: #D9D9D9;
+	background-color: #D9D9D9;
+}
+
+<<<<<<< HEAD
+=======
+
+section.userDetail .cta-orange.btn{
+	padding: 8px;
+
+}
+>>>>>>> 531673006e4de34ccc865c9246f04be90795d13b
+
+img{
+	display: block;
+}
+
+.inputMailadres{
+	margin-bottom: 2eM;
+
+}
+
+#formMail.form-group input.cta-orange.btn{
+	margin-top: 5px;
+	padding: 10px;
+
 }
 
 
-section.userDetail .cta-orange.btn{
-padding: 8px;
+.inputAntwoord.col-md-6 input.cta-orange.btn{
+	margin-top: 5px;
+	padding: 10px;
 
+}
+
+.formWachtwoordHuidig {
+	flex-direction: column;
+}
+
+#profile-picture{
+	max-width: 400px;
+	max-height: 200px;	
+	height: 100%;
+	width: 100%;
+	
+}
+
+#editUserInfo{
+text-align: right;
+
+
+}
+
+#detailsForm{
+
+<<<<<<< HEAD
 }
 
 section.forgotpass .container{
@@ -54,3 +102,8 @@ padding: 10px;
 	float: left;
 	width: 100%;
 }
+=======
+	float: left;
+	width: 100%;
+}
+>>>>>>> 531673006e4de34ccc865c9246f04be90795d13b

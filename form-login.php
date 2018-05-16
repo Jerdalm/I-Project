@@ -8,8 +8,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         loginControl($_POST['email-login'], $_POST['wachtwoord']);
     }
 }
+<<<<<<< HEAD
 
 echo '
+=======
+?>
+
+>>>>>>> 531673006e4de34ccc865c9246f04be90795d13b
 <form method="post" id="login-form">
     <div class="form-group">
         <label for="inputEmail">Email</label>
@@ -22,5 +27,8 @@ echo '
     <a href= "wachtwoord-vergeten.php"> Wachtwoord Vergeten? </a><br><br>
     <button type="submit" name="login-submit" class="btn btn-primary">Login</button>
 </form>
+<<<<<<< HEAD
 ';
 ?>
+=======
+>>>>>>> 531673006e4de34ccc865c9246f04be90795d13b

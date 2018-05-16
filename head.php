@@ -29,6 +29,11 @@ $head = <<<HEAD
 HEAD;
 
 echo $head;
+<<<<<<< HEAD
 require_once './mechanic/functions.php'; 
+=======
+
+require_once 'mechanic/functions.php'; 
+>>>>>>> 531673006e4de34ccc865c9246f04be90795d13b
 ?>
 

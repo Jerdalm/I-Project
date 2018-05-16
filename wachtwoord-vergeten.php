@@ -20,7 +20,10 @@ $messageCode = $message . $randomPassword;
 ?>
 
 <main>
+<<<<<<< HEAD
  <section class="forgotpass">
+=======
+>>>>>>> 531673006e4de34ccc865c9246f04be90795d13b
   <div class="container">
     <div class="inputMailadres col-md-6">
      <!--  de form om te checken of de e-mail adres klopt -->
@@ -60,6 +63,10 @@ $messageCode = $message . $randomPassword;
         ?>
     </form>
   </div>
+<<<<<<< HEAD
  </section>
+=======
+ 
+>>>>>>> 531673006e4de34ccc865c9246f04be90795d13b
 </main>
 <?php require_once 'footer.php'; ?>
