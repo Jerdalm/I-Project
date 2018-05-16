@@ -2,129 +2,183 @@
 require_once 'header.php'; 
 
 if($_SESSION['gebruikersnaam'] == "admin") { 
-
+	$htmlVeranderVoorwerp = ' ';
+	$htmlVeranderGebruiker= ' ';
+	$_SESSION['voorwerpnummer'] = ' ';
 	if (isset($_GET['zoekenVoorwerp'])){
-
 		$voorwerpNummer = $_GET['voorwerp'];
 		$parametersVoorwerp = array(':voorwerpnummer' => $voorwerpNummer);
 		$voorwerpen = handlequery("SELECT * FROM Voorwerp WHERE voorwerpnummer = :voorwerpnummer",$parametersVoorwerp);
-		echo print_r($voorwerpen);
+		print_r($voorwerpen);
 		$artikelResultaten = '<table class="table"><tr><th scope="col">Voorwerp</th></tr><tr>';
 		foreach($voorwerpen as $voorwerp){
-
 			$getpath = "$_SERVER[QUERY_STRING]";
-			$artikelResultaten .= "<tr>" . "<td>" . "<a href='?".$getpath."&voorwerpForm=" . $voorwerp['titel'] . "'>" .  $voorwerp['titel'] ."</a>". "</td>" . "</tr>"; 
-
-
+			$artikelResultaten .= "<tr>" . "<td>" . "<a href='?".$getpath."&voorwerpForm=" . $voorwerp['titel'] . "'>" . $voorwerp['titel'] ."</a>". "</td>"."</tr>"; 
 		} 
 		$artikelResultaten .= '</tr></table>';
 	} else if (isset($_GET['zoekenGebruiker'])) {
 		$gebruikersnaam = $_GET['gebruiker'];
 		$parametersGebruiker = array(':gebruiker' => "%". $gebruikersnaam ."%");
 		$gebruikers = handlequery("SELECT * FROM Gebruiker WHERE gebruikersnaam like :gebruiker",$parametersGebruiker);
-		echo print_r($gebruikers);
+		print_r($gebruikers);
 		$gebruikerResultaten = '<table class="table"><tr><th scope="col">Gebruikersnaam</th></tr><tr>';
 		foreach($gebruikers as $gebruiker){
-			$gebruikerResultaten .= "<tr>" . "<td>" . "<a href='?gebruikersnaamForm=" . $gebruiker['gebruikersnaam'] . "'>" .  $gebruiker['gebruikersnaam'] ."</a>". "</td>" . "</tr>";
+			$gebruikerResultaten .= "<tr>" . "<td>" . "<a href='?gebruikersnaamForm=" . $gebruiker['gebruikersnaam'] . "'>" . $gebruiker['gebruikersnaam'] ."</a>". "</td>" . "</tr>";
 		} 
 		$gebruikerResultaten .= '</tr></table>';
-	}
+	} 
 
+	if (isset($_GET['voorwerpForm'])) {
+		$artikelResultaten = ' ';
+		$htmlVeranderVoorwerp = '<form class="form-group" method="GET" action="">'; 
+
+		$kweerie = "SELECT * FROM Voorwerp WHERE voorwerpnummer = :voorwerpnummer";
+		$query = FetchAssocSelectData($kweerie, $parametersVoorwerp);
+		foreach ($query as $key => $value) {
+			if ($key == 'voorwerpnummer') {				
+				$htmlVeranderVoorwerp .= '<label>'. $key . '</label>';
+				$htmlVeranderVoorwerp .= '<input type="text" name="'.$key.'" value="'.$value.'" readonly><br>';
+				
+				continue;
+			}
+			if ($key == 'verkoper') continue;
+			if ($key == 'koper') continue;
+			if ($key == 'looptijdEindeDag') continue;
+			if ($key == 'looptijdEindeTijdstip') continue;
+			if ($key == 'veilingGesloten') continue;
+			if ($key == 'verkoopPrijs') continue;
+			if ($key == 'looptijdBeginDag') {
+				$htmlVeranderVoorwerp .= '<label>'. $key . '</label>';
+				$htmlVeranderVoorwerp .= '<input type="date" name="'.$key.'" value="'.$value.'"><br>';	
+				continue;
+			} else if ($key == 'looptijdBeginDag') {
+				$htmlVeranderVoorwerp .= '<label>'. $key . '</label>';
+				$htmlVeranderVoorwerp .= '<input type="price" name="'.$key.'" value="'.$value.'"><br>';	
+				continue;
+			}
+			$htmlVeranderVoorwerp .= '<label>'. $key . '</label>';
+			$htmlVeranderVoorwerp .= '<input type="text" name="'.$key.'" value="'.$value.'"><br>';
+		}
+		$htmlVeranderVoorwerp .= '<button class="btn btn-success" name="submit-changes-article">Sla wijzigingen op</button>';
+		$htmlVeranderVoorwerp .= '<button class="btn btn-danger" name="delete-article">Verwijder voorwerp</button>';
+		$htmlVeranderVoorwerp .= '</form>';
+	} else if (isset($_GET['gebruikersnaamForm'])) {
+		$htmlVeranderGebruiker = '<form class="form-group" method="GET" action="">'; 
+		
+		$_SESSION['username_changeinfo'] = $_GET['gebruikersnaamForm'];
+		$parametersGebruiker = array(':gebruiker' => $_SESSION['username_changeinfo']);
+		$kweerie2 = "SELECT * FROM Gebruiker WHERE gebruikersnaam = :gebruiker";
+		$query = FetchAssocSelectData($kweerie2, $parametersGebruiker);
+		foreach ($query as $key => $value) {
+			if ($key == 'wachtwoord') continue; //Zodat de admin het wachtwoord niet kan zien
+			if ($key == 'vraag') continue;
+			if ($key == 'antwoordtekst') continue;
+			if ($key == 'soortGebruiker') continue;
+			$htmlVeranderGebruiker .= '<label>'. $key . '</label>';
+			$htmlVeranderGebruiker .= '<input type="text" name="'.$key.'" value="'.$value.'"><br>';
+			
+		}
+		$htmlVeranderGebruiker .= '<button class="btn btn-success" name="submit-changes-user">Sla wijzigingen op</button>';
+		$htmlVeranderGebruiker .= '<button name="block-user" class="btn btn-danger">Blokkeer gebruiker</button>';
+		$htmlVeranderGebruiker .= '</form>';
+	} else if (isset($_GET['block-user'])){
+		deleteUser(array_values($_GET)[0]);	
+	} else if (isset($_GET['delete-article'])){
+		deleteArticle(array_values($_GET)[0]);
+	} else if (isset($_GET['submit-changes-user'])){
+		$birthdate = $_GET['geboortedag'];
+		$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
+		$geboortedag = $myDateTime->format('Y-m-d');
+		
+		$changeUserParam = array(':usernameNew' => array_values($_GET)[0],
+			':firstname' => $_GET['voornaam'],
+			':lastname' => $_GET['achternaam'],
+			':adres1' => $_GET['adresregel1'],
+			':adres2' => $_GET['adresregel2'],
+			':postcode' => $_GET['postcode'],
+			':placename' => $_GET['plaatsnaam'],
+			':country' => $_GET['land'],
+			':birthdate' => $geboortedag,
+			':mail' => $_GET['mailadres'],
+			'usernameOld' => $_SESSION['username_changeinfo']);
+		handlequery("UPDATE Gebruiker 
+			SET gebruikersnaam = :usernameNew, voornaam = :firstname, achternaam = :lastname, adresregel1 = :adres1, adresregel2 = :adres2, postcode = :postcode, plaatsnaam = :placename, land = :country, geboortedag = :birthdate, mailadres = :mail
+			WHERE gebruikersnaam = :usernameOld", $changeUserParam);	
+		header("Location: ./admin-pagina.php");
+		echo '<script language="javascript">';
+		echo 'alert("Gegevens zijn gewijzigd")';
+		echo '</script>';
+	} else if (isset($_GET['submit-changes-article'])){
+		$dateLooptijdBegin = $_GET['looptijdBeginDag'];
+		$myDateTimeBegin = DateTime::createFromFormat('Y-m-d', $dateLooptijdBegin);
+		$datumLooptijdBegin = $myDateTimeBegin->format('Y-m-d');
+		$parametersUpdate = array(
+			':titel' => $_GET['titel'], 
+			':beschrijving' => $_GET['beschrijving'],
+			':startprijs' => (int)$_GET['startprijs'],
+			':betalingswijze' => $_GET['betalingswijze'],
+			':betalingsinstructie' => $_GET['betalingsinstructie'],
+			':plaatsnaam' => $_GET['plaatsnaam'],
+			':land' => $_GET['land'],
+			':looptijd' => $_GET['looptijd'],
+			':looptijdbeginDag' => $datumLooptijdBegin,
+			':looptijdbeginTijdstip' => $_GET['looptijdBeginTijdstip'],
+			':verzendkosten' => (int)$_GET['verzendkosten'],
+			':verzendinstructies' => $_GET['verzendinstructies'],
+			':voorwerpnummer' => $_GET['voorwerpnummer']);
+		handlequery("UPDATE Voorwerp SET
+			titel = :titel,
+			beschrijving = :beschrijving,
+			startprijs = :startprijs,
+			betalingswijze = :betalingswijze,
+			betalingsinstructie = :betalingsinstructie,
+			plaatsnaam = :plaatsnaam,
+			land = :land,
+			looptijd = :looptijd,
+			looptijdbeginDag = :looptijdbeginDag,
+			looptijdbeginTijdstip = :looptijdbeginTijdstip,
+			verzendkosten = :verzendkosten,
+			verzendinstructies = :verzendinstructies
+			WHERE voorwerpnummer = :voorwerpnummer",
+			$parametersUpdate);
+	}
 	?>
 
 	<main>
 		<div class="container">
 			<div class="row">
-				<div class="artikelnummer">
-					<!-- form om te zoeken op artikelnummer -->
-					<div class="col-lg-4">
-						<form class="form-group" method="GET" action=""> 
-							<input type="number" name="voorwerp" placeholder="Voorwerpnummer"> <br>
-							<input class="cta-orange" name="zoekenVoorwerp" type="submit" value="Zoeken">
-						</form>
+				<div class="col-6">
+					<div class="artikelnummer">
+						<!-- form om te zoeken op artikelnummer -->
+						<div class="col-lg-4">
+							<form class="form-group" method="GET" action=""> 
+								<input type="number" name="voorwerp" placeholder="Voorwerpnummer" min="0"> <br>
+								<input class="cta-orange" name="zoekenVoorwerp" type="submit" value="Zoeken">
+							</form>
+						</div>
+						<?=$htmlVeranderVoorwerp?>
 					</div>
+					<?php if(isset($artikelResultaten)) { 
+						echo $artikelResultaten; 
+					}?>
 				</div>
-
-				<div class="gebruiker">
-					<!-- for om te zoeken op gebruiker -->
-					<div class="col-lg-4">
-						<form class="form-group" method="GET" action=""> 
-							<input type="text" name="gebruiker" placeholder="Gebruikersnaam"> <br>
-							<input class="cta-orange" name="zoekenGebruiker" type="submit" value="Zoeken">
-						</form>
+				<div class="col-6">
+					<div class="gebruiker">
+						<!-- for om te zoeken op gebruiker -->
+						<div class="col-lg-4">
+							<form class="form-group" method="GET" action=""> 
+								<input type="text" name="gebruiker" placeholder="Gebruikersnaam"> <br>
+								<input class="cta-orange" name="zoekenGebruiker" type="submit" value="Zoeken">
+							</form>
+						</div>
+						<?=$htmlVeranderGebruiker?>
 					</div>
+					<?php if(isset($gebruikerResultaten)) { 
+						echo $gebruikerResultaten; 
+					}?>
 				</div>
-				<?php if(isset($artikelResultaten)) { 
-					echo $artikelResultaten; 
-				} else if(isset($gebruikerResultaten)) { 
-					echo $gebruikerResultaten; 
-				}?>
 			</div>
-
-		<?php }
-		if (isset($_GET['voorwerpForm'])) {?>
-			<!-- Voor nu op deze manier gedaan, kan met een foreach. Later nog naar kijken maar aangezien de tijdslimiet zo gedaan om geen tijd te verspillen. -->
-
-			<form class="form-group" method="GET" action=""> 
-				
-				<?php 
-				$kweerie = "SELECT * FROM Voorwerp WHERE voorwerpnummer = :voorwerpnummer";
-				$query = FetchAssocSelectData($kweerie, $parametersVoorwerp);
-				foreach ($query as $key => $value) {
-					echo '<label>'. $key . '</label>';
-					echo '<input type="text" name="'.$value.'" value="'.$value.'"><br>';
-				}
-			}
-				echo '</form>';
-				?>
-			
-
-		// nog niet helemaal werkend. dit is de query om de tabel te updaten.
-		<?php
-		if (isset($_GET['verzenden'])) {
-			$parametersUpdate = array(
-				':titel' => $_GET['titel'], 
-				':beschrijving' => $_GET['beschrijving'],
-				':startprijs' => $_GET['startprijs'],
-				':betalingswijze' => $_GET['betalingswijze'],
-				':betalingsinstructie' => $_GET['betalingsinstructie'],
-				':plaatsnaam' => $_GET['plaatsnaam'],
-				':land' => $_GET['land'],
-				':looptijd' => $_GET['looptijd'],
-				':looptijdbeginDag' => $_GET['looptijdbeginDag'],
-				':looptijdbeginTijdstip' => $_GET['looptijdbeginTijdstip'],
-				':verzendkosten' => $_GET['verzendkosten'],
-				':verzendinstructies' => $_GET['verzendinstructies'],
-				':verkoper' => $_GET['verkoper'],
-				':koper' => $_GET['koper'],
-				':looptijdeindeDag' => $_GET['looptijdeindeDag'],
-				':looptijdeindeTijdstip' => $_GET['looptijdeindeTijdstip'],
-				':veilingGesloten' => $_GET['veilingGesloten'],
-				':verkoopPrijs' => $_GET['verkoopPrijs']);
-
-			handlequery("UPDATE Voorwerp SET
-				titel = :titel,
-				beschrijving = :beschrijving,
-				startprijs = CONVERT(NUMERIC(8,2), :startprijs),
-				betalingswijze = CONVERT(INT, :betalingswijze),
-				betalingsinstructie = :betalingsinstructie,
-				plaatsnaam = :plaatsnaam,
-				land = :land,
-				looptijd = :looptijd,
-				looptijdbeginDag = :looptijdbeginDag,
-				looptijdbeginTijdstip = :looptijdbeginTijdstip,
-				verzendkosten = CONVERT(NUMERIC(5,2), :verzendkosten),
-				verzendinstructies = :verzendinstructies,
-				verkoper = :verkoper,
-				koper = :koper,
-				looptijdeindeDag = :looptijdeindeDag,
-				looptijdeindeTijdstip = :looptijdeindeTijdstip,
-				veilingGesloten = :veilingGesloten,
-				verkoopPrijs = CONVERT(NUMERIC(8,2), :verkoopPrijs)",
-				$parametersUpdate);
-			}?>
 		</div>
 	</main>
 	
-	<?php require_once './footer.php'; ?>
-
+	<?php } require_once './footer.php'; ?>
