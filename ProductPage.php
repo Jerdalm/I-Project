@@ -68,9 +68,9 @@ foreach ($productdata as $item) {
                             <table class="table">
 
                                 <?php
-                                $bodData = handlequery("SELECT *
-from Bod
-Order By 2 desc
+                                $bodData = handlequery("SELECT top 10 * 
+FROM Bod
+ORDER BY bodbedrag desc
 ");
 
                                 foreach ($bodData as $Boditem) {
