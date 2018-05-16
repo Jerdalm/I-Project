@@ -512,3 +512,14 @@ function validateCode($inputCode, $email){
 	}
 	return $state;
 }
+
+/* Deze functie verwijdert de meegegeven gebruiker uit de database */
+function deleteUser($gebruiker){
+	$deleteParam = array(':gebruikersnaam' => $gebruiker);
+	handlequery("UPDATE Gebruiker SET soortGebruiker=3 WHERE gebruikersnaam=:gebruikersnaam",$deleteParam);
+}
+
+function deleteArticle($artikel){
+	$deleteParam = array(':artikel' => $artikel);
+	handlequery("DELETE FROM Voorwerp WHERE voorwerpnummer = :artikel", $deleteParam);
+}
