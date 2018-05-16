@@ -6,7 +6,7 @@ $emailParameters = array(':gebruikersnaam' => "$gebruikersnaam");
 $messageNewPassword = ' ';
 $gebruiker = FetchAssocSelectData("SELECT * FROM Gebruiker join Gebruikerstelefoon on Gebruiker.gebruikersnaam = Gebruikerstelefoon.gebruikersnaam WHERE gebruiker.gebruikersnaam = :gebruikersnaam", $emailParameters);
 
-$email = $gebruiker[0]['mailadres'];
+$email = $gebruiker['mailadres'];
 $subject = 'Wachtwoord wijzigen';
 $message = 'U heeft aangegeven dat u het wachtwoord wilt wijzigen. Uw nieuwe code is =';
 
@@ -42,53 +42,36 @@ if(isset($_POST['submit-new-password'])){
         <div id="profile-picture" class="row row-left">                
             <img src="img/geit.jpg" class="profile-pic">                
         </div>
-        <div class="row row-right">
+        <div id="detailsForm" class="row row-right">
             <!-- alle gegevens van de gebruiker worden met een echo in een tabel gezet -->
              <?php if(!isset($_GET['changeInfo'])) {?>
             <table class="table"> 
                 <tbody>
-                    <?php foreach ($gebruiker as $key => $info ){
+                    <?php foreach($gebruiker as $key => $info ){
                         echo "<tr>" . "<th scope='col'>" . $key . "</th" . "</tr>";
                         echo "<td>" . $info . "</td>";
                     } ?>
-                    <td><a href="" <b>Info Bewerken</b></td>
-            </tbody>
-                   
-                  
+                    <td><a href="?&changeInfo=ok" <b>Info Bewerken</a></b></td>
+                </tbody>
             </table>
 
+            
+        <form id="editUserInfo" method="GET" class="form-group">
+            
             <?php } else if (isset($_GET['changeInfo'])){ 
-                foreach ($gebruiker as $key => $value) { ?>
-                     <label><b>$key</b></label>
-                <input type="text" name=<?= '"' . $key . '"' ?> value=<?= '"' . $value . '"'?>> <br>
-                
-                <?php }
+                        foreach ($gebruiker as $key => $value) { 
+                            if ($key == 'wachtwoord' || $key == 'gebruikersnaam' || $key == 'vraag' || $key == 'antwoordtekst' || $key == 'volgnr' ) continue;
+                           
+                            echo '<label><b>'. $key .'</b></label><input type="text" name="' . $key . '" value="'. $value .'">';
+                            
+             }
 
-                ?>
-            <form id="editUserInfo" class="form-group">
-            <label><b>Gebruikersnaam</b></label>
-                <input type="text" name="gebruikersnaam" value=<?= '"' . $gebruikersnaam . '"'?>> <br>
-            <label><b>Land</b></label>
-                <input type="text" name="land" value=<?= '"' . $gebruiker[0]['land'] . '"'?>><br>
-            <label><b>Plaatsnaam</b></label>
-                <input type="text" name="plaatsnaam" value=<?= '"' . $gebruiker[0]['plaatsnaam'] . '"'?>> <br>
-            <label><b>Geboortedag</b></label>
-                <input type="text" name="geboortedag" value=<?= '"' . $gebruiker[0]['geboortedag'] . '"'?>> <br>
-            <label><b>E-Mail adres</b></label>
-                <input type="text" name="mailadres" value=<?= '"' . $gebruiker[0]['mailadres'] . '"'?>> <br>
-            <label><b>Voornaam</b></label>
-                <input type="text" name="voornaam" value=<?= '"' . $gebruiker[0]['voornaam'] . '"'?>> <br>
-            <label><b>Achternaam</b></label>
-                <input type="text" name="achternaam" value=<?= '"' . $gebruiker[0]['achternaam'] . '"'?>> <br>
-            <label><b>Postcode</b></label>
-                <input type="text" name="postcode" value=<?= '"' . $gebruiker[0]['postcode'] . '"'?>> <br>
-            </form>
+        }    ?>
+                <input type="submit" class="cta-orange btn" name="bijwerken" value="Bijwerken"> 
+                <input type="submit" class="cta-orange btn" value="Upgrade account">
+        </form>
 
-            <?php } ?>
-            <form class="form-group" action="upgrade-user.php">
-                <input type="submit" class="cta-orange btn" value="Upgrade account"><br>
-            </form>
-        </div>
+    
 
         <div class="formWachtwoordHuidig col-md-4 row">
             <?php if(isset($_GET['changePass'])){ ?>
@@ -118,8 +101,6 @@ if(isset($_POST['submit-new-password'])){
             echo '</p>';
             ?>
         </div>
-
-    </div>
 
 </main>
 
