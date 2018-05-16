@@ -17,7 +17,7 @@ if ($emailEquivalent['code'] == $codeControl){
     header("location: ./registratieScherm.php");
 } 
 else{ 
-	echo '<script>alert("hellaas")</script>';
+	echo '<script>alert("helaas")</script>';
 }
 
 ?>

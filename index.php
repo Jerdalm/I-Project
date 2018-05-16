@@ -1,9 +1,6 @@
-<?php require_once 'header.php';
-$_SESSION["step1"] = true;
-$_SESSION["step2"] = false;
-$_SESSION["step3"] = false;
-$_SESSION["step4"] = false;
-$_SESSION["error_registration"] = '';
+<?php 
+require_once 'header.php';
+$_SESSION['email-registration'] = ' ';
 ?>
 <!-- promotie header -->
 <header class="header promo-header">
@@ -50,36 +47,21 @@ $_SESSION["error_registration"] = '';
    </div>
 </section>
 <section class="userExperience">
-<div class="container">
-<div class="row text-center">
-
- <div class="col-lg-1">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-lg-1">
+      </div>
+      <div class="col-lg-3">
+        <img  class="rounded-circle" src="https://media.nu.nl/m/o5mx3i7aqf41_wd640.jpeg">
+      </div>
+      <div class="col-lg-5">
+        <h2> "Maak een account aan om ook te bieden, of verkoper te worden!"</h2>
+        <a href="./registreren.php" class="cta-white">Klik hier om je te registreren!</a>
+      </div>
+      <div class="col-lg-3">
+      </div>
+    </div>
   </div>
-  <div class="col-lg-3">
-  <img  class="rounded-circle" src="https://media.nu.nl/m/o5mx3i7aqf41_wd640.jpeg">
-  </div>
-
-  <div class="col-lg-5">
-  <h2> "We have THE BEST website" </h2>
-  </div>
-  <div class="col-lg-3">
-  </div>
-  
-  <!--
-	<div class="col-md-2 ">
-	<img  class="rounded-circle" src="https://media.nu.nl/m/o5mx3i7aqf41_wd640.jpeg">
-	</div>
-		<div class="col-md-6">
-	<h2> "We have THE BEST website" </h2>
-	</div>
--->
-	
-	
-	
-</div>
-	
-	
-</div>
 </section>
 
 
@@ -98,5 +80,5 @@ $('.product-data').load(document.URL +  ' .product-data');
 
 
 <!-- /.container -->
-<?php require_once 'footer.php'; ?>
+<?php require_once './footer.php'; ?>
 

@@ -1,147 +1,108 @@
-<?php require_once 'header.php'; 
+<?php
+require_once 'header.php'; 
 
-$_SESSION['ingelogdeGebruiker'] = 'admin';
-$gebruikersnaam = $_SESSION['ingelogdeGebruiker'];
-
+$gebruikersnaam = $_SESSION['gebruikersnaam'];
 $emailParameters = array(':gebruikersnaam' => "$gebruikersnaam");
+$messageNewPassword = ' ';
+$gebruiker = FetchAssocSelectData("SELECT * FROM Gebruiker join Gebruikerstelefoon on Gebruiker.gebruikersnaam = Gebruikerstelefoon.gebruikersnaam WHERE gebruiker.gebruikersnaam = :gebruikersnaam", $emailParameters);
 
-
-
-
-$gebruiker = handlequery("SELECT *
- FROM Gebruiker JOIN GeheimeVraag
- on Gebruiker.vraag = GeheimeVraag.ID
- where gebruikersnaam = :gebruikersnaam 
- and
- Gebruiker.vraag = GeheimeVraag.ID", $emailParameters);
-
-$email = $gebruiker[0]['mailadres'];
+$email = $gebruiker['mailadres'];
 $subject = 'Wachtwoord wijzigen';
 $message = 'U heeft aangegeven dat u het wachtwoord wilt wijzigen. Uw nieuwe code is =';
 
-$randomPassword = createRandomPassword(); 
-$messageCode = $message . $randomPassword;
+$nieuwePassword = ''; 
+$messageCode = $message . $nieuwePassword;
 
+$correct = false;
+print_r($gebruiker);
+if(isset($_POST['submit-new-password'])){
+
+    $huidigWachtwoord = $_POST['huidigWachtwoord'];
+    $wachtwoordParameters = array(':wachtwoord' => "$huidigWachtwoord", ':gebruiker' => "$gebruikersnaam" );
+    $antwoord = handlequery("SELECT wachtwoord FROM Gebruiker WHERE wachtwoord = :wachtwoord AND gebruikersnaam = :gebruiker" , $wachtwoordParameters);
+
+    if (count($antwoord) == 1){
+        if (checkNewPassword($_POST['password'], $_POST['password-repeat']) == "Wachtwoord zit in de database") {
+            $nieuwePassword = $_POST['password'];
+            handlequery("UPDATE Gebruiker SET wachtwoord = '$nieuwePassword' WHERE gebruikersnaam = '$gebruikersnaam'");
+            $messageNewPass = checkNewPassword($_POST['password'], $_POST['password-repeat']);
+        } else {
+            $messageNewPass = checkNewPassword($_POST['password'], $_POST['password-repeat']);
+        }
+    } else {
+        $messageNewPass = "Het huidige wachtwoord klopt niet";
+    }
+}
 
 ?>
 
+<main class="user-details">
+    <div class="container">
 
-<main>
-<section class="userDetail">
-<div class="container">
-   
-
-
-        <div class="row row-left">
-            <div class="plaatje">
-                <img src="img/geit.jpg">
-            </div>
-        <div class="row row-right">
-        <table class="table"> 
-            <thead>
-                <tr>
-                     <th scope="col">Gebruikersnaam </th>
-                     <td> <?php echo $gebruikersnaam ?> </td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">Land</th>
-                        <td><?php echo $gebruiker[0]['land'] ?> </td>
-                </tr>
-                <tr>
-                    <th scope="row">Woonplaats</th>
-                </tr>
-                <tr>
-                    <th scope="row">E-mailadres</th>
-                </tr>
-                <tr>
-                    <th scope="row">Voornaam</th>
-                </tr>
-                 <tr>
-                    <th scope="row">Achternaam</th>
-                </tr>
-                 <tr>
-                    <th scope="row">Telefoonnummer</th>
-                </tr>
-                 <tr>
-                    <th scope="row">Postcode</th>
-                </tr>
-                  <tr>
-                    <th scope="row">Wachtwoord</th>
-                <td>  <a  href=<?="?changePass=ok" ?>  > <b><i>Wachtwoord wijzigen</i></b> </a></td>
-                </tr>
-            </tbody>    
-        </table>
-
-        <?php if(isset($_GET['changePass'])){?>
-        
-<form method="POST" class="form-group">
-    <label for="testvoorvraag">  <?php echo $gebruiker[0]['vraag']?> </label>
-        <input type="text" name="antwoord" class="form-control" id="testAntwoordvakje" placeholder="Antwoord">
-        <input class="cta-orange btn" type="submit" name="verzenden" value="Verzenden">
-</form>
-       
-    
-
-       <?php } ?>
-
-
-       <?php 
-
-
-
-
-       if (isset ($_POST['verzenden'])){
-
-$antwoordtekst = $_POST['antwoord'];
-
-$answerParameters = array(':antwoord' => "$antwoordtekst" , 
-                          ':gebruiker' => "$gebruikersnaam" );
-
-$antwoord = handlequery("SELECT antwoordtekst
-                         FROM Gebruiker
-                         WHERE antwoordtekst = :antwoord
-                         AND gebruikersnaam = :gebruiker" , $answerParameters);
-
-
-
-if (count($antwoord) == 1){
-
-    $correct = true;
-
-} else {
-
-    $correct = false;
-
-    }
-
-if ($correct == true){
-
-sendMail($email,$subject,$messageCode);
-
-handlequery("UPDATE Gebruiker SET wachtwoord = '$randomPassword' WHERE gebruikersnaam = '$gebruikersnaam' ");
-
-
-
-
-} else {echo 'shit';}
-
-
-}
-    
-
-
-       ?>
-
-
-        
+        <div id="profile-picture" class="row row-left">                
+            <img src="img/geit.jpg" class="profile-pic">                
         </div>
-    </div>
-</section>
+        <div id="detailsForm" class="row row-right">
+            <!-- alle gegevens van de gebruiker worden met een echo in een tabel gezet -->
+             <?php if(!isset($_GET['changeInfo'])) {?>
+            <table class="table"> 
+                <tbody>
+                    <?php foreach($gebruiker as $key => $info ){
+                        echo "<tr>" . "<th scope='col'>" . $key . "</th" . "</tr>";
+                        echo "<td>" . $info . "</td>";
+                    } ?>
+                    <td><a href="?&changeInfo=ok" <b>Info Bewerken</a></b></td>
+                </tbody>
+            </table>
 
+            
+        <form id="editUserInfo" method="GET" class="form-group">
+            
+            <?php } else if (isset($_GET['changeInfo'])){ 
+                        foreach ($gebruiker as $key => $value) { 
+                            if ($key == 'wachtwoord' || $key == 'gebruikersnaam' || $key == 'vraag' || $key == 'antwoordtekst' || $key == 'volgnr' ) continue;
+                           
+                            echo '<label><b>'. $key .'</b></label><input type="text" name="' . $key . '" value="'. $value .'">';
+                            
+             }
 
+        }    ?>
+                <input type="submit" class="cta-orange btn" name="bijwerken" value="Bijwerken"> 
+                <input type="submit" class="cta-orange btn" value="Upgrade account">
+        </form>
+
+    
+
+        <div class="formWachtwoordHuidig col-md-4 row">
+            <?php if(isset($_GET['changePass'])){ ?>
+
+            <form method="POST" class="form-steps" action="">
+                <div class="form-group">
+                    <label for="testvoorvraag"> Huidig Wachtwoord </label>
+                    <input type="password" name="huidigWachtwoord" class="form-control" id="testAntwoordvakje" placeholder="Voer hier uw huidige wachtwoord in">
+                </div>
+                <div class="form-group">
+                    <label for="registration-password">Wachtwoord</label>
+                    <input type="password" placeholder="Voer uw nieuwe wachtwoord in" class="form-control" name="password" id="registration-password">
+                </div>
+                <div class="form-group">
+                    <label for="password-repeat">Herhaal wachtwoord</label>
+                    <input type="password" class="form-control" placeholder="Herhaal uw nieuwe wachtwoord" name="password-repeat" id="password-repeat">
+                </div>
+                <button type="submit" name="submit-new-password" value="Register" class="btn btn-primary btn-sm">Verzenden</button>
+            </form>
+            
+            <?php 
+            } 
+            echo '<p class="error error-warning">';
+            if (isset($messageNewPass)){
+                echo $messageNewPass;
+            }
+            echo '</p>';
+            ?>
+        </div>
 
 </main>
+
 <?php require_once 'footer.php'; ?>
 

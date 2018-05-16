@@ -21,29 +21,13 @@
 					<?= showMenuRubrieken(); ?>
 					</div>
 				  </li>
-              <li class="nav-item">
-                <a class="nav-link" href="
-                <?php if($_SESSION['logged-in'] == false){ 
-                  echo './registratieScherm.php';
-                } else {
-                  echo './logout.php';
-                }
-                ?>">
-                  <?php if($_SESSION['logged-in'] == false){
-                    echo 'Inloggen|Registreren';
-                  } else {
-                    echo 'Uitloggen';
-                  }
-                  ?>
-                  </a>
-              </li>
+			 <?= showLoginMenu(); ?>
   			<li class="no_hover">
   				<form action="overview.php" method="get">
   					<input list="producten" name="search" placeholder="Uw product" maxlength="50" type="search">
   					<input value="zoeken" type="submit">
   				</form>
   			</li>
-			
 			</li>
             </ul>
           </div>
