@@ -90,9 +90,7 @@ ORDER BY bodbedrag desc
                                     <?php } ?>
                                 </tr>
                                 </thead>
-
-
-
+                                
                             </table>
                         </div>
                     </div>
