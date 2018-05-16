@@ -1,0 +1,148 @@
+	/*#header-content{
+	height: 55px;
+	width: 100%;
+	position: absolute;
+	top: 0;
+	padding: 10px 0;
+	background-color: white;
+}
+
+#header-content .logo{
+	width: 100px;
+}
+
+button{
+	width: 75px;
+	height: 35px;
+	background-color: green;
+	color: white;
+	font-size: 1.2em;
+	border: none;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 4px;
+}			
+
+#header-content input{
+	width: 125px;
+	height: 35px;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+#header-content .col{
+	display: inline-block;
+
+}*/
+
+#login-registration .row{
+	width: 50%;
+}
+
+
+#login-registration .container, .user-details .container{
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+
+}
+
+footer{
+/* 	position: absolute;
+	bottom: 0;
+	left: 0;		
+	width: 100%; */
+}
+
+#login-registration main{
+	margin-top: 100px;
+}
+
+.cta-orange{
+	padding: 15px 60px;
+	background-color: #F2552C;
+	color: white;
+	font-weight: 600;
+}
+
+a.cta-orange:hover{
+	color: #F2552C;
+	text-decoration: none;
+	border: 2px solid #F2552C;
+	transition: 0.3s;
+	background-color: white;
+	padding: 13px 58px;
+	box-shadow: 0px 0px 30px 1px rgba(0,0,0,0.25);
+}
+
+.cta-white{
+	padding: 13px 58px;
+	border: 2px solid #F2552C;
+	color: #F2552C;
+	background-color: white;
+	font-weight: 600;
+}
+
+.cta-white:hover{
+	color: white;
+	text-decoration: none;
+	background-color: #F2552C;
+	transition: 0.3s;
+	box-shadow: 0px 0px 30px 1px rgba(0,0,0,0.25);
+}
+
+section.register{
+	min-height: 80vh;
+}
+
+.register .container{margin-top:50px;}
+
+body{
+	min-height: 100vh;
+}
+/*
+header, main, footer{
+	
+	width: 100%;
+}
+/*
+pre{
+	float: left;
+}
+*/
+
+#login-form{
+	width: 100%;
+}
+
+.form-steps > *, #login-form > *{
+	float: left;
+	width: 100%;
+}
+
+.form-steps{
+	width: 100%;
+	float: left;
+}
+
+.product.card:hover{
+	box-shadow: 0px 0px 20px 1px rgba(0,0,0,0.10);
+}
+
+.error-warning{
+	margin-top: 10px;
+	display: inline-block;
+	color: red;
+}
+
+@media screen and (max-width: 500px){
+	#login-registration .container, .user-details .container{
+		padding: 0 20px;
+		flex-direction: column;
+	}
+
+	#login-registration .container .row, .user-details .container .row{
+		width: 100%;
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+}

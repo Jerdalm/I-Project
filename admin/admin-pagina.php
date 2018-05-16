@@ -1,5 +1,5 @@
 <?php 
-require_once 'header.php'; 
+require_once './header.php'; 
 
 if($_SESSION['gebruikersnaam'] == "admin") { 
 	$htmlVeranderVoorwerp = ' ';
@@ -24,7 +24,7 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 			$gebruikerResultaten .= "<tr>" . "<td>" . "<a href='?gebruikersnaamForm=" . $gebruiker['gebruikersnaam'] . "'>" . $gebruiker['gebruikersnaam'] ."</a>". "</td>" . "</tr>";
 		} 
 		$gebruikerResultaten .= '</tr></table>';
-	} 
+	}
 
 	if (isset($_GET['voorwerpForm'])) {
 		$artikelResultaten = ' ';
@@ -36,15 +36,10 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 			if ($key == 'voorwerpnummer') {				
 				$htmlVeranderVoorwerp .= '<label>'. $key . '</label>';
 				$htmlVeranderVoorwerp .= '<input type="text" name="'.$key.'" value="'.$value.'" readonly><br>';
-				
 				continue;
 			}
-			if ($key == 'verkoper') continue;
-			if ($key == 'koper') continue;
-			if ($key == 'looptijdEindeDag') continue;
-			if ($key == 'looptijdEindeTijdstip') continue;
-			if ($key == 'veilingGesloten') continue;
-			if ($key == 'verkoopPrijs') continue;
+			if ($key == 'verkoper' || $key == 'koper' || $key == 'looptijdEindeDag' || $key == 'looptijdEindeTijdstip' || $key == 'veilingGesloten' 
+				|| $key == 'verkoopPrijs') continue;
 			if ($key == 'looptijdBeginDag') {
 				$htmlVeranderVoorwerp .= '<label>'. $key . '</label>';
 				$htmlVeranderVoorwerp .= '<input type="date" name="'.$key.'" value="'.$value.'"><br>';	
@@ -68,10 +63,7 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 		$kweerie2 = "SELECT * FROM Gebruiker WHERE gebruikersnaam = :gebruiker";
 		$query = FetchAssocSelectData($kweerie2, $parametersGebruiker);
 		foreach ($query as $key => $value) {
-			if ($key == 'wachtwoord') continue; //Zodat de admin het wachtwoord niet kan zien
-			if ($key == 'vraag') continue;
-			if ($key == 'antwoordtekst') continue;
-			if ($key == 'soortGebruiker') continue;
+			if ($key == 'wachtwoord' || $key == 'vraag' || $key == 'soortGebruiker' || $key == 'antwoordtekst') continue; //Zodat de admin het wachtwoord niet kan zien
 			$htmlVeranderGebruiker .= '<label>'. $key . '</label>';
 			$htmlVeranderGebruiker .= '<input type="text" name="'.$key.'" value="'.$value.'"><br>';
 			
