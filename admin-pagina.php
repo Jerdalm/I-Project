@@ -8,8 +8,7 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 	if (isset($_GET['zoekenVoorwerp'])){
 		$voorwerpNummer = $_GET['voorwerp'];
 		$parametersVoorwerp = array(':voorwerpnummer' => $voorwerpNummer);
-		$voorwerpen = handlequery("SELECT * FROM Voorwerp WHERE voorwerpnummer = :voorwerpnummer",$parametersVoorwerp);
-		print_r($voorwerpen);
+		$voorwerpen = handlequery("SELECT * FROM Voorwerp WHERE voorwerpnummer = :voorwerpnummer",$parametersVoorwerp);		
 		$artikelResultaten = '<table class="table"><tr><th scope="col">Voorwerp</th></tr><tr>';
 		foreach($voorwerpen as $voorwerp){
 			$getpath = "$_SERVER[QUERY_STRING]";
@@ -20,7 +19,6 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 		$gebruikersnaam = $_GET['gebruiker'];
 		$parametersGebruiker = array(':gebruiker' => "%". $gebruikersnaam ."%");
 		$gebruikers = handlequery("SELECT * FROM Gebruiker WHERE gebruikersnaam like :gebruiker",$parametersGebruiker);
-		print_r($gebruikers);
 		$gebruikerResultaten = '<table class="table"><tr><th scope="col">Gebruikersnaam</th></tr><tr>';
 		foreach($gebruikers as $gebruiker){
 			$gebruikerResultaten .= "<tr>" . "<td>" . "<a href='?gebruikersnaamForm=" . $gebruiker['gebruikersnaam'] . "'>" . $gebruiker['gebruikersnaam'] ."</a>". "</td>" . "</tr>";
