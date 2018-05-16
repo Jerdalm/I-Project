@@ -4,7 +4,7 @@ require_once 'header.php';
 $gebruikersnaam = $_SESSION['gebruikersnaam'];
 $emailParameters = array(':gebruikersnaam' => "$gebruikersnaam");
 $messageNewPassword = ' ';
-$gebruiker = handlequery("SELECT * FROM Gebruiker JOIN Vraag ON Gebruiker.vraag = Vraag.vraagnummer WHERE gebruikersnaam = :gebruikersnaam AND Gebruiker.vraag = Vraag.vraagnummer", $emailParameters);
+$gebruiker = FetchAssocSelectData("SELECT * FROM Gebruiker join Gebruikerstelefoon on Gebruiker.gebruikersnaam = Gebruikerstelefoon.gebruikersnaam WHERE gebruiker.gebruikersnaam = :gebruikersnaam", $emailParameters);
 
 $email = $gebruiker[0]['mailadres'];
 $subject = 'Wachtwoord wijzigen';
@@ -14,7 +14,7 @@ $nieuwePassword = '';
 $messageCode = $message . $nieuwePassword;
 
 $correct = false;
-
+print_r($gebruiker);
 if(isset($_POST['submit-new-password'])){
 
     $huidigWachtwoord = $_POST['huidigWachtwoord'];
@@ -39,58 +39,52 @@ if(isset($_POST['submit-new-password'])){
 <main class="user-details">
     <div class="container">
 
-        <div class="row row-left">                
-            <img src="" class="profile-pic">                
+        <div id="profile-picture" class="row row-left">                
+            <img src="img/geit.jpg" class="profile-pic">                
         </div>
         <div class="row row-right">
             <!-- alle gegevens van de gebruiker worden met een echo in een tabel gezet -->
+             <?php if(!isset($_GET['changeInfo'])) {?>
             <table class="table"> 
-                <thead>
-                    <tr>
-                        <th scope="col">Gebruikersnaam </th>
-                        <td> <?= $gebruikersnaam ?> </td>
-                    </tr>
-                </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">Land</th>
-                        <td><?= $gebruiker[0]['land'] ?> </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Woonplaats</th>
-                        <td><?php echo $gebruiker[0]['plaatsnaam'] ?> </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Geboortedatum</th>
-                        <td><?php echo $gebruiker[0]['geboortedag'] ?> </td>
-                    </tr>    
-
-                    <tr>
-                        <th scope="row">E-mailadres</th>
-                        <td><?php echo $gebruiker[0]['mailadres'] ?> </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Voornaam</th>
-                        <td><?php echo $gebruiker[0]['voornaam'] ?> </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Achternaam</th>
-                        <td><?php echo $gebruiker[0]['achternaam'] ?> </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Telefoonnummer</th>
-
-                    </tr>
-                    <tr>
-                        <th scope="row">Postcode</th>
-                        <td><?php echo $gebruiker[0]['postcode'] ?> </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Wachtwoord</th>
-                        <td>  <a  href= <?="?changePass=ok" ?>  > <b><i>Wachtwoord wijzigen</i></b> </a></td>
-                    </tr>
-                </tbody>    
+                    <?php foreach ($gebruiker as $key => $info ){
+                        echo "<tr>" . "<th scope='col'>" . $key . "</th" . "</tr>";
+                        echo "<td>" . $info . "</td>";
+                    } ?>
+                    <td><a href="" <b>Info Bewerken</b></td>
+            </tbody>
+                   
+                  
             </table>
+
+            <?php } else if (isset($_GET['changeInfo'])){ 
+                foreach ($gebruiker as $key => $value) { ?>
+                     <label><b>$key</b></label>
+                <input type="text" name=<?= '"' . $key . '"' ?> value=<?= '"' . $value . '"'?>> <br>
+                
+                <?php }
+
+                ?>
+            <form id="editUserInfo" class="form-group">
+            <label><b>Gebruikersnaam</b></label>
+                <input type="text" name="gebruikersnaam" value=<?= '"' . $gebruikersnaam . '"'?>> <br>
+            <label><b>Land</b></label>
+                <input type="text" name="land" value=<?= '"' . $gebruiker[0]['land'] . '"'?>><br>
+            <label><b>Plaatsnaam</b></label>
+                <input type="text" name="plaatsnaam" value=<?= '"' . $gebruiker[0]['plaatsnaam'] . '"'?>> <br>
+            <label><b>Geboortedag</b></label>
+                <input type="text" name="geboortedag" value=<?= '"' . $gebruiker[0]['geboortedag'] . '"'?>> <br>
+            <label><b>E-Mail adres</b></label>
+                <input type="text" name="mailadres" value=<?= '"' . $gebruiker[0]['mailadres'] . '"'?>> <br>
+            <label><b>Voornaam</b></label>
+                <input type="text" name="voornaam" value=<?= '"' . $gebruiker[0]['voornaam'] . '"'?>> <br>
+            <label><b>Achternaam</b></label>
+                <input type="text" name="achternaam" value=<?= '"' . $gebruiker[0]['achternaam'] . '"'?>> <br>
+            <label><b>Postcode</b></label>
+                <input type="text" name="postcode" value=<?= '"' . $gebruiker[0]['postcode'] . '"'?>> <br>
+            </form>
+
+            <?php } ?>
             <form class="form-group" action="upgrade-user.php">
                 <input type="submit" class="cta-orange btn" value="Upgrade account"><br>
             </form>

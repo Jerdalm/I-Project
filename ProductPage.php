@@ -19,11 +19,11 @@
 
 <body class="bg-secondary bg-light text-dark"<body onload="startTime()">
 <?php require_once ('header.php');
-$Vwnummer = 1;
+$Vwnummer = $_GET['product'];
 $productdata = handlequery("
-SELECT V.voorwerpnummer, G.voornaam, G.achternaam, G.plaatsnaam, 
+SELECT V.voorwerpnummer, G.voornaam, G.achternaam, G.plaatsnaam,
 V.titel, V.startprijs
-from voorwerp V 
+from voorwerp V
 inner join gebruiker G on V.verkoper = G.gebruikersnaam
 inner join verkoper VK on V.verkoper = VK.gebruikersnaam
 WHERE voorwerpnummer = $Vwnummer
@@ -120,7 +120,7 @@ Order By 2 desc
 
             <?php
             if(isset($_POST['bidAmount-Submit'])){
-                $result = mysqli::query('CALL pcd_hogerBod(28, 1, "gebruiker")');
+                executequery("EXEC prc_hogerBod 30, 1, 'gebruiker'");
             }
 //            if(isset($_POST['bidAmount-Submit']) && !empty($_POST['bidAmount'])) {
 //                $HighestBid = handlequery("SELECT max(B.bodbedrag) as MaxBod from Bod B");

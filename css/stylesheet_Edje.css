@@ -33,3 +33,17 @@ img{
 .formWachtwoordHuidig {
 	flex-direction: column;
 }
+
+#profile-picture{
+	max-width: 400px;
+	max-height: 200px;	
+	height: 100%;
+	width: 100%;
+	
+}
+
+#editUserInfo{
+text-align: right;
+
+
+}
