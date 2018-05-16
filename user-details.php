@@ -48,6 +48,7 @@ if(isset($_POST['submit-new-password'])){
             <table class="table"> 
                 <tbody>
                     <?php foreach($gebruiker as $key => $info ){
+                         if ($key == 'wachtwoord' || $key == 'gebruikersnaam' || $key == 'vraag' || $key == 'antwoordtekst' || $key == 'volgnr' ) continue;
                         echo "<tr>" . "<th scope='col'>" . $key . "</th" . "</tr>";
                         echo "<td>" . $info . "</td>";
                     } ?>
