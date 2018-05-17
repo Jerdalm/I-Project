@@ -1,23 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>ProductPage</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/business-frontpage.css" rel="stylesheet">
-
-
-<body class="bg-secondary bg-light text-dark"<body onload="startTime()">
 <?php require_once ('header.php');
 $Vwnummer = $_GET['product'];
 $productdata = handlequery("
@@ -36,9 +16,8 @@ foreach ($productdata as $item) {
 <body class="bg-secondary bg-light text-dark"
 <body onload="startTime()">
 
-
+<section class="productpage">
 <div class="container border-primary">
-
         <div class="row">
             <div class="col-lg-6 p-3 bg-secondary text-white">
                 <figure class="figure" style="position: relative; text-align: center;">
@@ -176,6 +155,7 @@ foreach ($productdata as $item) {
         </section>
     </div>
 </div>
+</section>
 
 <?php
 }
