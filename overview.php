@@ -1,18 +1,25 @@
 <?php 
 	require 'header.php'; 
+	
+	if(isset($_GET['min']) && isset($_GET['max'])){
+	$pricecheck = checkPriceFilter($_GET['min'],$_GET['max']);
+	}
+	else{
+	$pricecheck = checkPriceFilter(null,null);
+	}
+	
 	if(isset($_GET['rub'])){ 
 	$rubriek = $_GET['rub'];
 	
 	if(is_numeric($rubriek)){
 	$rubriekdata = getSubRubriek($rubriek);
-	$parameters = false;
 	
-	print_r($parameters);
+	$parameters = false;
 	
 	$query = "SELECT * from currentAuction 
 	INNER JOIN VoorwerpinRubriek
 	ON VoorwerpinRubriek.voorwerpnummer = currentAuction.voorwerpnummer
-	Where rubriekOpLaagsteNiveau IN ".$rubriekdata."
+	Where rubriekOpLaagsteNiveau IN ".$rubriekdata. " AND ".$pricecheck."
 	";
 	
 	$rubrieken = FetchSelectData("EXEC SHOW_RUBRIEK_TREE");
@@ -43,14 +50,14 @@
 	
 		$titel = "Zoekresultaten";
 		$parameters = array(":search" => "%" . $zoekfilter . "%");
-		$query = "SELECT * FROM currentAuction WHERE currentAuction.titel LIKE :search";
+		$query = "SELECT * FROM currentAuction WHERE currentAuction.titel LIKE :search AND ".$pricecheck;
 	
 	}
 	
 	else{
 	$titel = $zoekfilter = "Alle veilingen";
 	$parameters = false;
-	$query = "SELECT * from currentAuction";
+	$query = "SELECT * from currentAuction WHERE ".$pricecheck;
 	}
 ?>
 <header class="header content-header" 
@@ -112,3 +119,20 @@ if($key == 'min' || $key == 'max'){
 </div>
 </section>
 <?php require 'footer.php'; ?>
+
+
+<?php 
+// returnt parameter array
+function checkPriceFilter($min, $max){
+	
+$returnwaarde = '1 = 1';
+   
+        if(!empty($min) && !empty($max)){
+			if(is_numeric($min) && is_numeric($max)){
+			$returnwaarde = "bodbedrag between $min AND $max";
+			}
+		}
+
+	
+return $returnwaarde;
+}
