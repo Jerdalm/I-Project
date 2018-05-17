@@ -38,45 +38,30 @@ if(isset($_POST['submit-new-password'])){
 
 <main class="user-details">
     <div class="container">
-
-        <div id="profile-picture" class="row row-left">                
-            <img src="img/geit.jpg" class="profile-pic">                
-        </div>
-        <div id="detailsForm" class="row row-right">
+        <?php if(!isset($_GET['changeInfo'])) {?>
+        <div id="detailsTabel" class="row row-right">
             <!-- alle gegevens van de gebruiker worden met een echo in een tabel gezet -->
-             <?php if(!isset($_GET['changeInfo'])) {?>
-            <table class="table"> 
+            <table class="table table-user-details"> 
                 <tbody>
                     <?php foreach($gebruiker as $key => $info ){
-                         if ($key == 'wachtwoord' || $key == 'gebruikersnaam' || $key == 'vraag' || $key == 'antwoordtekst' || $key == 'volgnr' ) continue;
+                     if ($key == 'wachtwoord' || $key == 'gebruikersnaam' || $key == 'vraag' || $key == 'antwoordtekst' || $key == 'volgnr' ) continue;
                         echo "<tr>" . "<th scope='col'>" . $key . "</th" . "</tr>";
                         echo "<td>" . $info . "</td>";
-                    } ?>
-                    <td><a href="?&changeInfo=ok" <b>Info Bewerken</a></b></td>
+                     } ?>
+                     <tr>
+                        <th>Wachtwoord</th>
+                        <td><a href="?&changePass=ok"> <b><i>Wachtwoord Wijzigen</a></i></b></td>
+                    </tr>
+                    <tr> 
+                        <td><a href="?&changeInfo=ok"> <b>Info Bewerken</a></b></td>   
+                    </tr>
                 </tbody>
             </table>
+            <button class="cta-orange btn">Upgrade account</button>
+        </div>
 
-            
-        <form id="editUserInfo" method="GET" class="form-group">
-            
-            <?php } else if (isset($_GET['changeInfo'])){ 
-                        foreach ($gebruiker as $key => $value) { 
-                            if ($key == 'wachtwoord' || $key == 'gebruikersnaam' || $key == 'vraag' || $key == 'antwoordtekst' || $key == 'volgnr' ) continue;
-                           
-                            echo '<label><b>'. $key .'</b></label><input type="text" name="' . $key . '" value="'. $value .'">';
-                            
-             }
-
-        }    ?>
-                <input type="submit" class="cta-orange btn" name="bijwerken" value="Bijwerken"> 
-                <input type="submit" class="cta-orange btn" value="Upgrade account">
-        </form>
-
-    
-
+        <?php } else if(isset($_GET['changePass'])){ ?>
         <div class="formWachtwoordHuidig col-md-4 row">
-            <?php if(isset($_GET['changePass'])){ ?>
-
             <form method="POST" class="form-steps" action="">
                 <div class="form-group">
                     <label for="testvoorvraag"> Huidig Wachtwoord </label>
@@ -92,18 +77,22 @@ if(isset($_POST['submit-new-password'])){
                 </div>
                 <button type="submit" name="submit-new-password" value="Register" class="btn btn-primary btn-sm">Verzenden</button>
             </form>
-            
-            <?php 
-            } 
+        </div>
+        <?php 
             echo '<p class="error error-warning">';
             if (isset($messageNewPass)){
                 echo $messageNewPass;
             }
             echo '</p>';
-            ?>
-        </div>
+        } else if (isset($_GET['changeInfo'])){ ?>
+        <form id="editUserInfo" method="GET" class="form-group">  
+            <?php  foreach ($gebruiker as $key => $value) { 
+                if ($key == 'wachtwoord' || $key == 'gebruikersnaam' || $key == 'vraag' || $key == 'antwoordtekst' || $key == 'volgnr' ) continue;
+                echo '<label><b>'. $key .'</b></label><input type="text" name="' . $key . '" value="'. $value .'">';
+            } ?>
+        </form>
+        <?php }?>    
 
+    </div>    
 </main>
-
 <?php require_once 'footer.php'; ?>
-
