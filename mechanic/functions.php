@@ -574,7 +574,7 @@ function validateCode($inputCode, $email){
 
 	/* Returnt het rubrieknummer van de huidige rubriek en de subrubrieken */
 	function getSubRubriek($rubrieknumber){
-		if(is_int($rubrieken)){
+		
 		$rubriekparameters = array(':rubriek' => $rubrieknumber);
 		$rubrieken = FetchSelectData("EXEC SHOW_RUBRIEK_TREE @rubriek = :rubriek",$rubriekparameters);
 		
@@ -583,7 +583,7 @@ function validateCode($inputCode, $email){
 			if($rubrieknumbers){
 				return '(' . implode(',', $rubrieknumbers) .')';
 			}
-		}else{header("location:overview.php");}
+		
 		
 	}
 
