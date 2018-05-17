@@ -5,7 +5,7 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 	$htmlVeranderVoorwerp = ' ';
 	$htmlVeranderGebruiker= ' ';
 	$_SESSION['voorwerpnummer'] = ' ';
-	if (isset($_GET['zoekenVoorwerp'])){
+	if (isset($_GET['search-article'])){
 		$voorwerpNummer = $_GET['voorwerp'];
 		$parametersVoorwerp = array(':voorwerpnummer' => $voorwerpNummer);
 		$voorwerpen = handlequery("SELECT * FROM Voorwerp WHERE voorwerpnummer = :voorwerpnummer",$parametersVoorwerp);		
@@ -15,10 +15,13 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 			$artikelResultaten .= "<tr>" . "<td>" . "<a href='?".$getpath."&voorwerpForm=" . $voorwerp['titel'] . "'>" . $voorwerp['titel'] ."</a>". "</td>"."</tr>"; 
 		} 
 		$artikelResultaten .= '</tr></table>';
-	} else if (isset($_GET['zoekenGebruiker'])) {
+	} else if (isset($_GET['search-user'])) {
 		$gebruikersnaam = $_GET['gebruiker'];
 		$parametersGebruiker = array(':gebruiker' => "%". $gebruikersnaam ."%");
-		$gebruikers = handlequery("SELECT * FROM Gebruiker WHERE gebruikersnaam like :gebruiker",$parametersGebruiker);
+		$gebruikers = handlequery("SELECT * 
+								   FROM Gebruiker 
+								   WHERE gebruikersnaam like :gebruiker
+								   OR mailadres like :gebruiker",$parametersGebruiker);
 		$gebruikerResultaten = '<table class="table"><tr><th scope="col">Gebruikersnaam</th></tr><tr>';
 		foreach($gebruikers as $gebruiker){
 			$gebruikerResultaten .= "<tr>" . "<td>" . "<a href='?gebruikersnaamForm=" . $gebruiker['gebruikersnaam'] . "'>" . $gebruiker['gebruikersnaam'] ."</a>". "</td>" . "</tr>";
@@ -164,7 +167,7 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 						
 							<form class="form-group" method="GET" action=""> 
 								<input type="number" name="voorwerp" placeholder="Voorwerpnummer" min="0"> <br>
-								<input class="cta-orange" name="zoekenVoorwerp" type="submit" value="Zoeken">
+								<input class="cta-orange" name="search-article" type="submit" value="Zoeken">
 							</form>
 						
 						<?=$htmlVeranderVoorwerp?>
@@ -178,8 +181,8 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 						<!-- for om te zoeken op gebruiker -->
 						
 							<form class="form-group" method="GET" action=""> 
-								<input type="text" name="gebruiker" placeholder="Gebruikersnaam"> <br>
-								<input class="cta-orange" name="zoekenGebruiker" type="submit" value="Zoeken">
+								<input type="text" name="gebruiker" placeholder="Gebruiker"> <br>
+								<input class="cta-orange" name="search-user" type="submit" value="Zoeken">
 							</form>
 						
 						<?=$htmlVeranderGebruiker?>
