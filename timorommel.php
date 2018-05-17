@@ -184,13 +184,13 @@ img {
           <ul class="preview-thumbnail nav nav-tabs">
             <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
             <li><a data-target="#pic-2" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
-            <li><a data-target="#pic-3" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+            <li><a data-target="#pic-3" data-toggle="tab"><img src="https://www.brandfield.nl/media/catalog/product/cache/21/image/9df78eab33525d08d6e5fb8d27136e95/m/k/mk8281_1.jpg" /></a></li>
             <li><a data-target="#pic-4" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
             <li><a data-target="#pic-5" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
           </ul>
 
         </div>
-        <div class="details col-md-6">
+        <!-- <div class="details col-md-6">
           <h3 class="product-title">men's shoes fashion</h3>
           <div class="rating">
             <div class="stars">
@@ -220,7 +220,7 @@ img {
             <button class="add-to-cart btn btn-default" type="button">add to cart</button>
             <button class="like btn btn-default" type="button"><span class="fa fa-heart"></span></button>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

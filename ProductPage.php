@@ -22,9 +22,10 @@
 $Vwnummer = $_GET['product'];
 $productdata = handlequery("
 SELECT V.voorwerpnummer, G.voornaam, G.achternaam, G.plaatsnaam,
-V.titel, V.startprijs, V.beschrijving
+V.titel, V.startprijs
 from voorwerp V
 inner join gebruiker G on V.verkoper = G.gebruikersnaam
+inner join verkoper VK on V.verkoper = VK.gebruikersnaam
 WHERE voorwerpnummer = $Vwnummer
 ");//voorwerpnummer moet meegegeven worden vanuit de site
 
@@ -32,61 +33,46 @@ WHERE voorwerpnummer = $Vwnummer
 foreach ($productdata as $item) {
 ?>
 
+<body class="bg-secondary bg-light text-dark"
+<body onload="startTime()">
 
+
+<div class="container border-primary">
 
         <div class="row">
             <div class="col-lg-6 p-3 bg-secondary text-white">
-              <body class="bg-secondary bg-light text-dark"
-              <body onload="startTime()">
+                <figure class="figure" style="position: relative; text-align: center;">
+                    <!-- <img src="media/WatchTestJEREMY.jpg" alt="..."
+                         class="figure-img img-fluid rounded">
+                   afbeelding vanuit de webserver moet nog ingevoerd worden
+                    <div class="row">
+                    <img src="media/WatchTestJEREMY.jpg" alt="..." class="col-2 col-md-offset-1 rounded">
+                    <img src="media/WatchTestJEREMY.jpg" alt="..." class="col-lg-2 col-md-offset-1 rounded">
+                    <img src="media/WatchTestJEREMY.jpg" alt="..." class="col-lg-2 col-md-offset-1 rounded">
+                    </div> -->
 
-                <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                  <!-- Indicators -->
-                  <ol class="carousel-indicators">
-                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#myCarousel" data-slide-to="1"></li>
-                    <li data-target="#myCarousel" data-slide-to="2"></li>
-                  </ol>
+                    <div class="preview col-md-6">
 
-                  <!-- Wrapper for slides -->
-                  <div class="carousel-inner">
-                    <div class="item active">
-                      <img src="https://mb.lucardi-cdn.nl/zoom/64867/regal-mesh-horloge-met-zilverkleurige-band.jpg" alt="Los Angeles">
+                      <div class="preview-pic tab-content">
+                        <div class="tab-pane active" id="pic-1"><img src="http://placekitten.com/400/252" /></div>
+                        <div class="tab-pane" id="pic-2"><img src="https://cdn-1.debijenkorf.nl/web_detail/hugo-boss-horloge-rafal-hb1513456/?reference=039/130/13_0391309001300000_pro_flt_frt_01_1108_1528_1669062.jpg" /></div>
+                        <div class="tab-pane" id="pic-3"><img src="https://www.brandfield.nl/media/catalog/product/cache/21/image/9df78eab33525d08d6e5fb8d27136e95/m/k/mk8281_1.jpg" /></div>
+                        <div class="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252" /></div>
+                        <div class="tab-pane" id="pic-5"><img src="http://placekitten.com/400/252" /></div>
+                      </div>
+                      <ul class="preview-thumbnail nav nav-tabs">
+                        <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+                        <li><a data-target="#pic-2" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+                        <li><a data-target="#pic-3" data-toggle="tab"><img src="https://www.brandfield.nl/media/catalog/product/cache/21/image/9df78eab33525d08d6e5fb8d27136e95/m/k/mk8281_1.jpg" /></a></li>
+                        <li><a data-target="#pic-4" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+                        <li><a data-target="#pic-5" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
+                      </ul>
+
                     </div>
 
-                    <div class="item">
-                      <img src="https://www.brandfield.nl/media/catalog/product/cache/21/image/9df78eab33525d08d6e5fb8d27136e95/m/k/mk8281_1.jpg" alt="Chicago">
-                    </div>
-
-                    <div class="item">
-                      <img src="https://cdn-1.debijenkorf.nl/web_detail/hugo-boss-horloge-rafal-hb1513456/?reference=039/130/13_0391309001300000_pro_flt_frt_01_1108_1528_1669062.jpg" alt="New York">
-                    </div>
-                  </div>
-
-                  <!-- Left and right controls -->
-                  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-                  <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                    <span class="sr-only">Next</span>
-                  </a>
-                </div>
-              <div class="container border-primary">
-                <!-- <figure class="figure" style="position: relative; text-align: center;">
-                    <img src="https://www.brandfield.nl/media/catalog/product/cache/21/image/9df78eab33525d08d6e5fb8d27136e95/S/K/SKW6216.jpg" alt="..."
-                         class="figure-img img-fluid rounded"> -->
-<!--                    afbeelding vanuit de webserver moet nog ingevoerd worden-->
-                    <!-- <div class="row">
-                    <img src="https://mb.lucardi-cdn.nl/zoom/64867/regal-mesh-horloge-met-zilverkleurige-band.jpg" alt="..." class="col-2 col-md-offset-1 rounded">
-                    <img src="https://www.brandfield.nl/media/catalog/product/cache/21/image/9df78eab33525d08d6e5fb8d27136e95/m/k/mk8281_1.jpg" alt="..." class="col-lg-2 col-md-offset-1 rounded">
-                    <img src="https://cdn-1.debijenkorf.nl/web_detail/hugo-boss-horloge-rafal-hb1513456/?reference=039/130/13_0391309001300000_pro_flt_frt_01_1108_1528_1669062.jpg" alt="..." class="col-lg-2 col-md-offset-1 rounded">
-                    </div>
-                </figure> -->
+                </figure>
                 <div class="col p-3 mb-2 bg-secondary text-white" style="text-align: center">
-                    <p>Description:
-                    <?= $item['beschrijving'] ?>
-                    </p>
+                    <p>Description:</p>
                 </div>
             </div>
             <div class="col-lg-6 p-3 mb-2 bg-secondary text-white">
@@ -134,8 +120,7 @@ foreach ($productdata as $item) {
                             Aangeboden door:
                             <?= $item['voornaam'] . " " . $item['achternaam'] . " uit " . $item['plaatsnaam']; ?>
                         </p>
-                        <!-- Dit moet de eerste afbeelding uti de rij worden -->
-                        <img src="https://mb.lucardi-cdn.nl/zoom/64867/regal-mesh-horloge-met-zilverkleurige-band.jpg" alt="..." width= 70px height= 70px class="rounded-circle float-right" style="margin: -15px 15px 0 0">
+                        <!-- <img src="https://mb.lucardi-cdn.nl/zoom/64867/regal-mesh-horloge-met-zilverkleurige-band.jpg" alt="..." width= 70px height= 70px class="rounded-circle float-right" style="margin: -15px 15px 0 0"> -->
                     </div>
                 </div>
 
