@@ -55,13 +55,15 @@ $_SESSION['email-registration'] = ' ';
         <img  class="rounded-circle" src="https://media.nu.nl/m/o5mx3i7aqf41_wd640.jpeg">
       </div>
       <div class="col-lg-5">
-        <h2> "Maak een account aan om ook te bieden, of verkoper te worden!"</h2>
-        <a href="./registreren.php" class="cta-white">Klik hier om je te registreren!</a>
+        <h2> "We have the BEST website!"</h2>
       </div>
       <div class="col-lg-3">
       </div>
     </div>
   </div>
+</section>
+<section class="attention text-center">
+<a href="productpage.php?product=2" class="btn cta-orange">Meld je nu aan als verkoper!</a>
 </section>
 
 
