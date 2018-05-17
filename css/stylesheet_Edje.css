@@ -37,9 +37,9 @@ div#detailsTabel.row.row-right{
 
 }
 
-#editUserInfo{
-	float: left;
-	width: 100%;
+.edit-user-info{
+
+	float: right; 	 
 }
 
 
@@ -48,3 +48,7 @@ div#detailsTabel.row.row-right{
 }
 
 
+form.form-group.edit-user-info{
+text-align: right;
+
+}

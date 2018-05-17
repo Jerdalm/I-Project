@@ -2,9 +2,11 @@
 require_once 'header.php'; 
 
 $gebruikersnaam = $_SESSION['gebruikersnaam'];
-$emailParameters = array(':gebruikersnaam' => "$gebruikersnaam");
+$emailParameters = array(':gebruikersnaam' => $gebruikersnaam);
 $messageNewPassword = ' ';
-$gebruiker = FetchAssocSelectData("SELECT * FROM Gebruiker join Gebruikerstelefoon on Gebruiker.gebruikersnaam = Gebruikerstelefoon.gebruikersnaam WHERE gebruiker.gebruikersnaam = :gebruikersnaam", $emailParameters);
+$gebruiker = FetchAssocSelectData("SELECT TOP 1 Gebruiker.gebruikersnaam,voornaam,achternaam,adresregel1,adresregel2,postcode,plaatsnaam,land,geboortedag,mailadres,telefoonnummer FROM Gebruiker 
+                                   LEFT join Gebruikerstelefoon on Gebruiker.gebruikersnaam = Gebruikerstelefoon.gebruikersnaam
+                                   WHERE Gebruiker.gebruikersnaam = :gebruikersnaam", $emailParameters);
 
 $email = $gebruiker['mailadres'];
 $subject = 'Wachtwoord wijzigen';
@@ -14,7 +16,7 @@ $nieuwePassword = '';
 $messageCode = $message . $nieuwePassword;
 
 $correct = false;
-print_r($gebruiker);
+
 if(isset($_POST['submit-new-password'])){
 
     $huidigWachtwoord = $_POST['huidigWachtwoord'];
@@ -44,7 +46,7 @@ if(isset($_POST['submit-new-password'])){
             <table class="table table-user-details"> 
                 <tbody>
                     <?php foreach($gebruiker as $key => $info ){
-                     if ($key == 'wachtwoord' || $key == 'gebruikersnaam' || $key == 'vraag' || $key == 'antwoordtekst' || $key == 'volgnr' ) continue;
+                   
                         echo "<tr>" . "<th scope='col'>" . $key . "</th" . "</tr>";
                         echo "<td>" . $info . "</td>";
                      } ?>
@@ -60,9 +62,9 @@ if(isset($_POST['submit-new-password'])){
             <button class="cta-orange btn">Upgrade account</button>
         </div>
 
-        <?php } else if(isset($_GET['changePass'])){ ?>
+        <?php } if(isset($_GET['changePass'])){ ?>
         <div class="formWachtwoordHuidig col-md-4 row">
-            <form method="POST" class="form-steps" action="">
+                    <form method="POST" class="form-steps" action="">
                 <div class="form-group">
                     <label for="testvoorvraag"> Huidig Wachtwoord </label>
                     <input type="password" name="huidigWachtwoord" class="form-control" id="testAntwoordvakje" placeholder="Voer hier uw huidige wachtwoord in">
@@ -85,14 +87,70 @@ if(isset($_POST['submit-new-password'])){
             }
             echo '</p>';
         } else if (isset($_GET['changeInfo'])){ ?>
-        <form id="editUserInfo" method="GET" class="form-group">  
-            <?php  foreach ($gebruiker as $key => $value) { 
-                if ($key == 'wachtwoord' || $key == 'gebruikersnaam' || $key == 'vraag' || $key == 'antwoordtekst' || $key == 'volgnr' ) continue;
-                echo '<label><b>'. $key .'</b></label><input type="text" name="' . $key . '" value="'. $value .'">';
-            } ?>
-        </form>
-        <?php }?>    
+            <form method="get" class="form-group edit-user-info">  
+                <?php  foreach ($gebruiker as $key => $value) { 
+                    if ($key == 'geboortedag') {
+                        echo '<label><b>'. $key .'</b></label><input type="date" name="' . $key . '" value="'. $value .'">';
+                        echo '<br>';
+                        continue;
+                    } else if ($key == 'gebruikersnaam') {
+                        echo '<label><b>'. $key .'</b></label><input type="text" name="' . $key . '" value="'. $value .'" readonly>';
+                        echo '<br>';
+                        continue;
+                    } else if ($key == 'telefoonnummer') {
+                        echo '<label><b>'. $key .'</b></label><input type="number" name="' . $key . '" value="'. $value .'">';
+                        echo '<br>';
+                        continue;
+                    }
+                    echo '<label><b>'. $key .'</b></label><input type="text" name="' . $key . '" value="'. $value .'">';
+                    echo '<br>';
+                } ?>
+                <button type="submit" class="btn btn-primary btn-sm" name="bijwerken">Bijwerken</button>
+            </form>
+        <?php
+        }
+            if (isset($_GET['bijwerken'])) {
+                
+                $telefoonnummerPara = array(':telefoonnummer' => $_GET['telefoonnummer'] , ':gebruikersnaam' => $gebruikersnaam);
+                $birthdate = $_GET['geboortedag'];
+                $myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
+                $geboortedag = $myDateTime->format('Y-m-d');
+
+                $infoParameters = array(':gebruikersnaam' => $gebruikersnaam , 
+                                        ':voornaam' => $_GET['voornaam'], 
+                                        ':achternaam' => $_GET['achternaam'] , 
+                                        ':adresregel1' => $_GET['adresregel1'] , 
+                                        ':adresregel2' => $_GET['adresregel2'] , 
+                                        ':postcode' => $_GET['postcode'], 
+                                        ':plaatsnaam' => $_GET['plaatsnaam'] , 
+                                        ':land' =>  $_GET['land'] , 
+                                        ':geboortedag' => $geboortedag , 
+                                        ':mailadres' => $_GET['mailadres']);
+            
+                 handlequery("UPDATE Gebruiker
+                              SET voornaam = :voornaam , 
+                                  achternaam = :achternaam, 
+                                  adresregel1 = :adresregel1 ,
+                                  adresregel2 = :adresregel2 ,
+                                  postcode = :postcode,
+                                  plaatsnaam = :plaatsnaam ,
+                                  land = :land,
+                                  geboortedag = :geboortedag,
+                                  mailadres = :mailadres
+                              WHERE gebruikersnaam = :gebruikersnaam", 
+                              $infoParameters);
+                
+                 handlequery("UPDATE Gebruikerstelefoon 
+                              SET telefoonnummer = :telefoonnummer 
+                              WHERE gebruikersnaam = :gebruikersnaam" , $telefoonnummerPara);
+
+  
+            }
+
+           ?> 
+        }
 
     </div>    
+
 </main>
 <?php require_once 'footer.php'; ?>

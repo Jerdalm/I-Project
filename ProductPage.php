@@ -53,7 +53,7 @@ foreach ($productdata as $item) {
 
                 </figure>
                 <div class="col p-3 mb-2 bg-secondary text-white" style="text-align: center">
-                    <p>Description: <?= $productdata['beschrijving'] ?></p>
+                    <p>Description: <?= $item['beschrijving'] ?> </p>
                 </div>
             </div>
             <div class="col-lg-6 p-3 mb-2 bg-secondary text-white">
