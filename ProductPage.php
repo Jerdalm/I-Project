@@ -2,12 +2,16 @@
 $Vwnummer = $_GET['product'];
 $productdata = handlequery("
 SELECT V.voorwerpnummer, G.voornaam, G.achternaam, G.plaatsnaam,
-V.titel, V.startprijs
-from voorwerp V
-inner join gebruiker G on V.verkoper = G.gebruikersnaam
-inner join verkoper VK on V.verkoper = VK.gebruikersnaam
+V.titel, V.startprijs, V.beschrijving
+FROM Voorwerp V
+JOIN gebruiker G on V.verkoper = G.gebruikersnaam
 WHERE voorwerpnummer = $Vwnummer
 ");//voorwerpnummer moet meegegeven worden vanuit de site
+$images = handlequery("
+SELECT filenaam
+FROM Bestand
+WHERE voorwerpnummer = $Vwnummer
+");
 
 
 foreach ($productdata as $item) {
@@ -37,21 +41,19 @@ foreach ($productdata as $item) {
                         <div class="tab-pane" id="pic-2"><img src="https://cdn-1.debijenkorf.nl/web_detail/hugo-boss-horloge-rafal-hb1513456/?reference=039/130/13_0391309001300000_pro_flt_frt_01_1108_1528_1669062.jpg" /></div>
                         <div class="tab-pane" id="pic-3"><img src="https://www.brandfield.nl/media/catalog/product/cache/21/image/9df78eab33525d08d6e5fb8d27136e95/m/k/mk8281_1.jpg" /></div>
                         <div class="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252" /></div>
-                        <div class="tab-pane" id="pic-5"><img src="http://placekitten.com/400/252" /></div>
                       </div>
                       <ul class="preview-thumbnail nav nav-tabs">
                         <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
                         <li><a data-target="#pic-2" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
                         <li><a data-target="#pic-3" data-toggle="tab"><img src="https://www.brandfield.nl/media/catalog/product/cache/21/image/9df78eab33525d08d6e5fb8d27136e95/m/k/mk8281_1.jpg" /></a></li>
                         <li><a data-target="#pic-4" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
-                        <li><a data-target="#pic-5" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
                       </ul>
 
                     </div>
 
                 </figure>
                 <div class="col p-3 mb-2 bg-secondary text-white" style="text-align: center">
-                    <p>Description:</p>
+                    <p>Description: <?= $productdata['beschrijving'] ?></p>
                 </div>
             </div>
             <div class="col-lg-6 p-3 mb-2 bg-secondary text-white">
