@@ -101,11 +101,10 @@ body{
 }
 
 main{
+	margin-top:min-height: 6vh;
 	min-height: 78vh;
 }
-header{
-	min-height: 6vh;
-}
+
 
 .change-form{
 	float: left;
