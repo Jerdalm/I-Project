@@ -32,20 +32,23 @@ padding: 10px;
 
 }
 
-.formWachtwoordHuidig {
-	flex-direction: column;
-}
-
-#profile-picture{
-	max-width: 400px;
-	max-height: 200px;
-	height: 100%;
-	width: 100%;
+div#detailsTabel.row.row-right{
+	
 
 }
 
-#editUserInfo{
-	float: left;
-	width: 100%;
+.edit-user-info{
+
+	float: right; 	 
 }
 
+
+.table-user-details{
+	width: 75%;
+}
+
+
+form.form-group.edit-user-info{
+text-align: right;
+
+}

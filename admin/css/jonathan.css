@@ -135,9 +135,32 @@ pre{
 }
 
 main{
-	min-height: 80vh;
+	min-height: 78vh;
+}
+header{
+	min-height: 6vh;
 }
 
+.change-form{
+	float: left;
+	widows: 100%;
+}
+
+.change-form-group > *{
+	float: left;
+	width: 49%;
+} 
+
+.change-form button{
+	margin-top: 10px;
+}
+
+.change-form-group{
+	margin-bottom: 20px;
+}
+.change-form button:first-of-type, .change-form label{
+	margin-right: 6px;
+}
 @media screen and (max-width: 500px){
 	#login-registration .container, .user-details .container{
 		padding: 0 20px;

@@ -574,12 +574,17 @@ function validateCode($inputCode, $email){
 
 	/* Returnt het rubrieknummer van de huidige rubriek en de subrubrieken */
 	function getSubRubriek($rubrieknumber){
+		if(is_int($rubrieken)){
 		$rubriekparameters = array(':rubriek' => $rubrieknumber);
 		$rubrieken = FetchSelectData("EXEC SHOW_RUBRIEK_TREE @rubriek = :rubriek",$rubriekparameters);
-		$rubrieknumbers = array_column($rubrieken, 'rubrieknummer');
-		if($rubrieknumbers){
-			return '(' . implode(',', $rubrieknumbers) .')';
-		}
+		
+	
+			$rubrieknumbers = array_column($rubrieken, 'rubrieknummer');
+			if($rubrieknumbers){
+				return '(' . implode(',', $rubrieknumbers) .')';
+			}
+		}else{header("location:overview.php");}
+		
 	}
 
 	function deleteUser($gebruiker){
