@@ -134,6 +134,10 @@ pre{
 	color: red;
 }
 
+main{
+	min-height: 80vh;
+}
+
 @media screen and (max-width: 500px){
 	#login-registration .container, .user-details .container{
 		padding: 0 20px;
