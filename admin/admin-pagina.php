@@ -28,44 +28,65 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 
 	if (isset($_GET['voorwerpForm'])) {
 		$artikelResultaten = ' ';
-		$htmlVeranderVoorwerp = '<form class="form-group" method="GET" action="">'; 
+		$htmlVeranderVoorwerp = '<form class="form-group change-form" method="GET" action="">'; 
 
-		$kweerie = "SELECT * FROM Voorwerp WHERE voorwerpnummer = :voorwerpnummer";
+		$kweerie = "SELECT voorwerpnummer, titel, beschrijving, startprijs, betalingswijze, betalingsinstructie, plaatsnaam, land, looptijd, looptijdbeginDag, 				looptijdbeginTijdstip, verzendkosten, verzendinstructies FROM Voorwerp WHERE voorwerpnummer = :voorwerpnummer";
 		$query = FetchAssocSelectData($kweerie, $parametersVoorwerp);
+		
 		foreach ($query as $key => $value) {
-			if ($key == 'voorwerpnummer') {				
+			if ($key == 'voorwerpnummer') {		
+				$htmlVeranderVoorwerp .= '<div class="change-form-group">';		
 				$htmlVeranderVoorwerp .= '<label>'. $key . '</label>';
 				$htmlVeranderVoorwerp .= '<input type="text" name="'.$key.'" value="'.$value.'" readonly><br>';
+				$htmlVeranderVoorwerp .= '</div>';
+				continue;
+			} else if ($key == 'looptijdbeginDag') {
+				$htmlVeranderVoorwerp .= '<div class="change-form-group">';
+				$htmlVeranderVoorwerp .= '<label>'. $key . '</label>';
+				$htmlVeranderVoorwerp .= '<input type="date" name="'.$key.'" value="'.$value.'"><br>';
+				$htmlVeranderVoorwerp .= '</div>';	
+				continue;
+			} 
+			else if ($key == 'looptijd') {
+				$htmlVeranderVoorwerp .= '<div class="change-form-group">';
+				$htmlVeranderVoorwerp .= '<label>'. $key . '</label>';
+				$htmlVeranderVoorwerp .= '<select name="'.$key.'">
+											<option value="1">1</option>
+											<option value="3">3</option>
+											<option value="5">5</option>
+											<option value="7">7</option>
+											<option value="10">10</option>
+										  </select><br>';	
+				$htmlVeranderVoorwerp .= '</div>';
 				continue;
 			}
-			if ($key == 'verkoper' || $key == 'koper' || $key == 'looptijdEindeDag' || $key == 'looptijdEindeTijdstip' || $key == 'veilingGesloten' 
-				|| $key == 'verkoopPrijs') continue;
-			if ($key == 'looptijdBeginDag') {
-				$htmlVeranderVoorwerp .= '<label>'. $key . '</label>';
-				$htmlVeranderVoorwerp .= '<input type="date" name="'.$key.'" value="'.$value.'"><br>';	
-				continue;
-			} else if ($key == 'looptijdBeginDag') {
-				$htmlVeranderVoorwerp .= '<label>'. $key . '</label>';
-				$htmlVeranderVoorwerp .= '<input type="price" name="'.$key.'" value="'.$value.'"><br>';	
-				continue;
-			}
+			$htmlVeranderVoorwerp .= '<div class="change-form-group">';
 			$htmlVeranderVoorwerp .= '<label>'. $key . '</label>';
 			$htmlVeranderVoorwerp .= '<input type="text" name="'.$key.'" value="'.$value.'"><br>';
+			$htmlVeranderVoorwerp .= '</div>';
 		}
 		$htmlVeranderVoorwerp .= '<button class="btn btn-success" name="submit-changes-article">Sla wijzigingen op</button>';
 		$htmlVeranderVoorwerp .= '<button class="btn btn-danger" name="delete-article">Verwijder voorwerp</button>';
 		$htmlVeranderVoorwerp .= '</form>';
 	} else if (isset($_GET['gebruikersnaamForm'])) {
-		$htmlVeranderGebruiker = '<form class="form-group" method="GET" action="">'; 
+		$htmlVeranderGebruiker = '<form class="form-group change-form" method="GET" action="">'; 
 		
 		$_SESSION['username_changeinfo'] = $_GET['gebruikersnaamForm'];
 		$parametersGebruiker = array(':gebruiker' => $_SESSION['username_changeinfo']);
-		$kweerie2 = "SELECT * FROM Gebruiker WHERE gebruikersnaam = :gebruiker";
+		$kweerie2 = "SELECT gebruikersnaam, voornaam, achternaam, adresregel1, adresregel2, postcode, plaatsnaam, land, geboortedag, mailadres FROM Gebruiker WHERE gebruikersnaam = :gebruiker";
 		$query = FetchAssocSelectData($kweerie2, $parametersGebruiker);
 		foreach ($query as $key => $value) {
-			if ($key == 'wachtwoord' || $key == 'vraag' || $key == 'soortGebruiker' || $key == 'antwoordtekst') continue; //Zodat de admin het wachtwoord niet kan zien
+			if ($key == 'gebruikersnaam'){
+				$htmlVeranderGebruiker .= '<div class="change-form-group">';
+				$htmlVeranderGebruiker .= '<label>'. $key . '</label>';
+				$htmlVeranderGebruiker .= '<input type="text" name="'.$key.'" value="'.$value.'" readonly><br>';
+				$htmlVeranderGebruiker .= '</div>';
+				continue;
+			}
+			$htmlVeranderGebruiker .= '<div class="change-form-group">';
 			$htmlVeranderGebruiker .= '<label>'. $key . '</label>';
 			$htmlVeranderGebruiker .= '<input type="text" name="'.$key.'" value="'.$value.'"><br>';
+			$htmlVeranderGebruiker .= '</div>';
 			
 		}
 		$htmlVeranderGebruiker .= '<button class="btn btn-success" name="submit-changes-user">Sla wijzigingen op</button>';
@@ -99,7 +120,7 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 		echo 'alert("Gegevens zijn gewijzigd")';
 		echo '</script>';
 	} else if (isset($_GET['submit-changes-article'])){
-		$dateLooptijdBegin = $_GET['looptijdBeginDag'];
+		$dateLooptijdBegin = $_GET['looptijdbeginDag'];
 		$myDateTimeBegin = DateTime::createFromFormat('Y-m-d', $dateLooptijdBegin);
 		$datumLooptijdBegin = $myDateTimeBegin->format('Y-m-d');
 		$parametersUpdate = array(
@@ -112,7 +133,7 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 			':land' => $_GET['land'],
 			':looptijd' => $_GET['looptijd'],
 			':looptijdbeginDag' => $datumLooptijdBegin,
-			':looptijdbeginTijdstip' => $_GET['looptijdBeginTijdstip'],
+			':looptijdbeginTijdstip' => $_GET['looptijdbeginTijdstip'],
 			':verzendkosten' => (int)$_GET['verzendkosten'],
 			':verzendinstructies' => $_GET['verzendinstructies'],
 			':voorwerpnummer' => $_GET['voorwerpnummer']);
@@ -140,12 +161,12 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 				<div class="col-6">
 					<div class="artikelnummer">
 						<!-- form om te zoeken op artikelnummer -->
-						<div class="col-lg-4">
+						
 							<form class="form-group" method="GET" action=""> 
 								<input type="number" name="voorwerp" placeholder="Voorwerpnummer" min="0"> <br>
 								<input class="cta-orange" name="zoekenVoorwerp" type="submit" value="Zoeken">
 							</form>
-						</div>
+						
 						<?=$htmlVeranderVoorwerp?>
 					</div>
 					<?php if(isset($artikelResultaten)) { 
@@ -155,12 +176,12 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 				<div class="col-6">
 					<div class="gebruiker">
 						<!-- for om te zoeken op gebruiker -->
-						<div class="col-lg-4">
+						
 							<form class="form-group" method="GET" action=""> 
 								<input type="text" name="gebruiker" placeholder="Gebruikersnaam"> <br>
 								<input class="cta-orange" name="zoekenGebruiker" type="submit" value="Zoeken">
 							</form>
-						</div>
+						
 						<?=$htmlVeranderGebruiker?>
 					</div>
 					<?php if(isset($gebruikerResultaten)) { 
