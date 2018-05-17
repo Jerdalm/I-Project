@@ -50,7 +50,7 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 			else if ($key == 'looptijd') {
 				$htmlVeranderVoorwerp .= '<div class="change-form-group">';
 				$htmlVeranderVoorwerp .= '<label>'. $key . '</label>';
-				$htmlVeranderVoorwerp .= '<select>
+				$htmlVeranderVoorwerp .= '<select name="'.$key.'">
 											<option value="1">1</option>
 											<option value="3">3</option>
 											<option value="5">5</option>
@@ -120,7 +120,7 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 		echo 'alert("Gegevens zijn gewijzigd")';
 		echo '</script>';
 	} else if (isset($_GET['submit-changes-article'])){
-		$dateLooptijdBegin = $_GET['looptijdBeginDag'];
+		$dateLooptijdBegin = $_GET['looptijdbeginDag'];
 		$myDateTimeBegin = DateTime::createFromFormat('Y-m-d', $dateLooptijdBegin);
 		$datumLooptijdBegin = $myDateTimeBegin->format('Y-m-d');
 		$parametersUpdate = array(
@@ -133,7 +133,7 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 			':land' => $_GET['land'],
 			':looptijd' => $_GET['looptijd'],
 			':looptijdbeginDag' => $datumLooptijdBegin,
-			':looptijdbeginTijdstip' => $_GET['looptijdBeginTijdstip'],
+			':looptijdbeginTijdstip' => $_GET['looptijdbeginTijdstip'],
 			':verzendkosten' => (int)$_GET['verzendkosten'],
 			':verzendinstructies' => $_GET['verzendinstructies'],
 			':voorwerpnummer' => $_GET['voorwerpnummer']);

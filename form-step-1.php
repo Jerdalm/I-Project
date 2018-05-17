@@ -7,8 +7,8 @@ $randomVerificationCode = 111111;
 $subject = 'Activatiecode';
 $body = 'Bedankt voor het registreren,
 Voer de volgende activatiecode in het formulier in:' . $randomVerificationCode;
-$headerLocationIf = "user.php?step=2";
-$headerLocationElse = "user.php";
+$headerLocationIf = "registreren.php?step=2";
+$headerLocationElse = "registreren.php";
 
 if (isset($_POST['submit-mail'])){
 	if (checkIfFieldsFilledIn()) {
