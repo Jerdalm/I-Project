@@ -99,10 +99,10 @@ url('./img/header/horloge_header.jpg') center center no-repeat scroll;">
 <form method="get" action="">
 <div class="form-group">
 <label for="minamount" class="col-form-label">Prijs van/tot</label>
-<input min="0" class="form-control" name="min" id="minamount" type="number">
+<input min="0" class="form-control" name="min" id="minamount" type="number" required="required">
 </div>
 <div class="form-group">
-<input min="0" class="form-control" name="max" id="maxamount" type="number">
+<input min="0" class="form-control" name="max" id="maxamount" type="number" required="required">
 <?php foreach($_GET as $key => $value){ 
 if($key == 'min' || $key == 'max'){
 }else{
