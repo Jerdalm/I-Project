@@ -14,6 +14,7 @@
 	if(is_numeric($rubriek)){
 	$rubriekdata = getSubRubriek($rubriek);
 	
+	
 	$parameters = false;
 	
 	$query = "SELECT * from currentAuction 
