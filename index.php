@@ -62,8 +62,8 @@ $_SESSION['email-registration'] = ' ';
     </div>
   </div>
 </section>
-<section class="attention">
-
+<section class="attention text-center">
+<a href="productpage.php?product=2" class="btn cta-orange">Meld je nu aan als verkoper!</a>
 </section>
 
 

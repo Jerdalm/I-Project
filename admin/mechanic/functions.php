@@ -2,10 +2,10 @@
 
 /* Deze functie zorgt voor de connectie met de Database */
 function ConnectToDatabase(){
-	$hostname = "mssql2.iproject.icasites.nl";
+	$hostname = "(local)";
 	$dbname = "iproject34";
-	$dbusername = "iproject34";
-	$dbpw = "Q43bdM5d9r";
+	$dbusername = "sa";
+	$dbpw = "12345";
 
 	try {$pdo = new PDO("sqlsrv:Server=$hostname;Database=$dbname;
 		ConnectionPooling=0", "$dbusername", "$dbpw");

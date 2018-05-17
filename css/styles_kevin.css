@@ -188,6 +188,9 @@ section.userExperience{
 	background:#D9D9D9;
 }
 
+section.attention{
+	background:#bfbfbf;
+}
 
 /* Section UserExperience */
 .userExperience img{
