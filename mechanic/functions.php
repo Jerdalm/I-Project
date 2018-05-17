@@ -2,7 +2,7 @@
 
 /* Deze functie zorgt voor de connectie met de Database */
 function ConnectToDatabase(){
-	$hostname = "mssql2.iproject.icasites.nl";
+	$hostname = "local";
 	$dbname = "iproject34";
 	$dbusername = "iproject34";
 	$dbpw = "Q43bdM5d9r";
