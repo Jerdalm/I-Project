@@ -3,12 +3,15 @@ require_once './header.php';
 
 if($_SESSION['gebruikersnaam'] == "admin") { 
 	$htmlVeranderVoorwerp = ' ';
-	$htmlVeranderGebruiker= ' ';
+	$htmlVeranderGebruiker = ' ';
+	$htmlVeranderBieding = ' ';
 	$_SESSION['voorwerpnummer'] = ' ';
 	if (isset($_GET['search-article'])){
 		$voorwerpNummer = $_GET['voorwerp'];
 		$parametersVoorwerp = array(':voorwerpnummer' => $voorwerpNummer);
-		$voorwerpen = handlequery("SELECT * FROM Voorwerp WHERE voorwerpnummer = :voorwerpnummer",$parametersVoorwerp);		
+		$voorwerpen = handlequery("SELECT * 
+			FROM Voorwerp 
+			WHERE voorwerpnummer = :voorwerpnummer",$parametersVoorwerp);		
 		$artikelResultaten = '<table class="table"><tr><th scope="col">Voorwerp</th></tr><tr>';
 		foreach($voorwerpen as $voorwerp){
 			$getpath = "$_SERVER[QUERY_STRING]";
@@ -17,16 +20,54 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 		$artikelResultaten .= '</tr></table>';
 	} else if (isset($_GET['search-user'])) {
 		$gebruikersnaam = $_GET['gebruiker'];
-		$parametersGebruiker = array(':gebruiker' => "%". $gebruikersnaam ."%");
+		$parametersGebruiker = array(':gebruiker' => "%". $gebruikersnaam ."%",
+			'mail' => "%". $gebruikersnaam ."%",
+			'plaats' => "%". $gebruikersnaam ."%");
+
 		$gebruikers = handlequery("SELECT * 
-								   FROM Gebruiker 
-								   WHERE gebruikersnaam like :gebruiker
-								   OR mailadres like :gebruiker",$parametersGebruiker);
+			FROM Gebruiker 
+			WHERE gebruikersnaam like :gebruiker
+			OR mailadres like :mail
+			OR plaatsnaam like :plaats",$parametersGebruiker);
+		// echo '<pre>';
+		// print_r($gebruikers);
+		// echo "</pre>";
+		// die();
 		$gebruikerResultaten = '<table class="table"><tr><th scope="col">Gebruikersnaam</th></tr><tr>';
 		foreach($gebruikers as $gebruiker){
 			$gebruikerResultaten .= "<tr>" . "<td>" . "<a href='?gebruikersnaamForm=" . $gebruiker['gebruikersnaam'] . "'>" . $gebruiker['gebruikersnaam'] ."</a>". "</td>" . "</tr>";
 		} 
 		$gebruikerResultaten .= '</tr></table>';
+	} else if (isset($_GET['search-bieding'])) {
+		$biedingInput = $_GET['bieding'];	
+		$parametersbieding = array(':voorwerpnummer' => "%". $biedingInput ."%",
+								   'bodbedrag' => "%". $biedingInput ."%",
+								   'titel' => "%". $biedingInput ."%");
+		$biedingen = handlequery("SELECT * 
+								   FROM Bod B INNER JOIN Voorwerp V 
+								   ON B.voorwerpnummer = V.voorwerpnummer
+								   WHERE B.voorwerpNummer like :voorwerpnummer
+								   OR bodbedrag like :bodbedrag
+								   OR titel like :titel",$parametersbieding);
+		$biedingenResultaten = '<table class="table"><tr><th scope="col">Biedingen</th></tr>';
+		foreach($biedingen as $bieding){
+			$biedingenResultaten .= "<tr>
+										<td>
+											<a href=?gebruikersnaamForm=".$bieding['voorwerpnummer']."'>".$bieding['voorwerpnummer']."</a>
+										</td>
+										<td>
+											<a href=?gebruikersnaamForm=".$bieding['voorwerpnummer']."'>".$bieding['titel']."</a>
+										</td>
+										<td>
+											<a href=?gebruikersnaamForm=".$bieding['voorwerpnummer']."'>€".$bieding['bodbedrag']."</a>
+										</td>
+									</tr>";
+			// echo "<pre>";
+			// print_r($bieding['titel']);
+			// echo "</pre>";
+			// die();
+		} 
+		$biedingenResultaten .= '</table>';
 	}
 
 	if (isset($_GET['voorwerpForm'])) {
@@ -54,12 +95,12 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 				$htmlVeranderVoorwerp .= '<div class="change-form-group">';
 				$htmlVeranderVoorwerp .= '<label>'. $key . '</label>';
 				$htmlVeranderVoorwerp .= '<select name="'.$key.'">
-											<option value="1">1</option>
-											<option value="3">3</option>
-											<option value="5">5</option>
-											<option value="7">7</option>
-											<option value="10">10</option>
-										  </select><br>';	
+				<option value="1">1</option>
+				<option value="3">3</option>
+				<option value="5">5</option>
+				<option value="7">7</option>
+				<option value="10">10</option>
+				</select><br>';	
 				$htmlVeranderVoorwerp .= '</div>';
 				continue;
 			}
@@ -161,14 +202,14 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 	<main>
 		<div class="container">
 			<div class="row">
-				<div class="col-6">
+				<div class="col-4">
 					<div class="artikelnummer">
 						<!-- form om te zoeken op artikelnummer -->
 						
-							<form class="form-group" method="GET" action=""> 
-								<input type="number" name="voorwerp" placeholder="Voorwerpnummer" min="0"> <br>
-								<input class="cta-orange" name="search-article" type="submit" value="Zoeken">
-							</form>
+						<form class="form-group" method="GET" action=""> 
+							<input type="number" name="voorwerp" placeholder="Voorwerpnummer" min="0"> <br>
+							<input class="cta-orange" name="search-article" type="submit" value="Zoeken">
+						</form>
 						
 						<?=$htmlVeranderVoorwerp?>
 					</div>
@@ -176,19 +217,32 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 						echo $artikelResultaten; 
 					}?>
 				</div>
-				<div class="col-6">
+				<div class="col-4">
 					<div class="gebruiker">
 						<!-- for om te zoeken op gebruiker -->
-						
-							<form class="form-group" method="GET" action=""> 
-								<input type="text" name="gebruiker" placeholder="Gebruiker"> <br>
-								<input class="cta-orange" name="search-user" type="submit" value="Zoeken">
-							</form>
+						<form class="form-group" method="GET" action=""> 
+							<input type="text" name="gebruiker" placeholder="Gebruiker"> <br>
+							<input class="cta-orange" name="search-user" type="submit" value="Zoeken">
+						</form>
 						
 						<?=$htmlVeranderGebruiker?>
 					</div>
 					<?php if(isset($gebruikerResultaten)) { 
 						echo $gebruikerResultaten; 
+					}?>
+				</div>
+				<div class="col-4">
+					<div class="bieding">
+						<!-- for om te zoeken op gebruiker -->
+						<form class="form-group" method="GET" action=""> 
+							<input type="text" name="bieding" placeholder="Bieding"> <br>
+							<input class="cta-orange" name="search-bieding" type="submit" value="Zoeken">
+						</form>
+						
+						<?=$htmlVeranderBieding?>
+					</div>
+					<?php if(isset($biedingenResultaten)) { 
+						echo $biedingenResultaten; 
 					}?>
 				</div>
 			</div>
