@@ -91,10 +91,27 @@ url('./img/header/horloge_header.jpg') center center no-repeat scroll;">
 </div>
 
 <div class="container">
-<div class = "row">
-<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 sidebar" style="">
+<div class="wrapper" style="margin-left:-15px; margin-right:-15px";>
+<div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 sidebar float-left" style="">
 <h4 class="text-center"> Rubrieken </h4>
  <?= showRubriekenlist(); ?>
+ 
+<h4 class="text-center"> Afstand </h4>
+<form method="get" action="">
+<div class="form-group">
+  <label for="sel1">afstand in KM:</label>
+  <select class="form-control" id="distanceFilter"  onchange="this.form.submit()">
+	<option></option>
+    <option value="3">< 3 km</option>
+    <option value="5">< 5 km</option>
+    <option value="10">< 10 km</option>
+    <option value="15">< 15 km</option>
+	<option value="25">< 25 km</option>
+	<option value="50">< 50 km</option>
+	<option value="75">< 75 km</option>
+  </select>
+ </div>
+</form>
  <h4 class="text-center"> Prijs </h4>
 <form method="get" action="">
 <div class="form-group">
@@ -110,30 +127,16 @@ if($key == 'min' || $key == 'max'){
 <input type='hidden' name='<?= $key; ?>' value='<?= $value; ?>' />
 <?php }} ?>
 </div>
-<button class="btn btn-success" type="submit"><i class="fas fa-sync-alt"></i></button>
+<button class="btn btn-success" type="submit">Zoeken <i class="fas fa-sync-alt"></i></button>
 </form>
+
 </div>
-<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style=" display: flex; flex-wrap: wrap;">
+<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 no-margin float-left" style=" display: flex; flex-wrap: wrap;">
 <?= showProducts(false,$query,$parameters); ?>
 </div>
+
+<div class="clearfix"></div>
 </div>
 </div>
 </section>
 <?php require 'footer.php'; ?>
-
-
-<?php 
-// returnt parameter array
-function checkPriceFilter($min, $max){
-	
-$returnwaarde = '1 = 1';
-   
-        if(!empty($min) && !empty($max)){
-			if(is_numeric($min) && is_numeric($max)){
-			$returnwaarde = "bodbedrag between $min AND $max";
-			}
-		}
-
-	
-return $returnwaarde;
-}

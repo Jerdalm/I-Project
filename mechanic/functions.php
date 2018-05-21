@@ -608,5 +608,20 @@ function validateCode($inputCode, $email){
 
 		return array('time' => $time, 'distance' => $distanceKm);
 	}
+	
+		// returnt parameter array
+	function checkPriceFilter($min, $max){
+		
+	$returnwaarde = '1 = 1';
+	   
+			if(!empty($min) && !empty($max)){
+				if(is_numeric($min) && is_numeric($max)){
+				$returnwaarde = "bodbedrag between $min AND $max";
+				}
+			}
+
+		
+	return $returnwaarde;
+	}
 
 	?>
