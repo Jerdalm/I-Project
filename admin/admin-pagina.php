@@ -176,31 +176,38 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 		$htmlVeranderBieding .= '<button class="btn btn-success" name="submit-changes-bit">Sla wijzigingen op</button>';
 		$htmlVeranderBieding .= '</form>';	
 	} else if (isset($_GET['block-user'])){
+		// echo "<pre>";
+		// print_r(array_values($_GET)[0]);
+		// echo "</pre>";
+		// die();
 		blockUser(array_values($_GET)[0]);	
 		$errorMessageUser = "De gekozen gebruiker is geblokkeerd";
 	} else if (isset($_GET['delete-article'])){
 		deleteArticle(array_values($_GET)[0]);
 		$errorMessageArticle = "Het gekozen artikel is verwijderd";
 	} else if (isset($_GET['submit-changes-user'])){
-
-		$birthdate = $_GET['geboortedag'];
-		$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
-		$geboortedag = $myDateTime->format('Y-m-d');
-		$changeUserParam = array(':usernameNew' => array_values($_GET)[0],
-			':firstname' => $_GET['voornaam'],
-			':lastname' => $_GET['achternaam'],
-			':adres1' => $_GET['adresregel1'],
-			':adres2' => $_GET['adresregel2'],
-			':postcode' => $_GET['postcode'],
-			':placename' => $_GET['plaatsnaam'],
-			':country' => $_GET['land'],
-			':birthdate' => $geboortedag,
-			':mail' => $_GET['mailadres'],
-			'usernameOld' => $_SESSION['username_changeinfo']);
-		handlequery("UPDATE Gebruiker 
-			SET gebruikersnaam = :usernameNew, voornaam = :firstname, achternaam = :lastname, adresregel1 = :adres1, adresregel2 = :adres2, postcode = :postcode, plaatsnaam = :placename, land = :country, geboortedag = :birthdate, mailadres = :mail
-			WHERE gebruikersnaam = :usernameOld", $changeUserParam);
-		$errorMessageUser = "Wijzigingen zijn opgeslagen";
+		if(checkEmailUnique($_GET['mailadres'])){
+			$birthdate = $_GET['geboortedag'];
+			$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
+			$geboortedag = $myDateTime->format('Y-m-d');
+			$changeUserParam = array(':usernameNew' => array_values($_GET)[0],
+				':firstname' => $_GET['voornaam'],
+				':lastname' => $_GET['achternaam'],
+				':adres1' => $_GET['adresregel1'],
+				':adres2' => $_GET['adresregel2'],
+				':postcode' => $_GET['postcode'],
+				':placename' => $_GET['plaatsnaam'],
+				':country' => $_GET['land'],
+				':birthdate' => $geboortedag,
+				':mail' => $_GET['mailadres'],
+				'usernameOld' => $_SESSION['username_changeinfo']);
+			handlequery("UPDATE Gebruiker 
+				SET gebruikersnaam = :usernameNew, voornaam = :firstname, achternaam = :lastname, adresregel1 = :adres1, adresregel2 = :adres2, postcode = :postcode, plaatsnaam = :placename, land = :country, geboortedag = :birthdate, mailadres = :mail
+				WHERE gebruikersnaam = :usernameOld", $changeUserParam);
+			$errorMessageUser = "Wijzigingen zijn opgeslagen";
+		} else {
+			$errorMessageUser = "Mailadres is al in gebruik";
+		}
 	} else if (isset($_GET['submit-changes-article'])){
 		$dateLooptijdBegin = $_GET['looptijdbeginDag'];
 		$myDateTimeBegin = DateTime::createFromFormat('Y-m-d', $dateLooptijdBegin);
