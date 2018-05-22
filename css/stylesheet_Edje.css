@@ -64,9 +64,14 @@ text-align: right;
 }
 
 .userInfo i {
-	text-align: left;
+	
 	margin-top: 10px;
 	max-width: 5px;
 	width: 100%;
 	height: 100%;
+}
+
+
+.userInfo p {
+	margin-left: 15px;
 }

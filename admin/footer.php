@@ -1,4 +1,7 @@
     <!-- Footer -->
+    <?php if(isset($_SESSION)){
+    	print_r($_SESSION);
+    }?>
     <footer class="py-3 bg-dark">
       <div class="container">
        <div class="row ">
