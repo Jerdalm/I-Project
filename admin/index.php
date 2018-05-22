@@ -3,11 +3,11 @@ require_once './header.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (isset($_POST['login-submit-admin'])) {
-		if(($_POST['email-login'] == "admin@root.com" || $_POST['email-login'] == "admin")  && $_POST['wachtwoord'] != "admin123"){
-			echo "Wahtwoord of email/gebruikersnaam klopt niet";
-		} else {
+		if(($_POST['email-login'] === "admin@root.com" || $_POST['email-login'] === "admin") && $_POST['wachtwoord'] == "admin"){
 			$_SESSION['gebruikersnaam'] = "admin";
 			header("Location: ./admin-pagina.php");
+		} else {
+			$errorLoginAdmin = "Wachtwoord of email/gebruikersnaam klopt niet";
 		}
 	}
 }
@@ -28,6 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			<a href= "wachtwoord-vergeten.php"> Wachtwoord Vergeten? </a><br><br>
 			<button type="submit" name="login-submit-admin" class="btn btn-primary">Login</button>
 		</form>
+		<p class="error error-warning"><?php if(isset($errorLoginAdmin)){echo $errorLoginAdmin;}?></p>
 	</div>
 </main>
 

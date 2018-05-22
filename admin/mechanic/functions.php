@@ -96,25 +96,6 @@ function sendMail($to, $subject, $body, $message = "Fout"){
     $_SESSION['message'] = $message;
 }
 
-/* Creeert een random wachtwoord */
-function createRandomPassword() {
-
-	$chars = "abcdefghijkmnopqrstuvwxyz023456789";
-	srand((double)microtime()*1000000);
-	$i = 0;
-	$pass = '' ;
-
-	while ($i <= 7) {
-		$num = rand() % 33;
-		$tmp = substr($chars, $num, 1);
-		$pass = $pass . $tmp;
-		$i++;
-	}
-
-	return $pass;
-
-}
-
 /* Deze functie geeft true of fasle terug, a.d.h.v. de POST informatie */
 function checkIfFieldsFilledIn(){ // returnt true als de meegegeven velden gevuld zijn
 	if (count(array_filter($_POST)) == count($_POST)) {
@@ -176,6 +157,10 @@ function showLoginMenu(){
 		$htmlLogin .= '<li class="nav-item">';
 		$htmlLogin .= '<a class="nav-link" href="./logout.php">Uitloggen</a>';
 		$htmlLogin .= '</li>';
+		$htmlLogin .= '<li class="nav-item">';
+		$htmlLogin .= '<a href="admin-pagina.php?cleanDatabase=true" class="btn btn-danger">Verschoon database</a>';
+					   if (isset($_GET['cleanDatabase'])) cleanDB();
+		$htmlLogin .= '</li>';
 	} else {
 		$htmlLogin = '<li class="nav-item">';
 		$htmlLogin .= '<a class="nav-link" href="./user.php">Inloggen</a>';
@@ -210,5 +195,13 @@ function changedFields($fieldsOld, $fieldsNew){
 	return $state;
 }
 
+
+
+function cleanDB(){
+	handlequery("DELETE FROM ActivatieCode WHERE DATEDIFF(hour, ActivatieCode.tijdAangevraagd, GETDATE()) > 4 AND soort = 0");
+	handlequery("DELETE FROM ActivatieCode WHERE DATEDIFF(day, ActivatieCode.tijdAangevraagd, GETDATE()) > 7 AND soort = 1");
+	executequery("EXEC prc_veilingGesloten");
+	header("Location: ./admin-pagina.php");
+}
 
 ?>
