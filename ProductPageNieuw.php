@@ -3,21 +3,18 @@ $Vwnummer = $_GET['product'];
 
 $productdata = handlequery(
     "SELECT V.voorwerpnummer,V.verzendkosten,V.verzendinstructies, G.voornaam, G.achternaam, G.plaatsnaam,
-    V.titel, V.startprijs, V.beschrijving , G.mailadres ,GT.telefoonnummer
+    V.titel, V.startprijs, V.beschrijving , G.mailadres ,GT.telefoonnummer,V.looptijdBeginTijdstip,V.looptijdBeginDag
     FROM Voorwerp V
     JOIN gebruiker G on V.verkoper = G.gebruikersnaam
     JOIN gebruikerstelefoon GT on G.gebruikersnaam = GT.gebruikersnaam
     WHERE voorwerpnummer = $Vwnummer");
     //voorwerpnummer moet meegegeven worden vanuit de site
 
-$images = handlequery("
-    SELECT filenaam
-    FROM Bestand
-    WHERE voorwerpnummer = $Vwnummer
-    ");
-
+$images = handlequery(
+    "SELECT filenaam
+     FROM Bestand
+     WHERE voorwerpnummer = $Vwnummer");
     ?>
-
 
         <section class="productpage">
             <div class="container border-primary">
@@ -58,6 +55,7 @@ $images = handlequery("
                     </div>
         <div class="col-lg-6 p-3 bg-secondary text-white">
             <div class="alert alert-dark" role="alert">
+                <p class="beginTijdstip">Aangeboden op: <?= $productdata[0]['looptijdBeginDag'] .' ' . $productdata[0]['looptijdBeginTijdstip']  ?>
              <h2 class="alert-heading"> <strong> <?= $productdata[0]['titel']?></strong></h2> 
                 <p>Startprijs: € <?= $productdata[0]['startprijs']?></p>
                 <p>Verzendkosten: € <?= $productdata[0]['verzendkosten'] ?>
@@ -116,7 +114,7 @@ $images = handlequery("
                         <div class="col-sm-9">
                             <input type="number" class="form-control form-control-lg" name="bidAmount" id="colFormLabelLg" placeholder="Geef uw gewenste bedrag in.">
                             <div class="col-auto">
-                                <button type="submit" name="bidAmount-Submit" class="btn btn-primary mb-2">Bied!</button>
+                            <a class="biedenKnop cta-orange btn">Bied!</a>
                             </div>
                         </div>
                     </div>
