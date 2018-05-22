@@ -68,15 +68,16 @@ $_SESSION['email-registration'] = ' ';
 
 
 
-<!--
+
 <script>
 setInterval(function()
-{
-$('.product-data').load(document.URL +  ' .product-data');
-   
+{	
+$('.product-data').each(function() {
+$('#'+ this.id).load('index.php #' + this.id);
+});
 }, 1000); 
 </script>
--->
+
 
 
 

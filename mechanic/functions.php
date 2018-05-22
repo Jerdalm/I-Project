@@ -169,13 +169,13 @@ function contains_capital($string){
 function showLoginMenu(){
 	$htmlLogin = ' ';
 	if(isset($_SESSION['gebruikersnaam']) && !empty($_SESSION['gebruikersnaam'])){
-		$htmlLogin = '<li class="nav-item">';
-		$htmlLogin .= '<a class="nav-link" href="./logout.php">Uitloggen</a>';
-		$htmlLogin .= '</li>';
+		
+		$htmlLogin .= '<li class="nav-item"><a class="nav-link" href="./user-details.php">Account</a></li>';
+		$htmlLogin .= '<li class="nav-item"><a class="nav-link" href="./logout.php">Uitloggen</a></li>';
+
+		
 	} else {
-		$htmlLogin = '<li class="nav-item">';
-		$htmlLogin .= '<a class="nav-link" href="./user.php">Inloggen</a>';
-		$htmlLogin .= '</li>';
+		$htmlLogin .= '<li class="nav-item"><a class="nav-link" href="./user.php">Inloggen</a></li>';
 	}
 	return $htmlLogin;
 }
@@ -499,7 +499,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 		<h4 class="card-title">
 		'.$product['titel'].'
 		</h4>
-		<h5 class="product-data"><span class="time">'.$timediff.'</span>|<span class="price">&euro;'.$product['bodbedrag'].'</span></h5>
+		<h5 class="product-data" id="'.$product['voorwerpnummer'].'"><span class="time">'.$timediff.'</span>|<span class="price">&euro;'.$product['bodbedrag'].'</span></h5>
 		<a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a>
 		</div>
 		</div>
