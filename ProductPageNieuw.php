@@ -102,15 +102,16 @@ WHERE voorwerpnummer = $Vwnummer
                     </div>
                     <div class="row">
                        
-                        <div class="userInfo"
-                        <p style="margin: auto;">
+                        <div class="userInfo">
+                        <p>
                             Aangeboden door:
                             <?= $productdata[0]['voornaam'] . " " . $productdata[0]['achternaam'] . " uit " . $productdata[0]['plaatsnaam']; ?>
-                             <br><br>
+                             </p><br><br>
+                             <p>
                             Neem contact op met <?= $productdata[0]['voornaam'] . " " . $productdata[0]['achternaam'] ?>: 
                             <br>
-                            <A href=<?='"'. 'mailto:'. $productdata[0]['mailadres'] . '?SUBJECT=' . $productdata[0]['titel'] . '"'?>><i class="fas fa-envelope"></i> </A> <a href=<?= '"'.'tel:' . $productdata[0]['telefoonnummer'].'"'?>><i class="fas fa-phone"></i></a>
-                        </p>
+                                <A href=<?='"'. 'mailto:'. $productdata[0]['mailadres'] . '?SUBJECT=' . $productdata[0]['titel'] . '"'?>><i class="fas fa-envelope"></i> </A> <a href=<?= '"'.'tel:' . $productdata[0]['telefoonnummer'].'"'?>><i class="fas fa-phone"></i></a>
+                            </p>
                         <!-- <img src="https://mb.lucardi-cdn.nl/zoom/64867/regal-mesh-horloge-met-zilverkleurige-band.jpg" alt="..." width= 70px height= 70px class="rounded-circle float-right" style="margin: -15px 15px 0 0"> -->
                     </div>
                 </div>

@@ -65,15 +65,22 @@
 	
 	/* Afvangen afstand */
 	if(isset($_GET['dis'])){ 
-	$products = $query = handlequery($query,$parameters);
+	$products  = handlequery($query,$parameters);
+	
+	if(isset($_SESSION['gebruikersnaam'])){
+	$userParameters = array(':gebruikersnaam' => $_SESSION['gebruikersnaam']);
+	$userResults = handlequery("SELECT :gebruikersnaam FROM gebruiker WHERE gebruikersnaam = :gebruikersnaam",$userParameters);
+	
+	$query = array();
+	
 		foreach($products as $product){
 		
-		$distanceinfo = (getDistanceData("beuningen",$product['plaats']));
-		echo $distanceinfo['distance'].'<br>';
-		echo $_GET['dis'].'<br>';;
-			if($distanceinfo['distance'] <= $_GET['dis']){
-			echo 'hoi';
+		$distanceinfo = (getDistanceData($userResults[0],$product['plaats']));
+			if($distanceinfo['distance'] <= $_GET['dis'] ){
+			array_push ($query,$product);
 			}
 		}
+		
+	}
 	}
 ?>

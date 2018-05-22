@@ -1,3 +1,7 @@
+<?php 
+if(isset($_SESSION['gebruikersnaam'])){
+ ?>
+
 <h4 class="text-center"> Afstand </h4>
 <form method="get" action="">
 <div class="form-group">
@@ -14,9 +18,9 @@
   </select>
  </div>
  <?php foreach($_GET as $key => $value){ 
-if($key == 'min' || $key == 'max'){
+if($key == 'dis'){
 }else{
 ?> 
 <input type='hidden' name='<?= $key; ?>' value='<?= $value; ?>' />
-<?php }} ?>
+<?php }}} ?>
 </form>
