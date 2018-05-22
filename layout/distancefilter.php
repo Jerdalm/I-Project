@@ -14,7 +14,7 @@
   </select>
  </div>
  <?php foreach($_GET as $key => $value){ 
-if($key == 'min' || $key == 'max'){
+if($key == 'dis'){
 }else{
 ?> 
 <input type='hidden' name='<?= $key; ?>' value='<?= $value; ?>' />

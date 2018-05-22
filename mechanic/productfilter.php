@@ -65,14 +65,14 @@
 	
 	/* Afvangen afstand */
 	if(isset($_GET['dis'])){ 
-	$products = $query = handlequery($query,$parameters);
+	$products  = handlequery($query,$parameters);
+	$query = array();
+	
 		foreach($products as $product){
 		
 		$distanceinfo = (getDistanceData("beuningen",$product['plaats']));
-		echo $distanceinfo['distance'].'<br>';
-		echo $_GET['dis'].'<br>';;
-			if($distanceinfo['distance'] <= $_GET['dis']){
-			echo 'hoi';
+			if($distanceinfo['distance'] <= $_GET['dis'] ){
+			$query = $product;
 			}
 		}
 	}
