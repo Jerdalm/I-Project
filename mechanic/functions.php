@@ -432,26 +432,26 @@ function showRubriekenlist(){
 	return $html;
 }
 
-/* Deze functie toont alle producten  || Filterwaarde ('afstand','false')*/ 
+/* Deze functie toont alle producten  || Filterwaarde ('afstand','false')*/
 function showProducts($carrousel = false, $query = false, $parameters = false, $lg = 4, $md = 6, $sm = 6, $xs = 12){
-	
+
 	if( is_array($query)){
 		$producten = $query;
 	}
 	else{
-		
+
 		if($query == false){
 			$query = "SELECT * from currentAuction";
 		}
 
 		if($parameters){
 			$producten = handlequery($query,$parameters);
-			
+
 		}
-		
+
 		else{
 			$producten = handlequery($query);
-			
+
 		}
 	}
 
@@ -472,7 +472,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 
 	foreach($producten as $product)
 	{
-		
+
 		$itemcount++;
 		if(!$product['bodbedrag']){
 			$product['bodbedrag'] = 0;
@@ -583,17 +583,17 @@ function validateCode($inputCode, $email){
 
 	/* Returnt het rubrieknummer van de huidige rubriek en de subrubrieken */
 	function getSubRubriek($rubrieknumber){
-		
+
 		$rubriekparameters = array(':rubriek' => $rubrieknumber);
 		$rubrieken = FetchSelectData("EXEC SHOW_RUBRIEK_TREE @rubriek = :rubriek",$rubriekparameters);
-		
+
 
 		$rubrieknumbers = array_column($rubrieken, 'rubrieknummer');
 		if($rubrieknumbers){
 			return '(' . implode(',', $rubrieknumbers) .')';
 		}
-		
-		
+
+
 	}
 
 	function deleteUser($gebruiker){
@@ -605,7 +605,7 @@ function validateCode($inputCode, $email){
 		$deleteParam = array(':artikel' => $artikel);
 		handlequery("DELETE FROM Voorwerp WHERE voorwerpnummer = :artikel", $deleteParam);
 	}
-	
+
 	/* In deze functie wordt de afstand in tijd en km berekend tussen 2 locaties|Invoer: stad/dorp/postcode */
 	function getDistanceData($cityUser,$citySeller){
 		$data = file_get_contents("http://maps.googleapis.com/maps/api/distancematrix/json?origins=".$cityUser."&destinations=".$citySeller."&language=nl-NL&sensor=false");
@@ -617,7 +617,7 @@ function validateCode($inputCode, $email){
 
 		return array('time' => $time, 'distance' => $distanceKm);
 	}
-	
+
 		// returnt parameter array
 	function checkPriceFilter($min, $max){
 
@@ -633,25 +633,25 @@ function validateCode($inputCode, $email){
 		return $returnwaarde;
 	}
 
-	function UpdateInfoUser($get, $gebruikersnaam){ 
+	function UpdateInfoUser($get, $gebruikersnaam){
 		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer'] , ':gebruikersnaam' => $gebruikersnaam);
 		$birthdate = $get['geboortedag'];
 		$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
 		$geboortedag = $myDateTime->format('Y-m-d');
 
-		$infoParameters = array(':gebruikersnaam' => $gebruikersnaam , 
-			':voornaam' => $get['voornaam'], 
-			':achternaam' => $get['achternaam'] , 
-			':adresregel1' => $get['adresregel1'] , 
-			':adresregel2' => $get['adresregel2'] , 
-			':postcode' => $get['postcode'], 
-			':plaatsnaam' => $get['plaatsnaam'] , 
-			':land' =>  $get['land'] , 
-			':geboortedag' => $geboortedag , 
+		$infoParameters = array(':gebruikersnaam' => $gebruikersnaam ,
+			':voornaam' => $get['voornaam'],
+			':achternaam' => $get['achternaam'] ,
+			':adresregel1' => $get['adresregel1'] ,
+			':adresregel2' => $get['adresregel2'] ,
+			':postcode' => $get['postcode'],
+			':plaatsnaam' => $get['plaatsnaam'] ,
+			':land' =>  $get['land'] ,
+			':geboortedag' => $geboortedag ,
 			':mailadres' => $get['mailadres']);
 		handlequery("UPDATE Gebruiker
-			SET voornaam = :voornaam , 
-			achternaam = :achternaam, 
+			SET voornaam = :voornaam ,
+			achternaam = :achternaam,
 			adresregel1 = :adresregel1 ,
 			adresregel2 = :adresregel2 ,
 			postcode = :postcode,
@@ -659,10 +659,10 @@ function validateCode($inputCode, $email){
 			land = :land,
 			geboortedag = :geboortedag,
 			mailadres = :mailadres
-			WHERE gebruikersnaam = :gebruikersnaam", 
+			WHERE gebruikersnaam = :gebruikersnaam",
 			$infoParameters);
-		handlequery("UPDATE Gebruikerstelefoon 
-			SET telefoonnummer = :telefoonnummer 
+		handlequery("UPDATE Gebruikerstelefoon
+			SET telefoonnummer = :telefoonnummer
 			WHERE gebruikersnaam = :gebruikersnaam" , $telefoonnummerPara);
 		echo '<script>window.location.replace("./user-details.php")</script>';
 	}
