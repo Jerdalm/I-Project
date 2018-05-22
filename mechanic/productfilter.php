@@ -69,13 +69,13 @@
 	
 	if(isset($_SESSION['gebruikersnaam'])){
 	$userParameters = array(':gebruikersnaam' => $_SESSION['gebruikersnaam']);
-	$userResults = handlequery("SELECT :gebruikersnaam FROM gebruiker WHERE gebruikersnaam = :gebruikersnaam",$userParameters);
-	
+	$userResults = handlequery("SELECT Gebruiker.plaatsnaam FROM Gebruiker WHERE gebruikersnaam = :gebruikersnaam",$userParameters);
+	$userLocation = $userResults[0]['plaatsnaam'];
 	$query = array();
 	
 		foreach($products as $product){
 		
-		$distanceinfo = (getDistanceData($userResults[0],$product['plaats']));
+		$distanceinfo = (getDistanceData($userLocation,$product['plaats']));
 			if($distanceinfo['distance'] <= $_GET['dis'] ){
 			array_push ($query,$product);
 			}
