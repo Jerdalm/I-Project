@@ -1,4 +1,6 @@
 <?php 	
+
+	/* Wanneer er op prijs word gezocht */
 	if(isset($_GET['min']) && isset($_GET['max'])){
 	$pricecheck = checkPriceFilter($_GET['min'],$_GET['max']);
 	}
@@ -6,6 +8,7 @@
 	$pricecheck = checkPriceFilter(null,null);
 	}
 	
+	/* Wanneer er op rubriek word gezocht */
 	if(isset($_GET['rub'])){ 
 	$rubriek = $_GET['rub'];
 	
@@ -41,9 +44,9 @@
 	
 	$zoekfilter = '';
 	
-	
 	}
 	
+	/* Wanneer er word gezocht op woord */
 	else if(isset($_GET['search'])){ 
 	$zoekfilter = $_GET['search'];
 	
@@ -53,9 +56,17 @@
 	
 	}
 	
+	/* Wanneer er geen enkel filter gebruikt word */
 	else{
 	$titel = $zoekfilter = "Alle veilingen";
 	$parameters = false;
 	$query = "SELECT * from currentAuction WHERE ".$pricecheck;
+	}
+	
+	/* Afvangen afstand */
+	if(isset($_GET['dis'])){ 
+	handlequery($query,$parameters);
+	
+	
 	}
 ?>
