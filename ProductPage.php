@@ -113,7 +113,7 @@ foreach ($productdata as $item) {
                     </div>
                 </div>
                 </div>
-
+            <?php if (isset($_SESSION['gebruikersnaam'])){ ?>
                 <form method="post" action="">
                     <div class="form-row align-items-center">
                         <div class="col-sm-9">
@@ -124,6 +124,7 @@ foreach ($productdata as $item) {
                     </div>
                 </div>
                 </form>
+            <?php } ?>
             <div>
 
             <?php
