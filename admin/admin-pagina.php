@@ -60,15 +60,16 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 		$gebruikerResultaten .= '</tr></table>';
 	} else if (isset($_GET['search-bieding'])) {
 		$biedingInput = $_GET['bieding'];	
-		$parametersbieding = array(':voorwerpnummer' => "%". $biedingInput ."%",
-			'bodbedrag' => "%". $biedingInput ."%",
+		$parametersbieding = array(':voorwerpnummer' => $biedingInput,
+			'bodbedrag' => (int)$biedingInput,
 			'titel' => "%". $biedingInput ."%");
 		$biedingen = handlequery("SELECT * 
 			FROM Bod B INNER JOIN Voorwerp V 
 			ON B.voorwerpnummer = V.voorwerpnummer
-			WHERE B.voorwerpNummer like :voorwerpnummer
-			OR bodbedrag like :bodbedrag
-			OR titel like :titel",$parametersbieding);
+			WHERE B.voorwerpNummer = :voorwerpnummer
+			OR bodbedrag = :bodbedrag
+			OR titel like :titel",
+			$parametersbieding);
 		$biedingenResultaten = '<table class="table"><tr><th scope="col">Resultaat</th></tr>';
 		foreach($biedingen as $bieding){
 			$biedingenResultaten .= "<tr>
@@ -147,11 +148,15 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 		$htmlVeranderGebruiker .= '</form>';
 	} else if (isset($_GET['biedingsNummer'])){
 		$_SESSION['bit_changeinfo'] = $_GET['biedingsBedrag'];
-		$parametersBied = array(':nummer' => (int)$_GET['biedingsNummer']);
+		
+		$parametersBied = array(':nummer' => (int)$_GET['biedingsNummer'],
+								':bedrag' => $_GET['biedingsBedrag']);
 		$queryBit = "SELECT voorwerpnummer, gebruikersnaam, bodbedrag, bodDag, CONVERT(TIME(0), [bodTijdstip]) as bodTijdstip
 		FROM Bod 
-		WHERE voorwerpnummer = :nummer";
+		WHERE voorwerpnummer = :nummer
+		AND bodbedrag = :bedrag";
 		$query = FetchAssocSelectData($queryBit, $parametersBied);
+		
 		$htmlVeranderBieding = '<form class="form-group change-form" method="GET" action="">'; 
 		foreach ($query as $field => $value) {			
 			$htmlVeranderBieding .= '<div class="form-group">';
