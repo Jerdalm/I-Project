@@ -41,26 +41,26 @@ if(isset($_POST['submit-new-password'])){
 <main class="user-details">
     <div class="container">
         <?php if(!isset($_GET['changeInfo'])) {?>
-            <div id="detailsTabel" class="row row-right">
-                <!-- alle gegevens van de gebruiker worden met een echo in een tabel gezet -->
-                <table class="table table-user-details"> 
-                    <tbody>
-                        <?php foreach($gebruiker as $key => $info ){
-
-                            echo "<tr>" . "<th scope='col'>" . $key . "</th" . "</tr>";
-                            echo "<td>" . $info . "</td>";
-                        } ?>
-                        <tr>
-                            <th>Wachtwoord</th>
-                            <td><a href="?&changePass=ok"> <b><i>Wachtwoord Wijzigen</a></i></b></td>
-                        </tr>
-                        <tr> 
-                            <td><a href="?&changeInfo=ok"> <b>Info Bewerken</a></b></td>   
-                        </tr>
-                    </tbody>
-                </table>
-                <button class="cta-orange btn">Upgrade account</button>
-            </div>
+        <div id="detailsTabel" class="row row-right">
+            <!-- alle gegevens van de gebruiker worden met een echo in een tabel gezet -->
+            <table class="table table-user-details"> 
+                <tbody>
+                    <?php foreach($gebruiker as $key => $info ){
+                   
+                        echo "<tr>" . "<th scope='col'>" . $key . "</th" . "</tr>";
+                        echo "<td>" . $info . "</td>";
+                     } ?>
+                     <tr>
+                        <th>Wachtwoord</th>
+                        <td><a href="?&changePass=ok"> <b><i>Wachtwoord Wijzigen</a></i></b></td>
+                    </tr>
+                    <tr> 
+                        <td><a href="?&changeInfo=ok"> <b>Info Bewerken</a></b></td>   
+                    </tr>
+                </tbody>
+            </table>
+            <A href="upgrade-user.php" class="cta-orange btn">Upgrade account</A>
+        </div>
 
         <?php } if(isset($_GET['changePass'])){ ?>
             <div class="formWachtwoordHuidig col-md-4 row">

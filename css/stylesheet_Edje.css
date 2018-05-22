@@ -52,3 +52,21 @@ form.form-group.edit-user-info{
 text-align: right;
 
 }
+
+.userInfo a {
+	text-align: left;
+	margin-top: 10px;
+	margin-right: 20px;
+	max-width: 5px;
+	width: 100%;
+	height: 100%;
+	text-decoration: none;
+}
+
+.userInfo i {
+	text-align: left;
+	margin-top: 10px;
+	max-width: 5px;
+	width: 100%;
+	height: 100%;
+}

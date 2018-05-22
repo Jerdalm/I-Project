@@ -439,21 +439,21 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 		$producten = $query;
 	}
 	else{
+		
 		if($query == false){
 			$query = "SELECT * from currentAuction";
 		}
 
 		if($parameters){
 			$producten = handlequery($query,$parameters);
+			
 		}
 		
 		else{
 			$producten = handlequery($query);
+			
 		}
 	}
-	
-
-
 
 	$beforeInput = '';
 	$afterInput = '';
@@ -472,6 +472,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 
 	foreach($producten as $product)
 	{
+		
 		$itemcount++;
 		if(!$product['bodbedrag']){
 			$product['bodbedrag'] = 0;

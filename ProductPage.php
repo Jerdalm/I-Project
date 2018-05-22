@@ -1,10 +1,12 @@
 <?php require_once ('header.php');
 $Vwnummer = $_GET['product'];
+
 $productdata = handlequery("
 SELECT V.voorwerpnummer, G.voornaam, G.achternaam, G.plaatsnaam,
-V.titel, V.startprijs, V.beschrijving
+V.titel, V.startprijs, V.beschrijving , G.mailadres ,GT.telefoonnummer
 FROM Voorwerp V
 JOIN gebruiker G on V.verkoper = G.gebruikersnaam
+JOIN gebruikerstelefoon GT on G.gebruikersnaam = GT.gebruikersnaam
 WHERE voorwerpnummer = $Vwnummer
 ");//voorwerpnummer moet meegegeven worden vanuit de site
 $images = handlequery("
@@ -97,14 +99,21 @@ foreach ($productdata as $item) {
                         </div>
                     </div>
                     <div class="row">
-                        <p style= "margin: auto">
+                       
+                        <div class="userInfo"
+                        <p style="margin: auto;">
                             Aangeboden door:
                             <?= $item['voornaam'] . " " . $item['achternaam'] . " uit " . $item['plaatsnaam']; ?>
+                             <br><br>
+                            Neem contact op met <?= $item['voornaam'] . " " . $item['achternaam'] ?>: 
+                            <br>
+                            <A href=<?='"'. 'mailto:'. $item['mailadres'] . '?SUBJECT=' . $item['titel'] . '"'?>><i class="fas fa-envelope"></i> </A> <a href=<?= '"'.'tel:' . $item['telefoonnummer'].'"'?>><i class="fas fa-phone"></i></a>
                         </p>
                         <!-- <img src="https://mb.lucardi-cdn.nl/zoom/64867/regal-mesh-horloge-met-zilverkleurige-band.jpg" alt="..." width= 70px height= 70px class="rounded-circle float-right" style="margin: -15px 15px 0 0"> -->
                     </div>
                 </div>
-
+                </div>
+            <?php if (isset($_SESSION['gebruikersnaam'])){ ?>
                 <form method="post" action="">
                     <div class="form-row align-items-center">
                         <div class="col-sm-9">
@@ -115,6 +124,7 @@ foreach ($productdata as $item) {
                     </div>
                 </div>
                 </form>
+            <?php } ?>
             <div>
 
             <?php
