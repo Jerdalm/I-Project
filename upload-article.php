@@ -1,26 +1,29 @@
-<?php require_once 'header.php'
-if($_POST['sellitem']) {
-  $selectUploadedItem = array(':titel' => $_POST['titel'],
-  ':verkoper' => $_SESSION['gebruikersnaam'],
-  ':startprijs' => $_POST['startprijs'],
-  ':looptijd' => $_POST['loopijd']);
-  $voorwerpnummer = handlequery(' SELECT Voorwerpnummer
-    FROM Voorwerp
-    WHERE Titel = :titel AND
-    Verkoper = :verkoper AND
-    Startprijs = :startprijs AND
-    Looptijd = :looptijd
-    ORDER BY looptijdEindeDag DESC,
-    looptijdEindeTijdstip DESC', $selectUploadedItem);
-    print_r($voorwerpnummer);
-    header(Location: 'http://localhost/I-Project/productpage.php?product=' . $voorwerpnummer);
+<?php require_once 'header.php';
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  if (isset($_POST['sellitem'])) {
+    $selectUploadedItem = array(':titel' => $_POST['titel'],
+    ':verkoper' => $_SESSION['gebruikersnaam'],
+    ':startprijs' => $_POST['startprijs'],
+    ':looptijd' => $_POST['loopijd']);
+    $voorwerpnummer = handlequery('SELECT Voorwerpnummer
+      FROM Voorwerp
+      WHERE Titel = :titel AND
+      Verkoper = :verkoper AND
+      Startprijs = :startprijs AND
+      Looptijd = :looptijd
+      ORDER BY looptijdEindeDag DESC,
+      looptijdEindeTijdstip DESC', $selectUploadedItem);
+      print_r($voorwerpnummer);
+      die();
+      // header(Location: 'http://localhost/I-Project/productpage.php?product=' . $voorwerpnummer);
+    }
   }
   ?>
 <main>
   <section class='uploadarticle'>
     <div class="container">
       <div class="row">
-        <form class="" method="post">
+        <form class="" method="POST">
           <!-- <fieldset> -->
           <legend>Voorwerp veilen!</legend>
 
