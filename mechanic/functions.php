@@ -434,19 +434,22 @@ function showRubriekenlist(){
 
 /* Deze functie toont alle producten  || Filterwaarde ('afstand','false')*/ 
 function showProducts($carrousel = false, $query = false, $parameters = false, $lg = 4, $md = 6, $sm = 6, $xs = 12){
-	if($query == false){
-		$query = "SELECT * from currentAuction";
-	}
-
-	if($parameters){
-		$producten = handlequery($query,$parameters);
-	}
 	
 	if( is_array($query)){
 		$producten = $query;
 	}
 	else{
-		$producten = handlequery($query);
+		if($query == false){
+			$query = "SELECT * from currentAuction";
+		}
+
+		if($parameters){
+			$producten = handlequery($query,$parameters);
+		}
+		
+		else{
+			$producten = handlequery($query);
+		}
 	}
 	
 
