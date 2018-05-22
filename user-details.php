@@ -59,7 +59,7 @@ if(isset($_POST['submit-new-password'])){
                     </tr>
                 </tbody>
             </table>
-            <button class="cta-orange btn">Upgrade account</button>
+            <A href="upgrade-user.php" class="cta-orange btn">Upgrade account</A>
         </div>
 
         <?php } if(isset($_GET['changePass'])){ ?>
