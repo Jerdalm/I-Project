@@ -1,6 +1,10 @@
 <?php 
 	require 'header.php'; 
 	
+	if(isset($_GET['dis'])){ 
+	
+	}
+	
 	if(isset($_GET['min']) && isset($_GET['max'])){
 	$pricecheck = checkPriceFilter($_GET['min'],$_GET['max']);
 	}
@@ -100,7 +104,7 @@ url('./img/header/horloge_header.jpg') center center no-repeat scroll;">
 <form method="get" action="">
 <div class="form-group">
   <label for="sel1">afstand in KM:</label>
-  <select class="form-control" id="distanceFilter"  onchange="this.form.submit()">
+  <select class="form-control"name="dis" id="distanceFilter"  onchange="this.form.submit()">
 	<option></option>
     <option value="3">< 3 km</option>
     <option value="5">< 5 km</option>
@@ -111,6 +115,12 @@ url('./img/header/horloge_header.jpg') center center no-repeat scroll;">
 	<option value="75">< 75 km</option>
   </select>
  </div>
+ <?php foreach($_GET as $key => $value){ 
+if($key == 'min' || $key == 'max'){
+}else{
+?> 
+<input type='hidden' name='<?= $key; ?>' value='<?= $value; ?>' />
+<?php }} ?>
 </form>
  <h4 class="text-center"> Prijs </h4>
 <form method="get" action="">
@@ -132,7 +142,7 @@ if($key == 'min' || $key == 'max'){
 
 </div>
 <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 no-margin float-left" style=" display: flex; flex-wrap: wrap;">
-<?= showProducts(false,$query,$parameters); ?>
+<?= showProducts(false,$query,$parameters, false); ?>
 </div>
 
 <div class="clearfix"></div>
