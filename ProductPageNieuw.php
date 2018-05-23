@@ -54,7 +54,10 @@ $images = handlequery(
 
                     <?php  
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $target_dir = "./uploads/";
+    $target_dir = "./uploads/" . $productdata[0]['verkoper'] . '/' . $productdata[0]['voorwerpnummer']. '/';
+    if (!file_exists($target_dir)){
+    mkdir('uploads/'. $productdata[0]['verkoper'] . '/' . $productdata[0]['voorwerpnummer'] , 0220, true);
+}
     $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -98,12 +101,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     }
                 } 
             }
-            if (isset($_POST['submit-file'])) {
-                
-            $InsertPhoto = handlequery("insert into Bestand values ($Bestandsnaam, $VwNummer)")
+            if (isset($_POST['submit-file']) && $uploadOk == 1) {
+                $Bestandsnaam = $target_file;
+                $uploadParameters = array(':vwNummer' => $productdata[0]['voorwerpnummer'] , ':Bestandsnaam' => $Bestandsnaam);
+
+            $InsertPhoto = handlequery("insert into Bestand values (:Bestandsnaam, :vwNummer)",$uploadParameters);
 
 
             }
+
             } ?>
         </div>
 
