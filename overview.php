@@ -49,14 +49,4 @@ require 'layout/pricefilter.php';
 </div>
 </div>
 </section>
-<script>
-setInterval(function()
-{	
-	$('.product-data').each(function() {
-	$('#'+ this.id).load('overview.php #' + this.id);
-});
-}, 1000);
-
-  
-</script>
 <?php require 'footer.php'; ?>
