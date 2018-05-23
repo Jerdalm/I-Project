@@ -53,38 +53,39 @@ $images = handlequery(
                     </form>
 
                     <?php  
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $target_dir = "./uploads/" . $productdata[0]['verkoper'] . '/' . $productdata[0]['voorwerpnummer']. '/';
-    if (!file_exists($target_dir)){
-    mkdir('uploads/'. $productdata[0]['verkoper'] . '/' . $productdata[0]['voorwerpnummer'] , 0220, true);
-}
-    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
-    if(isset($_POST["submit-file"])) {
-        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-        if($check !== false) {
-            echo "File is an image - " . $check["mime"] . ".";
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $target_dir = "./uploads/" . $productdata[0]['verkoper'] . '/' . $productdata[0]['voorwerpnummer']. '/';
+            if (!file_exists($target_dir)){
+            mkdir('uploads/'. $productdata[0]['verkoper'] . '/' . $productdata[0]['voorwerpnummer'] , 0220, true);
+            }
+            $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
             $uploadOk = 1;
-        } else {
-            echo "File is not an image.";
-            $uploadOk = 0;
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+            if(isset($_POST["submit-file"])) {
+                $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+                if($check !== false) {
+                  
+                    $uploadOk = 1;
+                } else {
+                    echo "File is not an image.";
+                    $uploadOk = 0;
+            }
         }
-    }
 
 
-                    if (file_exists($target_file)) {
+                if (file_exists($target_file)) {
                         echo "Sorry, Het bestand bestaat al.";
                         $uploadOk = 0;
-                    }
+                }
 // Check file size
-                    if ($_FILES["fileToUpload"]["size"] > 500000) {
+                if ($_FILES["fileToUpload"]["size"] > 500000) {
                         echo "Sorry, Uw bestand is te groot.";
                         $uploadOk = 0;
-                    }
+                }
 // Allow certain file formats
-                    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+                if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
                         && $imageFileType != "gif" ) {
                         echo "Sorry, alleen JPG, JPEG, PNG & GIF files zijn toegestaan.";
                     $uploadOk = 0;
