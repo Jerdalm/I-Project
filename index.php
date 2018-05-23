@@ -65,23 +65,14 @@ $_SESSION['email-registration'] = ' ';
 <section class="attention text-center">
 <a href="user.php" class="btn cta-orange">Meld je nu aan als verkoper!</a>
 </section>
-
-
-
-
 <script>
 setInterval(function()
 {	
-$('.product-data').each(function() {
-$('#'+ this.id).load('index.php #' + this.id);
+	$('.product-data').each(function() {
+	$('#'+ this.id).load('index.php #' + this.id);
 });
 }, 1000); 
-</script>
-
-
-
-
-
+	</script>
 <!-- /.container -->
 <?php require_once './footer.php'; ?>
 
