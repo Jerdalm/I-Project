@@ -89,10 +89,10 @@ function sendMail($to, $subject, $body, $message = "Fout"){
 	$message_body = $body;
 
 
-    mail( $emailTo, $subjectEmail, $message_body );
+	mail( $emailTo, $subjectEmail, $message_body );
     // echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
 
-    $_SESSION['message'] = $message;
+	$_SESSION['message'] = $message;
 }
 
 /* Creeert een random wachtwoord */
@@ -185,37 +185,35 @@ function generateRandomCode(){
 	return uniqueid(rand(100000,900000),true);
 }
 
-/* Deze functie checkt of de username nog niet bestaat,
-   en of de wachtwoorden overeen komen, en aan de
-   regels voldoen */
-   function checkUsernamePassword($username, $password, $passwordrepeat){
-   	$passwordMinimumLength = 7;
-   	$getUserParameters = array(':gebruikersnaam' => $username);
-   	$getUserQuery =  handleQuery("SELECT * FROM Gebruiker WHERE gebruikersnaam = :gebruikersnaam", $getUserParameters);
+/* Deze functie checkt of de username nog niet bestaat, en of de wachtwoorden overeen komen, en aan de regels voldoen */
+function checkUsernamePassword($username, $password, $passwordrepeat){
+	$passwordMinimumLength = 7;
+	$getUserParameters = array(':gebruikersnaam' => $username);
+	$getUserQuery =  handleQuery("SELECT * FROM Gebruiker WHERE gebruikersnaam = :gebruikersnaam", $getUserParameters);
 
-   	if(count($getUserQuery) > 0) {
-   		$message_registration = "Uw ingevoerde gebruikersnaam bestaat al";
-   	} else {
-   		if ($password == $passwordrepeat) {
+	if(count($getUserQuery) > 0) {
+		$message_registration = "Uw ingevoerde gebruikersnaam bestaat al";
+	} else {
+		if ($password == $passwordrepeat) {
 
-   			if (strlen($password) >= $passwordMinimumLength && contains_number($password)) {
-   				$password_hashed = password_hash($password , PASSWORD_DEFAULT);
-   				$_SESSION['username'] = $username;
-   				$_SESSION['password'] = $password_hashed;
-   				header("Location: ./user.php?step=4");
-   			} else if (strlen($password) < $passwordMinimumLength &&  0 === preg_match('~[0-9]~', $password)) {
-   				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";
-   			} else if (strlen($password) < $passwordMinimumLength) {
-   				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.";
-   			} else if (0 === preg_match('~[0-9]~', $password)) {
-   				$message_registration = "Uw wachtwoord moet minimaal 1 cijfer bevatten.";
-   			}
-   		} else {
-   			$message_registration = "De wachtwoorden komen niet overeen";
-   		}
-   	}
-   	return $message_registration;
-   }
+			if (strlen($password) >= $passwordMinimumLength && contains_number($password)) {
+				$password_hashed = password_hash($password , PASSWORD_DEFAULT);
+				$_SESSION['username'] = $username;
+				$_SESSION['password'] = $password_hashed;
+				header("Location: ./user.php?step=4");
+			} else if (strlen($password) < $passwordMinimumLength &&  0 === preg_match('~[0-9]~', $password)) {
+				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";
+			} else if (strlen($password) < $passwordMinimumLength) {
+				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.";
+			} else if (0 === preg_match('~[0-9]~', $password)) {
+				$message_registration = "Uw wachtwoord moet minimaal 1 cijfer bevatten.";
+			}
+		} else {
+			$message_registration = "De wachtwoorden komen niet overeen";
+		}
+	}
+	return $message_registration;
+}
 
 /* Deze functie zet de registratieinformatie ook daadwerkelijk
 in de database */
@@ -286,15 +284,15 @@ function setCodeInDB($email, $hashed_code){
 	$parameters = array(':mailadres' => "$email");
 	$emailUnique = handleQuery("SELECT * FROM ActivatieCode WHERE mailadres = :mailadres", $parameters);
 
-if (count($emailUnique) > 0){ //kijkt of de email al bestaat in het tabel activatiecode, indien ja: update het mialadres met een
-	$parameters = array(':mailadres' => "$email", ':verifycode' => "$hashed_code"); //nieuwe code & de nieuwe tijd
-	handleQuery("UPDATE ActivatieCode
-		SET code = :verifycode, tijdAangevraagd = GETDATE()
-		WHERE mailadres = :mailadres", $parameters);
-} else {
-	$parameters = array(':mailadres' => "$email", ':verifycode' => "$hashed_code");
-	handleQuery("INSERT INTO ActivatieCode VALUES (0 ,:verifycode ,:mailadres, GETDATE())",$parameters);
-}
+	if (count($emailUnique) > 0){ //kijkt of de email al bestaat in het tabel activatiecode, indien ja: update het mialadres met een
+		$parameters = array(':mailadres' => "$email", ':verifycode' => "$hashed_code"); //nieuwe code & de nieuwe tijd
+		handleQuery("UPDATE ActivatieCode
+			SET code = :verifycode, tijdAangevraagd = GETDATE()
+			WHERE mailadres = :mailadres", $parameters);
+	} else {
+		$parameters = array(':mailadres' => "$email", ':verifycode' => "$hashed_code");
+		handleQuery("INSERT INTO ActivatieCode VALUES (0 ,:verifycode ,:mailadres, GETDATE())",$parameters);
+	}
 }
 
 /* Deze functie verzendt de code naar de klant (email) */
@@ -321,7 +319,7 @@ function loginControl($email, $wachtwoord){
 	$gebruiker = handleQuery("SELECT * FROM Gebruiker WHERE mailadres=:mailadres", $emailParam);
 
 	if (count($gebruiker) == 0) {
-		$message_login = 'Er bestaat geen account met het opgegeven mailadres';
+		$message_login = "Verkeerd wachtwoord of onbekende e-mail, probeer opnieuw!";
 	} else {
 		$wachtwoord = trim($wachtwoord);
 		$gebruiker['wachtwoord'] = trim($gebruiker[0]['wachtwoord']);
@@ -536,135 +534,139 @@ function validateCode($inputCode, $email){
 	return $state;
 }
 
-/* returnt een array met de rubrieken in breadcrumb layout
-	|Gebruik dit in combinatie met de procedure SHOW_RUBRIEK_TREE|
+/* returnt een array met de rubrieken in breadcrumb layout |Gebruik dit in combinatie met de procedure SHOW_RUBRIEK_TREE|
 */
-	function getRubriekPath($array, $arrayregel){
+function getRubriekPath($array, $arrayregel){
 
-		$currentlevel = $array[$arrayregel]['Lvl'];
-		$currentRubriek = $array[$arrayregel]['rubrieknaam'];
-		$currentNumber= $array[$arrayregel]['rubrieknummer'];
-		$results = array(array($currentRubriek,$currentNumber));
+	$currentlevel = $array[$arrayregel]['Lvl'];
+	$currentRubriek = $array[$arrayregel]['rubrieknaam'];
+	$currentNumber= $array[$arrayregel]['rubrieknummer'];
+	$results = array(array($currentRubriek,$currentNumber));
 
 
-		if($currentlevel > 1){
-			while($currentlevel > 1){
-				$arrayregel--;
+	if($currentlevel > 1){
+		while($currentlevel > 1){
+			$arrayregel--;
 
-				if($array[$arrayregel]['Lvl'] < $currentlevel){
-					$results[] = array($array[$arrayregel]['rubrieknaam'],$array[$arrayregel]['rubrieknummer']);
-					$currentlevel --;
-				}
+			if($array[$arrayregel]['Lvl'] < $currentlevel){
+				$results[] = array($array[$arrayregel]['rubrieknaam'],$array[$arrayregel]['rubrieknummer']);
+				$currentlevel --;
 			}
 		}
-
-		$rubrieken = array_reverse($results);
-		return $rubrieken;
 	}
 
-	/* Maak rubriek breadcrumb aan de hand van de data */
+	$rubrieken = array_reverse($results);
+	return $rubrieken;
+}
 
-	function createRubriekBreadcrumb($array){
-		$html = '';
+/* Maak rubriek breadcrumb aan de hand van de data */
 
-		foreach($array as $value){
+function createRubriekBreadcrumb($array){
+	$html = '';
+
+	foreach($array as $value){
 
 
-			if( !next( $array ) ) {
-				$html .=  '<li class="breadcrumb-item">'.$value[0].'</li>';
-			}
-			else{
-				$html .=  '<li class="breadcrumb-item"><a href="overview.php?rub='. $value[1].'">'. $value[0].'</a></li>';
-			}
-
+		if( !next( $array ) ) {
+			$html .=  '<li class="breadcrumb-item">'.$value[0].'</li>';
 		}
-		return $html;
-	}
-
-	/* Returnt het rubrieknummer van de huidige rubriek en de subrubrieken */
-	function getSubRubriek($rubrieknumber){
-
-		$rubriekparameters = array(':rubriek' => $rubrieknumber);
-		$rubrieken = FetchSelectData("EXEC SHOW_RUBRIEK_TREE @rubriek = :rubriek",$rubriekparameters);
-
-
-		$rubrieknumbers = array_column($rubrieken, 'rubrieknummer');
-		if($rubrieknumbers){
-			return '(' . implode(',', $rubrieknumbers) .')';
+		else{
+			$html .=  '<li class="breadcrumb-item"><a href="overview.php?rub='. $value[1].'">'. $value[0].'</a></li>';
 		}
 
-
 	}
+	return $html;
+}
 
-	function deleteUser($gebruiker){
-		$deleteParam = array(':gebruikersnaam' => $gebruiker);
-		handlequery("UPDATE Gebruiker SET soortGebruiker=3 WHERE gebruikersnaam=:gebruikersnaam",$deleteParam);
+/* Returnt het rubrieknummer van de huidige rubriek en de subrubrieken */
+function getSubRubriek($rubrieknumber){
+	$rubriekparameters = array(':rubriek' => $rubrieknumber);
+	$rubrieken = FetchSelectData("EXEC SHOW_RUBRIEK_TREE @rubriek = :rubriek",$rubriekparameters);
+
+
+	$rubrieknumbers = array_column($rubrieken, 'rubrieknummer');
+	if($rubrieknumbers){
+		return '(' . implode(',', $rubrieknumbers) .')';
 	}
+}
 
-	function deleteArticle($artikel){
-		$deleteParam = array(':artikel' => $artikel);
-		handlequery("DELETE FROM Voorwerp WHERE voorwerpnummer = :artikel", $deleteParam);
-	}
+function deleteUser($gebruiker){
+	$deleteParam = array(':gebruikersnaam' => $gebruiker);
+	handlequery("UPDATE Gebruiker SET soortGebruiker=3 WHERE gebruikersnaam=:gebruikersnaam",$deleteParam);
+}
 
-	/* In deze functie wordt de afstand in tijd en km berekend tussen 2 locaties|Invoer: stad/dorp/postcode */
-	function getDistanceData($cityUser,$citySeller){
-		$data = file_get_contents("http://maps.googleapis.com/maps/api/distancematrix/json?origins=".$cityUser."&destinations=".$citySeller."&language=nl-NL&sensor=false");
-		$data = json_decode($data, true);
+function deleteArticle($artikel){
+	$deleteParam = array(':artikel' => $artikel);
+	handlequery("DELETE FROM Voorwerp WHERE voorwerpnummer = :artikel", $deleteParam);
+}
 
-		$time = $data['rows'][0]['elements'][0]['duration']['text']; //Text for String and Value for INT
-		$distance = $data['rows'][0]['elements'][0]['distance']['value'];//Text for String and Value for INT
-		$distanceKm = round($distance / 1000);
+/* In deze functie wordt de afstand in tijd en km berekend tussen 2 locaties|Invoer: stad/dorp/postcode */
+function getDistanceData($cityUser,$citySeller){
+	$data = file_get_contents("http://maps.googleapis.com/maps/api/distancematrix/json?origins=".$cityUser."&destinations=".$citySeller."&language=nl-NL&sensor=false");
+	$data = json_decode($data, true);
 
-		return array('time' => $time, 'distance' => $distanceKm);
-	}
+	$time = $data['rows'][0]['elements'][0]['duration']['text']; //Text for String and Value for INT
+	$distance = $data['rows'][0]['elements'][0]['distance']['value'];//Text for String and Value for INT
+	$distanceKm = round($distance / 1000);
 
-		// returnt parameter array
-	function checkPriceFilter($min, $max){
+	return array('time' => $time, 'distance' => $distanceKm);
+}
 
-		$returnwaarde = '1 = 1';
+	// returnt parameter array
+function checkPriceFilter($min, $max){
 
-		if(!empty($min) && !empty($max)){
-			if(is_numeric($min) && is_numeric($max)){
-				$returnwaarde = "bodbedrag between $min AND $max";
-			}
+	$returnwaarde = '1 = 1';
+
+	if(!empty($min) && !empty($max)){
+		if(is_numeric($min) && is_numeric($max)){
+			$returnwaarde = "bodbedrag between $min AND $max";
 		}
-
-
-		return $returnwaarde;
 	}
 
-	function UpdateInfoUser($get, $gebruikersnaam){
-		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer'] , ':gebruikersnaam' => $gebruikersnaam);
-		$birthdate = $get['geboortedag'];
-		$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
-		$geboortedag = $myDateTime->format('Y-m-d');
 
-		$infoParameters = array(':gebruikersnaam' => $gebruikersnaam ,
-			':voornaam' => $get['voornaam'],
-			':achternaam' => $get['achternaam'] ,
-			':adresregel1' => $get['adresregel1'] ,
-			':adresregel2' => $get['adresregel2'] ,
-			':postcode' => $get['postcode'],
-			':plaatsnaam' => $get['plaatsnaam'] ,
-			':land' =>  $get['land'] ,
-			':geboortedag' => $geboortedag ,
-			':mailadres' => $get['mailadres']);
-		handlequery("UPDATE Gebruiker
-			SET voornaam = :voornaam ,
-			achternaam = :achternaam,
-			adresregel1 = :adresregel1 ,
-			adresregel2 = :adresregel2 ,
-			postcode = :postcode,
-			plaatsnaam = :plaatsnaam ,
-			land = :land,
-			geboortedag = :geboortedag,
-			mailadres = :mailadres
-			WHERE gebruikersnaam = :gebruikersnaam",
-			$infoParameters);
-		handlequery("UPDATE Gebruikerstelefoon
-			SET telefoonnummer = :telefoonnummer
-			WHERE gebruikersnaam = :gebruikersnaam" , $telefoonnummerPara);
-		echo '<script>window.location.replace("./user-details.php")</script>';
+	return $returnwaarde;
+}
+
+function UpdateInfoUser($get, $gebruikersnaam){
+	$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer'] , ':gebruikersnaam' => $gebruikersnaam);
+	$birthdate = $get['geboortedag'];
+	$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
+	$geboortedag = $myDateTime->format('Y-m-d');
+
+	$infoParameters = array(':gebruikersnaam' => $gebruikersnaam ,
+		':voornaam' => $get['voornaam'],
+		':achternaam' => $get['achternaam'] ,
+		':adresregel1' => $get['adresregel1'] ,
+		':adresregel2' => $get['adresregel2'] ,
+		':postcode' => $get['postcode'],
+		':plaatsnaam' => $get['plaatsnaam'] ,
+		':land' =>  $get['land'] ,
+		':geboortedag' => $geboortedag ,
+		':mailadres' => $get['mailadres']);
+	handlequery("UPDATE Gebruiker
+		SET voornaam = :voornaam ,
+		achternaam = :achternaam,
+		adresregel1 = :adresregel1 ,
+		adresregel2 = :adresregel2 ,
+		postcode = :postcode,
+		plaatsnaam = :plaatsnaam ,
+		land = :land,
+		geboortedag = :geboortedag,
+		mailadres = :mailadres
+		WHERE gebruikersnaam = :gebruikersnaam",
+		$infoParameters);
+	handlequery("UPDATE Gebruikerstelefoon
+		SET telefoonnummer = :telefoonnummer
+		WHERE gebruikersnaam = :gebruikersnaam" , $telefoonnummerPara);
+	echo '<script>window.location.replace("./user-details.php")</script>';
+}
+
+/* toont goede button aan de hand van ingelogt zijn of niet */
+function showButtonIndex(){
+	if(isset($_SESSION['gebruikersnaam'])){
+		echo '<a href="upgrade-user.php" class="btn cta-orange">Wordt verkoper!</a>';
+	} else {
+		echo '<a href="registreren.php" class="btn cta-orange">Registreer je nu om mee te bieden!</a>';		
 	}
-
-	?>
+}
+?>

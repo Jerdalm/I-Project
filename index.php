@@ -63,7 +63,7 @@ $_SESSION['email-registration'] = ' ';
   </div>
 </section>
 <section class="attention text-center">
-<a href="user.php" class="btn cta-orange">Meld je nu aan als verkoper!</a>
+  <?= showButtonIndex()?>
 </section>
 <script>
 setInterval(function()

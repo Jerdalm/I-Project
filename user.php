@@ -1,6 +1,6 @@
 <?php require_once 'header.php'; ?>
 
-<main id="login-registration">
+<main id="login">
     <section>
         <div class="container">
             <div class="row">

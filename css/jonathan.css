@@ -34,27 +34,16 @@ button{
 
 }*/
 
-#login-registration .row{
-	width: 50%;
-}
-
-
-#login-registration .container, .user-details .container{
-	display: flex;
-	justify-content: space-between;
-	flex-direction: row;
-
-}
-
-footer{
-/* 	position: absolute;
-	bottom: 0;
-	left: 0;		
-	width: 100%; */
-}
-
-#login-registration main{
+.progress{
 	margin-top: 100px;
+}
+
+#login-form{
+	margin-bottom: 10px;
+}
+
+#login .error-warning{
+	flex-basis: 100%;
 }
 
 .cta-orange{
@@ -101,7 +90,7 @@ body{
 }
 
 main{
-	margin-top:min-height: 6vh;
+	margin-top: 6vh;
 	min-height: 78vh;
 }
 
@@ -132,7 +121,6 @@ main{
 }
 
 .form-steps > *, #login-form > *{
-	float: left;
 	width: 100%;
 }
 
