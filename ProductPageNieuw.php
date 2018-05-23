@@ -8,35 +8,44 @@ $productdata = handlequery(
     V.titel, V.startprijs, V.beschrijving , G.mailadres ,GT.telefoonnummer,V.looptijdBeginTijdstip,V.looptijdBeginDag
     FROM Voorwerp V
     JOIN gebruiker G on V.verkoper = G.gebruikersnaam
-<<<<<<< HEAD
     JOIN gebruikerstelefoon GT on G.gebruikersnaam = GT.gebruikersnaam
     WHERE voorwerpnummer = :voorwernummer", $paramvoorwerpnummer);
-=======
-    LEFT JOIN gebruikerstelefoon GT on G.gebruikersnaam = GT.gebruikersnaam
-    WHERE voorwerpnummer = $Vwnummer");
->>>>>>> cf7663b72dde0f8b828d1d4a7f8f9380312a3b35
     //voorwerpnummer moet meegegeven worden vanuit de site
 
 $images = handlequery(
     "SELECT filenaam
     FROM Bestand
     WHERE voorwerpnummer = :voorwernummer", $paramvoorwerpnummer);
-    ?>
 
-    <section class="productpage">
-        <div class="container border-primary">
-            <div class="row">
-                <div class="col-lg-6 p-3 bg-secondary text-white">
-                    <figure class="figure" style="position: relative; text-align: center;">
-                    <!-- <img src="media/WatchTestJEREMY.jpg" alt="..."
-                         class="figure-img img-fluid rounded">
-                   afbeelding vanuit de webserver moet nog ingevoerd worden
-                    <div class="row">
-                    <img src="media/WatchTestJEREMY.jpg" alt="..." class="col-2 col-md-offset-1 rounded">
-                    <img src="media/WatchTestJEREMY.jpg" alt="..." class="col-lg-2 col-md-offset-1 rounded">
-                    <img src="media/WatchTestJEREMY.jpg" alt="..." class="col-lg-2 col-md-offset-1 rounded">
-                </div> -->
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if(isset($_POST['submit-file'])){
+        $target_dir = "./uploads/" . $productdata[0]['verkoper'] . '/' . $productdata[0]['voorwerpnummer']. '/';
+        if (!file_exists($target_dir)){
+            mkdir('uploads/'. $productdata[0]['verkoper'] . '/' . $productdata[0]['voorwerpnummer'] , 02202, true);
+        }
+        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
+        if(checkIfImage($_POST["submit-file"]) && checkAllowedFileTypes($imageFileType) && checkSizeFile(500000) && checkExistingFile($target_file)) {
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                echo "Het bestand". basename( $_FILES["fileToUpload"]["name"]). " is geüpload.";
+                $Bestandsnaam = $target_file;
+                $uploadParameters = array(':vwNummer' => $productdata[0]['voorwerpnummer'] , ':Bestandsnaam' => $Bestandsnaam);
+                handlequery("insert into Bestand values (:Bestandsnaam, :vwNummer)",$uploadParameters);
+            } else {
+                echo "Sorry, Er is iets fout gegaan tijdens het uploaden van uw bestand.";
+            }
+        }
+    }
+}
+?>
+
+<section class="productpage">
+    <div class="container border-primary">
+        <div class="row">
+            <div class="col-lg-6 p-3 bg-secondary text-white">
+                <figure class="figure" style="position: relative; text-align: center;">
                 <div class="preview col-md-6">
                     <div class="preview-pic tab-content">
                         <div class="tab-pane active" id="pic-1"><img src="http://placekitten.com/400/252" /></div>
@@ -50,41 +59,12 @@ $images = handlequery(
                         <li><a data-target="#pic-3" data-toggle="tab"><img src="https://www.brandfield.nl/media/catalog/product/cache/21/image/9df78eab33525d08d6e5fb8d27136e95/m/k/mk8281_1.jpg" /></a></li>
                         <li><a data-target="#pic-4" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
                     </ul>
-                    <?php if ($_SESSION['gebruikersnaam'] == $productdata[0]['verkoper']) { ?>
-                        <form action="" method="post" enctype="multipart/form-data">
-                            <p>Selecteer een afbeelding</p>
-                            <input type="file" name="fileToUpload" id="fileToUpload">
-                            <input type="submit" class="cta-orange btn" value="Upload Image" name="submit-file">
-                        </form>
-
-                        <?php  
-
-                        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                            $target_dir = "./uploads/" . $productdata[0]['verkoper'] . '/' . $productdata[0]['voorwerpnummer']. '/';
-                            if (!file_exists($target_dir)){
-                                mkdir('uploads/'. $productdata[0]['verkoper'] . '/' . $productdata[0]['voorwerpnummer'] , 0220, true);
-                            }
-                            $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-                            $uploadOk = 1;
-                            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-                            if(checkIfImage($_POST["submit-file"]) && checkAllowedFileTypes($imageFileType) && checkSizeFile(500000) && checkExistingFile($target_file)) {
-                                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                                    echo "Het bestand". basename( $_FILES["fileToUpload"]["name"]). " is geüpload.";
-                                } else {
-                                    echo "Sorry, Er is iets fout gegaan tijdens het uploaden van uw bestand.";
-                                }
-                            }
-                        }
-                        if (isset($_POST['submit-file']) && $uploadOk == 1) {
-                            $Bestandsnaam = $target_file;
-                            $uploadParameters = array(':vwNummer' => $productdata[0]['voorwerpnummer'] , ':Bestandsnaam' => $Bestandsnaam);
-
-                            $InsertPhoto = handlequery("insert into Bestand values (:Bestandsnaam, :vwNummer)",$uploadParameters);
-
-
-                        }
-
+                    <?php if ($_SESSION['gebruikersnaam'] == $productdata[0]['verkoper']) {
+                        echo '<form action="" method="post" enctype="multipart/form-data">
+                        <p>Selecteer een afbeelding</p>
+                        <input type="file" name="fileToUpload" id="fileToUpload">
+                        <input type="submit" class="cta-orange btn" value="Upload Image" name="submit-file">
+                        </form>';
                     } ?>
                 </div>
 
@@ -189,19 +169,19 @@ $images = handlequery(
                 </div>
                 <div class="clearfix">
                     <div class="sliderbuttons">
-                     <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                         <span class="sr-only">Previous</span>
-                     </a>
-                     <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                         <span class="sr-only">Next</span>
-                     </a>
-                 </div>
-             </div>
-         </div>
-     </div>
- </div>
+                       <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                           <span class="sr-only">Previous</span>
+                       </a>
+                       <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                           <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                           <span class="sr-only">Next</span>
+                       </a>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </div>
 </section>
 
 </div>
