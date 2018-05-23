@@ -6,7 +6,7 @@ $productdata = handlequery(
     V.titel, V.startprijs, V.beschrijving , G.mailadres ,GT.telefoonnummer,V.looptijdBeginTijdstip,V.looptijdBeginDag
     FROM Voorwerp V
     JOIN gebruiker G on V.verkoper = G.gebruikersnaam
-    JOIN gebruikerstelefoon GT on G.gebruikersnaam = GT.gebruikersnaam
+    LEFT JOIN gebruikerstelefoon GT on G.gebruikersnaam = GT.gebruikersnaam
     WHERE voorwerpnummer = $Vwnummer");
     //voorwerpnummer moet meegegeven worden vanuit de site
 
