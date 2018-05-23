@@ -664,7 +664,7 @@ function UpdateInfoUser($get, $gebruikersnaam){
 /* toont goede button aan de hand van ingelogt zijn of niet */
 function showButtonIndex(){
 	if(isset($_SESSION['gebruikersnaam'])){
-		echo '<a href="upgrade-step-1.php" class="btn cta-orange">Wordt verkoper!</a>';
+		echo '<a href="upgrade-user.php" class="btn cta-orange">Wordt verkoper!</a>';
 	} else {
 		echo '<a href="registreren.php" class="btn cta-orange">Meld je nu aan als verkoper!</a>';		
 	}
