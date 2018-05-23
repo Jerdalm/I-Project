@@ -8,8 +8,13 @@ $productdata = handlequery(
     V.titel, V.startprijs, V.beschrijving , G.mailadres ,GT.telefoonnummer,V.looptijdBeginTijdstip,V.looptijdBeginDag
     FROM Voorwerp V
     JOIN gebruiker G on V.verkoper = G.gebruikersnaam
+<<<<<<< HEAD
     JOIN gebruikerstelefoon GT on G.gebruikersnaam = GT.gebruikersnaam
     WHERE voorwerpnummer = :voorwernummer", $paramvoorwerpnummer);
+=======
+    LEFT JOIN gebruikerstelefoon GT on G.gebruikersnaam = GT.gebruikersnaam
+    WHERE voorwerpnummer = $Vwnummer");
+>>>>>>> cf7663b72dde0f8b828d1d4a7f8f9380312a3b35
     //voorwerpnummer moet meegegeven worden vanuit de site
 
 $images = handlequery(

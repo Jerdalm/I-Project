@@ -50,9 +50,24 @@
 	else if(isset($_GET['search'])){ 
 	$zoekfilter = $_GET['search'];
 	
+	//$parameters = array(":search" => "%" . $zoekfilter . "%");
+	$keywords = explode(' ' ,$zoekfilter);
+	$parameters = array();
+	$last = count($keywords) - 1;
+	$searchstring = '';
+	
+	foreach($keywords as $keyword => $value){
+		$parameters[":$value"] = "%$value%";
+		$searchstring .= " LIKE :$value ";
+		 if($keyword != $last)
+		 {
+			$searchstring .= 'AND currentAuction.titel';
+		 }
+	}
+		
 		$titel = "Zoekresultaten";
-		$parameters = array(":search" => "%" . $zoekfilter . "%");
-		$query = "SELECT * FROM currentAuction WHERE currentAuction.titel LIKE :search AND ".$pricecheck;
+		//$parameters = array(":search" => "%" . $zoekfilter . "%");
+		$query = "SELECT * FROM currentAuction WHERE currentAuction.titel ".$searchstring." AND ".$pricecheck;
 	
 	}
 	

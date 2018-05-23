@@ -6,40 +6,63 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     'beschrijving',
     'looptijd',
     'startprijs',
-    'betalingswijze',
-    'uploadfoto'
+    'betalingswijze'
+    // 'uploadfoto' deze weer aanzetten
   );
   if (isset($_POST['sellitem']) && fieldsFilledIn($filledin)) {
+    if (empty($_POST['betalingsinstructie'])) {
+      $_POST['betalingsinstructie'] = 'NULL';
+    } if (empty($_POST['verzendkosten'])) {
+      $_POST['verzendkosten'] = 'NULL';
+    } if (empty($_POST['verzendinstructies'])) {
+      $_POST['verzendinstructies'] = 'NULL';
+    }
+
+    $voorwerpnummerUpload = handlequery('SELECT MAX(voorwerpnummer)+1 FROM Voorwerp');
+    echo '<pre>';
+    print_r($voorwerpnummerUpload);
+    echo '</pre>';
+    $plaatsnaam = handlequery('SELECT plaatsnaam FROM Gebruiker WHERE gebruikersnaam = "gebruiker"');
+    echo '<pre>';
+    print_r($plaatsnaam);
+    echo '</pre>';
+    die();
+    $land = handlequery('SELECT land FROM Gebruiker WHERE gebruikersnaam =' . $_SESSION['gebruikersnaam']);
+    print_r($land);
+    die();
     $upload = array(
+      ':voorwerpnummer' => $voorwerpnummerUpload,
       ':titel' => $_POST['titel'],
       ':beschrijving' => $_POST['beschrijving'],
       ':looptijd' => $_POST['looptijd'],
-      ':startprijs' => $_POST['startprijs'],
+      ':startprijs' => (float)$_POST['startprijs'],
       ':betalingswijze' => $_POST['betalingswijze'],
       ':betalingsinstructie' => $_POST['betalingsinstructie'],
-      ':verzendkosten' => $_POST['verzendkosten'],
+      ':verzendkosten' => (float)$_POST['verzendkosten'],
       ':verzendinstructies' => $_POST['verzendinstructies'],
-      ':afbeelding' => $_POST['uploadfoto'],
+      // ':afbeelding' => $_POST['uploadfoto'],
+      // ':looptijdBeginDag' => GETDATE(),
+      // ':looptijdBeginTijdstip' => GETDATE(),
+      ':plaatsnaam' => $plaatsnaam,
+      ':land' => $land,
       ':verkoper' => $_SESSION['gebruikersnaam']
     );
-  if (empty($_POST['betalingsinstructie'])) {
-    $_POST['betalingsinstructie'] = 'NULL';
-  } if (empty($_POST['verzendkosten'])) {
-    $_POST['verzendkosten'] = 'NULL';
-  } if (empty($_POST['verzendinstructies'])) {
-    $_POST['verzendinstructies'] = 'NULL';
-  }
-  // handlequery('INSERT INTO Voorwerp VALUES ()');
-    $selectUploadedItem = handlequery('SELECT Voorwerpnummer
-      FROM Voorwerp
-      WHERE Titel = :titel AND
-      Verkoper = :verkoper AND
-      Startprijs = :startprijs AND
-      Looptijd = :looptijd
-      ORDER BY looptijdEindeDag DESC,
-      looptijdEindeTijdstip DESC', $upload);
-      print_r($voorwerpnummer);
-      die();
+
+    handlequery('INSERT INTO Voorwerp (voorwerpnummer, titel, beschrijving, startprijs, betalingswijze, betalingsinstructie, plaatsnaam,
+      land, looptijd, looptijdBeginDag, looptijdBeginTijdstip, verzendkosten, verzendinstructies, verkoper)
+      VALUES (:voorwerpnummer. :titel, :beschrijving, :startprijs, :betalingswijze, :betalingsinstructie, :plaatsnaam, :land, :looptijd,
+        GETDATE(), GETDATE(), :verzendkosten, :verzendinstructies, :verkoper)', $upload);
+
+    // $selectUploadedItem = handlequery('SELECT Voorwerpnummer
+    //   FROM Voorwerp
+    //   WHERE Titel = :titel AND
+    //   Verkoper = :verkoper AND
+    //   Startprijs = :startprijs AND
+    //   Looptijd = :looptijd
+    //   ORDER BY looptijdEindeDag DESC,
+    //   looptijdEindeTijdstip DESC', $upload);
+    //   print_r($voorwerpnummer);
+    //   die();
       // header(Location: 'http://localhost/I-Project/productpage.php?product=' . $voorwerpnummer);
     } else {
       echo 'Niet alle velden zijn ingevuld <br><br><br><br>
