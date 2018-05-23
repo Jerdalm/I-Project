@@ -165,6 +165,49 @@ function contains_capital($string){
 	return preg_match('/[A-Z]/', $string);
 }
 
+/* Deze functie checkt of het meegegeven bestand al bestaat */ 
+function checkExistingFile($file){
+	if (file_exists($file)) {
+		echo "Sorry, Het bestand bestaat al.";
+		return false;
+	} else {
+		return true;
+	}
+}
+
+/* Deze functie checkt of het meegegeven bestandsgrootte niet overschreden worden */
+function checkSizeFile($fileSize){
+	if ($_FILES["fileToUpload"]["size"] > $fileSize) {
+		echo "Sorry, Uw bestand is te groot.";
+		return false;
+	} else {
+		return true;
+	}
+}
+
+/* Deze functie checkt of het meegegeven bestandstype voldoet aan de eisen */
+function checkAllowedFileTypes($imageFileType){
+	if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+		echo "Sorry, alleen JPG, JPEG & PNG files zijn toegestaan.";
+		return false;
+	} else {
+		return true;
+	}
+}
+
+/* Deze functie checkt of het meegegeven bestand daaderkelijk een plaatje is */
+function checkIfImage($file){
+	if(isset($file)) {
+		$check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+		if($check !== false) {
+			return true;
+		} else {
+			echo "File is not an image.";
+			return false;
+		}
+	}
+}
+
 /* Deze functie toont tekst en link wordt bepaalt a.d.h.v. of je ingelogt of uitlogt bent */
 function showLoginMenu(){
 	$htmlLogin = ' ';
