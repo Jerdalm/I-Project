@@ -666,7 +666,7 @@ function showButtonIndex(){
 	if(isset($_SESSION['gebruikersnaam'])){
 		echo '<a href="upgrade-user.php" class="btn cta-orange">Wordt verkoper!</a>';
 	} else {
-		echo '<a href="registreren.php" class="btn cta-orange">Meld je nu aan als verkoper!</a>';		
+		echo '<a href="registreren.php" class="btn cta-orange">Registreer je nu om mee te bieden!</a>';		
 	}
 }
 ?>
