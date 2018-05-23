@@ -6,6 +6,7 @@ $required = array('firstname', 'lastname', 'adres1', 'postalcode', 'residence', 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (fieldsFilledIn($required)){
 		insertRegistrationinfoInDB();
+		mkdir("uploads/user/".$_SESSION['username']);
 		$message_registration = insertRegistrationinfoInDB();
 	} else {
 		$message_registration = "U moet alle velden invullen.";
