@@ -73,5 +73,16 @@ text-align: right;
 
 
 .userInfo p {
-	margin-left: 15px;
+	margin-left: 20px;
+
+}
+
+.beginTijdstip{
+	opacity: 0.4;
+}
+
+.biedenKnop {
+
+margin-top: 15px;
+
 }
