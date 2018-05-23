@@ -37,7 +37,7 @@ if(isset($_POST['submit-new-password'])){
 }
 
 ?>
-
+<section class="user-details">
 <main class="user-details">
     <div class="container">
         <?php if(!isset($_GET['changeInfo'])) {?>
@@ -113,4 +113,5 @@ if(isset($_POST['submit-new-password'])){
        }?> 
    </div>    
 </main>
+</section>
 <?php require_once 'footer.php'; ?>
