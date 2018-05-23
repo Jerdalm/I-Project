@@ -34,27 +34,8 @@ button{
 
 }*/
 
-#login-registration .row{
-	width: 50%;
-}
-
-
-#login-registration .container, .user-details .container{
-	display: flex;
-	justify-content: space-between;
-	flex-direction: row;
-
-}
-
-footer{
-/* 	position: absolute;
-	bottom: 0;
-	left: 0;		
-	width: 100%; */
-}
-
-#login-registration main{
-	margin-top: 100px;
+#login-form{
+	margin-bottom: 10px;
 }
 
 .cta-orange{
