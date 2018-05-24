@@ -12,7 +12,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
     'looptijd',
     'startprijs',
     'betalingswijze',
-    'uploadfoto'
+    'fileToUpload'
   );
 
   if (isset($_POST['sellitem']) && fieldsFilledIn($filledin)) {
@@ -42,7 +42,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
       ':verkoper' => $username
     );
     $uploadFoto = array(
-      ':filenaam' => $_POST['uploadfoto'],
+      ':filenaam' => $_POST['fileToUpload'],
       ':voorwerpnummer' => $voorwerpnummerUpload[0]['nieuwVoorwerpnummer']
     );
 
@@ -58,13 +58,13 @@ if (isset($_SESSION['gebruikersnaam'])) {
       echo '<pre>';
       print_r($_FILES);
       echo "</pre>";
-      $target_file = $target_dir . basename($_FILES["uploadfoto"]["name"]);
+      $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
       $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
-      if(checkIfImage($_POST["uploadfoto"]) && checkAllowedFileTypes($imageFileType) && checkSizeFile(500000) && checkExistingFile($target_file)) {
+      if(checkIfImage($_POST["fileToUpload"]) && checkAllowedFileTypes($imageFileType) && checkSizeFile(500000) && checkExistingFile($target_file)) {
         echo "AABWEZIF";
         die();
-        if (move_uploaded_file($_FILES["uploadfoto"]["tmp_name"], $target_file)) {
+        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
           //echo "Het bestand". basename( $_FILES["fileToUpload"]["name"]). " is geüpload.";
           $uploadFoto = array(':voorwerpnummer' => $voorwerpnummerUpload[0]['nieuwVoorwerpnummer'] , ':filenaam' => $target_file);
           handlequery("INSERT INTO Bestand (filenaam, voorwerpnummer) VALUES (:filenaam, :voorwerpnummer)", $uploadFoto);
@@ -165,7 +165,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
               <div class="form-group">
                 <label class="col-md-12 control-label" for="uploadphoto">Upload foto*</label>
                 <div class="col-md-12">
-                  <input id="uploadfoto" name="uploadfoto" class="input-file" type="file">
+                  <input id="fileToUpload" name="fileToUpload" class="input-file" type="file">
                 </div>
               </div>
               <div class="form-group">
