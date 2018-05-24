@@ -115,6 +115,11 @@ nav {
 	min-height: 300px;
 }
 
+html body header#account.header.content-header{
+	min-height:200px;
+	height: 200px;
+	background:rgba(166,166,166);
+}
 .header h1 b,.header h1 strong{
 	font-weight:bold;
 }
@@ -508,4 +513,8 @@ section.user-details{
 
 .no-margin{
 	margin:0;
+}
+.wrapper{
+	margin-left:-15px; 
+	margin-right:-15px;
 }

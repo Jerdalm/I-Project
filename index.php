@@ -72,7 +72,7 @@ setInterval(function()
 	$('#'+ this.id).load('index.php #' + this.id);
 });
 }, 1000); 
-	</script>
+</script>
 <script src="vendor/bootstrap/js/popup.header.js"></script>
 <!-- /.container -->
 <?php require_once './footer.php'; ?>
