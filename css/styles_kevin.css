@@ -124,6 +124,10 @@ html body header#account.header.content-header{
 	font-weight:bold;
 }
 
+html body section.user-details div.container div#nav-tabContent.tab-content {
+        overflow:visible;
+    }
+
 .header .logo{
 	width:150px;
 }
