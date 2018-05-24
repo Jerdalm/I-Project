@@ -8,7 +8,7 @@ $productdata = handlequery(
     V.titel, V.startprijs, V.beschrijving , G.mailadres ,GT.telefoonnummer,V.looptijdBeginTijdstip,V.looptijdBeginDag
     FROM Voorwerp V
     JOIN gebruiker G on V.verkoper = G.gebruikersnaam
-    JOIN gebruikerstelefoon GT on G.gebruikersnaam = GT.gebruikersnaam
+    LEFT JOIN gebruikerstelefoon GT on G.gebruikersnaam = GT.gebruikersnaam
     WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
     //voorwerpnummer moet meegegeven worden vanuit de site
 
@@ -37,9 +37,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 echo "Sorry, Er is iets fout gegaan tijdens het uploaden van uw bestand.";
             }
         }
-    } else if(isset($_POST['bidAmount-Submit'])){
-        $paramBod = array(':voorwerpnummer' => $_GET['product'], ':bedrag' => $_POST['bidAmount']);
-        executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, 'gebruiker'", $paramBod); // functie in databse om het bod uit te brengen en te checken of het klopt
+    } else if(isset($_POST['bidAmount-submit'])){
+        $paramBod = array(':voorwerpnummer' => $_GET['product'], ':bedrag' => (float)$_POST['bidAmount']);
+        $plaatsBod =  executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, 'gebruiker'", $paramBod); // functie in databse om het bod uit te brengen en te checken of het klopt
+
+        if($plaatsBod == "Opdracht kon niet worden volbracht."){
+            echo 'bod kan niet worden geplaats';
+        } else {
+            executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, 'gebruiker'", $paramBod);
+        }
     }
 }
 
@@ -48,13 +54,12 @@ if (isset($_SESSION['gebruikersnaam'])){
     <div class="form-row align-items-center">
     <div class="col-sm-9">
     <input type="number" class="form-control" name="bidAmount" id="colFormLabelLg" placeholder="Geef uw gewenste bedrag in">
-    <a class="biedenKnop cta-orange btn">Bied!</a>
+    <input type="submit" name="bidAmount-submit" Value="Bied!" class="biedenKnop cta-orange btn">
     </div>
     </div>
     </form>';
 } else {
-
-    $htmluploadFoto = "Log in om te kunnen bieden!";
+    $htmluploadFoto = '<a href="./user.php">Log in om te kunnen bieden!</a>';
 }
 ?>
 
@@ -150,11 +155,11 @@ if (isset($_SESSION['gebruikersnaam'])){
                         <hr>
                         <div class="userInfo">
                             <div class="row">
-                                <div class="col">
-                                    <p><b><?= $productdata[0]['voornaam']. " " .$productdata[0]['achternaam'] ?></b><br></p>
+                                <div class="col-lg-9">
+                                    <p><b><?= $productdata[0]['voornaam']. " " .$productdata[0]['achternaam'] ?></b> te <?=$productdata[0]['plaatsnaam']?></p><br>
                                     <p><a href=<?='"mailto:' .$productdata[0]['mailadres']. '?SUBJECT=' . $productdata[0]['titel'] . '"'?>> <i class="fas fa-envelope"></i></a><!-- <a href="tel:<?=$productdata[0]['telefoonnummer']?>">&nbsp;&nbsp;<i class="fas fa-phone"></i></a> --></p>
                                 </div>
-                                <div class="col profile-picture align-items-right">
+                                <div class="col-lg-3 profile-picture align-items-right">
                                     <img src="https://mb.lucardi-cdn.nl/zoom/64867/regal-mesh-horloge-met-zilverkleurige-band.jpg" alt="Profielfoto" class="rounded-circle">
                                 </div>
                             </div>
