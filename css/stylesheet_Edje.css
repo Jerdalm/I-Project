@@ -13,7 +13,6 @@ section.forgotpass .container{
 
 }
 
-section.user-details div.container{margin-top:50px;}
 .inputMailadres{
 	margin-bottom: 2eM;
 
@@ -40,11 +39,6 @@ div#detailsTabel.row.row-right{
 .edit-user-info{
 
 	float: right; 	 
-}
-
-
-.table-user-details{
-	width: 75%;
 }
 
 
