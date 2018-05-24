@@ -48,7 +48,7 @@
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	  <script src="vendor/bootstrap/js/popup.header.js"></script>
+	  
   </body>
 </html>
 

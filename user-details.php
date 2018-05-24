@@ -37,13 +37,14 @@ if(isset($_POST['submit-new-password'])){
 }
 
 ?>
+
 <section class="user-details">
-<main class="user-details">
     <div class="container">
         <?php if(!isset($_GET['changeInfo'])) {?>
         <div id="detailsTabel" class="row row-right">
             <!-- alle gegevens van de gebruiker worden met een echo in een tabel gezet -->
-            <table class="table table-user-details"> 
+			<h3>Gebruikersgegevens</h3>
+            <table class="table-striped table table-user-details"> 
                 <tbody>
                     <?php foreach($gebruiker as $key => $info ){
                    
@@ -111,7 +112,7 @@ if(isset($_POST['submit-new-password'])){
         } else if (isset($_GET['bijwerken'])) {
            UpdateInfoUser($_GET, $gebruikersnaam);
        }?> 
-   </div>    
-</main>
-</section>
+   </div>  
+</section>   
+
 <?php require_once 'footer.php'; ?>

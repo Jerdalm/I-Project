@@ -63,7 +63,7 @@ $_SESSION['email-registration'] = ' ';
   </div>
 </section>
 <section class="attention text-center">
-  <?= showButtonIndex()?>
+  <?= showButtonIndex();?>
 </section>
 <script>
 setInterval(function()
@@ -73,6 +73,7 @@ setInterval(function()
 });
 }, 1000); 
 	</script>
+<script src="vendor/bootstrap/js/popup.header.js"></script>
 <!-- /.container -->
 <?php require_once './footer.php'; ?>
 

@@ -20,8 +20,12 @@ section{padding:50px;}
 
 /* Page navigation */
 nav.navbar{
-	background-color:transparent;
+	background-color: rgba(0,0,0,0.4);
 	line-height:16px;
+}
+
+html body header nav#index.navbar{	
+	background-color:transparent;
 }
 
 nav.navbar a{
@@ -490,6 +494,12 @@ text-decoration:none;
 .sidebar h4:not(:first-child) {
     margin-top:20px;
 }
+
+/*Product details */
+section.user-details{
+	background: white;
+}
+
 
 /*General classes */
 .form-control:focus{border-color: rgb(242, 85, 44);  box-shadow: none; -webkit-box-shadow: none;} 
