@@ -32,7 +32,7 @@ url('./img/header/horloge_header.jpg') center center no-repeat scroll;">
 </div>
 
 <div class="container">
-<div class="wrapper" style="margin-left:-15px; margin-right:-15px";>
+<div class="wrapper">
 <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 sidebar float-left" style="">
 <h4 class="text-center"> Rubrieken </h4>
 <?= showRubriekenlist();
@@ -49,4 +49,5 @@ require 'layout/pricefilter.php';
 </div>
 </div>
 </section>
+<script src="vendor/bootstrap/js/popup.header.js"></script>
 <?php require 'footer.php'; ?>
