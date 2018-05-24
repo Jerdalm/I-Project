@@ -1,6 +1,10 @@
 <?php require_once 'header.php';
 
 if (isset($_SESSION['gebruikersnaam'])) {
+  $username = $_SESSION['gebruikersnaam'];
+  if ($_SESSION['soortGebruiker'] != 2) {
+    header("Location: upgrade-user.php"); // redirect naar upgrade user wanneer je geen verkoper bent
+  }
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $filledin = array(
     'titel',
@@ -21,7 +25,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
     }
 
     $voorwerpnummerUpload = handlequery("SELECT MAX(voorwerpnummer)+1 AS nieuwVoorwerpnummer FROM Voorwerp");
-    $plaats = handlequery("SELECT plaatsnaam, land FROM Gebruiker WHERE gebruikersnaam = '".$_SESSION['gebruikersnaam']."'");
+    $plaats = handlequery("SELECT plaatsnaam, land FROM Gebruiker WHERE gebruikersnaam = '".$username."'");
 
     $uploadItem = array(
       ':voorwerpnummer' => $voorwerpnummerUpload[0]['nieuwVoorwerpnummer'],
@@ -35,7 +39,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
       ':verzendinstructies' => $_POST['verzendinstructies'],
       ':plaatsnaam' => $plaats[0]['plaatsnaam'],
       ':land' => $plaats[0]['land'],
-      ':verkoper' => $_SESSION['gebruikersnaam']
+      ':verkoper' => $username
     );
     $uploadFoto = array(
       ':filenaam' => $_POST['uploadfoto'],
@@ -45,8 +49,39 @@ if (isset($_SESSION['gebruikersnaam'])) {
     handlequery('INSERT INTO Voorwerp (voorwerpnummer, titel, beschrijving, startprijs, betalingswijze, betalingsinstructie, plaatsnaam,
       land, looptijd, looptijdBeginDag, looptijdBeginTijdstip, verzendkosten, verzendinstructies, verkoper, veilingGesloten)
       VALUES (:voorwerpnummer, :titel, :beschrijving, :startprijs, :betalingswijze, :betalingsinstructie, :plaatsnaam, :land, :looptijd,
-        GETDATE(), GETDATE(), :verzendkosten, :verzendinstructies, :verkoper, 0)', $uploadItem);
-    handlequery('INSERT INTO Bestand (filenaam, voorwerpnummer) VALUES (:filenaam, :voorwerpnummer)', $uploadFoto);
+      GETDATE(), GETDATE(), :verzendkosten, :verzendinstructies, :verkoper, 0)', $uploadItem);
+
+      $target_dir = "./uploads/" . $username . '/' . $voorwerpnummerUpload[0]['nieuwVoorwerpnummer']. '/';
+      if (!file_exists($target_dir)){
+        mkdir('uploads/'. $username . '/' . $voorwerpnummerUpload[0]['nieuwVoorwerpnummer'] , 02202, true);
+      }
+      echo '<pre>';
+      print_r($_FILES);
+      echo "</pre>";
+      $target_file = $target_dir . basename($_FILES["uploadfoto"]["name"]);
+      $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+      if(checkIfImage($_POST["uploadfoto"]) && checkAllowedFileTypes($imageFileType) && checkSizeFile(500000) && checkExistingFile($target_file)) {
+        echo "AABWEZIF";
+        die();
+        if (move_uploaded_file($_FILES["uploadfoto"]["tmp_name"], $target_file)) {
+          //echo "Het bestand". basename( $_FILES["fileToUpload"]["name"]). " is geüpload.";
+          $uploadFoto = array(':voorwerpnummer' => $voorwerpnummerUpload[0]['nieuwVoorwerpnummer'] , ':filenaam' => $target_file);
+          handlequery("INSERT INTO Bestand (filenaam, voorwerpnummer) VALUES (:filenaam, :voorwerpnummer)", $uploadFoto);
+        }
+        else {
+          echo "Sorry, Er is iets fout gegaan tijdens het uploaden van uw bestand.";
+          die();
+        }
+      } else {
+        echo '<pre>';
+        print_r($_FILES);
+        echo "</pre>";
+        echo 'niet door check heen';
+        die();
+      }
+
+    //handlequery('INSERT INTO Bestand (filenaam, voorwerpnummer) VALUES (:filenaam, :voorwerpnummer)', $uploadFoto);
 
     header("Location: productpage.php?product=" . $voorwerpnummerUpload[0]['nieuwVoorwerpnummer']); // verwijzen naar nieuw
       } else {
@@ -59,6 +94,9 @@ if (isset($_SESSION['gebruikersnaam'])) {
         </section></main>';
       }
     }
+    // echo '<pre>';
+    // print_r($_SESSION);
+    // echo '</pre>';
     echo '<main>
       <section class="uploadarticle">
         <div class="container">
@@ -140,15 +178,17 @@ if (isset($_SESSION['gebruikersnaam'])) {
           </div>
         </div>
       </section>
-
     </main>';
   } else {
+    header("Location: index.php"); // redirect naar index wanneer je niet ingelogd bent
+    die();
     echo '<main><section>
     niet ingelogd > redirect naar?<br>
     nog geen verkoper > redirect naar verkoper worden?
     </section></main>';
   }
-    ?>
+
+  require_once 'footer.php' ?>
 
     <!-- <main>
       <section class='uploadarticle'>
@@ -233,5 +273,3 @@ if (isset($_SESSION['gebruikersnaam'])) {
       </section>
 
     </main> -->
-
-    <?php require_once 'footer.php' ?>
