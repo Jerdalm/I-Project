@@ -1,177 +1,215 @@
 <?php require_once ('header.php');
-$Vwnummer = $_GET['product'];
+if(isset($_GET['product'])){
+    $Vwnummer = $_GET['product'];
+    $htmluploadFoto = ' ';
+    $paramvoorwerpnummer = array(':voorwerpnummer' => $_GET['product']);
 
-$productdata = handlequery("
-SELECT V.voorwerpnummer,V.verzendkosten,V.verzendinstructies, G.voornaam, G.achternaam, G.plaatsnaam,
-V.titel, V.startprijs, V.beschrijving , G.mailadres ,GT.telefoonnummer
-FROM Voorwerp V
-JOIN gebruiker G on V.verkoper = G.gebruikersnaam
-JOIN gebruikerstelefoon GT on G.gebruikersnaam = GT.gebruikersnaam
-WHERE voorwerpnummer = $Vwnummer
-");//voorwerpnummer moet meegegeven worden vanuit de site
-$images = handlequery("
-SELECT filenaam
-FROM Bestand
-WHERE voorwerpnummer = $Vwnummer
-");
+    $productdata = FetchAssocSelectData(
+        "SELECT V.verkoper, G.gebruikersnaam,V.voorwerpnummer,V.verzendkosten,V.verzendinstructies, G.voornaam, G.achternaam, G.plaatsnaam,G.soortGebruiker,
+        V.titel, V.startprijs, V.beschrijving , G.mailadres ,GT.telefoonnummer,V.looptijdBeginTijdstip,V.looptijdBeginDag
+        FROM Voorwerp V
+        JOIN gebruiker G on V.verkoper = G.gebruikersnaam
+        LEFT JOIN gebruikerstelefoon GT on G.gebruikersnaam = GT.gebruikersnaam
+        WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
+        //voorwerpnummer moet meegegeven worden vanuit de site
+    $images = handlequery("SELECT filenaam FROM Bestand WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if(isset($_POST['submit-file'])){
+            $target_dir = "./uploads/user/" . $productdata['verkoper'] . '/' . $productdata['voorwerpnummer']. '/';
+            if (!file_exists($target_dir)){
+                mkdir('uploads/user/'. $productdata['verkoper'] . '/' . $productdata['voorwerpnummer'] , 02202, true);
+            }
+            $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+            if(checkIfImage($_POST["submit-file"]) && checkAllowedFileTypes($imageFileType) && checkSizeFile(500000) && checkExistingFile($target_file)) {
+                    // echo $bestandsnaam;
+                    // die();
+                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                    echo "Het bestand ". basename( $_FILES["fileToUpload"]["name"]). " is geüpload.";
+                    $bestandsnaam = $target_file;
+                    $uploadParameters = array(':voorwerpnummer' => $productdata['voorwerpnummer'] , ':bestandsnaam' => $bestandsnaam);
+                    handlequery("insert into Bestand values (:bestandsnaam, :voorwerpnummer)",$uploadParameters);
+                    header("Refresh:0"); //Refresht de pagina zodat de foto's getoont worden 
+                } else {
+                    echo "Sorry, Er is iets fout gegaan tijdens het uploaden van uw bestand.";
+                }
+            }
+        } else if(isset($_POST['bidAmount-submit'])){
+            $paramBod = array(':voorwerpnummer' => $_GET['product'], ':bedrag' => (float)$_POST['bidAmount']);
+            $plaatsBod =  executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, 'gebruiker'", $paramBod); // functie in databse om het bod uit te brengen en te checken of het klopt
+            if($plaatsBod == "Opdracht kon niet worden volbracht."){
+                echo 'Bod kan niet worden geplaats';
+            } else {
+                executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, 'gebruiker'", $paramBod);
+            }
+        }
+    }
+
+    if (isset($_SESSION['gebruikersnaam'])){ 
+        $htmluploadFoto = '<form method="post" action="">
+        <div class="form-row align-items-center">
+        <div class="col-sm-9">
+        <input type="number" class="form-control" name="bidAmount" id="colFormLabelLg" placeholder="Geef uw gewenste bedrag in">
+        <input type="submit" name="bidAmount-submit" Value="Bied!" class="biedenKnop cta-orange btn">
+        </div>
+        </div>
+        </form>';
+    } else {
+        $htmluploadFoto = '<a href="./user.php">Log in om te kunnen bieden!</a>';
+    }
 
 ?>
 
-<body class="bg-secondary bg-light text-dark"
-<body onload="startTime()">
+<main>
+    <section class="productpage">
+        <div class="container border-primary">
+            <div class="row">
+                <div class="col-lg-7 p-3 bg-secondary text-white">
+                    <figure class="figure col-md-12">
+                        <div class="preview">
+                            <div class="preview-pic tab-content">
+                                <?php  
+                                $teller = 1;
+                                $skipFirst = true;
+                                foreach ($images as $image){
+                                    if ($skipFirst) {
+                                        echo '<div class="tab-pane active" id="pic-'.$teller .'"><img src="' .$image['filenaam'] . '"/></div>';
+                                        $teller++;
+                                        $skipFirst = false;
+                                        continue;
+                                    }
+                                    echo '<div class="tab-pane" id="pic-'.$teller.'"><img src="' .$image['filenaam']. '" /></div>';
+                                    $teller++; 
+                                } ?>
+                            </div>
+                            <ul class="preview-thumbnail nav nav-tabs">
+                                <?php 
+                                $teller = 1;
+                                $skipFirst = true;
+                                foreach ($images as $image){
+                                    if ($skipFirst) {
+                                        echo '<li class="active"><a data-target="#pic-'. $teller . '" data-toggle="tab"><img src=" '. $images[0]['filenaam'] .'"/></a></li>';
+                                        $skipFirst = false;
+                                        $teller++;
+                                        continue;
+                                    }
+                                    echo '<li><a data-target="#pic-'.$teller . '"data-toggle="tab"><img src="'.$image['filenaam'] . '" /></a></li>';
+                                    $teller++; 
+                                } ?>
+                            </ul>
+                        </div>
+                    </figure>
+                    <div class="col p-3 mb-2 bg-secondary text-white" style="text-align: left">
+                        <?php if(isset($_SESSION['gebruikersnaam'])){
+                            if ($_SESSION['gebruikersnaam'] == $productdata['verkoper']) {
+                                echo '<form action="" method="post" enctype="multipart/form-data">
+                                <div class="custom-file">
+                                <label class="custom-file-label" for="customFile">Selecteer een foto</label>
+                                <input type="file" class="custom-file-input" id="customFile" name="fileToUpload">
+                                </div>
 
-<section class="productpage">
-<div class="container border-primary">
-        <div class="row">
-            <div class="col-lg-6 p-3 bg-secondary text-white">
-                <figure class="figure" style="position: relative; text-align: center;">
-                    <!-- <img src="media/WatchTestJEREMY.jpg" alt="..."
-                         class="figure-img img-fluid rounded">
-                   afbeelding vanuit de webserver moet nog ingevoerd worden
-                    <div class="row">
-                    <img src="media/WatchTestJEREMY.jpg" alt="..." class="col-2 col-md-offset-1 rounded">
-                    <img src="media/WatchTestJEREMY.jpg" alt="..." class="col-lg-2 col-md-offset-1 rounded">
-                    <img src="media/WatchTestJEREMY.jpg" alt="..." class="col-lg-2 col-md-offset-1 rounded">
-                    </div> -->
-
-                    <div class="preview col-md-6">
-
-                      <div class="preview-pic tab-content">
-                        <div class="tab-pane active" id="pic-1"><img src="http://placekitten.com/400/252" /></div>
-                        <div class="tab-pane" id="pic-2"><img src="https://cdn-1.debijenkorf.nl/web_detail/hugo-boss-horloge-rafal-hb1513456/?reference=039/130/13_0391309001300000_pro_flt_frt_01_1108_1528_1669062.jpg" /></div>
-                        <div class="tab-pane" id="pic-3"><img src="https://www.brandfield.nl/media/catalog/product/cache/21/image/9df78eab33525d08d6e5fb8d27136e95/m/k/mk8281_1.jpg" /></div>
-                        <div class="tab-pane" id="pic-4"><img src="http://placekitten.com/400/252" /></div>
-                      </div>
-                      <ul class="preview-thumbnail nav nav-tabs">
-                        <li class="active"><a data-target="#pic-1" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
-                        <li><a data-target="#pic-2" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
-                        <li><a data-target="#pic-3" data-toggle="tab"><img src="https://www.brandfield.nl/media/catalog/product/cache/21/image/9df78eab33525d08d6e5fb8d27136e95/m/k/mk8281_1.jpg" /></a></li>
-                        <li><a data-target="#pic-4" data-toggle="tab"><img src="http://placekitten.com/200/126" /></a></li>
-                      </ul>
-
+                                <input type="submit" class="btn upload-file btn-primary" value="Upload foto" name="submit-file">
+                                </form>';
+                            }
+                        } ?>
+                        <dl class="dl-horizontal">
+                            <dt>Beschrijving:</dt>
+                            <br>
+                            <dd><?= $productdata['beschrijving'] ?></dd>                            
+                        </dl>
                     </div>
-
-                </figure>
-                <div class="col p-3 mb-2 bg-secondary text-white" style="text-align: center">
-
-
-                    <p>Description: <?= $productdata[0]['beschrijving'] ?> </p><br>
-                    <p>Verzendinstructies:<br> <?= $productdata[0]['verzendinstructies'] ?>
                 </div>
-            </div>
-            <div class="col-lg-6 p-3 mb-2 bg-secondary text-white">
-                <div class="alert alert-dark" role="alert">
-                    <h4 class="alert-heading"><?= $productdata[0]['titel']?></h4>
-                    <p>Startprijs: € <?= $productdata[0]['startprijs']?></p>
-                    <p>Verzendkosten: € <?= $productdata[0]['verzendkosten'] ?>
-                    <p>Voorwerpnummer: <?= $productdata[0]['voorwerpnummer']?></p>
-                    <div id="txt"></div>
-                    <hr>
-                    <p>Hoogste bod:</p>
-                    <div class="card bg-light mb-4">
-                        <div class="card-body">
-                            <table class="table">
 
+                <div class="col-lg-5 p-3 bg-secondary text-white">
+                    <div class="alert alert-dark" role="alert">
+                        <p class="beginTijdstip"><i>Aangeboden op: <?= $productdata['looptijdBeginDag'] .' om: ' . date_format(date_create($productdata['looptijdBeginTijdstip']), "H:i") ?> </i></p>
+                        <h2 class="alert-heading"> <strong> <?= $productdata['titel']?></strong></h2> 
+                        <p>Startprijs: € <?=$productdata['startprijs']?></p>
+                        <?php if(isset($productdata['verzendkosten'])){ echo '<p>Verzendkosten: €' .$productdata['verzendkosten'];} ?></p>
+                        <p>Productnummer: <?=$productdata['voorwerpnummer']?></p>
+                        <div id="txt"></div>
+                        <hr>
+
+                        <div class="bids">
+                            <table class="table table-responsive">
                                 <?php
-                                $bodData = handlequery("SELECT top 10 *
-                                FROM Bod
-                                WHERE voorwerpnummer = $Vwnummer
-                                ORDER BY bodbedrag DESC
-                                ");
-
-                                foreach ($bodData as $Boditem) {
-                                $bodHi= $Boditem['bodTijdstip'];
-                                $bodTijdstip= date_create("$bodHi");
-
-                                $boddcY= $Boditem['bodDag'];
-                                $bodDag= date_create("$boddcY");
+                                $bodInfo = handlequery("SELECT top 10 * FROM Bod WHERE voorwerpnummer = :voorwerpnummer ORDER BY bodbedrag DESC", $paramvoorwerpnummer);
+                                if(count($bodInfo) == 0){
+                                    echo "Er zijn nog geen biedingen.";
+                                } else {
+                                    echo '<thead>';
+                                    foreach ($bodInfo as $bodkolom) {
+                                        echo '<tr>';
+                                        echo '<th scope="col">€' .$bodkolom['bodbedrag']. '</th>';
+                                        echo '<th scope="col">' .$bodkolom['gebruikersnaam']. '</th>';
+                                        echo '<th scope="col">' .date_format(date_create($bodkolom['bodDag']), "d-m-Y"). '</th>';
+                                        echo '<th scope="col">' .date_format(date_create($bodkolom['bodTijdstip']), "H:i"). '</th>';  
+                                        echo '</tr>';                                      
+                                    }
+                                    echo '</thead>';
+                                }
                                 ?>
-                                <thead class="thead-dark">
-                                <tr class="table-danger">
-                                    <th scope="col">€ <?= $Boditem['bodbedrag']?></th>
-                                    <th scope="col"><?= $Boditem['gebruikersnaam']?></th>
-                                    <th scope="col"><?= date_format($bodDag, "d-m-Y")?></th>
-                                    <th scope="col"><?= date_format($bodTijdstip, "H:i")?></th>
-<!--                                <th scope="col">--><?//= date_format($bodTijd, "H:i:s")?><!--</th>Secondenteller bij het bod-->
-                                    <?php } ?>
-                                </tr>
-                                </thead>
-
                             </table>
                         </div>
-                    </div>
-                    <div class="row">
-                       
-                        <div class="userInfo"
-                        <p style="margin: auto;">
-                            Aangeboden door:
-                            <?= $productdata[0]['voornaam'] . " " . $productdata[0]['achternaam'] . " uit " . $productdata[0]['plaatsnaam']; ?>
-                             <br><br>
-                            Neem contact op met <?= $productdata[0]['voornaam'] . " " . $productdata[0]['achternaam'] ?>: 
-                            <br>
-                            <A href=<?='"'. 'mailto:'. $productdata[0]['mailadres'] . '?SUBJECT=' . $productdata[0]['titel'] . '"'?>><i class="fas fa-envelope"></i> </A> <a href=<?= '"'.'tel:' . $productdata[0]['telefoonnummer'].'"'?>><i class="fas fa-phone"></i></a>
-                        </p>
-                        <!-- <img src="https://mb.lucardi-cdn.nl/zoom/64867/regal-mesh-horloge-met-zilverkleurige-band.jpg" alt="..." width= 70px height= 70px class="rounded-circle float-right" style="margin: -15px 15px 0 0"> -->
-                    </div>
-                </div>
-                </div>
-            <?php if (isset($_SESSION['gebruikersnaam'])){ ?>
-                <form method="post" action="">
-                    <div class="form-row align-items-center">
-                        <div class="col-sm-9">
-                            <input type="number" class="form-control form-control-lg" name="bidAmount" id="colFormLabelLg" placeholder="Geef uw gewenste bedrag in.">
-                            <div class="col-auto">
-                                <button type="submit" name="bidAmount-Submit" class="btn btn-primary mb-2">Bied!</button>
+                        <?='<p>'.$htmluploadFoto.'</p>'?>
+                        <hr>
+                        <div class="userInfo">
+                            <div class="row">
+                                <div class="col-lg-9">
+                                    <p><b><?= $productdata['voornaam']. " " .$productdata['achternaam'] ?></b> te <?=$productdata['plaatsnaam']?></p><br>
+                                    <p><a href=<?='"mailto:' .$productdata['mailadres']. '?SUBJECT=' . $productdata['titel'] . '"'?>> <i class="fas fa-envelope"></i></a><!-- <a href="tel:<?=$productdata['telefoonnummer']?>">&nbsp;&nbsp;<i class="fas fa-phone"></i></a> --></p>
+                                </div>
+                                <!-- <div class="col-lg-3 profile-picture align-items-right">
+                                    <img src="https://mb.lucardi-cdn.nl/zoom/64867/regal-mesh-horloge-met-zilverkleurige-band.jpg" alt="Profielfoto" class="rounded-circle">
+                                </div> -->
                             </div>
+                        </div>
+
                     </div>
                 </div>
-                </form>
-            <?php } ?>
-            <div>
-
-            <?php
-            if(isset($_POST['bidAmount-Submit'])){
-                $bidAmount = $_POST['bidAmount'];
-                executequery("EXEC prc_hogerBod $bidAmount, $Vwnummer, 'gebruiker'"); // functie in databse om het bod uit te brengen en te checken of het klopt
-            }
-
-            ?>
-
             </div>
         </div>
-        <section class="products">
-          <div class="container">
+    </section>
+    <section class="products">
+        <div class="container">
             <div class="row">
-              <div class="col-md-12 text-center">
-                <h2 class="mt-4">Nieuwe veilingen</h2>
-              </div>
-            </div>
-            <div class="product-container">
-              <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-                <div class="carousel-inner row w-100 mx-auto">
-                  <?= showProducts(true); ?>
+                <div class="col-md-12 text-center">
+                    <h2 class="mt-4">Nieuwe veilingen</h2>
                 </div>
-                <div class="clearfix">
-                  <div class="sliderbuttons">
-                    <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
-                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                    <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
-                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-    </div>
-</div>
-</section>
+                <div class="col-lg-12 product-container">
+                    <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                        <div class="carousel-inner row w-100 mx-auto">
+                            <?= showProducts(true); ?>      
+                        </div>
+                        <div class="clearfix">
+                            <div class="sliderbuttons">
+                               <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                                   <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                   <span class="sr-only">Previous</span>
+                               </a>
+                               <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                                   <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                   <span class="sr-only">Next</span>
+                               </a>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </section>
+</main>
 
-<?php
+<?php } else {
+
+    echo    '<main>
+                <div class="container">
+                    <h1>Product niet gevonden!</h1>
+                </div>
+            </main>';
+}
 require_once 'footer.php'; ?>
 
-</body>
