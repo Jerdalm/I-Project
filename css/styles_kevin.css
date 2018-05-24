@@ -24,7 +24,9 @@ nav.navbar{
 	line-height:16px;
 }
 
-html body header nav#index.navbar{	
+nav#index.navbar,
+nav#overview.navbar
+{	
 	background-color:transparent;
 }
 

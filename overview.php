@@ -49,4 +49,5 @@ require 'layout/pricefilter.php';
 </div>
 </div>
 </section>
+<script src="vendor/bootstrap/js/popup.header.js"></script>
 <?php require 'footer.php'; ?>
