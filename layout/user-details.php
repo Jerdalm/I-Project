@@ -1,8 +1,9 @@
          <div class="tab-pane fade show active" id="content-user-details" role="tabpanel" aria-labelledby="list-user-details">
 		<?php if(!isset($_GET['changeInfo'])) {?>
-		<div class="col-lg-12 col-xs-12 text-center"><h3>Gebruikersgegevens</h3></div>
+		
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"><h3>Gebruikersgegevens</h3></div>
 		<div class="row">
-		<div class="col-lg-2"></div>
+		<div class="col-lg-2 col-md-2 col-sm-2 col-xs-0 "></div>
         <div id="detailsTabel" class="text-center col-lg-8 float-left">
             <!-- alle gegevens van de gebruiker worden met een echo in een tabel gezet -->
 			
