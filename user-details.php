@@ -50,13 +50,15 @@ if(isset($_POST['submit-new-password'])){
     <div class="container">
 	<div class="col-lg-3 sidebar float-left"> 
     <div class="list-group" id="list-tab" role="tablist">
-	<a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Gewonnen veilingen</a>
-      <a class="list-group-item list-group-item-action active" id="list-user-details" data-toggle="list" href="#content-user-details" role="tab" aria-controls="home">Gebruikersgegevens</a>
+	<a class="list-group-item list-group-item-action" id="list-auctions-won" data-toggle="list" href="#content-auctions-won" role="tab" aria-controls="auctions-won">Gewonnen veilingen</a>
+    <a class="list-group-item list-group-item-action active" id="list-auctions-won" data-toggle="list" href="#content-user-details" role="tab" aria-controls="user-details">Gebruikersgegevens</a>
     </div>
 </div>
 	<div class="tab-content" id="nav-tabContent">
-      <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">1</div>
-	<?php require 'layout/user-details.php'; ?>
+     <?php
+	 require 'layout/user-details.php'; 
+	 require 'layout/auctionswon.php';
+	 ?>
     </div>
 	
 

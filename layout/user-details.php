@@ -1,4 +1,4 @@
-         <div class="tab-pane fade show active" id="content-user-details" role="tabpanel" aria-labelledby="list-user-details">
+        <div class="tab-pane fade show active" id="content-user-details" role="tabpanel" aria-labelledby="list-user-details">
 		<?php if(!isset($_GET['changeInfo'])) {?>
 		
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"><h3>Gebruikersgegevens</h3></div>
@@ -23,7 +23,7 @@
                     </tr>
                 </tbody>
             </table>
-            <A href="upgrade-user.php" class="cta-orange btn">Upgrade account</A>
+            <a href="upgrade-user.php" class="cta-orange btn">Upgrade account</A>
 			
         </div>
 		<div class="col-lg-2"></div>
