@@ -63,6 +63,8 @@ nav {
 	color:white;
 }
 
+
+
 /* Search bar navigation */
 .navbar input[type="search"]{
 	width: 240px;
@@ -521,4 +523,14 @@ section.user-details{
 .wrapper{
 	margin-left:-15px; 
 	margin-right:-15px;
+}
+
+/*buttons */
+.btn-orange{
+color: #fff;
+background-color: #F2552C;
+border-color: #F2552C;
+}
+.btn-orange:focus, .btn-orange.focus {
+    box-shadow: 0 0 0 0.2rem rgba(242, 85, 44,0.5)
 }

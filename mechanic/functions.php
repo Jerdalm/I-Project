@@ -213,7 +213,7 @@ function showLoginMenu(){
 	$htmlLogin = ' ';
 	if(isset($_SESSION['gebruikersnaam']) && !empty($_SESSION['gebruikersnaam'])){
 		
-		$htmlLogin .= '<li class="nav-item"><a class="nav-link" href="./user-details.php">Account</a></li>';
+		$htmlLogin .= '<li class="nav-item"><a class="nav-link" href="./account.php">Account</a></li>';
 		$htmlLogin .= '<li class="nav-item"><a class="nav-link" href="./logout.php">Uitloggen</a></li>';
 
 		
