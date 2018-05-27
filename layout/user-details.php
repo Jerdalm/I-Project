@@ -36,7 +36,7 @@ if(isset($_POST['submit-new-password'])){
 ?>
 
 <div class="tab-pane fade show active col-lg-9 float-left" id="content-user-details" role="tabpanel" aria-labelledby="list-user-details">
-	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"><h3 class="mt-4">Gebruikersgegevens</h3></div>
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"><h3>Gebruikersgegevens</h3></div>
 		<div class="row justify-content-md-center">
         
 		<!-- alle gegevens van de gebruiker worden met een echo in een tabel gezet -->
@@ -55,7 +55,7 @@ if(isset($_POST['submit-new-password'])){
 		</div>
 		<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 text-center">
 		<button type="button" class="btn btn-orange" data-toggle="modal" data-target="#changePass">Wachtwoord wijzigen</button>
-		<button type="button" class="btn btn btn-success" data-toggle="modal" data-target="#exampleModal">Info bewerken</button>
+		<button type="button" class="btn btn btn-success" data-toggle="modal" data-target="#changeInfo">Info bewerken</button>
 		</div>
 		<?php require 'changepassModal.php'; ?>
 		<?php require 'changeinfoModal.php'; ?>

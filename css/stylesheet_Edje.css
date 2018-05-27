@@ -41,12 +41,6 @@ div#detailsTabel.row.row-right{
 	float: right; 	 
 }
 
-
-form.form-group.edit-user-info{
-text-align: right;
-
-}
-
 .userInfo a {
 	text-align: left;
 	margin-top: 10px;

@@ -159,6 +159,11 @@ html body section.user-details div.container div#nav-tabContent.tab-content {
         overflow:visible;
     }
 
+#content-user-details button{
+	margin-right:5px;
+	margin-left: 5px;
+}
+
 .header .logo{
 	width:150px;
 }
@@ -549,8 +554,6 @@ section.user-details{
 .no-margin{
 	margin:0;
 }
-
-
 
 .wrapper{
 	margin-left:-15px; 
