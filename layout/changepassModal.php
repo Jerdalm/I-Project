@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="changePass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -11,7 +11,7 @@
       <div class="modal-body">
       
 	              <div class="formWachtwoordHuidig ">
-               <form method="POST" class="form-steps" action="">
+               <form method="POST" class="" action="">
                   <div class="form-group col-lg-12">
                      <label for="testvoorvraag"> Huidig Wachtwoord </label>
                      <input type="password" name="huidigWachtwoord" class="form-control" id="testAntwoordvakje" placeholder="Voer hier uw huidige wachtwoord in">
@@ -24,15 +24,16 @@
                      <label for="password-repeat">Herhaal wachtwoord</label>
                      <input type="password" class="form-control" placeholder="Herhaal uw nieuwe wachtwoord" name="password-repeat" id="password-repeat">
                   </div>
-                  <button type="submit" name="submit-new-password" value="Register" class="btn btn-primary btn-sm">Verzenden</button>
-               </form>
+                  
+               
             </div>
 	  
       </div>
       <div class="modal-footer">
-        <button type="button" style="flex-wrap: wrap;" class="btn btn-secondary" data-dismiss="modal">Annuleren</button>
-        <button type="button" style="flex-wrap: wrap;" class="btn btn-primary">Wijzigen</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleren</button>
+        <button type="submit" name="submit-new-password" value="Register" class="btn btn-primary">Wijzigen</button>
       </div>
+	</form>
     </div>
   </div>
 </div>

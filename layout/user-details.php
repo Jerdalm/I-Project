@@ -33,7 +33,7 @@ if(isset($_POST['submit-new-password'])){
         $messageNewPass = "Het huidige wachtwoord klopt niet";
     }
 }
- ?>
+?>
 
 <div class="tab-pane fade show active col-lg-9 float-left" id="content-user-details" role="tabpanel" aria-labelledby="list-user-details">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"><h3 class="mt-4">Gebruikersgegevens</h3></div>
@@ -53,20 +53,20 @@ if(isset($_POST['submit-new-password'])){
             </table>
             <!-- Button trigger modal -->
 		</div>
-		<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
-		<button type="button" class="btn btn-orange" data-toggle="modal" data-target="#exampleModal">Wachtwoord wijzigen</button>
+		<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 text-center">
+		<button type="button" class="btn btn-orange" data-toggle="modal" data-target="#changePass">Wachtwoord wijzigen</button>
 		<button type="button" class="btn btn btn-success" data-toggle="modal" data-target="#exampleModal">Info bewerken</button>
 		</div>
 		<?php require 'changepassModal.php'; ?>
+		<?php require 'changeinfoModal.php'; ?>
 		</div>
-        <?php if(isset($_GET['changePass'])){ ?>
-            <?php 
-            echo '<p class="error error-warning">';
-            if (isset($messageNewPass)){
-                echo $messageNewPass;
-            }
-            echo '</p>';
-        } 
+        <?php 		
+		
+		if (isset($messageNewPass)){
+			echo '<p class="error error-warning">';
+            echo $messageNewPass;
+			echo '</p>';	
+        }
 		
        if (isset($_GET['bijwerken'])) {
            UpdateInfoUser($_GET, $gebruikersnaam);

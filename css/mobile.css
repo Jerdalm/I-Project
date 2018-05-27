@@ -23,6 +23,8 @@
 	footer .separationline {
     border-right: 0px !important;
 	}
+	#content-user-details button:first-child{margin-top:0px;}
+	#content-user-details button{margin-top:10px;}
 	
 	
 }

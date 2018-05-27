@@ -31,13 +31,14 @@
 	background-color: #F2552C;
 	color: white;
 	font-weight: 600;
+	display: inline-block;
 }
 
 a.cta-orange:hover{
 	color: #F2552C;
 	text-decoration: none;
 	border: 2px solid #F2552C;
-	transition: 0.3s;
+	/* transition: 0.3s; */
 	background-color: white;
 	padding: 13px 58px;
 	box-shadow: 0px 0px 30px 1px rgba(0,0,0,0.25);

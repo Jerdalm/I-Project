@@ -1,5 +1,6 @@
 <?php
 require_once 'header.php'; 
+if(isset($_SESSION['gebruikersnaam'])){
 ?>
 <header id="account" class="header content-header">
    <div class="container">
@@ -30,4 +31,9 @@ require_once 'header.php';
    </div>  
 </section>   
 
-<?php require_once 'footer.php'; ?>
+<?php 
+
+}else{header('Location:user.php');}
+require_once 'footer.php'; 
+
+?>
