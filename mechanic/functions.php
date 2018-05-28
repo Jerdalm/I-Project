@@ -398,7 +398,7 @@ function loginControl($email, $wachtwoord){
 function insertUpgradeinfoInDB(){
 	$state = false;
 
-	$username = 'testnaam';
+    $username = $_SESSION['gebruikersnaam'];
 	$bank = $_SESSION['bank'];
 	$banknumber = $_SESSION['banknumber'];
 	$verificationMethod = $_SESSION['verificationMethod'];
