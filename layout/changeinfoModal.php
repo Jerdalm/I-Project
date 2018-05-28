@@ -9,22 +9,22 @@
         </button>
       </div>
       <div class="modal-body">
-      
+      <!-- echo om alle data in een formulier te zetten en te zorgen dat de gegevens aangepast kunnen worden. -->
             <form method="get" class="form-group col-lg-12 edit-user-info">  
                 <?php  foreach ($gebruiker as $key => $value) { 
                     echo '<label><b>'.$key.'</b></label>';
                     switch ($key) {
                         case 'geboortedag':
-                        echo '<input class="form-control" type="date" name="' . $key . '" value="'. $value .'"><br>';
+                        echo '<input class="form-control" type="date" name="' . $key . '" value="'. $value .'" required><br>';
                         break;
                         case 'gebruikersnaam':
                         echo '<input class="form-control" type="text" name="' . $key . '" value="'. $value .'" readonly><br>';
                         break;
                         case 'telefoonnummer':
-                        echo '<input class="form-control" type="tel" name="' . $key . '" value="'. $value .'"><br>';
+                        echo '<input class="form-control" type="tel" name="' . $key . '" value="'. $value .'" required><br>';
                         break;
                         default:
-                        echo '<input class="form-control" type="text" name="' . $key . '" value="'. $value .'"><br>';
+                        echo '<input class="form-control" type="text" name="' . $key . '" value="'. $value .'" required><br>';
                         break;
                     }
                 } 

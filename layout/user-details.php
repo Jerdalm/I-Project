@@ -2,6 +2,7 @@
 $gebruikersnaam = $_SESSION['gebruikersnaam'];
 $emailParameters = array(':gebruikersnaam' => $gebruikersnaam);
 $messageNewPassword = ' ';
+// fetch alle data van de gebruiker inclusief de telefoonnummer
 $gebruiker = FetchAssocSelectData("SELECT TOP 1 Gebruiker.gebruikersnaam,voornaam,achternaam,adresregel1,adresregel2,postcode,plaatsnaam,land,geboortedag,mailadres,telefoonnummer FROM Gebruiker 
    LEFT join Gebruikerstelefoon on Gebruiker.gebruikersnaam = Gebruikerstelefoon.gebruikersnaam
    WHERE Gebruiker.gebruikersnaam = :gebruikersnaam", $emailParameters);
@@ -14,7 +15,7 @@ $nieuwePassword = '';
 $messageCode = $message . $nieuwePassword;
 
 $correct = false;
-
+// checkt de input van de nieuwe wachtwoord en checkt ook of de nieuwe wachtwoord voldoet aan de eisen. Ook checkt dit gedeelte of het huidige wachtwoord juist is.
 if(isset($_POST['submit-new-password'])){
 
     $huidigWachtwoord = $_POST['huidigWachtwoord'];
