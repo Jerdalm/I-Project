@@ -670,7 +670,7 @@ function checkPriceFilter($min, $max){
 	return $returnwaarde;
 }
 
-function UpdateInfoUser($get, $gebruikersnaam){
+function UpdateInfoUser($get, $gebruikersnaam,$gebruiker){
 	$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer'] , ':gebruikersnaam' => $gebruikersnaam);
 	$birthdate = $get['geboortedag'];
 	$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
@@ -698,9 +698,14 @@ function UpdateInfoUser($get, $gebruikersnaam){
 		mailadres = :mailadres
 		WHERE gebruikersnaam = :gebruikersnaam",
 		$infoParameters);
-	handlequery("UPDATE Gebruikerstelefoon
+	if($gebruiker['telefoonnummer'] == null){
+		handlequery("INSERT INTO Gebruikerstelefoon (telefoonnummer,gebruikersnaam) VALUES (:telefoonnummer,:gebruikersnaam )",$telefoonnummerPara);
+		
+	} else {
+		handlequery("UPDATE Gebruikerstelefoon
 		SET telefoonnummer = :telefoonnummer
 		WHERE gebruikersnaam = :gebruikersnaam" , $telefoonnummerPara);
+	}
 	echo '<script>window.location.replace("./account.php")</script>';
 }
 
