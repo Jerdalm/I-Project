@@ -9,7 +9,7 @@
         </button>
       </div>
       <div class="modal-body">
-      
+      <!-- echo om alle data in een formulier te zetten en te zorgen dat de gegevens aangepast kunnen worden. -->
             <form method="get" class="form-group col-lg-12 edit-user-info">  
                 <?php  foreach ($gebruiker as $key => $value) { 
                     echo '<label><b>'.$key.'</b></label>';
