@@ -437,7 +437,12 @@ function showRubriekenlist(){
 	$previouslevel = $rubrieken[0]['Lvl'];
 
 	foreach($rubrieken as $rubriek){
-
+		$subcata = getSubRubriek($rubriek['rubrieknummer']);
+		
+		$amountInRubarr = handlequery("SELECT COUNT(voorwerpnummer) AS productaantal from VoorwerpInRubriek WHERE rubriekOpLaagsteNiveau IN ".$subcata."");
+		$amountInRub = $amountInRubarr[0]['productaantal'];
+		
+		
 		$rubriekparameters = array(':rubriek' => $rubriek['rubrieknummer']);
 		$subrubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek = :rubriek",$rubriekparameters);
 
@@ -448,7 +453,7 @@ function showRubriekenlist(){
 		if($subrubrieken){
 			$html .= '<li class="list-group-item d-flex justify-content-between align-items-center">
 			<a href="#'.$rubriek['rubrieknummer'].'" data-toggle="collapse" aria-expanded="false">'.$rubriek['rubrieknaam'].'
-			<span class="badge badge-primary badge-pill">14</span>
+			<span class="badge badge-primary badge-pill">'.$amountInRub.'</span>
 			<i class="fa fa-angle-down"></i>
 
 			</a></li>
@@ -458,7 +463,7 @@ function showRubriekenlist(){
 			$html .=
 			'<li class="list-group-item d-flex justify-content-between align-items-center ">
 			<a href="overview.php?rub='.$rubriek['rubrieknummer'].'">'.$rubriek['rubrieknaam'].'
-			<span class="badge badge-primary badge-pill">14</span>
+			<span class="badge badge-primary badge-pill">'.$amountInRub.'</span>
 			</a></li>';
 		}
 
