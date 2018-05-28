@@ -406,13 +406,14 @@ function insertUpgradeinfoInDB(){
 
 	$insertInfoParam = array(':gebruikersnaam' => $username, ':bank' => $bank, ':rekeningnummer' => $banknumber, ':controleOptie' => $verificationMethod, ':creditcardnumber' => $creditcardnumber);
 
-	$melding = handlequery("INSERT INTO Verkoper VALUES(:gebruikersnaam, :bank, :rekeningnummer, :controleOptie, :creditcardnumber)", $insertInfoParam);
-
-	$parameters = array(':username' => "$username");
-	handleQuery("UPDATE Gebruiker
+    $parameters = array(':username' => "$username");
+    handleQuery("UPDATE Gebruiker
 		SET soortGebruiker = 2
 		WHERE gebruikersnaam = :username", $parameters);
 
+	$melding = handlequery("INSERT INTO Verkoper VALUES(:gebruikersnaam, :bank, :rekeningnummer, :controleOptie, :creditcardnumber)", $insertInfoParam);
+
+	$_SESSION['soortgebruiker'] = 2;
 	header("Location: /account.php");
 	exit();
 }

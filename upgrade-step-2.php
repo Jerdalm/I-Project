@@ -21,14 +21,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if (validateCode($_SESSION['upgradeCode'], $_SESSION['email-upgrade'])) {
                 $validateCodeCorrect = true;
+                $message_upgrade = '';
                 insertUpgradeinfoInDB();
             } else {
-                $_SESSION["error_upgrade"] = 'upgradeCode komt niet overeen met de toegestuurde code';
-                header("Location: ./upgrade-user.php?step=2");
+                $message_upgrade = 'upgradeCode komt niet overeen met de toegestuurde code';
             }
         } else {
-            $_SESSION["error_upgrade"] = 'upgradeCode niet ingevoerd';
-            header("Location: ./upgrade-user.php?step=2");
+            $message_upgrade = 'upgradeCode niet ingevoerd';
         }
     }
 
@@ -36,18 +35,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['creditcardnumber'])) {
             $_SESSION['creditcardnumber'] = $_POST['creditcardnumber'];
             insertUpgradeinfoInDB();
-            header("Location: /user-details.php");
-        		exit();
         }
     } else {
-        $_SESSION["error_upgrade"] = 'creditcardnummer niet ingevoerd';
-        header("Location: ./upgrade-user.php?step=2");
+        $message_upgrade = 'creditcardnummer niet ingevoerd';
     }
 }
 
 if($_SESSION['verificationMethod'] == 'Post') {
     echo '
-    <form method="post">
+    <form class="col-lg-6" style="margin-right:350px;" method="post">
         <div class="form-group">
             <label for="upgrade-code">Uw code</label>
             <input type="textarea" class="form-control" name="upgradeCode" id="upgrade-code">

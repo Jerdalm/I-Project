@@ -14,7 +14,7 @@ body{
 	width:100%;
 }
 
-p{
+p:first-letter{
 	text-transform:capitalize;
 }
 section{
