@@ -398,7 +398,7 @@ function loginControl($email, $wachtwoord){
 function insertUpgradeinfoInDB(){
 	$state = false;
 
-	$username = 'testnaam';
+    $username = $_SESSION['gebruikersnaam'];
 	$bank = $_SESSION['bank'];
 	$banknumber = $_SESSION['banknumber'];
 	$verificationMethod = $_SESSION['verificationMethod'];
@@ -437,7 +437,12 @@ function showRubriekenlist(){
 	$previouslevel = $rubrieken[0]['Lvl'];
 
 	foreach($rubrieken as $rubriek){
-
+		$subcata = getSubRubriek($rubriek['rubrieknummer']);
+		
+		$amountInRubarr = handlequery("SELECT COUNT(voorwerpnummer) AS productaantal from VoorwerpInRubriek WHERE rubriekOpLaagsteNiveau IN ".$subcata."");
+		$amountInRub = $amountInRubarr[0]['productaantal'];
+		
+		
 		$rubriekparameters = array(':rubriek' => $rubriek['rubrieknummer']);
 		$subrubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek = :rubriek",$rubriekparameters);
 
@@ -448,7 +453,7 @@ function showRubriekenlist(){
 		if($subrubrieken){
 			$html .= '<li class="list-group-item d-flex justify-content-between align-items-center">
 			<a href="#'.$rubriek['rubrieknummer'].'" data-toggle="collapse" aria-expanded="false">'.$rubriek['rubrieknaam'].'
-			<span class="badge badge-primary badge-pill">14</span>
+			<span class="badge badge-primary badge-pill">'.$amountInRub.'</span>
 			<i class="fa fa-angle-down"></i>
 
 			</a></li>
@@ -458,7 +463,7 @@ function showRubriekenlist(){
 			$html .=
 			'<li class="list-group-item d-flex justify-content-between align-items-center ">
 			<a href="overview.php?rub='.$rubriek['rubrieknummer'].'">'.$rubriek['rubrieknaam'].'
-			<span class="badge badge-primary badge-pill">14</span>
+			<span class="badge badge-primary badge-pill">'.$amountInRub.'</span>
 			</a></li>';
 		}
 
@@ -742,4 +747,28 @@ function checkNewPassword ($password, $passwordrepeat){
 	}
 	return $messageReturn;
 }
+
+	function pagination($array,$itemsperpage = 10){
+		$submenus =(sizeof($array) / $itemsperpage);
+		$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		
+		if(isset($_GET['pagination'] ) && isset($_GET['perpage'] )){
+			$currentpagination = '&pagination='.$_GET['pagination'].'&perpage='.$_GET['perpage'];
+			$newUrl = str_replace($currentpagination, '', $actual_link);
+		}else{$newUrl = $actual_link; }
+		
+		$url_end = substr($actual_link, -3);
+		if($url_end == 'php'){$newUrl = $newUrl.'?';}
+		
+		if($submenus > 1){
+			
+			for($teller = 0; $teller < $submenus; $teller++){
+				$startvalue = $teller * $itemsperpage;
+				$visueel = $teller + 1;
+				
+				echo "<a class=\"btn btn3 \" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";	
+			}
+		}		
+	}
+	
 ?>

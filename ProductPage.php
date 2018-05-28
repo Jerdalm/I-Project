@@ -61,7 +61,7 @@ if(isset($_GET['product'])){
         $htmluploadFoto = '<form method="post" action="">
         <div class="form-row align-items-center">
         <div class="col-sm-12">
-        <input type="number" class="form-control" name="bidAmount" id="colFormLabelLg" placeholder="Geef uw gewenste bedrag in">
+        <input type="number" step="0.01" class="form-control" name="bidAmount" id="colFormLabelLg" placeholder="Geef uw gewenste bedrag in">
         <input type="submit" name="bidAmount-submit" Value="Bied!" class="biedenKnop cta-orange btn">
         ';
         if(isset($message_bids)){

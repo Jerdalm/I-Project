@@ -2,20 +2,17 @@
 require_once './head.php';
 require_once './db.php';
 
-// na het upgraden van de gebruiker wordt de gebruiker niet doorgestuurd als er voor post gekozen is
-// hij wordt wel doorgestuurd als de gebruiker voor credit card kiest
-
 $state = false; // boolean voor debuggen van de header in de insertUpgradeinfoInDb
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if($_SESSION['verificationMethod'] == 'Post') {
-        if (isset($_POST['creditcardnumber'])) {
+        if (!empty($_POST['creditcardnumber'])) {
             $_SESSION['creditcardnumber'] = $_POST['creditcardnumber'];
         } else {
             $_SESSION['creditcardnumber'] = NULL;
         }
 
-        if (isset($_POST['upgradeCode'])) {
+        if (!empty($_POST['upgradeCode'])) {
 
             $_SESSION['upgradeCode'] = $_POST['upgradeCode'];
 
