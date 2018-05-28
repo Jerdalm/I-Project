@@ -56,17 +56,22 @@ if(isset($_POST['submit-new-password'])){
 		<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 text-center">
 		<button type="button" class="btn btn-orange" data-toggle="modal" data-target="#changePass">Wachtwoord wijzigen</button>
 		<button type="button" class="btn btn btn-success" data-toggle="modal" data-target="#changeInfo">Info bewerken</button>
+		
+		<?php
+		if (isset($messageNewPass)){
+			echo '<p class="error error-warning">';
+            echo $messageNewPass;
+			echo '</p>';	
+        }
+		?>
+		
 		</div>
 		<?php require 'changepassModal.php'; ?>
 		<?php require 'changeinfoModal.php'; ?>
 		</div>
         <?php 		
 		
-		if (isset($messageNewPass)){
-			echo '<p class="error error-warning">';
-            echo $messageNewPass;
-			echo '</p>';	
-        }
+
 		
        if (isset($_GET['bijwerken'])) {
            UpdateInfoUser($_GET, $gebruikersnaam);
