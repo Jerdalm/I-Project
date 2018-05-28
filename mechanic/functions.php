@@ -671,21 +671,21 @@ function checkPriceFilter($min, $max){
 }
 
 function UpdateInfoUser($get, $gebruikersnaam){
-	$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer'] , ':gebruikersnaam' => $gebruikersnaam);
-	$birthdate = $get['geboortedag'];
+	$telefoonnummerPara = array(':telefoonnummer' => $_get['telefoonnummer'] , ':gebruikersnaam' => $gebruikersnaam);
+	$birthdate = $_get['geboortedag'];
 	$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
 	$geboortedag = $myDateTime->format('Y-m-d');
 
 	$infoParameters = array(':gebruikersnaam' => $gebruikersnaam ,
-		':voornaam' => $get['voornaam'],
-		':achternaam' => $get['achternaam'] ,
-		':adresregel1' => $get['adresregel1'] ,
-		':adresregel2' => $get['adresregel2'] ,
-		':postcode' => $get['postcode'],
-		':plaatsnaam' => $get['plaatsnaam'] ,
-		':land' =>  $get['land'] ,
+		':voornaam' => $_get['voornaam'],
+		':achternaam' => $_get['achternaam'] ,
+		':adresregel1' => $_get['adresregel1'] ,
+		':adresregel2' => $_get['adresregel2'] ,
+		':postcode' => $_get['postcode'],
+		':plaatsnaam' => $_get['plaatsnaam'] ,
+		':land' =>  $_get['land'] ,
 		':geboortedag' => $geboortedag ,
-		':mailadres' => $get['mailadres']);
+		':mailadres' => $_get['mailadres']);
 	handlequery("UPDATE Gebruiker
 		SET voornaam = :voornaam ,
 		achternaam = :achternaam,
