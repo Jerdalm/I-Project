@@ -747,4 +747,28 @@ function checkNewPassword ($password, $passwordrepeat){
 	}
 	return $messageReturn;
 }
+
+	function pagination($array,$itemsperpage = 10){
+		$submenus =(sizeof($array) / $itemsperpage);
+		$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		
+		if(isset($_GET['pagination'] ) && isset($_GET['perpage'] )){
+			$currentpagination = '&pagination='.$_GET['pagination'].'&perpage='.$_GET['perpage'];
+			$newUrl = str_replace($currentpagination, '', $actual_link);
+		}else{$newUrl = $actual_link; }
+		
+		$url_end = substr($actual_link, -3);
+		if($url_end == 'php'){$newUrl = $newUrl.'?';}
+		
+		if($submenus > 1){
+			
+			for($teller = 0; $teller < $submenus; $teller++){
+				$startvalue = $teller * $itemsperpage;
+				$visueel = $teller + 1;
+				
+				echo "<a class=\"btn btn3 \" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";	
+			}
+		}		
+	}
+	
 ?>
