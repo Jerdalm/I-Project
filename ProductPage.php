@@ -16,8 +16,8 @@ if(isset($_GET['product'])){
         //voorwerpnummer moet meegegeven worden vanuit de site
 
     $images = handlequery("SELECT filenaam FROM Bestand WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
-   
     $aangebodenDag = date("d-m-Y", strtotime($productdata['looptijdBeginDag']));
+    
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if(isset($_POST['submit-file'])){
             $target_dir = "./uploads/user/" . $productdata['verkoper'] . '/' . $productdata['voorwerpnummer']. '/';
