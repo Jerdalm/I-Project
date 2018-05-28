@@ -243,7 +243,7 @@ function checkUsernamePassword($username, $password, $passwordrepeat){
 				$password_hashed = password_hash($password , PASSWORD_DEFAULT);
 				$_SESSION['username'] = $username;
 				$_SESSION['password'] = $password_hashed;
-				header("Location: ./user.php?step=4");
+				header("Location: ./registeren.php?step=4");
 			} else if (strlen($password) < $passwordMinimumLength &&  0 === preg_match('~[0-9]~', $password)) {
 				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";
 			} else if (strlen($password) < $passwordMinimumLength) {
@@ -315,7 +315,7 @@ function insertRegistrationinfoInDB(){
 
 		session_destroy();
 		$message_registration = 'Registratie voltooit!';
-		header('Refresh:0; url=./user.php');
+		header('Location: url=./user.php');
 	} else {
 		$message_registration = 'Het opgegeven telefoonnummer klopt niet.';
 	}
