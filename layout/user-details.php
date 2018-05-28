@@ -74,7 +74,7 @@ if(isset($_POST['submit-new-password'])){
 
 		
        if (isset($_GET['bijwerken'])) {
-           UpdateInfoUser($_GET, $gebruikersnaam);
+           UpdateInfoUser($_GET, $gebruikersnaam,$gebruiker);
        }?> 
 	   </div>
 	   
