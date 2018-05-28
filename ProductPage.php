@@ -96,7 +96,7 @@ if(isset($_GET['product'])){
                                         $teller++;
                                         continue;
                                     }
-                                    echo '<li><a data-target="#pic-'.$teller . '"data-toggle="tab"><img src="'.$image['filenaam'] . '" /></a></li>';
+                                    echo '<li><a data-target="#pic-'.$teller . '"data-toggle="tab"><img onerror="this.style.display=\'none\'"src="'.$image['filenaam'] . '" /></a></li>';
                                     $teller++; 
                                 } ?>
                             </ul>
@@ -125,6 +125,7 @@ if(isset($_GET['product'])){
 
                 <div class="col-lg-5 p-3 bg-secondary text-white">
                     <div class="alert alert-dark" role="alert">
+					<div class="product-info">
                         <p class="beginTijdstip"><i>Aangeboden op: <?= $productdata['looptijdBeginDag'] .' om: ' . date_format(date_create($productdata['looptijdBeginTijdstip']), "H:i") ?> </i></p>
                         <h2 class="alert-heading"> <strong> <?= $productdata['titel']?></strong></h2> 
                         <p>Startprijs: € <?=$productdata['startprijs']?></p>
@@ -132,6 +133,7 @@ if(isset($_GET['product'])){
                         <p>Productnummer: <?=$productdata['voorwerpnummer']?></p>
                         <div id="txt"></div>
                         <hr>
+					</div>
 
                         <div class="bids">
                             <table class="table table-responsive">
@@ -202,14 +204,27 @@ if(isset($_GET['product'])){
        </div>
    </section>
 </main>
+<script>
+setInterval(function()
+{
+$('.preview-thumbnail').load(document.URL +  ' .preview-thumbnail');
+$('.product-info').load(document.URL +  ' .product-info');
+$('.bids').load(document.URL +  ' .bids');
+$('.userInfo').load(document.URL +  ' .userInfo');
+   
+}, 1000); 
+</script>
 
+<style>
+
+</style>
 <?php } else {
 
-    echo    '<main>
-                <div class="container">
-                    <h1>Product niet gevonden!</h1>
-                </div>
-            </main>';
+    echo  '<main>
+             <div class="container">
+                 <h1>Product niet gevonden!</h1>
+               </div>
+           </main>';
 }
 require_once 'footer.php'; ?>
 
