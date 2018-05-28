@@ -21,7 +21,10 @@
                         echo '<input class="form-control" type="text" name="' . $key . '" value="'. $value .'" readonly><br>';
                         break;
                         case 'telefoonnummer':
-                        echo '<input class="form-control" type="tel" name="' . $key . '" value="'. $value .'" required><br>';
+                        echo '<input class="form-control" type="tel" name="' . $key . '" value="'. $value .'" ><br>';
+                        break;
+                        case 'adresregel2':
+                        echo '<input class="form-control" type="text" name="' . $key . '" value="'. $value .'"><br>';
                         break;
                         default:
                         echo '<input class="form-control" type="text" name="' . $key . '" value="'. $value .'" required><br>';
