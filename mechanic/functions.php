@@ -544,6 +544,9 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 		<h5 class="product-data" id="'.$product['voorwerpnummer'].'"><span class="time">'.$timediff.'</span>|<span class="price">&euro;'.$product['bodbedrag'].'</span></h5>
 		<a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a>
 		</div>
+		<div class="card-footer text-muted">
+		locatie: '.$product['plaats'].'
+		</div>
 		</div>
 		';
 		$html .= $afterInput;
