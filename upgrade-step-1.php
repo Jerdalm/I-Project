@@ -34,22 +34,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // nadat er op de knop gedrukt wordt
 
     if($_POST['verificationMethod'] == 'Post') { // is er gekozen voor de post
         if($_SESSION['banknumber'] == NULL || ($_SESSION['bank'] == NULL)) {
-            $_SESSION["error_upgrade"] = 'bank en rekeningnummer moeten worden ingevoerd als u voor de post verificatie kiest';
-            header("Location: ./upgrade-user.php");
+            $message_upgrade = 'bank en rekeningnummer moeten worden ingevoerd als u voor de post verificatie kiest';
+           // header("Location: ./upgrade-user.php");
         } else {
             $_SESSION['verificationMethod'] = $_POST['verificationMethod'];
+            $message_upgrade = '';
             sendCode($_SESSION['email-upgrade'], $subjectText, $bodyText, $headerLocationIf, $headerLocationElse, $randomVerificationCode);
         }
     }
 
     if($_POST['verificationMethod'] == 'Credit Card') { // is er gekozen voor de creditcard
         $_SESSION['verificationMethod'] = $_POST['verificationMethod'];
-        header("Location: ./upgrade-user.php?step=2");
+        $message_upgrade = '';
+        //header("Location: ./upgrade-user.php?step=2");
     }
 }
 
 echo '
-<form method="post" >
+<form class="col-lg-6" method="post" >
     <div class="form-group">
         <label for="input-bank"> Bank </label>
         <input type="textarea" class="form-control" name="bank" id="user-bank">

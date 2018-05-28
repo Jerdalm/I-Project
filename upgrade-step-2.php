@@ -21,13 +21,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if (validateCode($_SESSION['upgradeCode'], $_SESSION['email-upgrade'])) {
                 $validateCodeCorrect = true;
+                $message_upgrade = '';
                 insertUpgradeinfoInDB();
             } else {
-                $_SESSION["error_upgrade"] = 'upgradeCode komt niet overeen met de toegestuurde code';
+                $message_upgrade = 'upgradeCode komt niet overeen met de toegestuurde code';
                 header("Location: ./upgrade-user.php?step=2");
             }
         } else {
-            $_SESSION["error_upgrade"] = 'upgradeCode niet ingevoerd';
+            $message_upgrade = 'upgradeCode niet ingevoerd';
             header("Location: ./upgrade-user.php?step=2");
         }
     }
@@ -40,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         		exit();
         }
     } else {
-        $_SESSION["error_upgrade"] = 'creditcardnummer niet ingevoerd';
+        $message_upgrade = 'creditcardnummer niet ingevoerd';
         header("Location: ./upgrade-user.php?step=2");
     }
 }
