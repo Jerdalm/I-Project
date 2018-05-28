@@ -213,7 +213,7 @@ function showLoginMenu(){
 	$htmlLogin = ' ';
 	if(isset($_SESSION['gebruikersnaam']) && !empty($_SESSION['gebruikersnaam'])){
 		
-		$htmlLogin .= '<li class="nav-item"><a class="nav-link" href="./user-details.php">Account</a></li>';
+		$htmlLogin .= '<li class="nav-item"><a class="nav-link" href="./account.php">Account</a></li>';
 		$htmlLogin .= '<li class="nav-item"><a class="nav-link" href="./logout.php">Uitloggen</a></li>';
 
 		
@@ -243,7 +243,7 @@ function checkUsernamePassword($username, $password, $passwordrepeat){
 				$password_hashed = password_hash($password , PASSWORD_DEFAULT);
 				$_SESSION['username'] = $username;
 				$_SESSION['password'] = $password_hashed;
-				header("Location: ./user.php?step=4");
+				header("Location: ./registeren.php?step=4");
 			} else if (strlen($password) < $passwordMinimumLength &&  0 === preg_match('~[0-9]~', $password)) {
 				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";
 			} else if (strlen($password) < $passwordMinimumLength) {
@@ -315,7 +315,7 @@ function insertRegistrationinfoInDB(){
 
 		session_destroy();
 		$message_registration = 'Registratie voltooit!';
-		header('Refresh:0; url=./user.php');
+		header('Location: url=./user.php');
 	} else {
 		$message_registration = 'Het opgegeven telefoonnummer klopt niet.';
 	}
@@ -385,7 +385,7 @@ function loginControl($email, $wachtwoord){
 			$_SESSION['vraag'] = $gebruiker[0]["vraag"];
 			$_SESSION['antwoordtekst'] = $gebruiker[0]["antwoordtekst"];
 			$_SESSION['soortGebruiker'] = $gebruiker[0]["soortGebruiker"];
-			header("location: ./user-details.php");
+			header("location: ./account.php");
 		}
 		else {
 			$message_login = "Verkeerd wachtwoord of onbekende e-mail, probeer opnieuw!";
@@ -413,7 +413,7 @@ function insertUpgradeinfoInDB(){
 		SET soortGebruiker = 2
 		WHERE gebruikersnaam = :username", $parameters);
 
-	header("Location: /user-details.php");
+	header("Location: /account.php");
 	exit();
 }
 
@@ -670,7 +670,7 @@ function checkPriceFilter($min, $max){
 	return $returnwaarde;
 }
 
-function UpdateInfoUser($get, $gebruikersnaam){
+function UpdateInfoUser($get, $gebruikersnaam,$gebruiker){
 	$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer'] , ':gebruikersnaam' => $gebruikersnaam);
 	$birthdate = $get['geboortedag'];
 	$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
@@ -698,18 +698,44 @@ function UpdateInfoUser($get, $gebruikersnaam){
 		mailadres = :mailadres
 		WHERE gebruikersnaam = :gebruikersnaam",
 		$infoParameters);
-	handlequery("UPDATE Gebruikerstelefoon
+	if($gebruiker['telefoonnummer'] == null){
+		handlequery("INSERT INTO Gebruikerstelefoon (telefoonnummer,gebruikersnaam) VALUES (:telefoonnummer,:gebruikersnaam )",$telefoonnummerPara);
+		
+	} else {
+		handlequery("UPDATE Gebruikerstelefoon
 		SET telefoonnummer = :telefoonnummer
 		WHERE gebruikersnaam = :gebruikersnaam" , $telefoonnummerPara);
-	echo '<script>window.location.replace("./user-details.php")</script>';
+	}
+	echo '<script>window.location.replace("./account.php")</script>';
 }
 
 /* toont goede button aan de hand van ingelogt zijn of niet */
 function showButtonIndex(){
 	if(isset($_SESSION['gebruikersnaam'])){
-		echo '<a href="upgrade-user.php" class="btn cta-orange">Wordt verkoper!</a>';
+		echo '<a href="upgrade-user.php" class="cta-orange">Wordt verkoper!</a>';
 	} else {
-		echo '<a href="registreren.php" class="btn cta-orange">Registreer je nu om mee te bieden!</a>';		
+		echo '<a href="registreren.php" class="cta-orange">Registreer je nu om mee te bieden!</a>';		
 	}
+}
+
+function checkNewPassword ($password, $passwordrepeat){
+	$passwordMinimumLength = 7;
+	$messageReturn = '';
+	if ($password == $passwordrepeat) {
+		if (strlen($password) >= $passwordMinimumLength && contains_number($password)) {
+			$password_hashed = password_hash($password , PASSWORD_DEFAULT);	
+			$_SESSION['password'] = $password_hashed;
+			$messageReturn = "Wachtwoord zit in de database";												
+		} else if (strlen($password) < $passwordMinimumLength &&  0 === preg_match('[0-9]', $password)) {
+			$messageReturn = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";	
+		} else if (strlen($password) < $passwordMinimumLength) {
+			$messageReturn = "Uw wachtwoord moet minstens 7 tekens bevatten.";	
+		} else if (!contains_number($password)) {
+			$messageReturn = "Uw wachtwoord moet minimaal 1 cijfer bevatten.";
+		}
+	} else {
+		$messageReturn = "De wachtwoorden komen niet overeen";
+	}
+	return $messageReturn;
 }
 ?>

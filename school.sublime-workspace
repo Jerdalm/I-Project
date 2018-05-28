@@ -4,6 +4,74 @@
 		"selected_items":
 		[
 			[
+				"PRINT",
+				"print_r"
+			],
+			[
+				"plaat",
+				"plaatsBod"
+			],
+			[
+				"html",
+				"htmluploadFoto"
+			],
+			[
+				"bod",
+				"bodInfo"
+			],
+			[
+				"margin",
+				"margin-top\tproperty"
+			],
+			[
+				"false",
+				"false"
+			],
+			[
+				"fasle",
+				"fasle"
+			],
+			[
+				"bac",
+				"background-color\tproperty"
+			],
+			[
+				"bieding",
+				"biedingsBedrag"
+			],
+			[
+				"por",
+				"productdata"
+			],
+			[
+				"user",
+				"user-details"
+			],
+			[
+				"error",
+				"errorLoginAdmin"
+			],
+			[
+				"err",
+				"errorMessageArticle"
+			],
+			[
+				"max",
+				"max-width\tproperty"
+			],
+			[
+				"gebrui",
+				"gebruikersnaamForm"
+			],
+			[
+				"quer",
+				"queryCheckUnique"
+			],
+			[
+				"fields",
+				"fieldsNew"
+			],
+			[
 				"change",
 				"changeBitParam"
 			],
@@ -14,10 +82,6 @@
 			[
 				"biedings",
 				"biedingsNummer"
-			],
-			[
-				"bod",
-				"bodbedrag"
 			],
 			[
 				"gebruiker",
@@ -50,14 +114,6 @@
 			[
 				"bied",
 				"biedingInput"
-			],
-			[
-				"margin",
-				"margin-bottom\tproperty"
-			],
-			[
-				"html",
-				"htmlVeranderGebruiker"
 			],
 			[
 				"marign",
@@ -188,10 +244,6 @@
 				"message_login"
 			],
 			[
-				"gebrui",
-				"gebruiker"
-			],
-			[
 				"messae",
 				"message_registration"
 			],
@@ -222,10 +274,6 @@
 			[
 				"inline",
 				"inline-block"
-			],
-			[
-				"user",
-				"user"
 			],
 			[
 				"w",
@@ -306,10 +354,6 @@
 			[
 				"SESSO",
 				"_SESSION"
-			],
-			[
-				"error",
-				"error_registration"
 			],
 			[
 				"pas",
@@ -420,10 +464,6 @@
 				"li\tTag"
 			],
 			[
-				"bac",
-				"background"
-			],
-			[
 				"cl",
 				"class\tAttr"
 			],
@@ -474,63 +514,11 @@
 			[
 				"bak",
 				"background-size"
-			],
-			[
-				"edit",
-				"edit-bouwtekening--wrapper"
-			],
-			[
-				"ma",
-				"max-width"
-			],
-			[
-				"fon",
-				"font-size"
-			],
-			[
-				"f",
-				"fieldset-wrapper"
-			],
-			[
-				"COLO",
-				"color-main"
-			],
-			[
-				"ct",
-				"cta-button-mail"
-			],
-			[
-				"c",
-				"color"
-			],
-			[
-				"colo",
-				"color-main"
-			],
-			[
-				"fir",
-				"form-item"
-			],
-			[
-				"fieldset",
-				"fieldset-wrapper"
 			]
 		]
 	},
 	"buffers":
 	[
-		{
-			"contents": "<?php \nrequire_once './header.php'; \n\nif($_SESSION['gebruikersnaam'] == \"admin\") { \n\t$htmlVeranderVoorwerp = ' ';\n\t$htmlVeranderGebruiker = ' ';\n\t$htmlVeranderBieding = ' ';\n\tif (isset($_GET['search-article'])){\n\t\t$voorwerpNummer = $_GET['voorwerp'];\n\t\t$parametersVoorwerp = array(':voorwerpnummer' => \"%\".$voorwerpNummer.\"%\",\n\t\t\t':titel' => \"%\".$voorwerpNummer.\"%\",\n\t\t\t':prijs' => \"%\".$voorwerpNummer.\"%\",\n\t\t\t':verkoper' => \"%\".$voorwerpNummer.\"%\",\n\t\t\t':plaats' => \"%\".$voorwerpNummer.\"%\",\n\t\t\t':categorie' => \"%\".$voorwerpNummer.\"%\");\n\t\t$voorwerpen = handlequery(\"SELECT V.voorwerpnummer, V.verkoper, V.plaatsnaam, V.titel, V.startprijs, R.rubriekOpLaagsteNiveau \n\t\t\tFROM VoorwerpInRubriek R left outer join Voorwerp V \t\t\t\t\t\t\t\t        \n\t\t\ton V.voorwerpnummer = R.voorwerpnummer\n\t\t\tleft outer join Rubriek Ru\n\t\t\ton R.rubriekOpLaagsteNiveau = Ru.rubrieknummer\n\t\t\tWHERE v.voorwerpnummer like :voorwerpnummer\n\t\t\tor V.verkoper like :verkoper\n\t\t\tor V.plaatsnaam like :plaats\n\t\t\tor V.titel like :titel\n\t\t\tor v.startprijs like :prijs\n\t\t\tor Ru.rubrieknaam like :categorie\n\t\t\torder by v.voorwerpnummer asc\",\n\t\t\t$parametersVoorwerp);\t\t\n\t\t$artikelResultaten = '<table class=\"table\"><tr><th scope=\"col\">Resultaat</th></tr><tr>';\n\t\t// echo \"<pre>\";\n\t\t// print_r($voorwerpen);\n\t\t// echo \"</pre>\";\n\t\t// die();\n\t\tforeach($voorwerpen as $voorwerp){\n\t\t\t$getpath = \"$_SERVER[QUERY_STRING]\";\n\t\t\t$artikelResultaten .= \"<tr>\n\t\t\t<td>\n\t\t\t<a href='?\".$getpath.\"&voorwerpForm=\" . $voorwerp['voorwerpnummer'] . \"'>\" . $voorwerp['titel'] .\"</a>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<a href='?\".$getpath.\"&voorwerpForm=\" . $voorwerp['voorwerpnummer'] . \"'>\" . $voorwerp['voorwerpnummer'] .\"</a>\n\t\t\t</td>\n\t\t\t</tr>\"; \n\t\t} \n\t\t$artikelResultaten .= '</tr></table>';\n\t} else if (isset($_GET['search-user'])) {\n\t\t$gebruikersnaam = $_GET['gebruiker'];\n\t\t$parametersGebruiker = array(':gebruiker' => \"%\". $gebruikersnaam .\"%\",\n\t\t\t':mail' => \"%\". $gebruikersnaam .\"%\",\n\t\t\t':plaats' => \"%\". $gebruikersnaam .\"%\");\n\n\t\t$gebruikers = handlequery(\"SELECT * \n\t\t\tFROM Gebruiker \n\t\t\tWHERE gebruikersnaam like :gebruiker\n\t\t\tOR mailadres like :mail\n\t\t\tOR plaatsnaam like :plaats\",$parametersGebruiker);\n\t\t// echo '<pre>';\n\t\t// print_r($gebruikers);\n\t\t// echo \"</pre>\";\n\t\t// die();\n\t\t$gebruikerResultaten = '<table class=\"table\"><tr><th scope=\"col\">Resultaat</th></tr><tr>';\n\t\tforeach($gebruikers as $gebruiker){\n\t\t\t$gebruikerResultaten .= \"<tr>\" . \"<td>\" . \"<a href='?gebruikersnaamForm=\" . $gebruiker['gebruikersnaam'] . \"'>\" . $gebruiker['gebruikersnaam'] .\"</a>\". \"</td>\" . \"</tr>\";\n\t\t} \n\t\t$gebruikerResultaten .= '</tr></table>';\n\t} else if (isset($_GET['search-bieding'])) {\n\t\t$biedingInput = $_GET['bieding'];\t\n\t\t$parametersbieding = array(':voorwerpnummer' => \"%\". $biedingInput .\"%\",\n\t\t\t'bodbedrag' => \"%\". $biedingInput .\"%\",\n\t\t\t'titel' => \"%\". $biedingInput .\"%\");\n\t\t$biedingen = handlequery(\"SELECT * \n\t\t\tFROM Bod B INNER JOIN Voorwerp V \n\t\t\tON B.voorwerpnummer = V.voorwerpnummer\n\t\t\tWHERE B.voorwerpNummer like :voorwerpnummer\n\t\t\tOR bodbedrag like :bodbedrag\n\t\t\tOR titel like :titel\",$parametersbieding);\n\t\t$biedingenResultaten = '<table class=\"table\"><tr><th scope=\"col\">Resultaat</th></tr>';\n\t\tforeach($biedingen as $bieding){\n\t\t\t$biedingenResultaten .= \"<tr>\n\t\t\t<td>\n\t\t\t<a href=?biedingsNummer=\".$bieding['voorwerpnummer'].\"&biedingsTitel=\".$bieding['titel'].\"&biedingsBedrag=\".$bieding['bodbedrag'].\">\".$bieding['voorwerpnummer'].\"</a>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<a href=?biedingsNummer=\".$bieding['voorwerpnummer'].\"&biedingsTitel=\".$bieding['titel'].\"&biedingsBedrag=\".$bieding['bodbedrag'].\">\".$bieding['titel'].\"</a>\n\t\t\t</td>\n\t\t\t<td>\n\t\t\t<a href=?biedingsNummer=\".$bieding['voorwerpnummer'].\"&biedingsTitel=\".$bieding['titel'].\"&biedingsBedrag=\".$bieding['bodbedrag'].\">€\".$bieding['bodbedrag'].\"</a>\n\t\t\t</td>\n\t\t\t</tr>\";\n\t\t} \n\t\t$biedingenResultaten .= '</table>';\n\t}\n\tif (isset($_GET['voorwerpForm'])) {\n\t\t$voorwerpDetailParam = array(':voorwerpnummer' => $_GET['voorwerpForm']);\n\t\t$artikelResultaten = ' ';\n\t\t$voorwerpDetailQuery = \"SELECT voorwerpnummer, titel, beschrijving, startprijs, betalingswijze, betalingsinstructie, plaatsnaam, land, looptijd, looptijdbeginDag, \t\t\t\tCONVERT(TIME(0), [looptijdbeginTijdstip]) as looptijdbeginTijdstip, verzendkosten, verzendinstructies \n\t\tFROM Voorwerp \n\t\tWHERE voorwerpnummer = :voorwerpnummer\";\n\t\t$query = FetchAssocSelectData($voorwerpDetailQuery, $voorwerpDetailParam);\n\n\t\t$htmlVeranderVoorwerp = '<form class=\"form-group change-form\" method=\"GET\" action=\"\">'; \n\t\tforeach ($query as $key => $value) {\n\t\t\t$htmlVeranderVoorwerp .= '<div class=\"form-group\">';\t\t\n\t\t\t$htmlVeranderVoorwerp .= '<label>'. $key . '</label>';\n\t\t\tswitch ($key) {\n\t\t\t\tcase 'voorwerpnummer':\n\t\t\t\t$htmlVeranderVoorwerp .= '<input type=\"text\" name=\"'.$key.'\" value=\"'.$value.'\" readonly><br>';\n\t\t\t\tbreak;\n\t\t\t\tcase 'looptijdbeginDag':\n\t\t\t\t$htmlVeranderVoorwerp .= '<input type=\"date\" name=\"'.$key.'\" value=\"'.$value.'\"><br>';\n\t\t\t\tbreak;\n\t\t\t\tcase 'looptijd':\n\t\t\t\t$htmlVeranderVoorwerp .= '<select name=\"'.$key.'\">\n\t\t\t\t<option value=\"1\">1</option>\n\t\t\t\t<option value=\"3\">3</option>\n\t\t\t\t<option value=\"5\">5</option>\n\t\t\t\t<option value=\"7\">7</option>\n\t\t\t\t<option value=\"10\">10</option>\n\t\t\t\t</select><br>';\t\n\t\t\t\tbreak;\n\t\t\t\tdefault:\n\t\t\t\t$htmlVeranderVoorwerp .= '<input type=\"text\" name=\"'.$key.'\" value=\"'.$value.'\"><br>';\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\t$htmlVeranderVoorwerp .= '</div>';\n\t\t}\n\t\t$htmlVeranderVoorwerp .= '<button class=\"btn btn-success\" name=\"submit-changes-article\">Sla wijzigingen op</button>';\n\t\t$htmlVeranderVoorwerp .= '<button class=\"btn btn-danger\" name=\"delete-article\">Verwijder voorwerp</button>';\n\t\t$htmlVeranderVoorwerp .= '</form>';\n\t} else if (isset($_GET['gebruikersnaamForm'])) {\n\t\t$_SESSION['username_changeinfo'] = $_GET['gebruikersnaamForm'];\n\t\t$parametersGebruiker = array(':gebruiker' => $_SESSION['username_changeinfo']);\n\t\t$kweerie2 = \"SELECT gebruikersnaam, voornaam, achternaam, adresregel1, adresregel2, postcode, plaatsnaam, land, geboortedag, mailadres FROM Gebruiker WHERE gebruikersnaam = :gebruiker\";\n\t\t$query = FetchAssocSelectData($kweerie2, $parametersGebruiker);\n\n\t\t$htmlVeranderGebruiker = '<form class=\"form-group\" method=\"GET\" action=\"\">'; \n\t\tforeach ($query as $key => $value) {\n\t\t\t$htmlVeranderGebruiker .= '<div class=\"form-group\">';\n\t\t\t$htmlVeranderGebruiker .= '<label>'. $key . '</label>';\n\t\t\tswitch ($key) {\n\t\t\t\tcase 'gebruikersnaam':\n\t\t\t\t$htmlVeranderGebruiker .= '<input type=\"text\" name=\"'.$key.'\" value=\"'.$value.'\" readonly><br>';\n\t\t\t\tbreak;\n\t\t\t\tdefault:\n\t\t\t\t$htmlVeranderGebruiker .= '<input type=\"text\" name=\"'.$key.'\" value=\"'.$value.'\"><br>';\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\t$htmlVeranderGebruiker .= '</div>';\n\t\t}\n\t\t$htmlVeranderGebruiker .= '<button class=\"btn btn-success\" name=\"submit-changes-user\">Sla wijzigingen op</button>';\n\t\t$htmlVeranderGebruiker .= '<button name=\"block-user\" class=\"btn btn-danger\">Blokkeer gebruiker</button>';\n\t\t$htmlVeranderGebruiker .= '</form>';\n\t} else if (isset($_GET['biedingsNummer'])){\n\t\t$_SESSION['bit_changeinfo'] = $_GET['biedingsBedrag'];\n\t\t$parametersBied = array(':nummer' => (int)$_GET['biedingsNummer']);\n\t\t$queryBit = \"SELECT voorwerpnummer, gebruikersnaam, bodbedrag, bodDag, CONVERT(TIME(0), [bodTijdstip]) as bodTijdstip\n\t\tFROM Bod \n\t\tWHERE voorwerpnummer = :nummer\";\n\t\t$query = FetchAssocSelectData($queryBit, $parametersBied);\n\n\t\t$htmlVeranderBieding = '<form class=\"form-group change-form\" method=\"GET\" action=\"\">'; \n\t\tforeach ($query as $field => $value) {\n\t\t\t$htmlVeranderBieding .= '<div class=\"form-group\">';\n\t\t\t$htmlVeranderBieding .= '<label>'. $field. '</label>';\n\t\t\tswitch ($field) {\n\t\t\t\tcase 'voorwerpnummer':\n\t\t\t\tcase 'gebruikersnaam':\n\t\t\t\t$htmlVeranderBieding .= '<input type=\"text\" name=\"'. $field.'\" value=\"'. $value.'\" readonly><br>';\n\t\t\t\tbreak;\n\t\t\t\tcase 'bodDag':\n\t\t\t\t$htmlVeranderBieding .= '<input type=\"date\" name=\"'. $field.'\" value=\"'. $value.'\"><br>';\n\t\t\t\tbreak;\n\t\t\t\tcase 'bodTijdstip':\n\t\t\t\t$htmlVeranderBieding .= '<input type=\"text\" name=\"'. $field.'\" value=\"'. $value.'\"><br>';\n\t\t\t\tbreak;\n\t\t\t\tcase 'bodbedrag':\n\t\t\t\t$htmlVeranderBieding .= '<input type=\"number\" name=\"'. $field.'\" value=\"'. $value.'\" step=\".01\" min=\"0\"><br>';\n\t\t\t\tbreak;\n\t\t\t}\n\t\t\t$htmlVeranderBieding .= '</div>';\n\t\t}\n\t\t$htmlVeranderBieding .= '<button class=\"btn btn-success\" name=\"submit-changes-bit\">Sla wijzigingen op</button>';\n\t\t$htmlVeranderBieding .= '</form>';\t\n\t} else if (isset($_GET['block-user'])){\n\t\tdeleteUser(array_values($_GET)[0]);\t\n\t} else if (isset($_GET['delete-article'])){\n\t\tdeleteArticle(array_values($_GET)[0]);\n\t} else if (isset($_GET['submit-changes-user'])){\n\t\t$birthdate = $_GET['geboortedag'];\n\t\t$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);\n\t\t$geboortedag = $myDateTime->format('Y-m-d');\n\t\t$changeUserParam = array(':usernameNew' => array_values($_GET)[0],\n\t\t\t':firstname' => $_GET['voornaam'],\n\t\t\t':lastname' => $_GET['achternaam'],\n\t\t\t':adres1' => $_GET['adresregel1'],\n\t\t\t':adres2' => $_GET['adresregel2'],\n\t\t\t':postcode' => $_GET['postcode'],\n\t\t\t':placename' => $_GET['plaatsnaam'],\n\t\t\t':country' => $_GET['land'],\n\t\t\t':birthdate' => $geboortedag,\n\t\t\t':mail' => $_GET['mailadres'],\n\t\t\t'usernameOld' => $_SESSION['username_changeinfo']);\n\t\thandlequery(\"UPDATE Gebruiker \n\t\t\tSET gebruikersnaam = :usernameNew, voornaam = :firstname, achternaam = :lastname, adresregel1 = :adres1, adresregel2 = :adres2, postcode = :postcode, plaatsnaam = :placename, land = :country, geboortedag = :birthdate, mailadres = :mail\n\t\t\tWHERE gebruikersnaam = :usernameOld\", $changeUserParam);\t\n\t} else if (isset($_GET['submit-changes-article'])){\n\t\t$dateLooptijdBegin = $_GET['looptijdbeginDag'];\n\t\t$myDateTimeBegin = DateTime::createFromFormat('Y-m-d', $dateLooptijdBegin);\n\t\t$datumLooptijdBegin = $myDateTimeBegin->format('Y-m-d');\n\t\t$parametersUpdate = array(\n\t\t\t':titel' => $_GET['titel'], \n\t\t\t':beschrijving' => $_GET['beschrijving'],\n\t\t\t':startprijs' => (float)$_GET['startprijs'],\n\t\t\t':betalingswijze' => $_GET['betalingswijze'],\n\t\t\t':betalingsinstructie' => $_GET['betalingsinstructie'],\n\t\t\t':plaatsnaam' => $_GET['plaatsnaam'],\n\t\t\t':land' => $_GET['land'],\n\t\t\t':looptijd' => $_GET['looptijd'],\n\t\t\t':looptijdbeginDag' => $datumLooptijdBegin,\n\t\t\t':looptijdbeginTijdstip' => $_GET['looptijdbeginTijdstip'],\n\t\t\t':verzendkosten' => (float)$_GET['verzendkosten'],\n\t\t\t':verzendinstructies' => $_GET['verzendinstructies'],\n\t\t\t':voorwerpnummer' => $_GET['voorwerpnummer']);\n\t\thandlequery(\"UPDATE Voorwerp SET\n\t\t\ttitel = :titel,\n\t\t\tbeschrijving = :beschrijving,\n\t\t\tstartprijs = :startprijs,\n\t\t\tbetalingswijze = :betalingswijze,\n\t\t\tbetalingsinstructie = :betalingsinstructie,\n\t\t\tplaatsnaam = :plaatsnaam,\n\t\t\tland = :land,\n\t\t\tlooptijd = :looptijd,\n\t\t\tlooptijdbeginDag = :looptijdbeginDag,\n\t\t\tlooptijdbeginTijdstip = :looptijdbeginTijdstip,\n\t\t\tverzendkosten = :verzendkosten,\n\t\t\tverzendinstructies = :verzendinstructies\n\t\t\tWHERE voorwerpnummer = :voorwerpnummer\",\n\t\t\t$parametersUpdate);\n\t} else if (isset($_GET['submit-changes-bit'])){\n\t\t$dateBitDate = $_GET['bodDag'];\n\t\t$myDateTimeBegin = DateTime::createFromFormat('Y-m-d', $dateBitDate);\n\t\t$datumBoddag = $myDateTimeBegin->format('Y-m-d');\n\t\t$changeBitParam = array(':nummer' => $_GET['voorwerpnummer'],\n\t\t\t':gebruikersnaam' => $_GET['gebruikersnaam'],\n\t\t\t':bedrag' => (float)$_GET['bodbedrag'],\n\t\t\t':dag' => $datumBoddag,\n\t\t\t':tijdstip' => $_GET['bodTijdstip'],\n\t\t\t':bedragOud' => $_SESSION['bit_changeinfo']);\n\t\t$changeBitQuery = \"UPDATE Bod SET bodbedrag = :bedrag, bodDag = :dag, bodTijdstip = :tijdstip WHERE gebruikersnaam = :gebruikersnaam AND bodbedrag = :bedragOud AND voorwerpnummer = :nummer\";\n\t\thandlequery($changeBitQuery, $changeBitParam);\n\t}\n\t?>\n\n\t<main>\n\t\t<div class=\"container\">\n\t\t\t<div class=\"row\">\n\t\t\t\t<div class=\"col-lg-4 col-sm,m,. /.,mbnhvfcdefrt,y-12\">\n\t\t\t\t\t<div class=\"artikelnummer\">\n\t\t\t\t\t\t<!-- form om te zoeken op artikelnummer -->\n\t\t\t\t\t\t<form class=\"form-group\" method=\"GET\" action=\"\"> \n\t\t\t\t\t\t\t<input type=\"text\" name=\"voorwerp\" placeholder=\"Voorwerpnummer\" min=\"0\"> <br>\n\t\t\t\t\t\t\t<input class=\"cta-orange\" name=\"search-article\" type=\"submit\" value=\"Zoeken\">\n\t\t\t\t\t\t</form>\n\t\t\t\t\t\t<?=$htmlVeranderVoorwerp?>\n\t\t\t\t\t</div>\n\t\t\t\t\t<?php if(isset($artikelResultaten)) { \n\t\t\t\t\t\techo $artikelResultaten; \n\t\t\t\t\t}?>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-lg-4 col-sm-12\">\n\t\t\t\t\t<div class=\"gebruiker\">\n\t\t\t\t\t\t<!-- for om te zoeken op gebruiker -->\n\t\t\t\t\t\t<form class=\"form-group\" method=\"GET\" action=\"\"> \n\t\t\t\t\t\t\t<input type=\"text\" name=\"gebruiker\" placeholder=\"Gebruiker\"> <br>\n\t\t\t\t\t\t\t<input class=\"cta-orange\" name=\"search-user\" type=\"submit\" value=\"Zoeken\">\n\t\t\t\t\t\t</form>\n\t\t\t\t\t\t<?=$htmlVeranderGebruiker?>\n\t\t\t\t\t</div>\n\t\t\t\t\t<?php if(isset($gebruikerResultaten)) { \n\t\t\t\t\t\techo $gebruikerResultaten; \n\t\t\t\t\t}?>\n\t\t\t\t</div>\n\t\t\t\t<div class=\"col-lg-4 col-sm-12\">\n\t\t\t\t\t<div class=\"bieding\">\n\t\t\t\t\t\t<!-- for om te zoeken op gebruiker -->\n\t\t\t\t\t\t<form class=\"form-group\" method=\"GET\" action=\"\"> \n\t\t\t\t\t\t\t<input type=\"text\" name=\"bieding\" placeholder=\"Bieding\"> <br>\n\t\t\t\t\t\t\t<input class=\"cta-orange\" name=\"search-bieding\" type=\"submit\" value=\"Zoeken\">\n\t\t\t\t\t\t</form>\n\t\t\t\t\t\t<?=$htmlVeranderBieding?>\n\t\t\t\t\t</div>\n\t\t\t\t\t<?php if(isset($biedingenResultaten)) { \n\t\t\t\t\t\techo $biedingenResultaten; \n\t\t\t\t\t}?>\n\t\t\t\t</div>\n\t\t\t</div>\n\t\t</div>\n\t</main>\n\n<?php } \nrequire_once './footer.php'; ?>",
-			"file": "admin/admin-pagina.php",
-			"file_size": 13469,
-			"file_write_time": 131712335392532600,
-			"settings":
-			{
-				"buffer_size": 13189,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -590,20 +578,48 @@
 	"expanded_folders":
 	[
 		"/C/xampp/htdocs/I-Project",
-		"/C/xampp/htdocs/I-Project/admin",
-		"/C/xampp/htdocs/I-Project/admin/mechanic",
 		"/C/xampp/htdocs/I-Project/mechanic"
 	],
 	"file_history":
 	[
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/html.html.twig",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/favicon.ico",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/html.html.twig",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/robots.txt",
+		"/C/xampp/htdocs/I-Project/css/jonathan.css",
+		"/C/xampp/htdocs/I-Project/mechanic/functions.php",
+		"/C/xampp/htdocs/I-Project/upload-article.php",
+		"/C/xampp/htdocs/I-Project/ProductPage.php",
+		"/C/xampp/htdocs/I-Project/ProductPageNieuw.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/registreren.php",
+		"/C/xampp/htdocs/I-Project/registreren.php",
+		"/C/xampp/htdocs/I-Project/user.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/functions.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/form-step-4.php",
+		"/C/xampp/htdocs/I-Project/form-step-4.php",
+		"/C/xampp/htdocs/I-Project/index.php",
+		"/C/xampp/htdocs/I-Project/upgrade-user.php",
+		"/C/xampp/htdocs/I-Project/upgrade-step-1.php",
+		"/C/xampp/htdocs/I-Project/README.md",
+		"/C/xampp/htdocs/I-Project/user-details.php",
+		"/C/xampp/htdocs/I-Project/test.php",
 		"/C/xampp/htdocs/I-Project/admin/admin-pagina.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/functions 2.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/form-step-1.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/index 2.php",
+		"/C/xampp/htdocs/I-Project/admin/footer.php",
+		"/C/xampp/htdocs/I-Project/admin/index.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/admin-pagina.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/db.php",
 		"/C/xampp/htdocs/I-Project/admin/mechanic/functions.php",
+		"/C/xampp/htdocs/I-Project/admin/css/styles_kevin.css",
+		"/C/xampp/htdocs/I-Project/admin/header.php",
+		"/C/xampp/htdocs/I-Project/admin/css/jonathan.css",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/html.tpl.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/custom.css",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/block--homepaginablok3.html.twig",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/footer_ornament.png",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/page.tpl.php",
-		"/C/xampp/htdocs/I-Project/mechanic/functions.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/index.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/registreren.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/form-step-2.php",
@@ -612,30 +628,22 @@
 		"/C/xampp/htdocs/I-Project/form-step-1.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/form-step-1.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/user.php",
-		"/C/xampp/htdocs/I-Project/css/jonathan.css",
-		"/C/xampp/htdocs/I-Project/admin/css/jonathan.css",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/jonathan.css",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/functions 2.php",
-		"/C/xampp/htdocs/I-Project/admin/index.php",
-		"/C/xampp/htdocs/I-Project/index.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/index.php",
 		"/C/xampp/htdocs/I-Project/admin-pagina.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/db.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/admin-pagina.php",
 		"/C/xampp/htdocs/I-Project/css/styles_kevin.css",
-		"/C/xampp/htdocs/I-Project/registreren.php",
-		"/C/xampp/htdocs/I-Project/user.php",
 		"/C/xampp/htdocs/I-Project/form-step-2.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/header.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/footer.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/head.php",
 		"/C/xampp/htdocs/I-Project/css/stylesheet_Edje.css",
-		"/C/xampp/htdocs/I-Project/user-details.php",
 		"/C/xampp/htdocs/I-Project/header.php",
 		"/C/xampp/htdocs/I-Project/form-step-3.php",
 		"/C/xampp/htdocs/I-Project/form-login.php",
 		"/C/xampp/htdocs/I-Project/login.php",
-		"/C/xampp/htdocs/I-Project/form-step-4.php",
 		"/C/xampp/htdocs/I-Project/mechanic/test.php",
 		"/C/xampp/htdocs/I-Project/footer.php",
 		"/C/xampp/htdocs/I-Project/logout.php",
@@ -645,7 +653,6 @@
 		"/C/Users/jdion/AppData/Local/Temp/Rar$DRa8560.38448/FLETNIX/php/header.php",
 		"/C/xampp/htdocs/I-Project/registrationInsertInfo.php",
 		"/C/xampp/htdocs/I-Project/name-password-check.php",
-		"/C/xampp/htdocs/I-Project/test.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/block--block--3.tpl.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/block--block--1.tpl.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/template.php",
@@ -702,28 +709,7 @@
 		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_typography.scss",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/all.scss",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/all.css",
-		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/js/modernizr.js",
-		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/templates/html.html.twig",
-		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/js/owl.carousel.min.js",
-		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/css/custom.css",
-		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/css/all.css",
-		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/scss/_animations.scss",
-		"/C/Users/jdion/OneDrive/Documenten/HBO-ICT/I-PROJECT/root/index.html",
-		"/C/Users/jdion/OneDrive/Documenten/HBO-ICT/I-PROJECT/root/css/app.css",
-		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/js/script.js",
-		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/templates/page.html.twig",
-		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/scss/all.scss",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/vendors/scrolloverflow.js",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/Gulpfile.js",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/sftp-config.json",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/php/head.php",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/head.php",
-		"/C/Users/jdion/OneDrive/FLETNIX/index.php",
-		"/C/Users/jdion/OneDrive/FLETNIX/php/head.php",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/style.css",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/CHANGELOG.txt",
-		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_typography.scss",
-		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/templates/html.html.twig"
+		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/js/modernizr.js"
 	],
 	"find":
 	{
@@ -742,6 +728,47 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"uploadfoto",
+			"form",
+			"</form>",
+			"</form?",
+			"sellitem",
+			"aanwezig",
+			"niet alle velden",
+			"file",
+			"file\\",
+			"file",
+			"verzend",
+			"$productdata[0]",
+			"bidAmount",
+			"het bestand bestaat al",
+			"placeholder",
+			"geef het ",
+			"voorwerpnummer",
+			"pic-4",
+			"tel:",
+			"tel",
+			"beschrijving",
+			"neem contact",
+			"file",
+			"hoogste",
+			"hoogtste",
+			"thead",
+			"InsertPhoto",
+			"imageFileType",
+			"$_FILES[\"fileToUpload\"][\"size\"]",
+			"aangeboden",
+			"/I-Project",
+			"getdate",
+			"fieldsfilledin",
+			"calculateTimeDiffrence",
+			"calcutetimedifference",
+			"<<<<<",
+			"$_SESSION[",
+			"mail",
+			"exec",
+			"delete",
+			"show",
 			"gebruikersnaamForm",
 			"biedform",
 			"biedingform",
@@ -829,6 +856,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"$productdata",
+			"",
 			"$query",
 			"",
 			"htmlVeranderVoorwerp",
@@ -845,47 +874,14 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "admin/admin-pagina.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 13189,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								11691,
-								11691
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 288.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 27.0
+		"height": 34.0
 	},
 	"input":
 	{
@@ -916,7 +912,7 @@
 	"menu_visible": true,
 	"output.find_results":
 	{
-		"height": 158.0
+		"height": 147.0
 	},
 	"output.sftp":
 	{
