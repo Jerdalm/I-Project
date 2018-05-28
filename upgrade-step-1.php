@@ -21,12 +21,12 @@ $headerLocationIf ='upgrade-user.php?step=2';
 $headerLocationElse ='upgrade-user.php?step=1';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { // nadat er op de knop gedrukt wordt
-    if(isset($_POST['bank'])) {
+    if(!empty($_POST['bank'])) {
         $_SESSION['bank'] = $_POST['bank'];
     } else {
         $_SESSION['bank'] = NULL;
     }
-    if(isset($_POST['banknumber'])) {
+    if(!empty($_POST['banknumber'])) {
         $_SESSION['banknumber'] = $_POST['banknumber'];
     } else {
         $_SESSION['banknumber'] = NULL;
