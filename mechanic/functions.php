@@ -213,7 +213,7 @@ function showLoginMenu(){
 	$htmlLogin = ' ';
 	if(isset($_SESSION['gebruikersnaam']) && !empty($_SESSION['gebruikersnaam'])){
 		
-		$htmlLogin .= '<li class="nav-item"><a class="nav-link" href="./user-details.php">Account</a></li>';
+		$htmlLogin .= '<li class="nav-item"><a class="nav-link" href="./account.php">Account</a></li>';
 		$htmlLogin .= '<li class="nav-item"><a class="nav-link" href="./logout.php">Uitloggen</a></li>';
 
 		
@@ -385,7 +385,7 @@ function loginControl($email, $wachtwoord){
 			$_SESSION['vraag'] = $gebruiker[0]["vraag"];
 			$_SESSION['antwoordtekst'] = $gebruiker[0]["antwoordtekst"];
 			$_SESSION['soortGebruiker'] = $gebruiker[0]["soortGebruiker"];
-			header("location: ./user-details.php");
+			header("location: ./account.php");
 		}
 		else {
 			$message_login = "Verkeerd wachtwoord of onbekende e-mail, probeer opnieuw!";
@@ -413,7 +413,7 @@ function insertUpgradeinfoInDB(){
 		SET soortGebruiker = 2
 		WHERE gebruikersnaam = :username", $parameters);
 
-	header("Location: /user-details.php");
+	header("Location: /account.php");
 	exit();
 }
 
@@ -701,15 +701,15 @@ function UpdateInfoUser($get, $gebruikersnaam){
 	handlequery("UPDATE Gebruikerstelefoon
 		SET telefoonnummer = :telefoonnummer
 		WHERE gebruikersnaam = :gebruikersnaam" , $telefoonnummerPara);
-	echo '<script>window.location.replace("./user-details.php")</script>';
+	echo '<script>window.location.replace("./account.php")</script>';
 }
 
 /* toont goede button aan de hand van ingelogt zijn of niet */
 function showButtonIndex(){
 	if(isset($_SESSION['gebruikersnaam'])){
-		echo '<a href="upgrade-user.php" class="btn cta-orange">Wordt verkoper!</a>';
+		echo '<a href="upgrade-user.php" class="cta-orange">Wordt verkoper!</a>';
 	} else {
-		echo '<a href="registreren.php" class="btn cta-orange">Registreer je nu om mee te bieden!</a>';		
+		echo '<a href="registreren.php" class="cta-orange">Registreer je nu om mee te bieden!</a>';		
 	}
 }
 ?>
