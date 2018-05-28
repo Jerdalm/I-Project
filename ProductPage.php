@@ -3,7 +3,8 @@ if(isset($_GET['product'])){
     $htmluploadFoto = ' ';
     $paramvoorwerpnummer = array(':voorwerpnummer' => $_GET['product']);
 
-    $checkPictureAmount = ("SELECT FROM WHERE");
+    $paramCheckPicture = array(':product' => $_GET['product']);
+    $checkPictureAmount = handlequery("SELECT * FROM bestand WHERE voorwerpnummer = :product", $paramCheckPicture);
 
     $productdata = FetchAssocSelectData(
         "SELECT V.verkoper, G.gebruikersnaam,V.voorwerpnummer,V.verzendkosten,V.verzendinstructies, G.voornaam, G.achternaam, G.plaatsnaam,G.soortGebruiker,
@@ -13,6 +14,7 @@ if(isset($_GET['product'])){
         LEFT JOIN gebruikerstelefoon GT on G.gebruikersnaam = GT.gebruikersnaam
         WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
         //voorwerpnummer moet meegegeven worden vanuit de site
+
     $images = handlequery("SELECT filenaam FROM Bestand WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -40,11 +42,16 @@ if(isset($_GET['product'])){
             }
         } else if(isset($_POST['bidAmount-submit'])){
             $paramBod = array(':voorwerpnummer' => $_GET['product'], ':bedrag' => (float)$_POST['bidAmount'], ':gebruiker' => $_SESSION['gebruikersnaam']);
-            $plaatsBod =  executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, ':gebruiker'", $paramBod); // functie in databse om het bod uit te brengen en te checken of het klopt
-            if($plaatsBod == "Opdracht kon niet worden volbracht."){
-                echo 'Bod kan niet worden geplaats';
+            $plaatsBod =  executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod); // functie in databse om het bod uit te brengen en te checken of het klopt
+
+            if ($_SESSION['gebruikersnaam'] != $productdata['gebruikersnaam']) {            
+                if($plaatsBod == "Opdracht kon niet worden volbracht."){
+                    echo 'Bod kan niet worden geplaats';
+                } else {
+                    executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod); 
+                }
             } else {
-                executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, ':gebruiker'", $paramBod); 
+                $message_bids = "U kunt niet bieden op uw eigen veilingen";
             }
         }
     }
@@ -52,10 +59,14 @@ if(isset($_GET['product'])){
     if (isset($_SESSION['gebruikersnaam'])){ 
         $htmluploadFoto = '<form method="post" action="">
         <div class="form-row align-items-center">
-        <div class="col-sm-9">
+        <div class="col-sm-12">
         <input type="number" class="form-control" name="bidAmount" id="colFormLabelLg" placeholder="Geef uw gewenste bedrag in">
         <input type="submit" name="bidAmount-submit" Value="Bied!" class="biedenKnop cta-orange btn">
-        </div>
+        ';
+        if(isset($message_bids)){
+            $htmluploadFoto .= '<p class="error error-warning">'.$message_bids.'</p>';
+        };
+        $htmluploadFoto .= '</div>
         </div>
         </form>';
     } else {
@@ -105,7 +116,7 @@ if(isset($_GET['product'])){
                     </figure>
                     <div class="col p-3 mb-2 bg-secondary text-white" style="text-align: left">
                         <?php if(isset($_SESSION['gebruikersnaam'])){
-                            if(count($checkPictureAmount) < 5){
+                            if(count($checkPictureAmount) < 4){
                                 if ($_SESSION['gebruikersnaam'] == $productdata['verkoper']) {
                                     echo '<form action="" method="post" enctype="multipart/form-data">
                                     <div class="custom-file">
@@ -164,7 +175,7 @@ if(isset($_GET['product'])){
                             <div class="row">
                                 <div class="col-lg-9">
                                     <p><b><?= $productdata['voornaam']. " " .$productdata['achternaam'] ?></b> te <?=$productdata['plaatsnaam']?></p><br>
-                                    <p><a href=<?='"mailto:' .$productdata['mailadres']. '?SUBJECT=' . $productdata['titel'] . '"'?>> <i class="fas fa-envelope"></i></a></p>
+                                    <p><a href=<?='"mailto:' .$productdata['mailadres']. '?SUBJECT=' . $productdata['titel'] . '"'?>> <i class="fas fa-envelope"></i> &nbsp;&nbsp;&nbsp;<?=$productdata['mailadres']?></a></p>
                                 </div>
                             </div>
                         </div>
