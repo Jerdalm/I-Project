@@ -16,7 +16,8 @@ if(isset($_GET['product'])){
         //voorwerpnummer moet meegegeven worden vanuit de site
 
     $images = handlequery("SELECT filenaam FROM Bestand WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
-
+   
+    $aangebodenDag = date("d-m-Y", strtotime($productdata['looptijdBeginDag']));
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if(isset($_POST['submit-file'])){
             $target_dir = "./uploads/user/" . $productdata['verkoper'] . '/' . $productdata['voorwerpnummer']. '/';
@@ -140,7 +141,7 @@ if(isset($_GET['product'])){
                 <div class="col-lg-5 p-3 bg-secondary text-white">
                     <div class="alert alert-dark" role="alert">
 					<div class="product-info">
-                        <p class="beginTijdstip"><i>Aangeboden op: <?= $productdata['looptijdBeginDag'] .' om: ' . date_format(date_create($productdata['looptijdBeginTijdstip']), "H:i") ?> </i></p>
+                        <p class="beginTijdstip"><i>Aangeboden op: <?= $aangebodenDag  ?> </i></p>
                         <h2 class="alert-heading"> <strong> <?= $productdata['titel']?></strong></h2> 
                         <p>Startprijs: € <?=$productdata['startprijs']?></p>
                         <?php if(isset($productdata['verzendkosten'])){ echo '<p>Verzendkosten: €' .$productdata['verzendkosten'];} ?></p>
