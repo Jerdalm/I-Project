@@ -32,12 +32,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if($_SESSION['verificationMethod'] == 'Credit Card') {
-        if (isset($_POST['creditcardnumber'])) {
+        if (isset($_POST['creditcardnumber']) && !empty($_POST['creditcardnumber']) ) {
+            echo 'mooi';
             $_SESSION['creditcardnumber'] = $_POST['creditcardnumber'];
             insertUpgradeinfoInDB();
-        }
-    } else {
+        } else {
         $message_upgrade = 'creditcardnummer niet ingevoerd';
+        }
     }
 }
 
@@ -59,7 +60,7 @@ if($_SESSION['verificationMethod'] == 'Post') {
 ';
 } elseif($_SESSION['verificationMethod'] == 'Credit Card') {
     echo '
-    <form method="post">
+    <form class="col-lg-6" method="post">
         <div class="form-group">
             <label for="Creditcardnumber"> creditcardnummer </label>
             <input type="textarea" class="form-control" name="creditcardnumber" id="Creditcardnumber">

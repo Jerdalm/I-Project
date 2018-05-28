@@ -17,8 +17,11 @@ if(isset($_SESSION['gebruikersnaam'])){
     <div class="list-group" id="list-tab" role="tablist">
 	<a class="list-group-item list-group-item-action" id="list-auctions-won" data-toggle="list" href="#content-auctions-won" role="tab" aria-controls="auctions-won">Gewonnen veilingen</a>
     <a class="list-group-item list-group-item-action active" id="list-user-details" data-toggle="list" href="#content-user-details" role="tab" aria-controls="user-details">Gebruikersgegevens</a>
-	<a class="list-group-item list-group-item-action" id="list-seller-registration" data-toggle="list" href="#content-seller-registration" role="tab" aria-controls="seller-registration">Verkoper registratie</a>
 	
+	<?php 
+	if($_SESSION['soortGebruiker'] < 2){ ?>
+	<a class="list-group-item list-group-item-action" id="list-seller-registration" data-toggle="list" href="#content-seller-registration" role="tab" aria-controls="seller-registration">Verkoper registratie</a>
+	<?php } ?>
     </div>
 </div>
 	<div class="tab-content" id="nav-tabContent">
