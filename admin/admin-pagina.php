@@ -49,10 +49,6 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 			WHERE gebruikersnaam like :gebruiker
 			OR mailadres like :mail
 			OR plaatsnaam like :plaats",$parametersGebruiker);
-		// echo '<pre>';
-		// print_r($gebruikers);
-		// echo "</pre>";
-		// die();
 		$gebruikerResultaten = '<table class="table"><tr><th scope="col">Resultaat</th></tr><tr>';
 		foreach($gebruikers as $gebruiker){
 			$gebruikerResultaten .= "<tr>" . "<td>" . "<a href='?gebruikersnaamForm=" . $gebruiker['gebruikersnaam'] . "'>" . $gebruiker['gebruikersnaam'] ."</a>". "</td>" . "</tr>";
@@ -60,7 +56,7 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 		$gebruikerResultaten .= '</tr></table>';
 	} else if (isset($_GET['search-bieding'])) {
 		$biedingInput = $_GET['bieding'];	
-		$parametersbieding = array(':voorwerpnummer' => $biedingInput,
+		$parametersbieding = array(':voorwerpnummer' => (int)$biedingInput,
 			'bodbedrag' => (int)$biedingInput,
 			'titel' => "%". $biedingInput ."%");
 		$biedingen = handlequery("SELECT * 
@@ -181,10 +177,7 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 		$htmlVeranderBieding .= '<button class="btn btn-success" name="submit-changes-bit">Sla wijzigingen op</button>';
 		$htmlVeranderBieding .= '</form>';	
 	} else if (isset($_GET['block-user'])){
-		// echo "<pre>";
-		// print_r(array_values($_GET)[0]);
-		// echo "</pre>";
-		// die();
+
 		blockUser(array_values($_GET)[0]);	
 		$errorMessageUser = "De gekozen gebruiker is geblokkeerd";
 	} else if (isset($_GET['delete-article'])){
@@ -311,7 +304,7 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 						echo $gebruikerResultaten; 
 					}?>
 				</div>
-				<div class="col-lg-4 col-sm-12">
+				<div class="col-lg-4 col-m-12">
 					<div class="bieding">
 						<!-- for om te zoeken op gebruiker -->
 						<form class="form-group" method="GET" action=""> 

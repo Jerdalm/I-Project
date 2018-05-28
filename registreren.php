@@ -6,16 +6,16 @@
             <div class="row">
                 <?php
                 
-                if($_SERVER['REQUEST_URI'] == '/registreren.php' || $_SERVER['REQUEST_URI'] == '/registreren.php?step=1') {
+                if($_SERVER['REQUEST_URI'] == '/I-Project/registreren.php' || $_SERVER['REQUEST_URI'] == '/I-Project/registreren.php?step=1') {
                     require_once 'form-step-1.php';
                     $actualvalue = 25;
-                } else if($_SERVER['REQUEST_URI'] == '/registreren.php?step=2') {
+                } else if($_SERVER['REQUEST_URI'] == '/I-Project/registreren.php?step=2') {
                     require_once 'form-step-2.php';
                     $actualvalue = 50;
-                } else if($_SERVER['REQUEST_URI'] == '/registreren.php?step=3') {
+                } else if($_SERVER['REQUEST_URI'] == '/I-Project/registreren.php?step=3') {
                     require_once 'form-step-3.php';
                     $actualvalue = 75;
-                } else if($_SERVER['REQUEST_URI'] == '/registreren.php?step=4') {
+                } else if($_SERVER['REQUEST_URI'] == '/I-Project/registreren.php?step=4') {
                     require_once 'form-step-4.php';
                     $actualvalue = 100;
                 }

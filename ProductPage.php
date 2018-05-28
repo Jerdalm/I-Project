@@ -1,8 +1,9 @@
 <?php require_once ('header.php');
 if(isset($_GET['product'])){
-    $Vwnummer = $_GET['product'];
     $htmluploadFoto = ' ';
     $paramvoorwerpnummer = array(':voorwerpnummer' => $_GET['product']);
+
+    $checkPictureAmount = ("SELECT FROM WHERE");
 
     $productdata = FetchAssocSelectData(
         "SELECT V.verkoper, G.gebruikersnaam,V.voorwerpnummer,V.verzendkosten,V.verzendinstructies, G.voornaam, G.achternaam, G.plaatsnaam,G.soortGebruiker,
@@ -38,12 +39,12 @@ if(isset($_GET['product'])){
                 }
             }
         } else if(isset($_POST['bidAmount-submit'])){
-            $paramBod = array(':voorwerpnummer' => $_GET['product'], ':bedrag' => (float)$_POST['bidAmount']);
-            $plaatsBod =  executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, 'gebruiker'", $paramBod); // functie in databse om het bod uit te brengen en te checken of het klopt
+            $paramBod = array(':voorwerpnummer' => $_GET['product'], ':bedrag' => (float)$_POST['bidAmount'], ':gebruiker' => $_SESSION['gebruikersnaam']);
+            $plaatsBod =  executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, ':gebruiker'", $paramBod); // functie in databse om het bod uit te brengen en te checken of het klopt
             if($plaatsBod == "Opdracht kon niet worden volbracht."){
                 echo 'Bod kan niet worden geplaats';
             } else {
-                executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, 'gebruiker'", $paramBod);
+                executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, ':gebruiker'", $paramBod); 
             }
         }
     }
@@ -104,15 +105,17 @@ if(isset($_GET['product'])){
                     </figure>
                     <div class="col p-3 mb-2 bg-secondary text-white" style="text-align: left">
                         <?php if(isset($_SESSION['gebruikersnaam'])){
-                            if ($_SESSION['gebruikersnaam'] == $productdata['verkoper']) {
-                                echo '<form action="" method="post" enctype="multipart/form-data">
-                                <div class="custom-file">
-                                <label class="custom-file-label" for="customFile">Selecteer een foto</label>
-                                <input type="file" class="custom-file-input" id="customFile" name="fileToUpload">
-                                </div>
+                            if(count($checkPictureAmount) < 5){
+                                if ($_SESSION['gebruikersnaam'] == $productdata['verkoper']) {
+                                    echo '<form action="" method="post" enctype="multipart/form-data">
+                                    <div class="custom-file">
+                                    <label class="custom-file-label" for="customFile">Selecteer een foto</label>
+                                    <input type="file" class="custom-file-input" id="customFile" name="fileToUpload">
+                                    </div>
 
-                                <input type="submit" class="btn upload-file btn-primary" value="Upload foto" name="submit-file">
-                                </form>';
+                                    <input type="submit" class="btn upload-file btn-primary" value="Upload foto" name="submit-file">
+                                    </form>';
+                                }
                             }
                         } ?>
                         <dl class="dl-horizontal">
@@ -131,7 +134,6 @@ if(isset($_GET['product'])){
                         <p>Startprijs: € <?=$productdata['startprijs']?></p>
                         <?php if(isset($productdata['verzendkosten'])){ echo '<p>Verzendkosten: €' .$productdata['verzendkosten'];} ?></p>
                         <p>Productnummer: <?=$productdata['voorwerpnummer']?></p>
-                        <div id="txt"></div>
                         <hr>
 					</div>
 
@@ -162,11 +164,8 @@ if(isset($_GET['product'])){
                             <div class="row">
                                 <div class="col-lg-9">
                                     <p><b><?= $productdata['voornaam']. " " .$productdata['achternaam'] ?></b> te <?=$productdata['plaatsnaam']?></p><br>
-                                    <p><a href=<?='"mailto:' .$productdata['mailadres']. '?SUBJECT=' . $productdata['titel'] . '"'?>> <i class="fas fa-envelope"></i></a><!-- <a href="tel:<?=$productdata['telefoonnummer']?>">&nbsp;&nbsp;<i class="fas fa-phone"></i></a> --></p>
+                                    <p><a href=<?='"mailto:' .$productdata['mailadres']. '?SUBJECT=' . $productdata['titel'] . '"'?>> <i class="fas fa-envelope"></i></a></p>
                                 </div>
-                                <!-- <div class="col-lg-3 profile-picture align-items-right">
-                                    <img src="https://mb.lucardi-cdn.nl/zoom/64867/regal-mesh-horloge-met-zilverkleurige-band.jpg" alt="Profielfoto" class="rounded-circle">
-                                </div> -->
                             </div>
                         </div>
 
