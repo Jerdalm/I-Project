@@ -410,10 +410,10 @@ function insertUpgradeinfoInDB(){
     handleQuery("UPDATE Gebruiker
 		SET soortGebruiker = 2
 		WHERE gebruikersnaam = :username", $parameters);
-    
+
 	$melding = handlequery("INSERT INTO Verkoper VALUES(:gebruikersnaam, :bank, :rekeningnummer, :controleOptie, :creditcardnumber)", $insertInfoParam);
 
-
+	$_SESSION['soortgebruiker'] = 2;
 	header("Location: /account.php");
 	exit();
 }

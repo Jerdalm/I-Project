@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // nadat er op de knop gedrukt wordt
     if($_POST['verificationMethod'] == 'Credit Card') { // is er gekozen voor de creditcard
         $_SESSION['verificationMethod'] = $_POST['verificationMethod'];
         $message_upgrade = '';
-        //header("Location: ./upgrade-user.php?step=2");
+        header("Location: ./upgrade-user.php?step=2");
     }
 }
 
