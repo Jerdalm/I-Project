@@ -15,16 +15,16 @@
                     echo '<label><b>'.$key.'</b></label>';
                     switch ($key) {
                         case 'geboortedag':
-                        echo '<input class="form-control" type="date" name="' . $key . '" value="'. $value .'"><br>';
+                        echo '<input class="form-control" type="date" name="' . $key . '" value="'. $value .'" required><br>';
                         break;
                         case 'gebruikersnaam':
                         echo '<input class="form-control" type="text" name="' . $key . '" value="'. $value .'" readonly><br>';
                         break;
                         case 'telefoonnummer':
-                        echo '<input class="form-control" type="tel" name="' . $key . '" value="'. $value .'"><br>';
+                        echo '<input class="form-control" type="tel" name="' . $key . '" value="'. $value .'" required><br>';
                         break;
                         default:
-                        echo '<input class="form-control" type="text" name="' . $key . '" value="'. $value .'"><br>';
+                        echo '<input class="form-control" type="text" name="' . $key . '" value="'. $value .'" required><br>';
                         break;
                     }
                 } 
