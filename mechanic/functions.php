@@ -89,8 +89,8 @@ function sendMail($to, $subject, $body, $message = "Fout"){
 	$message_body = $body;
 
 
-	mail( $emailTo, $subjectEmail, $message_body );
-    // echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
+	// mail( $emailTo, $subjectEmail, $message_body );
+    echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
 
 	$_SESSION['message'] = $message;
 }
