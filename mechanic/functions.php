@@ -501,7 +501,8 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 
 		}
 	}
-
+	
+	if($producten){
 	$beforeInput = '';
 	$afterInput = '';
 	$html = '';
@@ -549,13 +550,14 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 		<h5 class="product-data" id="'.$product['voorwerpnummer'].'"><span class="time">'.$timediff.'</span>|<span class="price">&euro;'.$product['bodbedrag'].'</span></h5>
 		<a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a>
 		</div>
-		<div class="card-footer text-muted">
+		<div class="card-footer text-center text-muted">
 		locatie: '.$product['plaats'].'
 		</div>
 		</div>
 		';
 		$html .= $afterInput;
-	}
+	}}
+	else{$html = '<div class="col-lg-12 text-center"><h4> Geen producten gevonden </h4></div>';}
 	/* Returns product cards html */
 	return $html;
 }
