@@ -4,7 +4,7 @@ $gebruiker = $_SESSION['gebruikersnaam'];
 $query = "SELECT TOP 1 Bod.voorwerpnummer, bestand, titel, bod.bodbedrag, einddag, eindtijdstip, plaats
 FROM currentAuction
 INNER JOIN Bod ON currentAuction.voorwerpnummer = Bod.voorwerpnummer
-WHERE Bod.gebruikersnaam = 'gebruiker'
+WHERE Bod.gebruikersnaam = '$gebruiker'
 ORDER BY bod.bodbedrag DESC"
 ?>
 

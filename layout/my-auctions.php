@@ -4,7 +4,7 @@ $gebruiker = $_SESSION['gebruikersnaam'];
 $query = "SELECT *
 FROM currentAuction
 INNER JOIN voorwerp ON currentAuction.voorwerpnummer = voorwerp.voorwerpnummer
-WHERE voorwerp.verkoper = 'gebruiker'"
+WHERE voorwerp.verkoper = '$gebruiker'"
 ?>
 
 <div class="tab-pane fade col-lg-9 float-left" id="content-my-auctions" role="tabpanel" aria-labelledby="list-profile-list">
