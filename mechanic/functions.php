@@ -419,9 +419,12 @@ function insertUpgradeinfoInDB(){
 }
 
 /* Deze functie returnt de verschillende rubrieken voor in het submenu */
-function showMenuRubrieken(){
+function showMenuRubrieken($toplevel){
+	if($toplevel == null){ $querypart = " is NULL ";}
+	else{ $querypart = " = $toplevel";}
+	
 	$html = '';
-	$rubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek is NULL");
+	$rubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek ".$querypart."");
 
 	foreach($rubrieken as $rubriek){
 		$html .= '<a class="dropdown-item" href="overview.php?rub='.$rubriek['rubrieknummer'].'">'.$rubriek['rubrieknaam'].'</a>';
@@ -771,6 +774,10 @@ function checkNewPassword ($password, $passwordrepeat){
 				echo "<a class=\"btn btn3 \" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";	
 			}
 		}		
+	}
+	
+	function logUserHistory($cookieName){
+
 	}
 	
 ?>
