@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"qu",
+				"queryGetUserInfo"
+			],
+			[
+				"check",
+				"checkPictureAmount"
+			],
+			[
+				"para",
+				"paramCheckPicture"
+			],
+			[
 				"PRINT",
 				"print_r"
 			],
@@ -502,23 +514,38 @@
 			[
 				"border-r",
 				"border-radius"
-			],
-			[
-				"fle",
-				"flex-grow"
-			],
-			[
-				"background",
-				"background-position"
-			],
-			[
-				"bak",
-				"background-size"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "admin/mechanic/functions.php",
+			"settings":
+			{
+				"buffer_size": 5781,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "admin/admin-pagina.php",
+			"settings":
+			{
+				"buffer_size": 15002,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "admin/change-user.php",
+			"settings":
+			{
+				"buffer_size": 4670,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -578,37 +605,40 @@
 	"expanded_folders":
 	[
 		"/C/xampp/htdocs/I-Project",
-		"/C/xampp/htdocs/I-Project/mechanic"
+		"/C/xampp/htdocs/I-Project/admin",
+		"/C/xampp/htdocs/I-Project/admin/mechanic"
 	],
 	"file_history":
 	[
+		"/C/xampp/htdocs/I-Project/ProductPage.php",
+		"/C/xampp/htdocs/I-Project/admin/admin-pagina.php",
+		"/C/xampp/htdocs/I-Project/form-step-4.php",
+		"/C/xampp/htdocs/I-Project/registreren.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/functions 2.php",
+		"/C/xampp/htdocs/I-Project/mechanic/functions.php",
+		"/C/xampp/htdocs/I-Project/admin/footer.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/overview.php",
+		"/C/xampp/htdocs/I-Project/form-step-2.php",
+		"/C/xampp/htdocs/I-Project/user.php",
+		"/C/xampp/htdocs/I-Project/admin/index.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/functions.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/html.html.twig",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/favicon.ico",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/html.html.twig",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/robots.txt",
 		"/C/xampp/htdocs/I-Project/css/jonathan.css",
-		"/C/xampp/htdocs/I-Project/mechanic/functions.php",
 		"/C/xampp/htdocs/I-Project/upload-article.php",
-		"/C/xampp/htdocs/I-Project/ProductPage.php",
 		"/C/xampp/htdocs/I-Project/ProductPageNieuw.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/registreren.php",
-		"/C/xampp/htdocs/I-Project/registreren.php",
-		"/C/xampp/htdocs/I-Project/user.php",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/functions.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/form-step-4.php",
-		"/C/xampp/htdocs/I-Project/form-step-4.php",
 		"/C/xampp/htdocs/I-Project/index.php",
 		"/C/xampp/htdocs/I-Project/upgrade-user.php",
 		"/C/xampp/htdocs/I-Project/upgrade-step-1.php",
 		"/C/xampp/htdocs/I-Project/README.md",
 		"/C/xampp/htdocs/I-Project/user-details.php",
 		"/C/xampp/htdocs/I-Project/test.php",
-		"/C/xampp/htdocs/I-Project/admin/admin-pagina.php",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/functions 2.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/form-step-1.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/index 2.php",
-		"/C/xampp/htdocs/I-Project/admin/footer.php",
-		"/C/xampp/htdocs/I-Project/admin/index.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/admin-pagina.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/db.php",
 		"/C/xampp/htdocs/I-Project/admin/mechanic/functions.php",
@@ -635,7 +665,6 @@
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/db.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/admin-pagina.php",
 		"/C/xampp/htdocs/I-Project/css/styles_kevin.css",
-		"/C/xampp/htdocs/I-Project/form-step-2.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/header.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/footer.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/head.php",
@@ -708,8 +737,7 @@
 		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_variables.scss",
 		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_typography.scss",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/all.scss",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/all.css",
-		"/C/Users/jdion/Documents/Sublime projecten/purposeinbedrijf/js/modernizr.js"
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/all.css"
 	],
 	"find":
 	{
@@ -728,6 +756,20 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"voorwerp=",
+			"$_SESSION",
+			"mailadres",
+			"mail",
+			"te ",
+			"te",
+			"bids",
+			"aanpassen",
+			"gebruiker",
+			"Vwnummer",
+			"checkUsernamePassword",
+			"UPDATE",
+			"UPDATE\\",
+			"user.php",
 			"uploadfoto",
 			"form",
 			"</form>",
@@ -841,14 +883,7 @@
 			"|margin-top: 110px;",
 			"margin-top: 110px;",
 			".page-nieuws .node-article h2",
-			"session_start",
-			"randomCode",
-			"emailunique",
-			"HEAD",
-			"HEAF",
-			"HEAD",
-			"code sturen",
-			"verzenden"
+			"session_start"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -874,8 +909,102 @@
 	"groups":
 	[
 		{
+			"selected": 2,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "admin/mechanic/functions.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5781,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5775,
+								5775
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 816.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "admin/admin-pagina.php",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 15002,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13023,
+								12990
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 624.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "admin/change-user.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4670,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3714,
+								3714
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 796.981132075,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],

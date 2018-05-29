@@ -56,6 +56,29 @@ header{
 	margin-bottom: 0.2rem;
 }
 
+.beheerdersomgeving .table.striped{
+	height: 440px;
+	overflow-y: scroll;
+	display: block;
+	border-radius: 2px;
+	border: 1px solid black;
+}
+
+.beheerdersomgeving .table.striped th, .beheerdersomgeving .table.striped tr, .beheerdersomgeving .table.striped td{
+	width: 1%;
+}
+
+.beheerdersomgeving .table.striped tr:nth-child(even){
+	background-color: white;
+}
+
+.beheerdersomgeving .table.striped td, .beheerdersomgeving .table.striped th{
+    padding: 7px 0.75rem;
+}
+
+.beheerdersomgeving .table.striped th{
+	background-color: rgba(255,255,255,0.5);
+}
 @media screen and (max-width: 500px){
 	.beheerdersomgeving .row{
 		margin-top: 40px;
