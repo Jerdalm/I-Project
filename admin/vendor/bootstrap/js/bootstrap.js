@@ -3892,3 +3892,8 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
 //# sourceMappingURL=bootstrap.js.map
+
+$(".btn-change-bid").click(function(){  
+  var bedrag = $(this).data('id');
+  $(".modal-body #bodbedrag").val( bedrag );
+});
