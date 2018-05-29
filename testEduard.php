@@ -5,14 +5,15 @@ $geslotenVeilingen = handlequery("SELECT * FROM voorwerp v join gebruiker G on v
 
 if (isset($_POST['sendmail'])){
 
-	
 		foreach($geslotenVeilingen as $gesloten){
+			if ($gesloten['veilingGesloten'] == 0){
 		$geslotenParameters = array(':voorwerpnummer' => $gesloten['voorwerpnummer']);
 		$subject = 'veiling:' . $gesloten['titel'] . 'is gesloten';
-		$message = 'De veiling' . $gesloten['titel'] . 'is Gesloten. De winnar van deze veiling is' . $gesloten['koper'];
+		$message = 'De veiling' .' '. $gesloten['titel'] .' '. 'is Gesloten. De winnar van deze veiling is:' .' '. $gesloten['koper'];
 		$email = $gesloten['mailadres'];
 		sendMail($email,$subject,$message);
 		handlequery("UPDATE voorwerp SET veilingGesloten = 1 WHERE voorwerpnummer = :voorwerpnummer",$geslotenParameters);
+			}
 		}
 	}
 ?>
