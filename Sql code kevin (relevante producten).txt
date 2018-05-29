@@ -1,0 +1,10 @@
+SELECT currentAuction.* from currentAuction
+INNER JOIN VoorwerpInRubriek
+ON VoorwerpInRubriek.voorwerpnummer = currentAuction.voorwerpnummer
+
+INNER JOIN rubriek
+ON rubriek.rubrieknummer = voorwerpInRubriek.rubriekOpLaagsteNiveau
+
+WHERE currentAuction.voorwerpnummer IN (1,2,3,4,5) /* cookie voorwerpen */
+AND	rubriek.rubrieknummer IN  (1,2,3) /* Subrubrieken van rubriek */
+AND currentAuction.voorwerpnummer != 1 /* Waarde huidig nummer */
