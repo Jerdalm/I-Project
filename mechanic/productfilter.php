@@ -17,7 +17,7 @@
 	
 	$parameters = false;
 	
-	$query = "SELECT * from currentAuction 
+	$query = "SELECT TOP 5* from currentAuction 
 	INNER JOIN VoorwerpinRubriek
 	ON VoorwerpinRubriek.voorwerpnummer = currentAuction.voorwerpnummer
 	Where rubriekOpLaagsteNiveau IN ".$rubriekdata. " AND ".$pricecheck."
@@ -66,7 +66,7 @@
 		
 		$titel = "Zoekresultaten";
 		//$parameters = array(":search" => "%" . $zoekfilter . "%");
-		$query = "SELECT * FROM currentAuction WHERE currentAuction.titel ".$searchstring." AND ".$pricecheck;
+		$query = "SELECT TOP 5 * FROM currentAuction WHERE currentAuction.titel ".$searchstring." AND ".$pricecheck;
 	
 	}
 	
@@ -74,7 +74,7 @@
 	else{
 	$titel = $zoekfilter = "Alle veilingen";
 	$parameters = false;
-	$query = "SELECT * from currentAuction WHERE ".$pricecheck;
+	$query = "SELECT TOP 5 * from currentAuction WHERE ".$pricecheck;
 	}
 	
 	/* Afvangen afstand */

@@ -89,8 +89,8 @@ function sendMail($to, $subject, $body, $message = "Fout"){
 	$message_body = $body;
 
 
-	mail( $emailTo, $subjectEmail, $message_body );
-    // echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
+	// mail( $emailTo, $subjectEmail, $message_body );
+    echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
 
 	$_SESSION['message'] = $message;
 }
@@ -419,9 +419,12 @@ function insertUpgradeinfoInDB(){
 }
 
 /* Deze functie returnt de verschillende rubrieken voor in het submenu */
-function showMenuRubrieken(){
+function showMenuRubrieken($toplevel){
+	if($toplevel == null){ $querypart = " is NULL ";}
+	else{ $querypart = " = $toplevel";}
+	
 	$html = '';
-	$rubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek is NULL");
+	$rubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek ".$querypart."");
 
 	foreach($rubrieken as $rubriek){
 		$html .= '<a class="dropdown-item" href="overview.php?rub='.$rubriek['rubrieknummer'].'">'.$rubriek['rubrieknaam'].'</a>';
@@ -501,7 +504,8 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 
 		}
 	}
-
+	
+	if($producten){
 	$beforeInput = '';
 	$afterInput = '';
 	$html = '';
@@ -549,13 +553,14 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 		<h5 class="product-data" id="'.$product['voorwerpnummer'].'"><span class="time">'.$timediff.'</span>|<span class="price">&euro;'.$product['bodbedrag'].'</span></h5>
 		<a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a>
 		</div>
-		<div class="card-footer text-muted">
+		<div class="card-footer text-center text-muted">
 		locatie: '.$product['plaats'].'
 		</div>
 		</div>
 		';
 		$html .= $afterInput;
-	}
+	}}
+	else{$html = '<div class="col-lg-12 text-center"><h4> Geen producten gevonden </h4></div>';}
 	/* Returns product cards html */
 	return $html;
 }
@@ -769,6 +774,10 @@ function checkNewPassword ($password, $passwordrepeat){
 				echo "<a class=\"btn btn3 \" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";	
 			}
 		}		
+	}
+	
+	function logUserHistory($cookieName){
+
 	}
 	
 ?>
