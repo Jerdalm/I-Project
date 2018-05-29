@@ -483,7 +483,7 @@ function showRubriekenlist(){
 }
 
 /* Deze functie toont alle producten  || Filterwaarde ('afstand','false')*/
-function showProducts($carrousel = false, $query = false, $parameters = false, $lg = 4, $md = 6, $sm = 6, $xs = 12){
+function showProducts($carrousel = false, $query = false, $parameters = false, $showAccount = false, $lg = 4, $md = 6, $sm = 6, $xs = 12){
 
 	if( is_array($query)){
 		$producten = $query;
@@ -521,36 +521,40 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 		$afterInput = '</div>';
 	}
 
-	foreach($producten as $product)
-	{
+	foreach($producten as $product) {
 
-		$itemcount++;
-		if(!$product['bodbedrag']){
-			$product['bodbedrag'] = 0;
-		}
+        $itemcount++;
+        if (!$product['bodbedrag']) {
+            $product['bodbedrag'] = 0;
+        }
 
-		if($carrousel){
-			if($itemcount == 1){
-				$html .= $beforeFirstInput;
-			}
-			else{$html .= $beforeInput;}
-		}
-		else{
-			$html .= $beforeInput;
-		}
+        if ($carrousel) {
+            if ($itemcount == 1) {
+                $html .= $beforeFirstInput;
+            } else {
+                $html .= $beforeInput;
+            }
+        } else {
+            $html .= $beforeInput;
+        }
 
-		$timediff = calculateTimeDiffrence(date('Y-m-d h:i:s'),
-			$product['einddag'].' '.$product['eindtijdstip']
-		);
+        $timediff = calculateTimeDiffrence(date('Y-m-d h:i:s'),
+            $product['einddag'] . ' ' . $product['eindtijdstip']
+        );
 
-		$html .= '
+        $html .= '
 		<div class="product card">
-		<img class="card-img-top img-fluid" src="img/products/'.$product['bestand'].'" alt="">
+		<img class="card-img-top img-fluid" src="img/products/' . $product['bestand'] . '" alt="">
 		<div class="card-body">
 		<h4 class="card-title">
-		'.$product['titel'].'
-		</h4>
-		<h5 class="product-data" id="'.$product['voorwerpnummer'].'"><span class="time">'.$timediff.'</span>|<span class="price">&euro;'.$product['bodbedrag'].'</span></h5>
+		' . $product['titel'] . '
+		</h4>';
+
+		if ($showAccount == false) {
+            $html .= '<h5 class="product-data" id = "' . $product['voorwerpnummer'] . '" ><span class="time" > ' . $timediff . '</span >|<span class="price" >&euro;' . $product['bodbedrag'] . ' </span ></h5 >';
+		}
+
+		$html.='
 		<a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a>
 		</div>
 		<div class="card-footer text-center text-muted">
