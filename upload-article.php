@@ -11,8 +11,8 @@ if (isset($_SESSION['gebruikersnaam'])) {
     'beschrijving',
     'looptijd',
     'startprijs',
-    'betalingswijze',
-    'fileToUpload'
+    'betalingswijze'
+    //'fileToUpload'
   );
 
   if (isset($_POST['sellitem']) && fieldsFilledIn($filledin)) {
@@ -101,7 +101,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
       <section class="uploadarticle">
         <div class="container">
           <div class="row">
-            <form class="" method="POST">
+            <form method="POST" enctype="multipart/form-data">
               <legend>Voorwerp veilen!</legend>
               <p>Velden met een * zijn verplicht</p>
               <div class="form-group">
