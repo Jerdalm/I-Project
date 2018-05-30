@@ -207,7 +207,6 @@ if(isset($_GET['product'])){
                         </div>
                         <?='<p>'.$htmluploadFoto.'</p>'?>
                         <hr>
-
                         <div class="userInfo">
                             <div class="row">
                                 <div class="col-lg-9">
