@@ -28,9 +28,14 @@
               echo '<input type="number" name="'. $field.'" id="'.$field.'" value="'. $value.'" step=".01" min="0"><br>';
               break;
             }
+            print_r($_GET);
+            foreach ($_GET as $field => $value) {  
+              if ($field == 'voorwerpInfo') continue;
+              echo '<input type="hidden" name="'. $field.'" id="'.$field.'" value="'. $value.'" step=".01" min="0"><br>';
+            }
             echo '</div>';
           }
-          
+
           ?>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleren</button>

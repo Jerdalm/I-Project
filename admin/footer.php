@@ -1,4 +1,7 @@
     <!-- Footer -->
+    <?="<pre>"?>
+    <?=print_r($_SESSION);?>
+    <?="</pre>"?>
     <footer class="py-3 bg-dark">
     	<div class="container">
     		<div class="row ">
@@ -44,6 +47,7 @@
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.js"></script>
     <script src="vendor/bootstrap/js/popup.header.js"></script>
 </body>
 </html>

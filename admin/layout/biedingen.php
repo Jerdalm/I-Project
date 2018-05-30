@@ -3,10 +3,6 @@ if (isset($_GET['voorwerpInfo'])) {
 	$htmlToonBiedingen = ' ';
 	$parametersbieding = array(':voorwerpnummer' => (int)$_GET['voorwerpInfo']);
 	$biedingen = handlequery("SELECT * FROM Bod WHERE voorwerpNummer = :voorwerpnummer ORDER BY bodbedrag desc ", $parametersbieding);
-	if (false) {
-		$parametersbod = array(':voorwerpnummer' => $_GET['voorwerpInfo'],
-			':bedrag' => $_GET['bodBedrag']);
-	}
 	$biedings = FetchAssocSelectData("SELECT voorwerpnummer, gebruikersnaam, bodbedrag, bodDag AS Datum, CONVERT(TIME(0), [bodTijdstip]) AS Tijd FROM Bod WHERE voorwerpNummer = :voorwerpnummer", $parametersbieding);
 	foreach($biedingen as $bieding){
 		$htmlToonBiedingen .= '<tr>
@@ -20,16 +16,12 @@ if (isset($_GET['voorwerpInfo'])) {
 		<p>'.date_format(date_create($bieding['bodDag']), "d-m-Y").'</p>
 		</td>
 		<td>
-		<button type="button" class="btn btn btn-success btn-change-bid" data-toggle="modal" data-target="#changeBid" data-id="'.$bieding['bodbedrag'].'">Bewerk bod</button>
+		<a type="button" href=&naam='.$bieding['gebruikersnaam'].'&bodBedrag='.$bieding['bodbedrag'].' class="btn btn btn-success btn-change-bid" data-toggle="modal" data-target="#changeBid" data-id="'.$bieding['bodbedrag'].'">Bewerk bod</a>
 		</td>
 		</tr>';
-	} 
-
-	if (isset($_GET['submit-bit'])) {
-		echo "aanwezig";
-		die();
-		updateBit($_GET);
 	}
+
+	
 	?>
 
 	<div class="tab-pane fade col-lg-9 col-sm-12 float-left" id="bids" role="tabpanel" aria-labelledby="list-profile-list">	
@@ -48,4 +40,6 @@ if (isset($_GET['voorwerpInfo'])) {
 		</div>
 	</div>
 
-	<?php } ?>
+<?php } if (isset($_GET['submit-bit']) && isset($_GET['bodBedrag'])) {
+	updateBit($_GET);
+}?>
