@@ -445,12 +445,17 @@ function showRubriekenlist($toplevel){
 		$amountInRubarr = handlequery("SELECT COUNT(voorwerpnummer) AS productaantal from VoorwerpInRubriek WHERE rubriekOpLaagsteNiveau IN ".$subcata."");
 		$amountInRub = $amountInRubarr[0]['productaantal'];
 		
+		if(!$amountInRub){continue;}
+		
 		
 		$rubriekparameters = array(':rubriek' => $rubriek['rubrieknummer']);
 		$subrubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek = :rubriek",$rubriekparameters);
 
 		if($rubriek['Lvl'] < $previouslevel){
+		$lvldif = $previouslevel - $rubriek['Lvl'];
+			for($teller = 0; $teller <  $lvldif; $teller++){
 			$html .= '</ul>';
+			}
 		}
 
 		if($subrubrieken){
