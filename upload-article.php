@@ -18,7 +18,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
     if (empty($_POST['betalingsinstructie'])) {
       $_POST['betalingsinstructie'] = NULL;
     } if (empty($_POST['verzendkosten'])) {
-      $_POST['verzendkosten'] = NULL;
+      $_POST['verzendkosten'] = 0.00;
     } if (empty($_POST['verzendinstructies'])) {
       $_POST['verzendinstructies'] = NULL;
     }
@@ -113,7 +113,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
               <div class="form-group">
                 <label class="col-md-12 control-label" for="startprijs">Startprijs in euro&apos;s*</label>
                 <div class="col-md-5">
-                  <input id="startprijs" name="startprijs" type="number" class="form-control input-md" required>
+                  <input id="startprijs" name="startprijs" type="number" step="0.01" class="form-control input-md" required>
                 </div>
               </div>
               <div class="form-group">
