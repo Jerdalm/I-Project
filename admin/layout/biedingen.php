@@ -24,8 +24,8 @@ if (isset($_GET['voorwerpInfo'])) {
 	
 	?>
 
-	<div class="tab-pane fade col-lg-9 col-sm-12 float-left" id="bids" role="tabpanel" aria-labelledby="list-profile-list">	
-		<div class="tab-pane fade show active" id="content-user-details" role="tabpanel" aria-labelledby="list-user-details">
+	<div class="tab-pane fade col-lg-9 col-sm-12 float-left" id="bids" role="tabpanel" aria-labelledby="list-change-bid">	
+		<div class="tab-pane fade show active" id="bids" role="tabpanel" aria-labelledby="list-change-bid">
 			<h2>Biedingen</h2>
 			<table class="table striped">
 				<tr>
@@ -40,6 +40,6 @@ if (isset($_GET['voorwerpInfo'])) {
 		</div>
 	</div>
 
-<?php } if (isset($_GET['submit-bit']) && isset($_GET['bodBedrag'])) {
+<?php } if (isset($_GET['submit-bit']) && isset($_GET['bodBedragOud'])) {
 	updateBit($_GET);
 }?>

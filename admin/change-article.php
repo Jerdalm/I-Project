@@ -45,10 +45,11 @@ if(isset($errorMessageArticle)) {
 } else if(isset($_GET['voorwerpInfo'])){
 	$htmlVeranderVoorwerp = '
 	<div class="col-lg-3 sidebar float-left"> 
-	<div class="list-group" id="list-tab" role="tablist">
-	<a class="list-group-item list-group-item-action" id="list-product-details" data-toggle="list" href="#productinfo" role="tab" aria-controls="product-details">Productinformatie</a>
-	<a class="list-group-item list-group-item-action active" id="list-bids" data-toggle="list" href="#bids" role="tab" aria-controls="bids">Biedingen</a>
+	<div class="list-group" role="tablist">
+	<a class="list-group-item list-group-item-action active" id="list-product-details" data-toggle="list" href="#productinfo" role="tab" aria-controls="list-product-details">Productinformatie</a>
+	<a class="list-group-item list-group-item-action" id="list-change-bid" data-toggle="list" href="#bids" role="tab" aria-controls="list-change-bid">Biedingen</a>
 	</div>
+	<form method="get" class="btn-delete-product"><button type="button" class="btn btn-danger" name="delete-product">Verwijder artikel</button></form>
 	</div>';
 
 	$artikelResultaten = ' ';	
@@ -57,6 +58,7 @@ if(isset($errorMessageArticle)) {
 	$htmlVeranderVoorwerp = '';
 }
 ?>
+
 <main class="beheerdersomgeving">
 	<section>
 		<div class="container">

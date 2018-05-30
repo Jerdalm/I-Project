@@ -1,7 +1,4 @@
     <!-- Footer -->
-    <?="<pre>"?>
-    <?=print_r($_SESSION);?>
-    <?="</pre>"?>
     <footer class="py-3 bg-dark">
     	<div class="container">
     		<div class="row ">

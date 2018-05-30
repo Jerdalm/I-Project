@@ -3891,14 +3891,6 @@ exports.Tooltip = Tooltip;
 Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-// # sourceMappingURL=bootstrap.js.map
-$(document).ready(function(){
- $('a[data-toggle="modal"]').click(function(){
-  window.location.href += $(this).attr('href');
- $(#changeBid).modal('show');
-});
-});
-
 $('button[data-dismiss="modal"]').click(function(){
  var original = window.location.href.substr(0, window.location.href.indexOf('#'))
  history.replaceState({}, document.title, original);

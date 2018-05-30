@@ -12,7 +12,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <?= showLoginMenu(); ?>
+            <?= showLoginAdminMenu(); ?>
           </ul>
         </div>
       </div>

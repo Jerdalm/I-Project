@@ -146,7 +146,7 @@ function contains_capital($string){
 }
 
 /* Deze functie toont tekst en link wordt bepaalt a.d.h.v. of je ingelogt of uitlogt bent */
-function showLoginMenu(){
+function showLoginAdminMenu(){
 	$htmlLogin = ' ';
 	if(isset($_SESSION['gebruikersnaam']) && !empty($_SESSION['gebruikersnaam'])){
 		$htmlLogin = '<li class="nav-item">';
@@ -160,7 +160,7 @@ function showLoginMenu(){
 		$htmlLogin .= '</li>';
 		$htmlLogin .= '<li class="nav-item">';
 		$htmlLogin .= '<a href="admin-pagina.php?cleanDatabase=true" class="btn btn-danger">Verschoon database</a>';
-		if (isset($_GET['cleanDatabase'])) cleanDB();
+		if (isset($_GET['cleanDatabase'])) { cleanDB();}
 		$htmlLogin .= '</li>';
 	} else {
 		$htmlLogin = '<li class="nav-item">';
@@ -230,23 +230,23 @@ function updateBit($array){
 	$myDateTimeBegin = DateTime::createFromFormat('Y-m-d', $dateBitDate);
 	$datumBoddag = $myDateTimeBegin->format('Y-m-d');
 	$changeBitParam = array(':nummer' => $array['voorwerpnummer'],
-		':gebruikersnaam' => $array['gebruikersnaam'],
 		':bedrag' => (float)$array['bodbedrag'],
 		':dag' => $datumBoddag,
 		':tijdstip' => $array['Tijd'],
-		':bedragOud' => $_SESSION['bit_changeinfo']);
+		':bedragOud' => $_GET['bodBedragOud']);
+	// echo "<pre>";
+	// print_r($changeBitParam);
+	// echo "</pre>";
+	// die();
 	$changeBitCheckParam = array(':nummer' => $array['voorwerpnummer'],
 		':gebruikersnaam' => $array['gebruikersnaam'],
 		':bedrag' => (float)$array['bodbedrag'],
 		':dag' => $datumBoddag,
 		':tijdstip' => $array['Tijd']);
-	$changeBitQuery = "UPDATE Bod SET bodbedrag = :bedrag, bodDag = :dag, bodTijdstip = :tijdstip WHERE gebruikersnaam = :gebruikersnaam AND bodbedrag = :bedragOud AND voorwerpnummer = :nummer";
-
+	$changeBitQuery = "UPDATE Bod SET bodbedrag = :bedrag, bodDag = :dag, bodTijdstip = :tijdstip WHERE bodbedrag = :bedragOud AND voorwerpnummer = :nummer";
+	handlequery($changeBitQuery, $changeBitParam);
 	$queryChangedBitCheck = handlequery("SELECT * FROM Bod WHERE voorwerpnummer = :nummer AND gebruikersnaam = :gebruikersnaam AND bodbedrag = :bedrag AND bodDag = :dag AND bodTijdstip = :tijdstip", $changeBitCheckParam);
-	echo "<pre>";
-	print_r($queryChangedBitCheck);
-	echo "</pre>";
-	die();
+	header("Location: ./change-article.php?&voorwerpInfo=".$changeBitParam[':nummer']);
 }
 
 ?>

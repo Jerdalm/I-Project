@@ -29,8 +29,8 @@ if (isset($_GET['voorwerpInfo'])) {
 	}
 	?>
 
-	<div class="tab-pane fade col-lg-9 col-sm-12 float-left" id="productinfo" role="tabpanel" aria-labelledby="list-profile-list">
-		<div class="tab-pane fade show active" id="content-user-details" role="tabpanel" aria-labelledby="list-user-details">
+	<div class="tab-pane fade col-lg-9 col-sm-12 float-left" id="productinfo" role="tabpanel" aria-labelledby="list-product-details">
+		<div class="tab-pane fade show active" id="productinfo" role="tabpanel" aria-labelledby="list-product-details">
 			<h2>Productinformatie</h2>
 			<form class="form-group change-form" method="GET" action="">
 				<?php if(isset($htmlToonProductInfo)){ echo $htmlToonProductInfo;}?>

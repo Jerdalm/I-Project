@@ -26,12 +26,8 @@
               break;
               case 'bodbedrag':
               echo '<input type="number" name="'. $field.'" id="'.$field.'" value="'. $value.'" step=".01" min="0"><br>';
+              echo '<input type="hidden" name="bodBedragOud" id="'.$field.'" value="'. $value.'" step=".01" min="0"><br>';
               break;
-            }
-            print_r($_GET);
-            foreach ($_GET as $field => $value) {  
-              if ($field == 'voorwerpInfo') continue;
-              echo '<input type="hidden" name="'. $field.'" id="'.$field.'" value="'. $value.'" step=".01" min="0"><br>';
             }
             echo '</div>';
           }
