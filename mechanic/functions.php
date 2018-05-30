@@ -433,10 +433,10 @@ function showMenuRubrieken($toplevel){
 }
 
 /* Deze functie returnt de rubriekenlijst in submenu's */
-function showRubriekenlist(){
+function showRubriekenlist($toplevel){
 
 	$html = '<ul class="list-group">';
-	$rubrieken = FetchSelectData("EXEC SHOW_RUBRIEK_TREE @rubriek = null");
+	$rubrieken = FetchSelectData("EXECUTE dbo.SHOW_RUBRIEK_TREE @rubriek = $toplevel");
 	$previouslevel = $rubrieken[0]['Lvl'];
 
 	foreach($rubrieken as $rubriek){
@@ -481,6 +481,7 @@ function showRubriekenlist(){
 	$html .= '</ul>';
 	return $html;
 }
+
 
 /* Deze functie toont alle producten  || Filterwaarde ('afstand','false')*/
 function showProducts($carrousel = false, $query = false, $parameters = false, $showAccount = false, $lg = 4, $md = 6, $sm = 6, $xs = 12){
