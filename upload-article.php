@@ -65,7 +65,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
         }
       }
     header("Location: productpage.php?product=" . $voorwerpnummerUpload[0][0]); // verwijzen naar nieuw
-    exit();
+    die();
       } else {
         echo '<main><section><div class="container">
         Niet alle velden zijn ingevuld <br><br>
