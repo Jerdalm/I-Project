@@ -165,7 +165,7 @@ function contains_capital($string){
 	return preg_match('/[A-Z]/', $string);
 }
 
-/* Deze functie checkt of het meegegeven bestand al bestaat */
+/* Deze functie checkt of het meegegeven bestand al bestaat */ 
 function checkExistingFile($file){
 	if (file_exists($file)) {
 		echo "Sorry, Het bestand bestaat al.";
@@ -212,11 +212,11 @@ function checkIfImage($file){
 function showLoginMenu(){
 	$htmlLogin = ' ';
 	if(isset($_SESSION['gebruikersnaam']) && !empty($_SESSION['gebruikersnaam'])){
-
+		
 		$htmlLogin .= '<li class="nav-item"><a class="nav-link" href="./account.php">Account</a></li>';
 		$htmlLogin .= '<li class="nav-item"><a class="nav-link" href="./logout.php">Uitloggen</a></li>';
 
-
+		
 	} else {
 		$htmlLogin .= '<li class="nav-item"><a class="nav-link" href="./user.php">Inloggen</a></li>';
 	}
@@ -422,7 +422,7 @@ function insertUpgradeinfoInDB(){
 function showMenuRubrieken($toplevel){
 	if($toplevel == null){ $querypart = " is NULL ";}
 	else{ $querypart = " = $toplevel";}
-
+	
 	$html = '';
 	$rubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek ".$querypart."");
 
@@ -441,16 +441,21 @@ function showRubriekenlist($toplevel){
 
 	foreach($rubrieken as $rubriek){
 		$subcata = getSubRubriek($rubriek['rubrieknummer']);
-
+		
 		$amountInRubarr = handlequery("SELECT COUNT(voorwerpnummer) AS productaantal from VoorwerpInRubriek WHERE rubriekOpLaagsteNiveau IN ".$subcata."");
 		$amountInRub = $amountInRubarr[0]['productaantal'];
-
-
+		
+		if(!$amountInRub){continue;}
+		
+		
 		$rubriekparameters = array(':rubriek' => $rubriek['rubrieknummer']);
 		$subrubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek = :rubriek",$rubriekparameters);
 
 		if($rubriek['Lvl'] < $previouslevel){
+		$lvldif = $previouslevel - $rubriek['Lvl'];
+			for($teller = 0; $teller <  $lvldif; $teller++){
 			$html .= '</ul>';
+			}
 		}
 
 		if($subrubrieken){
@@ -505,7 +510,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 
 		}
 	}
-
+	
 	if($producten){
 	$beforeInput = '';
 	$afterInput = '';
@@ -719,7 +724,7 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker){
 		$infoParameters);
 	if($gebruiker['telefoonnummer'] == null){
 		handlequery("INSERT INTO Gebruikerstelefoon (telefoonnummer,gebruikersnaam) VALUES (:telefoonnummer,:gebruikersnaam )",$telefoonnummerPara);
-
+		
 	} else {
 		handlequery("UPDATE Gebruikerstelefoon
 		SET telefoonnummer = :telefoonnummer
@@ -731,13 +736,9 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker){
 /* toont goede button aan de hand van ingelogt zijn of niet */
 function showButtonIndex(){
 	if(isset($_SESSION['gebruikersnaam'])){
-		if($_SESSION['soortGebruiker'] == 1) {
-		echo '<a href="upgrade-user.php" class="cta-orange">Word verkoper!</a>';
-		} elseif ($_SESSION['soortGebruiker'] == 2) {
-		echo '<a href="upload-article.php" class="cta-orange">Verkoop iets!</a>';
-			}
+		echo '<a href="upgrade-user.php" class="cta-orange">Wordt verkoper!</a>';
 	} else {
-		echo '<a href="registreren.php" class="cta-orange">Registreer je nu om mee te bieden!</a>';
+		echo '<a href="registreren.php" class="cta-orange">Registreer je nu om mee te bieden!</a>';		
 	}
 }
 
@@ -746,13 +747,13 @@ function checkNewPassword ($password, $passwordrepeat){
 	$messageReturn = '';
 	if ($password == $passwordrepeat) {
 		if (strlen($password) >= $passwordMinimumLength && contains_number($password)) {
-			$password_hashed = password_hash($password , PASSWORD_DEFAULT);
+			$password_hashed = password_hash($password , PASSWORD_DEFAULT);	
 			$_SESSION['password'] = $password_hashed;
-			$messageReturn = "Wachtwoord zit in de database";
+			$messageReturn = "Wachtwoord zit in de database";												
 		} else if (strlen($password) < $passwordMinimumLength &&  0 === preg_match('[0-9]', $password)) {
-			$messageReturn = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";
+			$messageReturn = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";	
 		} else if (strlen($password) < $passwordMinimumLength) {
-			$messageReturn = "Uw wachtwoord moet minstens 7 tekens bevatten.";
+			$messageReturn = "Uw wachtwoord moet minstens 7 tekens bevatten.";	
 		} else if (!contains_number($password)) {
 			$messageReturn = "Uw wachtwoord moet minimaal 1 cijfer bevatten.";
 		}
@@ -765,28 +766,28 @@ function checkNewPassword ($password, $passwordrepeat){
 	function pagination($array,$itemsperpage = 10){
 		$submenus =(sizeof($array) / $itemsperpage);
 		$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-
+		
 		if(isset($_GET['pagination'] ) && isset($_GET['perpage'] )){
 			$currentpagination = '&pagination='.$_GET['pagination'].'&perpage='.$_GET['perpage'];
 			$newUrl = str_replace($currentpagination, '', $actual_link);
 		}else{$newUrl = $actual_link; }
-
+		
 		$url_end = substr($actual_link, -3);
 		if($url_end == 'php'){$newUrl = $newUrl.'?';}
-
+		
 		if($submenus > 1){
-
+			
 			for($teller = 0; $teller < $submenus; $teller++){
 				$startvalue = $teller * $itemsperpage;
 				$visueel = $teller + 1;
-
-				echo "<a class=\"btn btn3 \" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";
+				
+				echo "<a class=\"btn btn3 \" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";	
 			}
-		}
+		}		
 	}
-
+	
 	function logUserHistory($cookieName){
 
 	}
-
+	
 ?>

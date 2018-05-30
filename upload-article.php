@@ -4,6 +4,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
   $username = $_SESSION['gebruikersnaam'];
   if ($_SESSION['soortGebruiker'] != 2) {
     header("Location: upgrade-user.php"); // redirect naar upgrade user wanneer je geen verkoper bent
+    die()
   }
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $filledin = array(
@@ -14,7 +15,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
     'betalingswijze'
   );
 
-  if (isset($_POST['sellitem']) && fieldsFilledIn($filledin) && isset($_FILES)) {
+  if (isset($_POST['sellitem']) && fieldsFilledIn($filledin) && $_FILES["fileToUpload"]["size"] != 0) {
     if (empty($_POST['betalingsinstructie'])) {
       $_POST['betalingsinstructie'] = NULL;
     } if (empty($_POST['verzendkosten'])) {
@@ -74,11 +75,9 @@ if (isset($_SESSION['gebruikersnaam'])) {
         name="Submit" id="frm1_submit"/></div>
         </form>
         </section></main>';
+        die();
       }
     }
-    // echo '<pre>';
-    // print_r($_SESSION);
-    // echo '</pre>';
     echo '<main>
       <section class="uploadarticle">
         <div class="container">
@@ -147,7 +146,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
               <div class="form-group">
                 <label class="col-md-12 control-label" for="fileToUpload">Upload foto*</label>
                 <div class="col-md-12">
-                  <input id="fileToUpload" name="fileToUpload" class="input-file" type="file">
+                  <input id="fileToUpload" name="fileToUpload" class="input-file" type="file" required>
                 </div>
               </div>
               <div class="form-group">
