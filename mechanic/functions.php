@@ -433,10 +433,10 @@ function showMenuRubrieken($toplevel){
 }
 
 /* Deze functie returnt de rubriekenlijst in submenu's */
-function showRubriekenlist(){
-
+function showRubriekenlist($toplevel){
+	
 	$html = '<ul class="list-group">';
-	$rubrieken = FetchSelectData("EXEC SHOW_RUBRIEK_TREE @rubriek = null");
+	$rubrieken = FetchSelectData("EXECUTE dbo.SHOW_RUBRIEK_TREE @rubriek = $toplevel");
 	$previouslevel = $rubrieken[0]['Lvl'];
 
 	foreach($rubrieken as $rubriek){
@@ -445,12 +445,17 @@ function showRubriekenlist(){
 		$amountInRubarr = handlequery("SELECT COUNT(voorwerpnummer) AS productaantal from VoorwerpInRubriek WHERE rubriekOpLaagsteNiveau IN ".$subcata."");
 		$amountInRub = $amountInRubarr[0]['productaantal'];
 		
+		if(!$amountInRub){continue;}
+		
 		
 		$rubriekparameters = array(':rubriek' => $rubriek['rubrieknummer']);
 		$subrubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek = :rubriek",$rubriekparameters);
 
 		if($rubriek['Lvl'] < $previouslevel){
+		$lvldif = $previouslevel - $rubriek['Lvl'];
+			for($teller = 0; $teller <  $lvldif; $teller++){
 			$html .= '</ul>';
+			}
 		}
 
 		if($subrubrieken){
@@ -481,6 +486,7 @@ function showRubriekenlist(){
 	$html .= '</ul>';
 	return $html;
 }
+
 
 /* Deze functie toont alle producten  || Filterwaarde ('afstand','false')*/
 function showProducts($carrousel = false, $query = false, $parameters = false, $showAccount = false, $lg = 4, $md = 6, $sm = 6, $xs = 12){

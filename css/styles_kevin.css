@@ -29,7 +29,7 @@ table th:first-letter{
 	text-transform:capitalize;
 }
 
-h1,h2,h3,h4,h5,h6{
+.wraptext{
   overflow-wrap: break-word;
   word-wrap: break-word;
   -webkit-hyphens: auto;
@@ -568,4 +568,12 @@ border-color: #F2552C;
 }
 .btn-orange:focus, .btn-orange.focus {
     box-shadow: 0 0 0 0.2rem rgba(242, 85, 44,0.5)
+}
+
+.card-title{
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+	
 }

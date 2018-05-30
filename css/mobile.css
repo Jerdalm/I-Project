@@ -128,8 +128,17 @@
 		padding:10px;
 	 }
 	 section.user-details .sidebar{float:none !important;}
+	 
 }
 
 
 /* Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {}
+@media (min-width: 1200px) {
+	
+}
+
+/* Specific ranges */
+@media (max-width: 1200px) and (min-width:768px){
+	
+	 footer .col-lg-5 > h2:nth-child(3){padding-right:0px;}
+}
