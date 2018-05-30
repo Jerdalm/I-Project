@@ -179,6 +179,7 @@ function blockUser($gebruiker){
 function deleteArticle($artikel){
 	$deleteParam = array(':artikel' => $artikel);
 	handlequery("DELETE FROM Voorwerp WHERE voorwerpnummer = :artikel", $deleteParam);
+	header("Location: ./change-article.php");
 }
 
 function changedFields($fieldsOld, $fieldsNew){
@@ -198,16 +199,18 @@ function changedFields($fieldsOld, $fieldsNew){
 
 function cleanDB(){
 	executequery("EXEC prc_verschoonDatabase");
+	// functie php mail
+	executequery("EXEC prc_veilingSluiten");
 	header("Location: ./admin-pagina.php");
 }
 
 function updateProductInfo($array){
-	echo "aanwezig";
-	die();
 	$dateLooptijdBegin = $array['looptijdbeginDag'];
 	$myDateTimeBegin = DateTime::createFromFormat('Y-m-d', $dateLooptijdBegin);
 	$datumLooptijdBegin = $myDateTimeBegin->format('Y-m-d');
 	$parametersUpdate = array(':titel' => $array['titel'], ':beschrijving' => $array['beschrijving'], ':startprijs' => (float)$array['startprijs'], ':betalingswijze' => $array['betalingswijze'], ':betalingsinstructie' => $array['betalingsinstructie'], ':plaatsnaam' => $array['plaatsnaam'], ':land' => $array['land'], ':looptijd' => $array['looptijd'], ':looptijdbeginDag' => $datumLooptijdBegin, ':looptijdbeginTijdstip' => $array['looptijdbeginTijdstip'], ':verzendkosten' => (float)$array['verzendkosten'], ':verzendinstructies' => $array['verzendinstructies'], ':voorwerpnummer' => $array['voorwerpnummer']);
+
+	
 	handlequery("UPDATE Voorwerp SET
 		titel = :titel,
 		beschrijving = :beschrijving,
@@ -223,6 +226,7 @@ function updateProductInfo($array){
 		verzendinstructies = :verzendinstructies
 		WHERE voorwerpnummer = :voorwerpnummer",
 		$parametersUpdate);
+	header("Location: ./change-article.php?&voorwerpInfo=".$parametersUpdate[':voorwerpnummer']);
 }
 
 function updateBit($array){
@@ -234,10 +238,6 @@ function updateBit($array){
 		':dag' => $datumBoddag,
 		':tijdstip' => $array['Tijd'],
 		':bedragOud' => $_GET['bodBedragOud']);
-	// echo "<pre>";
-	// print_r($changeBitParam);
-	// echo "</pre>";
-	// die();
 	$changeBitCheckParam = array(':nummer' => $array['voorwerpnummer'],
 		':gebruikersnaam' => $array['gebruikersnaam'],
 		':bedrag' => (float)$array['bodbedrag'],
@@ -247,6 +247,68 @@ function updateBit($array){
 	handlequery($changeBitQuery, $changeBitParam);
 	$queryChangedBitCheck = handlequery("SELECT * FROM Bod WHERE voorwerpnummer = :nummer AND gebruikersnaam = :gebruikersnaam AND bodbedrag = :bedrag AND bodDag = :dag AND bodTijdstip = :tijdstip", $changeBitCheckParam);
 	header("Location: ./change-article.php?&voorwerpInfo=".$changeBitParam[':nummer']);
+}
+
+function returnSRCProduct($voorwernummer){
+	$param = array(':nummer' => $voorwernummer);
+	$query = FetchAssocSelectData("SELECT TOP 1 filenaam FROM bestand WHERE voorwerpnummer = :nummer", $param);
+	$return = '.'.$query['filenaam'];
+	return $return;
+}
+
+
+function sortProducts(){
+	$sort = "desc";
+	if (isset($_GET['filter-time-asc'])){
+		$sort = "asc";
+	}
+	$return = "SELECT V.voorwerpnummer, V.verkoper, V.plaatsnaam, V.titel, V.startprijs, R.rubriekOpLaagsteNiveau, v.loopTijd FROM VoorwerpInRubriek R right outer join Voorwerp V 								        
+		on V.voorwerpnummer = R.voorwerpnummer
+		left outer join Rubriek Ru
+		on R.rubriekOpLaagsteNiveau = Ru.rubrieknummer
+		WHERE v.voorwerpnummer like :voorwerpnummer or V.verkoper like :verkoper or V.plaatsnaam like :plaats or V.titel like :titel or v.startprijs like :prijs
+		or Ru.rubrieknaam like :categorie
+		order by v.looptijd " . $sort;
+	return $return;
+}
+
+function UpdateInfoUser($get, $gebruikersnaam,$gebruiker){
+	$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer'] , ':gebruikersnaam' => $gebruikersnaam);
+	$birthdate = $get['geboortedag'];
+	$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
+	$geboortedag = $myDateTime->format('Y-m-d');
+
+	$infoParameters = array(':gebruikersnaam' => $gebruikersnaam ,
+		':voornaam' => $get['voornaam'],
+		':achternaam' => $get['achternaam'] ,
+		':adresregel1' => $get['adresregel1'] ,
+		':adresregel2' => $get['adresregel2'] ,
+		':postcode' => $get['postcode'],
+		':plaatsnaam' => $get['plaatsnaam'] ,
+		':land' =>  $get['land'] ,
+		':geboortedag' => $geboortedag ,
+		':mailadres' => $get['mailadres']);
+	handlequery("UPDATE Gebruiker
+		SET voornaam = :voornaam ,
+		achternaam = :achternaam,
+		adresregel1 = :adresregel1 ,
+		adresregel2 = :adresregel2 ,
+		postcode = :postcode,
+		plaatsnaam = :plaatsnaam ,
+		land = :land,
+		geboortedag = :geboortedag,
+		mailadres = :mailadres
+		WHERE gebruikersnaam = :gebruikersnaam",
+		$infoParameters);
+	if($gebruiker['telefoonnummer'] == null){
+		handlequery("INSERT INTO Gebruikerstelefoon (telefoonnummer,gebruikersnaam) VALUES (:telefoonnummer,:gebruikersnaam )",$telefoonnummerPara);
+		
+	} else {
+		handlequery("UPDATE Gebruikerstelefoon
+		SET telefoonnummer = :telefoonnummer
+		WHERE gebruikersnaam = :gebruikersnaam" , $telefoonnummerPara);
+	}
+	echo '<script>window.location.replace("./change-user.php?gebruikersnaam='.$gebruikersnaam.'")</script>';
 }
 
 ?>

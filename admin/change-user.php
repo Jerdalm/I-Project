@@ -1,123 +1,87 @@
 <?php 
 require_once './header.php'; 
-$htmlVeranderVoorwerp = ' ';
-$htmlVeranderBieding = ' ';
-if (isset($_GET['search-article'])){
-	$voorwerpNummer = $_GET['voorwerp'];
-	$parametersVoorwerp = array(':voorwerpnummer' => "%".$voorwerpNummer."%",
-		':titel' => "%".$voorwerpNummer."%",
-		':prijs' => "%".$voorwerpNummer."%",
-		':verkoper' => "%".$voorwerpNummer."%",
-		':plaats' => "%".$voorwerpNummer."%",
-		':categorie' => "%".$voorwerpNummer."%");
-	$voorwerpen = handlequery("SELECT V.voorwerpnummer, V.verkoper, V.plaatsnaam, V.titel, V.startprijs, R.rubriekOpLaagsteNiveau 
-		FROM VoorwerpInRubriek R right outer join Voorwerp V 								        
-		on V.voorwerpnummer = R.voorwerpnummer
-		left outer join Rubriek Ru
-		on R.rubriekOpLaagsteNiveau = Ru.rubrieknummer
-		WHERE v.voorwerpnummer like :voorwerpnummer
-		or V.verkoper like :verkoper
-		or V.plaatsnaam like :plaats
-		or V.titel like :titel
-		or v.startprijs like :prijs
-		or Ru.rubrieknaam like :categorie
-		order by v.voorwerpnummer asc",
-		$parametersVoorwerp);		
-	$artikelResultaten = '<table class="table"><tr><th scope="col">Resultaat</th></tr><tr>';
-	foreach($voorwerpen as $voorwerp){
-		$artikelResultaten .= "<tr>
-		<td>
-		<a href='?&voorwerpInfo=" . $voorwerp['voorwerpnummer'] . "'>" . $voorwerp['titel'] ."</a>
-		</td>
-		<td>
-		<a href='?&voorwerpInfo=" . $voorwerp['voorwerpnummer'] . "'>" . $voorwerp['verkoper'] ."</a>
-		</td>
-		<td>
-		<a href='?&voorwerpInfo=" . $voorwerp['voorwerpnummer'] . "'>" . $voorwerp['voorwerpnummer'] ."</a>
-		</td>
-		</tr>"; 
+$htmlGebruiker = '<form class="form-group" method="GET" action=""> 
+<input type="text" name="gebruiker" placeholder="Geef: Gebruikersnaam, E-mailadres, Plaats" min="0"> <br>
+<button class="btn cta-orange" name="search-user" type="submit" value="zoeken">Zoeken</button>
+</form>';
+if(isset($errorMessageUser)) { 
+	$htmlGebruiker .= '<p class="error error-warning">'.$errorMessageUser.'</p>'; 
+} else if (isset($_GET['search-user'])){
+	$gebruikersnaam = $_GET['gebruiker'];
+	$parametersGebruiker = array(':gebruiker' => "%". $gebruikersnaam ."%",
+		':mail' => "%". $gebruikersnaam ."%",
+		':plaats' => "%". $gebruikersnaam ."%");
+	$gebruikers = handlequery("SELECT * 
+		FROM Gebruiker 
+		WHERE gebruikersnaam like :gebruiker
+		OR mailadres like :mail
+		OR plaatsnaam like :plaats",$parametersGebruiker);
+	$gebruikerResultaten = '<div class="row">
+								<div class="sidebar col-lg-3 col-sm-12">
+									<p><b>Filter op de looptijd</b></p>
+									<form method="get">
+										<input name="gebruiker" type="hidden" value="'.$_GET['gebruiker'].'">
+										<input name="search-user" type="hidden" value="'.$_GET['search-user'].'">										
+										<button class="btn btn-primary" value="filter-desc" name="filter-time-desc">Filter producten aflopend</button>
+										<button class="btn btn-secondary" value="filter-asc" name="filter-time-asc">Filter producten oplopend</button>
+									</form>
+								</div>
+								<div class="col-lg-9 col-sm-12">
+									<table class="table table-responsive search-results">
+									<tr>
+										<th scope="col">Gebruikersnaam</th>
+										<th scope="col">E-mailadres</th>
+										<th scope="col">Woonplaats</th>
+									</tr>';
+	foreach($gebruikers as $gebruiker){
+		$gebruikerResultaten .= "<tr>
+									<td>
+										<a href='?gebruikersnaam=" . $gebruiker['gebruikersnaam'] . "'>" . $gebruiker['gebruikersnaam'] ."
+										</a>
+									</td>
+									<td>
+										<a href='?gebruikersnaam=" . $gebruiker['gebruikersnaam'] . "'>" . $gebruiker['mailadres'] ."
+										</a>
+									</td>
+									<td>
+										<a href='?gebruikersnaam=" . $gebruiker['gebruikersnaam'] . "'>" . $gebruiker['plaatsnaam'] ."
+										</a>
+									</td>
+								</tr>";
 	} 
-	$artikelResultaten .= '</tr></table>';
+	$gebruikerResultaten .= '</tr></table></div></div>';
+} else if (isset($_GET['gebruikersnaam'])){
+	$htmlGebruiker = '
+	<div class="col-lg-3 float-left"> 
+	<div class="list-group" id="list-tab" role="tablist">
+	<a class="list-group-item list-group-item-action active" id="list-product-list" data-toggle="list" href="#gebruikers" role="tab" aria-controls="userinfo">Geburikersinformatie</a>
+	<a class="list-group-item list-group-item-action" id="list-change-bid" data-toggle="list" href="#bids" role="tab" aria-controls="list-change-bid">Biedingen</a>
+	</div>
+	<form method="get" class="btn-delete-product"><input type="hidden" name="product" value="'. $_GET['gebruikersnaam'] .'"><button type="submit" class="btn btn-danger" value="delete-product" name="delete-product">Blokkeer gebruiker</button></form>
+	</div>';
+
+	$gebruikerResultaten = ' ';
 }
-
-if(isset($_GET['voorwerpInfo'])){
-	$artikelResultaten = ' ';
-	
-	$parametersbieding = array(':voorwerpnummer' => (int)$_GET['voorwerpInfo']);
-	$biedingen = handlequery("SELECT * FROM Bod WHERE voorwerpNummer = :voorwerpnummer ORDER BY bodbedrag desc ", $parametersbieding);
-
-	$voorwerpDetailParam = array(':voorwerpnummer' => $_GET['voorwerpInfo']);
-	//Titel startprijs plaatsnaam einde looptijd misschien nog een eerste regel van de beschrijving
-	$voorwerpDetailQuery = "SELECT titel, beschrijving, startprijs, plaatsnaam, looptijdEindeDag, CONVERT(TIME(0), [looptijdEindeTijdstip]) as looptijdEindeTijdstip
-		FROM Voorwerp 
-		WHERE voorwerpnummer = :voorwerpnummer";
-	$query = FetchAssocSelectData($voorwerpDetailQuery, $voorwerpDetailParam);
-
-	$htmlVeranderVoorwerp = '<div class="row">';
-	$htmlVeranderVoorwerp .= '<div class="col-lg-8 col-sm-12">
-	<h2>Productinformatie</h2>';
-	$htmlVeranderVoorwerp .= '<form class="form-group change-form" method="GET" action="">'; 
-	foreach ($query as $key => $value) {
-		$htmlVeranderVoorwerp .= '<div class="form-group">';		
-		$htmlVeranderVoorwerp .= '<label>'. $key . '</label>';
-		switch ($key) {
-			default:
-			$htmlVeranderVoorwerp .= '<input type="text" name="'.$key.'" value="'.$value.'" readonly><br>';
-			break;
-		}
-		$htmlVeranderVoorwerp .= '</div>';
-	}
-	$htmlVeranderVoorwerp .= '<button class="btn btn-success" name="change-article">Wijzig gegevens</button>';
-	$htmlVeranderVoorwerp .= '</form></div>';
-
-
-	$htmlVeranderVoorwerp .= '<div class="col-lg-4 col-sm-12">	
-	<h2>Biedingen</h2>';	
-	
-	$htmlVeranderVoorwerp .= '<table class="table"><tr></tr>';
-	foreach($biedingen as $bieding){
-
-		$htmlVeranderVoorwerp .= "<tr>
-		<td>
-		<p><a href=?biedingsNummer=".$bieding['voorwerpnummer']."&biedingsBedrag=".$bieding['bodbedrag'].">€".$bieding['bodbedrag']."</a></p>
-		</td>
-		<td>
-		<p><a href=?biedingsNummer=".$bieding['voorwerpnummer']."&biedingsBedrag=".$bieding['bodbedrag'].">".$bieding['gebruikersnaam']."</a></p>
-		</td>
-		<td>
-		<p><a href=?biedingsNummer=".$bieding['voorwerpnummer']."&biedingsBedrag=".$bieding['bodbedrag'].">".date_format(date_create($bieding['bodDag']), "d-m-Y")."</a></p>
-		</td>
-		</tr>";
-	} 
-	$htmlVeranderVoorwerp .= '</table>';
-
-	$htmlVeranderVoorwerp .= '</div>';
-
-	$htmlVeranderVoorwerp .= '</div>';
-}
-
 ?>
 
 <main class="beheerdersomgeving">
 	<section>
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="artikelnummer">
-						<!-- form om te zoeken op artikelnummer -->
-						<form class="form-group" method="GET" action=""> 
-							<input type="text" name="voorwerp" placeholder="Voorwerp" min="0"> <br>
-							<input class="cta-orange" name="search-article" type="submit" value="Zoeken">
-						</form>
-						<?php if(isset($errorMessageArticle)) { 
-							echo '<p class="error error-warning">'.$errorMessageArticle.'</p>'; 
-						}
-						echo $htmlVeranderVoorwerp;
-						?>
-					</div>
-					<?php if(isset($artikelResultaten)) { 
-						echo $artikelResultaten; 
+			<div class="gebruiker">
+				<div class="row">
+					<div class="col-lg-12">
+						<?=$htmlGebruiker?> 
+						<div class="tab-content" id="nav-tabContent">
+							<?php
+							require 'layout/gebruikers.php';
+							require 'layout/biedingen.php'; 
+							?>
+						</div>
+						<div class="clearfix"></div>
+					<?php if(isset($gebruikerResultaten)) { 
+						echo $gebruikerResultaten; 
 					}?>
+					</div>
 				</div>
 			</div>
 		</div>
