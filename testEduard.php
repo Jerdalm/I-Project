@@ -3,7 +3,9 @@
 
 // hier worden de mailtjes gestuurd voor de veilingen die nog op 0 staan en afgelopen zijn
 if (isset($_POST['sendmail'])){
+		executequery("EXEC prc_verschoonDatabase");	
 		sendEmailClosedAuctions();
+		executequery("EXEC prc_veilingSluiten");
 
 		
 	}
