@@ -434,7 +434,7 @@ function showMenuRubrieken($toplevel){
 
 /* Deze functie returnt de rubriekenlijst in submenu's */
 function showRubriekenlist($toplevel){
-
+	
 	$html = '<ul class="list-group">';
 	$rubrieken = FetchSelectData("EXECUTE dbo.SHOW_RUBRIEK_TREE @rubriek = $toplevel");
 	$previouslevel = $rubrieken[0]['Lvl'];
