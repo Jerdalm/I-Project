@@ -5,22 +5,35 @@
 <br>
 <br>
 <?php
-$vwarray[] = [9, 6, 3, 2, 7, 4];
-$username = $_SESSION['username'];
-$vwNummer = $_SESSION['vwnummer'];
-AddCookie($username, $vwarray);
-GetSimilarItems($username, $vwNummer);
-function AddCookie($CookieName, $ItemArray)
-{
-foreach($vwarray as $voorwerp){
+$vwarray[] = [9, 6, 3, 2, 7, 4, 8];
+$username = "henk";
+$vwNummer = 1;
 
-}
+AddCookie($username, $vwarray, $vwNummer);
+GetSimilarItems($username, $vwNummer);
+
+
+
+
+
+function AlterCookie($CookieName, $ItemArray, $vwNummer)
+{
+    array_shift($ItemArray);
+    $ItemArray[6] =$vwNummer;
     $month_in_sec = 2592000;
     setcookie($CookieName, serialize($ItemArray), time() + $month_in_sec);
 
 }
 
-function GetSimilarItems($username, $vwNummer)
+function SetCookie($CookieName, $ItemArray){
+    $month_in_sec = 2592000;
+    setcookie($CookieName, serialize($ItemArray), time() + $month_in_sec);
+}
+
+showProducts(true, Setquery($username, $vwNummer));
+
+
+    function Setquery($username, $vwNummer)
 {
     $data = unserialize($_COOKIE[$username]);
 
@@ -36,8 +49,8 @@ print_r($datalist);
                   WHERE C.voorwerpnummer IN ($datalist)/* cookie voorwerpen */
                   AND C.voorwerpnummer != $vwNummer";/* Waarde huidig nummer */
 
-    $Resultaten = handlequery($Arrayquery);
-    print_r($Resultaten);
+    print_r($data);
+    return $Arrayquery;
 }
 
 ?>
