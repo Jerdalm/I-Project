@@ -22,6 +22,13 @@ if(isset($_GET['product'])){
         JOIN gebruiker G on V.verkoper = G.gebruikersnaam
         LEFT JOIN gebruikerstelefoon GT on G.gebruikersnaam = GT.gebruikersnaam
         WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
+
+    $paramkoperdata = array(':gebruikersnaam' => $productdata['koper']);
+    $koperdata = FetchAssocSelectData(
+        "SELECT voornaam, achternaam, plaatsnaam, mailadres
+            FROM gebruiker
+            where gebruikersnaam = :gebruikersnaam", $paramkoperdata);
+
         //voorwerpnummer moet meegegeven worden vanuit de site
 
     $images = handlequery("SELECT filenaam FROM Bestand WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
@@ -186,7 +193,12 @@ if(isset($_GET['product'])){
                                         echo '</thead>';
                                     }
                                 } elseif($boddata['hoogstebod'] != NULL) {
-                                    echo $productdata['koper']. " heeft de veiling gewonnen met een bod van: ". $boddata['hoogstebod']. "!";
+                                    echo "Gewonnen door:";
+                                 ?>
+                                    <p><b><?= $koperdata['voornaam']. " " .$koperdata['achternaam'] ?></b> te <?=$koperdata['plaatsnaam']?></p><br>
+                                    <p><a href=<?='"mailto:' .$koperdata['mailadres']. '?SUBJECT=' . $productdata['titel'] . '"'?>> <i class="fas fa-envelope"></i> &nbsp;&nbsp;&nbsp;<?=$koperdata['mailadres']?></a></p>
+                                <?php
+                                echo " met een bod van €" .$boddata['hoogstebod'];
                                 } else {
                                     echo "helaas, niemand heeft binnen de tijd geboden op dit product.";
                                 }
