@@ -39,8 +39,7 @@ if(isset($_SESSION['gebruikersnaam'])){
 	 require 'layout/seller-registration.php';
 
 	 ?>
-    </div>
-
+    </div
 	<div class="clearfix"></div>
    </div>  
 </section>   

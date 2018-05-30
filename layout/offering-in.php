@@ -15,5 +15,6 @@ ORDER BY bod.bodbedrag DESC"
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-margin float-left" style=" display: flex; flex-wrap: wrap;">
             <?= showProducts(false, $query, false, true); ?>
         </div>
+
     </div>
 </div>
