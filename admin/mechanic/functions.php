@@ -7,16 +7,15 @@ function ConnectToDatabase(){
 	$dbusername = "sa";
 	$dbpw = "12345";
 
-	try {$pdo = new PDO("sqlsrv:Server=$hostname;Database=$dbname;
-		ConnectionPooling=0", "$dbusername", "$dbpw");
-	$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	return $pdo;
-}
-catch(PDOException $e)
-{
-	echo "Connection failed: " . $e->getMessage();
-	die();
-}
+	try { 
+		$pdo = new PDO("sqlsrv:Server=$hostname;Database=$dbname;
+			ConnectionPooling=0", "$dbusername", "$dbpw");
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		return $pdo;
+	} catch(PDOException $e) {
+		echo "Connection failed: " . $e->getMessage();
+		die();
+	}
 }
 
 /* Deze functie geeft een array terug met de SELECT RESULTATEN */
@@ -47,7 +46,6 @@ function FetchAssocSelectData($sql, $parameters = false){
 	$result = $qry->fetch(PDO::FETCH_ASSOC);
 	return $result;
 }
-
 
 /* Deze fucntie voert een sql query uit en geeft een resultaatmelding terug */
 function executequery($sql, $parameters = false){
@@ -152,14 +150,17 @@ function showLoginMenu(){
 	$htmlLogin = ' ';
 	if(isset($_SESSION['gebruikersnaam']) && !empty($_SESSION['gebruikersnaam'])){
 		$htmlLogin = '<li class="nav-item">';
-		$htmlLogin .= '<a class="nav-link" href="./admin-pagina.php">Beheerder</a>';
+		$htmlLogin .= '<a class="nav-link" href="./change-article.php">Voorwerp aanpassen</a>';
+		$htmlLogin .= '</li>';
+		$htmlLogin .= '<li class="nav-item">';
+		$htmlLogin .= '<a class="nav-link" href="./change-user.php">Gebruiker aanpassen</a>';
 		$htmlLogin .= '</li>';
 		$htmlLogin .= '<li class="nav-item">';
 		$htmlLogin .= '<a class="nav-link" href="./logout.php">Uitloggen</a>';
 		$htmlLogin .= '</li>';
 		$htmlLogin .= '<li class="nav-item">';
 		$htmlLogin .= '<a href="admin-pagina.php?cleanDatabase=true" class="btn btn-danger">Verschoon database</a>';
-					   if (isset($_GET['cleanDatabase'])) cleanDB();
+		if (isset($_GET['cleanDatabase'])) cleanDB();
 		$htmlLogin .= '</li>';
 	} else {
 		$htmlLogin = '<li class="nav-item">';
@@ -195,13 +196,57 @@ function changedFields($fieldsOld, $fieldsNew){
 	return $state;
 }
 
-
-
 function cleanDB(){
-	handlequery("DELETE FROM ActivatieCode WHERE DATEDIFF(hour, ActivatieCode.tijdAangevraagd, GETDATE()) > 4 AND soort = 0");
-	handlequery("DELETE FROM ActivatieCode WHERE DATEDIFF(day, ActivatieCode.tijdAangevraagd, GETDATE()) > 7 AND soort = 1");
-	executequery("EXEC prc_veilingGesloten");
+	executequery("EXEC prc_verschoonDatabase");
 	header("Location: ./admin-pagina.php");
+}
+
+function updateProductInfo($array){
+	echo "aanwezig";
+	die();
+	$dateLooptijdBegin = $array['looptijdbeginDag'];
+	$myDateTimeBegin = DateTime::createFromFormat('Y-m-d', $dateLooptijdBegin);
+	$datumLooptijdBegin = $myDateTimeBegin->format('Y-m-d');
+	$parametersUpdate = array(':titel' => $array['titel'], ':beschrijving' => $array['beschrijving'], ':startprijs' => (float)$array['startprijs'], ':betalingswijze' => $array['betalingswijze'], ':betalingsinstructie' => $array['betalingsinstructie'], ':plaatsnaam' => $array['plaatsnaam'], ':land' => $array['land'], ':looptijd' => $array['looptijd'], ':looptijdbeginDag' => $datumLooptijdBegin, ':looptijdbeginTijdstip' => $array['looptijdbeginTijdstip'], ':verzendkosten' => (float)$array['verzendkosten'], ':verzendinstructies' => $array['verzendinstructies'], ':voorwerpnummer' => $array['voorwerpnummer']);
+	handlequery("UPDATE Voorwerp SET
+		titel = :titel,
+		beschrijving = :beschrijving,
+		startprijs = :startprijs,
+		betalingswijze = :betalingswijze,
+		betalingsinstructie = :betalingsinstructie,
+		plaatsnaam = :plaatsnaam,
+		land = :land,
+		looptijd = :looptijd,
+		looptijdbeginDag = :looptijdbeginDag,
+		looptijdbeginTijdstip = :looptijdbeginTijdstip,
+		verzendkosten = :verzendkosten,
+		verzendinstructies = :verzendinstructies
+		WHERE voorwerpnummer = :voorwerpnummer",
+		$parametersUpdate);
+}
+
+function updateBit($array){
+	$dateBitDate = $array['Datum'];
+	$myDateTimeBegin = DateTime::createFromFormat('Y-m-d', $dateBitDate);
+	$datumBoddag = $myDateTimeBegin->format('Y-m-d');
+	$changeBitParam = array(':nummer' => $array['voorwerpnummer'],
+		':gebruikersnaam' => $array['gebruikersnaam'],
+		':bedrag' => (float)$array['bodbedrag'],
+		':dag' => $datumBoddag,
+		':tijdstip' => $array['Tijd'],
+		':bedragOud' => $_SESSION['bit_changeinfo']);
+	$changeBitCheckParam = array(':nummer' => $array['voorwerpnummer'],
+		':gebruikersnaam' => $array['gebruikersnaam'],
+		':bedrag' => (float)$array['bodbedrag'],
+		':dag' => $datumBoddag,
+		':tijdstip' => $array['Tijd']);
+	$changeBitQuery = "UPDATE Bod SET bodbedrag = :bedrag, bodDag = :dag, bodTijdstip = :tijdstip WHERE gebruikersnaam = :gebruikersnaam AND bodbedrag = :bedragOud AND voorwerpnummer = :nummer";
+
+	$queryChangedBitCheck = handlequery("SELECT * FROM Bod WHERE voorwerpnummer = :nummer AND gebruikersnaam = :gebruikersnaam AND bodbedrag = :bedrag AND bodDag = :dag AND bodTijdstip = :tijdstip", $changeBitCheckParam);
+	echo "<pre>";
+	print_r($queryChangedBitCheck);
+	echo "</pre>";
+	die();
 }
 
 ?>

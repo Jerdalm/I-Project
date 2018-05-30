@@ -28,7 +28,7 @@ $_SESSION['email-registration'] = ' ';
 	  <div class="product-container">
       <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
          <div class="carousel-inner row w-100 mx-auto">
-		<?= showProducts(true); ?>		
+		<?= showProducts(true,"SELECT TOP 6 * from currentAuction"); ?>		
          </div>
          <div class="clearfix">
             <div class="sliderbuttons">

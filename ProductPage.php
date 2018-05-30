@@ -1,8 +1,10 @@
 <?php require_once ('header.php');
 if(isset($_GET['product'])){
-    $Vwnummer = $_GET['product'];
     $htmluploadFoto = ' ';
     $paramvoorwerpnummer = array(':voorwerpnummer' => $_GET['product']);
+
+    $paramCheckPicture = array(':product' => $_GET['product']);
+    $checkPictureAmount = handlequery("SELECT * FROM bestand WHERE voorwerpnummer = :product", $paramCheckPicture);
 
     $productdata = FetchAssocSelectData(
         "SELECT V.verkoper, G.gebruikersnaam,V.voorwerpnummer,V.verzendkosten,V.verzendinstructies, G.voornaam, G.achternaam, G.plaatsnaam,G.soortGebruiker,
@@ -12,8 +14,10 @@ if(isset($_GET['product'])){
         LEFT JOIN gebruikerstelefoon GT on G.gebruikersnaam = GT.gebruikersnaam
         WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
         //voorwerpnummer moet meegegeven worden vanuit de site
-    $images = handlequery("SELECT filenaam FROM Bestand WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
 
+    $images = handlequery("SELECT filenaam FROM Bestand WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
+    $aangebodenDag = date("d-m-Y", strtotime($productdata['looptijdBeginDag']));
+    
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if(isset($_POST['submit-file'])){
             $target_dir = "./uploads/user/" . $productdata['verkoper'] . '/' . $productdata['voorwerpnummer']. '/';
@@ -38,12 +42,17 @@ if(isset($_GET['product'])){
                 }
             }
         } else if(isset($_POST['bidAmount-submit'])){
-            $paramBod = array(':voorwerpnummer' => $_GET['product'], ':bedrag' => (float)$_POST['bidAmount']);
-            $plaatsBod =  executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, 'gebruiker'", $paramBod); // functie in databse om het bod uit te brengen en te checken of het klopt
-            if($plaatsBod == "Opdracht kon niet worden volbracht."){
-                echo 'Bod kan niet worden geplaats';
+            $paramBod = array(':voorwerpnummer' => $_GET['product'], ':bedrag' => (float)$_POST['bidAmount'], ':gebruiker' => $_SESSION['gebruikersnaam']);
+            $plaatsBod =  executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod); // functie in databse om het bod uit te brengen en te checken of het klopt
+
+            if ($_SESSION['gebruikersnaam'] != $productdata['gebruikersnaam']) {            
+                if($plaatsBod == "Opdracht kon niet worden volbracht."){
+                    echo 'Bod kan niet worden geplaats';
+                } else {
+                    executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod); 
+                }
             } else {
-                executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, 'gebruiker'", $paramBod);
+                $message_bids = "U kunt niet bieden op uw eigen veilingen";
             }
         }
     }
@@ -51,10 +60,14 @@ if(isset($_GET['product'])){
     if (isset($_SESSION['gebruikersnaam'])){ 
         $htmluploadFoto = '<form method="post" action="">
         <div class="form-row align-items-center">
-        <div class="col-sm-9">
-        <input type="number" class="form-control" name="bidAmount" id="colFormLabelLg" placeholder="Geef uw gewenste bedrag in">
+        <div class="col-sm-12">
+        <input type="number" step="0.01" class="form-control" name="bidAmount" id="colFormLabelLg" placeholder="Geef uw gewenste bedrag in">
         <input type="submit" name="bidAmount-submit" Value="Bied!" class="biedenKnop cta-orange btn">
-        </div>
+        ';
+        if(isset($message_bids)){
+            $htmluploadFoto .= '<p class="error error-warning">'.$message_bids.'</p>';
+        };
+        $htmluploadFoto .= '</div>
         </div>
         </form>';
     } else {
@@ -104,15 +117,17 @@ if(isset($_GET['product'])){
                     </figure>
                     <div class="col p-3 mb-2 bg-secondary text-white" style="text-align: left">
                         <?php if(isset($_SESSION['gebruikersnaam'])){
-                            if ($_SESSION['gebruikersnaam'] == $productdata['verkoper']) {
-                                echo '<form action="" method="post" enctype="multipart/form-data">
-                                <div class="custom-file">
-                                <label class="custom-file-label" for="customFile">Selecteer een foto</label>
-                                <input type="file" class="custom-file-input" id="customFile" name="fileToUpload">
-                                </div>
+                            if(count($checkPictureAmount) < 4){
+                                if ($_SESSION['gebruikersnaam'] == $productdata['verkoper']) {
+                                    echo '<form action="" method="post" enctype="multipart/form-data">
+                                    <div class="custom-file">
+                                    <label class="custom-file-label" for="customFile">Selecteer een foto</label>
+                                    <input type="file" class="custom-file-input" id="customFile" name="fileToUpload">
+                                    </div>
 
-                                <input type="submit" class="btn upload-file btn-primary" value="Upload foto" name="submit-file">
-                                </form>';
+                                    <input type="submit" class="btn upload-file btn-primary" value="Upload foto" name="submit-file">
+                                    </form>';
+                                }
                             }
                         } ?>
                         <dl class="dl-horizontal">
@@ -126,12 +141,11 @@ if(isset($_GET['product'])){
                 <div class="col-lg-5 p-3 bg-secondary text-white">
                     <div class="alert alert-dark" role="alert">
 					<div class="product-info">
-                        <p class="beginTijdstip"><i>Aangeboden op: <?= $productdata['looptijdBeginDag'] .' om: ' . date_format(date_create($productdata['looptijdBeginTijdstip']), "H:i") ?> </i></p>
+                        <p class="beginTijdstip"><i>Aangeboden op: <?= $aangebodenDag  ?> </i></p>
                         <h2 class="alert-heading"> <strong> <?= $productdata['titel']?></strong></h2> 
                         <p>Startprijs: € <?=$productdata['startprijs']?></p>
                         <?php if(isset($productdata['verzendkosten'])){ echo '<p>Verzendkosten: €' .$productdata['verzendkosten'];} ?></p>
                         <p>Productnummer: <?=$productdata['voorwerpnummer']?></p>
-                        <div id="txt"></div>
                         <hr>
 					</div>
 
@@ -162,11 +176,8 @@ if(isset($_GET['product'])){
                             <div class="row">
                                 <div class="col-lg-9">
                                     <p><b><?= $productdata['voornaam']. " " .$productdata['achternaam'] ?></b> te <?=$productdata['plaatsnaam']?></p><br>
-                                    <p><a href=<?='"mailto:' .$productdata['mailadres']. '?SUBJECT=' . $productdata['titel'] . '"'?>> <i class="fas fa-envelope"></i></a><!-- <a href="tel:<?=$productdata['telefoonnummer']?>">&nbsp;&nbsp;<i class="fas fa-phone"></i></a> --></p>
+                                    <p><a href=<?='"mailto:' .$productdata['mailadres']. '?SUBJECT=' . $productdata['titel'] . '"'?>> <i class="fas fa-envelope"></i> &nbsp;&nbsp;&nbsp;<?=$productdata['mailadres']?></a></p>
                                 </div>
-                                <!-- <div class="col-lg-3 profile-picture align-items-right">
-                                    <img src="https://mb.lucardi-cdn.nl/zoom/64867/regal-mesh-horloge-met-zilverkleurige-band.jpg" alt="Profielfoto" class="rounded-circle">
-                                </div> -->
                             </div>
                         </div>
 

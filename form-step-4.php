@@ -1,7 +1,7 @@
 <?php
 require_once './db.php';
-
 $required = array('firstname', 'lastname', 'adres1', 'postalcode', 'residence', 'country', 'phonenumber', 'birthdate', 'secretanswer');
+$questions = handlequery("SELECT vraag FROM vraag");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (fieldsFilledIn($required)){
@@ -12,7 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$message_registration = "U moet alle velden invullen.";
 	}
 }
-
 echo '
 <form method ="post" class="form-steps">
 <div class="form-group">
@@ -54,11 +53,11 @@ echo '
 <p>Geef een geheime vraag op voor de beveiliging van uw account</p>
 <div class="form-group">
 <select name ="secretquestion" class="form-control" required>
-<option value="1">In welke straat ben je geboren?</option>
-<option value="2">Wat is de meisjesnaam van je moeder?</option>
-<option value="3">Wat is je lievelingsgerecht?</option>
-<option value="4">Hoe heet je oudste zus?</option>
-<option value="5">Hoe heet je huisdier?</option>
+';
+foreach ($questions as $key => $field) {
+	echo '<option>'.$field['vraag'].'</option>';
+};
+echo'
 </select>
 </div>
 <div class="form-group">

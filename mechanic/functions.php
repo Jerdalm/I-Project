@@ -89,8 +89,8 @@ function sendMail($to, $subject, $body, $message = "Fout"){
 	$message_body = $body;
 
 
-	mail( $emailTo, $subjectEmail, $message_body );
-    // echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
+	// mail( $emailTo, $subjectEmail, $message_body );
+    echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
 
 	$_SESSION['message'] = $message;
 }
@@ -243,7 +243,7 @@ function checkUsernamePassword($username, $password, $passwordrepeat){
 				$password_hashed = password_hash($password , PASSWORD_DEFAULT);
 				$_SESSION['username'] = $username;
 				$_SESSION['password'] = $password_hashed;
-				header("Location: ./registeren.php?step=4");
+				header("Location: ./registreren.php?step=4");
 			} else if (strlen($password) < $passwordMinimumLength &&  0 === preg_match('~[0-9]~', $password)) {
 				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";
 			} else if (strlen($password) < $passwordMinimumLength) {
@@ -398,7 +398,7 @@ function loginControl($email, $wachtwoord){
 function insertUpgradeinfoInDB(){
 	$state = false;
 
-	$username = 'testnaam';
+    $username = $_SESSION['gebruikersnaam'];
 	$bank = $_SESSION['bank'];
 	$banknumber = $_SESSION['banknumber'];
 	$verificationMethod = $_SESSION['verificationMethod'];
@@ -419,9 +419,12 @@ function insertUpgradeinfoInDB(){
 }
 
 /* Deze functie returnt de verschillende rubrieken voor in het submenu */
-function showMenuRubrieken(){
+function showMenuRubrieken($toplevel){
+	if($toplevel == null){ $querypart = " is NULL ";}
+	else{ $querypart = " = $toplevel";}
+	
 	$html = '';
-	$rubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek is NULL");
+	$rubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek ".$querypart."");
 
 	foreach($rubrieken as $rubriek){
 		$html .= '<a class="dropdown-item" href="overview.php?rub='.$rubriek['rubrieknummer'].'">'.$rubriek['rubrieknaam'].'</a>';
@@ -437,7 +440,12 @@ function showRubriekenlist(){
 	$previouslevel = $rubrieken[0]['Lvl'];
 
 	foreach($rubrieken as $rubriek){
-
+		$subcata = getSubRubriek($rubriek['rubrieknummer']);
+		
+		$amountInRubarr = handlequery("SELECT COUNT(voorwerpnummer) AS productaantal from VoorwerpInRubriek WHERE rubriekOpLaagsteNiveau IN ".$subcata."");
+		$amountInRub = $amountInRubarr[0]['productaantal'];
+		
+		
 		$rubriekparameters = array(':rubriek' => $rubriek['rubrieknummer']);
 		$subrubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek = :rubriek",$rubriekparameters);
 
@@ -448,7 +456,7 @@ function showRubriekenlist(){
 		if($subrubrieken){
 			$html .= '<li class="list-group-item d-flex justify-content-between align-items-center">
 			<a href="#'.$rubriek['rubrieknummer'].'" data-toggle="collapse" aria-expanded="false">'.$rubriek['rubrieknaam'].'
-			<span class="badge badge-primary badge-pill">14</span>
+			<span class="badge badge-primary badge-pill">'.$amountInRub.'</span>
 			<i class="fa fa-angle-down"></i>
 
 			</a></li>
@@ -458,7 +466,7 @@ function showRubriekenlist(){
 			$html .=
 			'<li class="list-group-item d-flex justify-content-between align-items-center ">
 			<a href="overview.php?rub='.$rubriek['rubrieknummer'].'">'.$rubriek['rubrieknaam'].'
-			<span class="badge badge-primary badge-pill">14</span>
+			<span class="badge badge-primary badge-pill">'.$amountInRub.'</span>
 			</a></li>';
 		}
 
@@ -475,7 +483,7 @@ function showRubriekenlist(){
 }
 
 /* Deze functie toont alle producten  || Filterwaarde ('afstand','false')*/
-function showProducts($carrousel = false, $query = false, $parameters = false, $lg = 4, $md = 6, $sm = 6, $xs = 12){
+function showProducts($carrousel = false, $query = false, $parameters = false, $showAccount = false, $lg = 4, $md = 6, $sm = 6, $xs = 12){
 
 	if( is_array($query)){
 		$producten = $query;
@@ -496,7 +504,8 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 
 		}
 	}
-
+	
+	if($producten){
 	$beforeInput = '';
 	$afterInput = '';
 	$html = '';
@@ -512,42 +521,50 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 		$afterInput = '</div>';
 	}
 
-	foreach($producten as $product)
-	{
+	foreach($producten as $product) {
 
-		$itemcount++;
-		if(!$product['bodbedrag']){
-			$product['bodbedrag'] = 0;
-		}
+        $itemcount++;
+        if (!$product['bodbedrag']) {
+            $product['bodbedrag'] = 0;
+        }
 
-		if($carrousel){
-			if($itemcount == 1){
-				$html .= $beforeFirstInput;
-			}
-			else{$html .= $beforeInput;}
-		}
-		else{
-			$html .= $beforeInput;
-		}
+        if ($carrousel) {
+            if ($itemcount == 1) {
+                $html .= $beforeFirstInput;
+            } else {
+                $html .= $beforeInput;
+            }
+        } else {
+            $html .= $beforeInput;
+        }
 
-		$timediff = calculateTimeDiffrence(date('Y-m-d h:i:s'),
-			$product['einddag'].' '.$product['eindtijdstip']
-		);
+        $timediff = calculateTimeDiffrence(date('Y-m-d h:i:s'),
+            $product['einddag'] . ' ' . $product['eindtijdstip']
+        );
 
-		$html .= '
+        $html .= '
 		<div class="product card">
-		<img class="card-img-top img-fluid" src="img/products/'.$product['bestand'].'" alt="">
+		<img class="card-img-top img-fluid" src="img/products/' . $product['bestand'] . '" alt="">
 		<div class="card-body">
 		<h4 class="card-title">
-		'.$product['titel'].'
-		</h4>
-		<h5 class="product-data" id="'.$product['voorwerpnummer'].'"><span class="time">'.$timediff.'</span>|<span class="price">&euro;'.$product['bodbedrag'].'</span></h5>
+		' . $product['titel'] . '
+		</h4>';
+
+		if ($showAccount == false) {
+            $html .= '<h5 class="product-data" id = "' . $product['voorwerpnummer'] . '" ><span class="time" > ' . $timediff . '</span >|<span class="price" >&euro;' . $product['bodbedrag'] . ' </span ></h5 >';
+		}
+
+		$html.='
 		<a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a>
+		</div>
+		<div class="card-footer text-center text-muted">
+		locatie: '.$product['plaats'].'
 		</div>
 		</div>
 		';
 		$html .= $afterInput;
-	}
+	}}
+	else{$html = '<div class="col-lg-12 text-center"><h4> Geen producten gevonden </h4></div>';}
 	/* Returns product cards html */
 	return $html;
 }
@@ -739,4 +756,32 @@ function checkNewPassword ($password, $passwordrepeat){
 	}
 	return $messageReturn;
 }
+
+	function pagination($array,$itemsperpage = 10){
+		$submenus =(sizeof($array) / $itemsperpage);
+		$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		
+		if(isset($_GET['pagination'] ) && isset($_GET['perpage'] )){
+			$currentpagination = '&pagination='.$_GET['pagination'].'&perpage='.$_GET['perpage'];
+			$newUrl = str_replace($currentpagination, '', $actual_link);
+		}else{$newUrl = $actual_link; }
+		
+		$url_end = substr($actual_link, -3);
+		if($url_end == 'php'){$newUrl = $newUrl.'?';}
+		
+		if($submenus > 1){
+			
+			for($teller = 0; $teller < $submenus; $teller++){
+				$startvalue = $teller * $itemsperpage;
+				$visueel = $teller + 1;
+				
+				echo "<a class=\"btn btn3 \" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";	
+			}
+		}		
+	}
+	
+	function logUserHistory($cookieName){
+
+	}
+	
 ?>

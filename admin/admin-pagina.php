@@ -49,10 +49,6 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 			WHERE gebruikersnaam like :gebruiker
 			OR mailadres like :mail
 			OR plaatsnaam like :plaats",$parametersGebruiker);
-		// echo '<pre>';
-		// print_r($gebruikers);
-		// echo "</pre>";
-		// die();
 		$gebruikerResultaten = '<table class="table"><tr><th scope="col">Resultaat</th></tr><tr>';
 		foreach($gebruikers as $gebruiker){
 			$gebruikerResultaten .= "<tr>" . "<td>" . "<a href='?gebruikersnaamForm=" . $gebruiker['gebruikersnaam'] . "'>" . $gebruiker['gebruikersnaam'] ."</a>". "</td>" . "</tr>";
@@ -60,7 +56,7 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 		$gebruikerResultaten .= '</tr></table>';
 	} else if (isset($_GET['search-bieding'])) {
 		$biedingInput = $_GET['bieding'];	
-		$parametersbieding = array(':voorwerpnummer' => $biedingInput,
+		$parametersbieding = array(':voorwerpnummer' => (int)$biedingInput,
 			'bodbedrag' => (int)$biedingInput,
 			'titel' => "%". $biedingInput ."%");
 		$biedingen = handlequery("SELECT * 
@@ -126,8 +122,9 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 	} else if (isset($_GET['gebruikersnaamForm'])) {
 		$_SESSION['username_changeinfo'] = $_GET['gebruikersnaamForm'];
 		$parametersGebruiker = array(':gebruiker' => $_SESSION['username_changeinfo']);
-		$kweerie2 = "SELECT gebruikersnaam, voornaam, achternaam, adresregel1, adresregel2, postcode, plaatsnaam, land, geboortedag, mailadres FROM Gebruiker WHERE gebruikersnaam = :gebruiker";
-		$query = FetchAssocSelectData($kweerie2, $parametersGebruiker);
+		$queryGetUserInfo = "SELECT gebruikersnaam, voornaam, achternaam, adresregel1, adresregel2, postcode, plaatsnaam, land, geboortedag, mailadres FROM Gebruiker WHERE gebruikersnaam = :gebruiker";
+		$query = FetchAssocSelectData($queryGetUserInfo, $parametersGebruiker);
+		$_SESSION['mail_changeinfo'] = $query['mailadres'];
 
 		$htmlVeranderGebruiker = '<form class="form-group" method="GET" action="">'; 
 		foreach ($query as $key => $value) {
@@ -181,56 +178,38 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 		$htmlVeranderBieding .= '<button class="btn btn-success" name="submit-changes-bit">Sla wijzigingen op</button>';
 		$htmlVeranderBieding .= '</form>';	
 	} else if (isset($_GET['block-user'])){
-		// echo "<pre>";
-		// print_r(array_values($_GET)[0]);
-		// echo "</pre>";
-		// die();
+
 		blockUser(array_values($_GET)[0]);	
 		$errorMessageUser = "De gekozen gebruiker is geblokkeerd";
 	} else if (isset($_GET['delete-article'])){
 		deleteArticle(array_values($_GET)[0]);
 		$errorMessageArticle = "Het gekozen artikel is verwijderd";
 	} else if (isset($_GET['submit-changes-user'])){
-		if(checkEmailUnique($_GET['mailadres'])){
-			$birthdate = $_GET['geboortedag'];
-			$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
-			$geboortedag = $myDateTime->format('Y-m-d');
-			$changeUserParam = array(':usernameNew' => array_values($_GET)[0],
-				':firstname' => $_GET['voornaam'],
-				':lastname' => $_GET['achternaam'],
-				':adres1' => $_GET['adresregel1'],
-				':adres2' => $_GET['adresregel2'],
-				':postcode' => $_GET['postcode'],
-				':placename' => $_GET['plaatsnaam'],
-				':country' => $_GET['land'],
-				':birthdate' => $geboortedag,
-				':mail' => $_GET['mailadres'],
-				'usernameOld' => $_SESSION['username_changeinfo']);
+		$birthdate = $_GET['geboortedag'];
+		$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
+		$geboortedag = $myDateTime->format('Y-m-d');
+		if($_SESSION['mail_changeinfo'] == $_GET['mailadres']){
+			$changeUserParam = array(':username' => $_GET['gebruikersnaam'], ':firstname' => $_GET['voornaam'], ':lastname' => $_GET['achternaam'], ':adres1' => $_GET['adresregel1'], ':adres2' => $_GET['adresregel2'], ':postcode' => $_GET['postcode'], ':placename' => $_GET['plaatsnaam'], ':country' => $_GET['land'], ':birthdate' => $geboortedag);
 			handlequery("UPDATE Gebruiker 
-				SET gebruikersnaam = :usernameNew, voornaam = :firstname, achternaam = :lastname, adresregel1 = :adres1, adresregel2 = :adres2, postcode = :postcode, plaatsnaam = :placename, land = :country, geboortedag = :birthdate, mailadres = :mail
-				WHERE gebruikersnaam = :usernameOld", $changeUserParam);
-			$errorMessageUser = "Wijzigingen zijn opgeslagen";
+						 SET voornaam = :firstname, achternaam = :lastname, adresregel1 = :adres1, adresregel2 = :adres2, postcode = :postcode, plaatsnaam = :placename, land = :country, geboortedag = :birthdate
+						 WHERE gebruikersnaam = :username", $changeUserParam);
 		} else {
-			$errorMessageUser = "Mailadres is al in gebruik";
+			if(checkEmailUnique($_GET['mailadres'])){
+				$changeUserParam = array(':username' => $_GET['gebruikersnaam'], ':firstname' => $_GET['voornaam'], ':lastname' => $_GET['achternaam'], ':adres1' => $_GET['adresregel1'], ':adres2' => $_GET['adresregel2'], ':postcode' => $_GET['postcode'], ':placename' => $_GET['plaatsnaam'], ':country' => $_GET['land'], ':birthdate' => $geboortedag, ':mail' => $_GET['mailadres']);
+				handlequery("UPDATE Gebruiker 
+							 SET voornaam = :firstname, achternaam = :lastname, adresregel1 = :adres1, adresregel2 = :adres2, postcode = :postcode, plaatsnaam = :placename, land = :country, geboortedag = :birthdate, mailadres = :mail
+							 WHERE gebruikersnaam = :username", $changeUserParam);
+				$errorMessageUser = "Wijzigingen zijn opgeslagen";
+			} else {
+				$errorMessageUser = "Mailadres is al in gebruik";
+			}
+
 		}
 	} else if (isset($_GET['submit-changes-article'])){
 		$dateLooptijdBegin = $_GET['looptijdbeginDag'];
 		$myDateTimeBegin = DateTime::createFromFormat('Y-m-d', $dateLooptijdBegin);
 		$datumLooptijdBegin = $myDateTimeBegin->format('Y-m-d');
-		$parametersUpdate = array(
-			':titel' => $_GET['titel'], 
-			':beschrijving' => $_GET['beschrijving'],
-			':startprijs' => (float)$_GET['startprijs'],
-			':betalingswijze' => $_GET['betalingswijze'],
-			':betalingsinstructie' => $_GET['betalingsinstructie'],
-			':plaatsnaam' => $_GET['plaatsnaam'],
-			':land' => $_GET['land'],
-			':looptijd' => $_GET['looptijd'],
-			':looptijdbeginDag' => $datumLooptijdBegin,
-			':looptijdbeginTijdstip' => $_GET['looptijdbeginTijdstip'],
-			':verzendkosten' => (float)$_GET['verzendkosten'],
-			':verzendinstructies' => $_GET['verzendinstructies'],
-			':voorwerpnummer' => $_GET['voorwerpnummer']);
+		$parametersUpdate = array(':titel' => $_GET['titel'], ':beschrijving' => $_GET['beschrijving'], ':startprijs' => (float)$_GET['startprijs'], ':betalingswijze' => $_GET['betalingswijze'], ':betalingsinstructie' => $_GET['betalingsinstructie'], ':plaatsnaam' => $_GET['plaatsnaam'], ':land' => $_GET['land'], ':looptijd' => $_GET['looptijd'], ':looptijdbeginDag' => $datumLooptijdBegin, ':looptijdbeginTijdstip' => $_GET['looptijdbeginTijdstip'], ':verzendkosten' => (float)$_GET['verzendkosten'], ':verzendinstructies' => $_GET['verzendinstructies'], ':voorwerpnummer' => $_GET['voorwerpnummer']);
 		handlequery("UPDATE Voorwerp SET
 			titel = :titel,
 			beschrijving = :beschrijving,
@@ -311,7 +290,7 @@ if($_SESSION['gebruikersnaam'] == "admin") {
 						echo $gebruikerResultaten; 
 					}?>
 				</div>
-				<div class="col-lg-4 col-sm-12">
+				<div class="col-lg-4 col-m-12">
 					<div class="bieding">
 						<!-- for om te zoeken op gebruiker -->
 						<form class="form-group" method="GET" action=""> 

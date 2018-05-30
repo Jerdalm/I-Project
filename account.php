@@ -15,6 +15,12 @@ if(isset($_SESSION['gebruikersnaam'])){
     <div class="container">
 	<div class="col-lg-3 sidebar float-left"> 
     <div class="list-group" id="list-tab" role="tablist">
+
+    <a class="list-group-item list-group-item-action" id="list-offering-in" data-toggle="list" href="#content-offering-in" role="tab" aria-controls="offering-in">Geboden in</a>
+        <?php
+        if($_SESSION['soortGebruiker'] > 1){ ?>
+    <a class="list-group-item list-group-item-action" id="list-my-auctions" data-toggle="list" href="#content-my-auctions" role="tab" aria-controls="my-auctions">Mijn veilingen</a>
+        <?php } ?>
 	<a class="list-group-item list-group-item-action" id="list-auctions-won" data-toggle="list" href="#content-auctions-won" role="tab" aria-controls="auctions-won">Gewonnen veilingen</a>
     <a class="list-group-item list-group-item-action active" id="list-user-details" data-toggle="list" href="#content-user-details" role="tab" aria-controls="user-details">Gebruikersgegevens</a>
 	
@@ -26,13 +32,14 @@ if(isset($_SESSION['gebruikersnaam'])){
 </div>
 	<div class="tab-content" id="nav-tabContent">
      <?php
-	 require 'layout/user-details.php'; 
+	 require 'layout/user-details.php';
 	 require 'layout/auctionswon.php';
+     require 'layout/my-auctions.php';
+     require 'layout/offering-in.php';
 	 require 'layout/seller-registration.php';
-	 ?>
-    </div>
-	
 
+	 ?>
+    </div
 	<div class="clearfix"></div>
    </div>  
 </section>   

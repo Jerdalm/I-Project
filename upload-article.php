@@ -11,11 +11,10 @@ if (isset($_SESSION['gebruikersnaam'])) {
     'beschrijving',
     'looptijd',
     'startprijs',
-    'betalingswijze',
-    'fileToUpload'
+    'betalingswijze'
   );
 
-  if (isset($_POST['sellitem']) && fieldsFilledIn($filledin)) {
+  if (isset($_POST['sellitem']) && fieldsFilledIn($filledin) && isset($_FILES)) {
     if (empty($_POST['betalingsinstructie'])) {
       $_POST['betalingsinstructie'] = NULL;
     } if (empty($_POST['verzendkosten'])) {
@@ -24,11 +23,11 @@ if (isset($_SESSION['gebruikersnaam'])) {
       $_POST['verzendinstructies'] = NULL;
     }
 
-    $voorwerpnummerUpload = handlequery("SELECT MAX(voorwerpnummer)+1 AS nieuwVoorwerpnummer FROM Voorwerp");
-    $plaats = handlequery("SELECT plaatsnaam, land FROM Gebruiker WHERE gebruikersnaam = '".$username."'");
+    $voorwerpnummerUpload = handlequery("SELECT dbo.fnc_voorwerpnummer()");
 
+    $plaats = handlequery("SELECT plaatsnaam, land FROM Gebruiker WHERE gebruikersnaam = '".$username."'");
     $uploadItem = array(
-      ':voorwerpnummer' => $voorwerpnummerUpload[0]['nieuwVoorwerpnummer'],
+      ':voorwerpnummer' => $voorwerpnummerUpload[0][0],
       ':titel' => $_POST['titel'],
       ':beschrijving' => $_POST['beschrijving'],
       ':looptijd' => $_POST['looptijd'],
@@ -39,11 +38,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
       ':verzendinstructies' => $_POST['verzendinstructies'],
       ':plaatsnaam' => $plaats[0]['plaatsnaam'],
       ':land' => $plaats[0]['land'],
-      ':verkoper' => $username
-    );
-    $uploadFoto = array(
-      ':filenaam' => $_POST['fileToUpload'],
-      ':voorwerpnummer' => $voorwerpnummerUpload[0]['nieuwVoorwerpnummer']
+      ':verkoper' => $_SESSION['gebruikersnaam']
     );
 
     handlequery('INSERT INTO Voorwerp (voorwerpnummer, titel, beschrijving, startprijs, betalingswijze, betalingsinstructie, plaatsnaam,
@@ -51,39 +46,26 @@ if (isset($_SESSION['gebruikersnaam'])) {
       VALUES (:voorwerpnummer, :titel, :beschrijving, :startprijs, :betalingswijze, :betalingsinstructie, :plaatsnaam, :land, :looptijd,
       GETDATE(), GETDATE(), :verzendkosten, :verzendinstructies, :verkoper, 0)', $uploadItem);
 
-      $target_dir = "./uploads/" . $username . '/' . $voorwerpnummerUpload[0]['nieuwVoorwerpnummer']. '/';
+      $target_dir = "./uploads/" . $username . '/' . $voorwerpnummerUpload[0][0]. '/';
       if (!file_exists($target_dir)){
-        mkdir('uploads/'. $username . '/' . $voorwerpnummerUpload[0]['nieuwVoorwerpnummer'] , 02202, true);
+        mkdir('uploads/'. $username . '/' . $voorwerpnummerUpload[0][0] , 02202, true);
       }
-      echo '<pre>';
-      print_r($_FILES);
-      echo "</pre>";
+
       $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
       $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
-      if(checkIfImage($_POST["fileToUpload"]) && checkAllowedFileTypes($imageFileType) && checkSizeFile(500000) && checkExistingFile($target_file)) {
-        echo "AABWEZIF";
-        die();
+      if(checkIfImage($_POST["sellitem"]) && checkAllowedFileTypes($imageFileType) && checkSizeFile(1000000) && checkExistingFile($target_file)) {
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-          //echo "Het bestand". basename( $_FILES["fileToUpload"]["name"]). " is geüpload.";
-          $uploadFoto = array(':voorwerpnummer' => $voorwerpnummerUpload[0]['nieuwVoorwerpnummer'] , ':filenaam' => $target_file);
+          $uploadFoto = array(':voorwerpnummer' => $voorwerpnummerUpload[0][0] , ':filenaam' => $target_file);
           handlequery("INSERT INTO Bestand (filenaam, voorwerpnummer) VALUES (:filenaam, :voorwerpnummer)", $uploadFoto);
         }
         else {
           echo "Sorry, Er is iets fout gegaan tijdens het uploaden van uw bestand.";
           die();
         }
-      } else {
-        echo '<pre>';
-        print_r($_FILES);
-        echo "</pre>";
-        echo 'niet door check heen';
-        die();
       }
-
-    //handlequery('INSERT INTO Bestand (filenaam, voorwerpnummer) VALUES (:filenaam, :voorwerpnummer)', $uploadFoto);
-
-    header("Location: productpage.php?product=" . $voorwerpnummerUpload[0]['nieuwVoorwerpnummer']); // verwijzen naar nieuw
+    header("Location: productpage.php?product=" . $voorwerpnummerUpload[0][0]); // verwijzen naar nieuw
+    exit();
       } else {
         echo '<main><section><div class="container">
         Niet alle velden zijn ingevuld <br><br>
@@ -101,7 +83,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
       <section class="uploadarticle">
         <div class="container">
           <div class="row">
-            <form class="" method="POST">
+            <form method="POST" enctype="multipart/form-data">
               <legend>Voorwerp veilen!</legend>
               <p>Velden met een * zijn verplicht</p>
               <div class="form-group">
@@ -163,7 +145,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-md-12 control-label" for="uploadphoto">Upload foto*</label>
+                <label class="col-md-12 control-label" for="fileToUpload">Upload foto*</label>
                 <div class="col-md-12">
                   <input id="fileToUpload" name="fileToUpload" class="input-file" type="file">
                 </div>
