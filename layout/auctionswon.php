@@ -12,7 +12,8 @@ WHERE voorwerp.koper = '$gebruiker'"
 		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"><h3>Gewonnen veilingen</h3></div>
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-margin float-left" style=" display: flex; flex-wrap: wrap;">
-        <?= showProducts(false,$query,false); ?>
+        <?= showProducts(false, $query, false, true); ?>
         </div>
+
 	</div>
 </div>
