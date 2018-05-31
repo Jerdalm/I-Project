@@ -698,7 +698,7 @@ function checkPriceFilter($min, $max){
 
 function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 	
-	$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer0'] , ':gebruikersnaam' => $gebruikersnaam);
+	
 	$birthdate = $get['geboortedag'];
 	$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
 	$geboortedag = $myDateTime->format('Y-m-d');
@@ -726,12 +726,16 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 		WHERE gebruikersnaam = :gebruikersnaam",
 		$infoParameters);
 
-	if( $get['telefoonnummer0'] == null ||  $get['telefoonnummer1'] == null || $get['telefoonnummer2'] == null ){
+	if( $nummer['volgnr'] == null ){
 		
+		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer0'] , ':gebruikersnaam' => $gebruikersnaam);
 		handlequery("INSERT INTO Gebruikerstelefoon (telefoonnummer,gebruikersnaam) VALUES (:telefoonnummer,:gebruikersnaam )",$telefoonnummerPara);
 		
-	}
-
+	}  else {
+		handlequery("UPDATE Gebruikerstelefoon
+		SET telefoonnummer = :telefoonnummer
+		WHERE gebruikersnaam = :gebruikersnaam" , $telefoonnummerPara)
+}
 
 
 
