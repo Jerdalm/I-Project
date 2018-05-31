@@ -8,7 +8,7 @@ url('./img/header/horloge_header.jpg') center center no-repeat scroll;">
    <div class="container">
       <div class="row text-center">
          <div class="col-lg-12 " >
-            <h1 class="display-3 text-center text-white"><?= $titel ?></h1>
+            <h1 class="display-3 text-center text-white"><?= $titel; ?></h1>
 			<p></p>
          </div>
       </div>
