@@ -807,4 +807,8 @@ function checkNewPassword ($password, $passwordrepeat){
 
 	}
 	
+	function redirectJS($url){
+		echo '<script>window.location.href = "'.$url.'"</script>';
+	}
+	
 ?>
