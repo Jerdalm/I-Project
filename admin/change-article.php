@@ -8,10 +8,10 @@ if(isset($errorMessageArticle)) {
 	$htmlVeranderVoorwerp .= '<p class="error error-warning">'.$errorMessageArticle.'</p>'; 
 } else if (isset($_GET['search-article'])){
 	$voorwerpNummer = $_GET['voorwerp'];
-	$parametersVoorwerp = array(':voorwerpnummer' => "%".$voorwerpNummer."%",
+	$parametersVoorwerp = array(':voorwerpnummer' => $voorwerpNummer-,
 		':titel' => "%".$voorwerpNummer."%",
 		':prijs' => "%".$voorwerpNummer."%",
-		':verkoper' => "%".$voorwerpNummer."%",
+		':verkoper' => $voorwerpNummer,
 		':plaats' => "%".$voorwerpNummer."%",
 		':categorie' => "%".$voorwerpNummer."%");
 	$queryGetSearchResults = sortProducts();
