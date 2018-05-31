@@ -698,7 +698,6 @@ function checkPriceFilter($min, $max){
 
 function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 	
-	
 	$birthdate = $get['geboortedag'];
 	$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
 	$geboortedag = $myDateTime->format('Y-m-d');
@@ -734,11 +733,8 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 	}  else {
 		handlequery("UPDATE Gebruikerstelefoon
 		SET telefoonnummer = :telefoonnummer
-		WHERE gebruikersnaam = :gebruikersnaam" , $telefoonnummerPara)
-}
-}
-
-
+		WHERE gebruikersnaam = :gebruikersnaam" , $telefoonnummerPara);
+	}
 
 	if($gebruiker['telefoonnummer'] == null){
 		
