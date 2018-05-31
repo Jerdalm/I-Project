@@ -3,8 +3,8 @@
 if (isset($_SESSION['gebruikersnaam'])) {
   $username = $_SESSION['gebruikersnaam'];
   if ($_SESSION['soortGebruiker'] != 2) {
-    header("Location: upgrade-user.php"); // redirect naar upgrade user wanneer je geen verkoper bent
-      exit();
+    redirectJS("upgrade-user.php"); // redirect naar upgrade user wanneer je geen verkoper bent
+    die();
   }
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $filledin = array(
@@ -65,7 +65,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
           die();
         }
       }
-    header("Location: productpage.php?product=" . $voorwerpnummerUpload[0][0]); // verwijzen naar nieuw
+    redirectJS("productpage.php?product=" . $voorwerpnummerUpload[0][0]); // verwijzen naar nieuw
     die();
       } else {
         echo '<main><section><div class="container">
@@ -78,7 +78,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
         die();
       }
     } ?>
-    
+
     <main>
       <section class="uploadarticle">
         <div class="container">
@@ -164,7 +164,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
         })
     </script>
  <?php  } else {
-    header("Location: index.php"); // redirect naar index wanneer je niet ingelogd bent
+    redirectJS("index.php"); // redirect naar index wanneer je niet ingelogd bent
     exit();
     echo '<main><section>
     niet ingelogd > redirect naar?<br>
