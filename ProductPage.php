@@ -4,6 +4,15 @@
 
 
 if(isset($_GET['product'])){
+    if (isset($_COOKIE[$_SESSION['gebruikersnaam']])) {
+        if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam'])) {
+            AlterCookie($_SESSION['gebruikersnaam'], $_GET['product'], true);
+        } else if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam'])) {
+            AlterCookie($_SESSION['gebruikersnaam'], $_GET['product']);
+        }
+    } else {
+        MakeCookie($_SESSION['gebruikersnaam']);
+    }
     $htmluploadFoto = ' ';
     $paramvoorwerpnummer = array(':voorwerpnummer' => $_GET['product']);
 
