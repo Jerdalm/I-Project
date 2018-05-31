@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$message_registration = "U moet alle velden invullen.";
 	}
 }
-echo ' test
+echo '
 <form method ="post" class="form-steps">
 <div class="form-group">
 <label for="firstname">Voornaam</label>
@@ -54,7 +54,6 @@ echo ' test
 <div class="form-group">
 <select name ="secretquestion" class="form-control" required>
 ';
-echo "test";
 foreach ($questions as $key => $field) {
 	echo "<option value=" . key($questions).">".$field['vraag']."</option>";
 };
