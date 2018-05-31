@@ -488,29 +488,30 @@ function showMenuRubrieken($toplevel){
 
 /* Deze functie returnt de rubriekenlijst in submenu's */
 function showRubriekenlist($toplevel){
-
+	
 	$html = '<ul class="list-group">';
 	$rubrieken = FetchSelectData("EXECUTE dbo.SHOW_RUBRIEK_TREE @rubriek = $toplevel");
 	$previouslevel = $rubrieken[0]['Lvl'];
 
 	foreach($rubrieken as $rubriek){
-		$subcata = getSubRubriek($rubriek['rubrieknummer']);
-
-		$amountInRubarr = handlequery("SELECT COUNT(voorwerpnummer) AS productaantal from VoorwerpInRubriek WHERE rubriekOpLaagsteNiveau IN ".$subcata."");
-		$amountInRub = $amountInRubarr[0]['productaantal'];
-
-		if(!$amountInRub){continue;}
-
-
-		$rubriekparameters = array(':rubriek' => $rubriek['rubrieknummer']);
-		$subrubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek = :rubriek",$rubriekparameters);
-
+		
 		if($rubriek['Lvl'] < $previouslevel){
 		$lvldif = $previouslevel - $rubriek['Lvl'];
 			for($teller = 0; $teller <  $lvldif; $teller++){
 			$html .= '</ul>';
 			}
 		}
+		
+		$subcata = getSubRubriek($rubriek['rubrieknummer']);
+		$amountInRubarr = handlequery("SELECT COUNT(voorwerpnummer) AS productaantal from VoorwerpInRubriek WHERE rubriekOpLaagsteNiveau IN ".$subcata."");
+		$amountInRub = $amountInRubarr[0]['productaantal'];
+		
+		if(!$amountInRub){continue;}
+		
+		
+		$rubriekparameters = array(':rubriek' => $rubriek['rubrieknummer']);
+		$subrubrieken = handlequery("SELECT TOP 1 rubrieknummer from dbo.Rubriek where Rubriek.hoofdrubriek = :rubriek",$rubriekparameters);
+
 
 		if($subrubrieken){
 			$html .= '<li class="list-group-item d-flex justify-content-between align-items-center">
@@ -551,7 +552,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 	else{
 
 		if($query == false){
-			$query = "SELECT * from currentAuction";
+			$query = "SELECT * from dbo.currentAuction ";
 		}
 
 		if($parameters){
@@ -564,7 +565,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 
 		}
 	}
-
+	
 	if($producten){
 	$beforeInput = '';
 	$afterInput = '';
@@ -618,13 +619,13 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 		<a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a>
 		</div>
 		<div class="card-footer text-center text-muted">
-		ibuiu: '.$product['plaats'].'
+		locatie: '.$product['plaats'].'
 		</div>
 		</div>
 		';
 		$html .= $afterInput;
-	}
-}	else{$html = '<div class="col-lg-12 text-center"><h4> Geen producten gevonden </h4></div>';}
+	}}
+	else{$html = '<div class="col-lg-12 text-center"><h4> Geen producten gevonden </h4></div>';}
 	/* Returns product cards html */
 	return $html;
 }
@@ -842,6 +843,10 @@ function checkNewPassword ($password, $passwordrepeat){
 
 	function logUserHistory($cookieName){
 
+	}
+	
+	function redirectJS($url){
+		echo '<script>window.location.href = "'.$url.'"</script>';
 	}
 
 ?>
