@@ -2,10 +2,9 @@
 
 // als het startbedrag 0 is, dan staat er .00
 
-
 if(isset($_GET['product'])){
     if (isset($_COOKIE[$_SESSION['gebruikersnaam']])) {
-        if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam'])) {
+        if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam'])== false) {
             AlterCookie($_SESSION['gebruikersnaam'], $_GET['product'], true);
         } else if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam'])) {
             AlterCookie($_SESSION['gebruikersnaam'], $_GET['product']);
@@ -13,6 +12,7 @@ if(isset($_GET['product'])){
     } else {
         MakeCookie($_SESSION['gebruikersnaam']);
     }
+
     $htmluploadFoto = ' ';
     $paramvoorwerpnummer = array(':voorwerpnummer' => $_GET['product']);
 

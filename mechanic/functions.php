@@ -2,17 +2,17 @@
 
 function AlterCookie($CookieName, $vwNummer, $vol = false)
 {
-    echo "dein mutti eins";
+    //echo "testAlter";
     $ItemArray = unserialize($_COOKIE[$CookieName]);
     $month_in_sec = 2592000;
     if (!in_array($_GET['product'], $ItemArray)) {
         if ($vol) {
-            echo "vol";
+            //echo "vol";
             array_shift($ItemArray);
             array_push($ItemArray, $_GET['product']);
             setcookie($CookieName, serialize($ItemArray), time() + $month_in_sec);
         } else {
-            echo "NIETvol";
+            //echo "NIETvol";
             array_push($ItemArray, $_GET['product']);
             //voeg cookie toe
             setcookie($CookieName, serialize($ItemArray), time() + $month_in_sec);
@@ -22,15 +22,15 @@ function AlterCookie($CookieName, $vwNummer, $vol = false)
 
 function MakeCookie($CookieName)
 {
-    echo "dein mutti zwei";
+    //echo "testMake";
     $month_in_sec = 2592000;
-    $ItemArray = array($_GET['product']);
+    $ItemArray = array($_GET['product'],$_GET['product'],$_GET['product'],$_GET['product'],$_GET['product'],$_GET['product']);
     setcookie($CookieName, serialize($ItemArray), time() + $month_in_sec);
 }
 
 function CheckCookieLengthSmallerThanSix($username)
 {
-    echo "dein mutti drei";
+    //echo "testCheck";
     $data = unserialize($_COOKIE[$username]);
     if (sizeof($data) < 6) {
         return true;
@@ -42,13 +42,12 @@ function CheckCookieLengthSmallerThanSix($username)
 
 function Setquery($username, $vwNummer)
 {
-    echo "dein mutti vier";
+    //echo "testQuery";
     $data = unserialize($_COOKIE[$username]);
+    $datalist = $data[0] . ' or voorwerpnummer = ' . $data[1] . ' or voorwerpnummer = ' . $data[2]. ' or voorwerpnummer = ' . $data[3] . ' or voorwerpnummer = ' . $data[4] . ' or voorwerpnummer = ' . $data[5];
+    //echo $datalist;
 
-    $datalist = ($data[0] . ',' . $data[1] . ',' . $data[2]. ',' . $data[3] . ',' . $data[4] . ',' . $data[5]);
-    echo $datalist;
-
-    $Arrayquery = "SELECT C.*, Vo.plaatsnaam as plaats
+    $Arrayquery = "SELECT C.*, Vo.plaatsnaam as plaats, V.rubriekOpLaagsteNiveau
                   FROM currentAuction C
                   
                   INNER JOIN voorwerp Vo
@@ -56,11 +55,12 @@ function Setquery($username, $vwNummer)
                   
                   INNER JOIN VoorwerpInRubriek V
                   ON V.voorwerpnummer = C.voorwerpnummer
-                  
-                  WHERE C.voorwerpnummer IN ($datalist)/* cookie voorwerpen */
-                  AND C.voorwerpnummer != $vwNummer";/* Waarde huidig nummer */
 
-    print_r($data);
+				  WHERE V.rubriekOpLaagsteNiveau in(
+    			  	select rubriekOpLaagsteNiveau from VoorwerpInRubriek R
+				  	where voorwerpnummer = $datalist
+				  	AND voorwerpnummer != $vwNummer)";
+
     return $Arrayquery;
 }
 
