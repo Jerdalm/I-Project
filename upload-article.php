@@ -4,7 +4,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
   $username = $_SESSION['gebruikersnaam'];
   if ($_SESSION['soortGebruiker'] != 2) {
     header("Location: upgrade-user.php"); // redirect naar upgrade user wanneer je geen verkoper bent
-
+      exit();
   }
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $filledin = array(
