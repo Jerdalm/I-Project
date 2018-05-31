@@ -35,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // nadat er op de knop gedrukt wordt
     if($_POST['verificationMethod'] == 'Post') { // is er gekozen voor de post
         if($_SESSION['banknumber'] == NULL || ($_SESSION['bank'] == NULL)) {
             $message_upgrade = 'bank en rekeningnummer moeten worden ingevoerd als u voor de post verificatie kiest';
-           // header("Location: ./upgrade-user.php");
         } else {
             $_SESSION['verificationMethod'] = $_POST['verificationMethod'];
             $message_upgrade = '';
