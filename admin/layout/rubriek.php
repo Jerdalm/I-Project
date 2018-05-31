@@ -1,9 +1,16 @@
 <?php
 if (isset($_GET['rubriek'])) {
-	$rubriekDetailParam = array(':nummer' => $_GET['rubriek']);
+	if (is_numeric($_GET['rubriek'])) {
+		$rubriekDetailParam = array(':nummer' => (int)$_GET['rubriek'],
+								':naam' => null);
+	} else {
+		$rubriekDetailParam = array(':nummer' => '-9000',
+								':naam' => "%".$_GET['rubriek']."%");
+	}
 	$queryGetRubriekInfo = "SELECT * 
 	FROM rubriek 
-	WHERE rubrieknummer = :nummer";
+	WHERE rubrieknummer = :nummer
+	or rubrieknaam like :naam";
 	$query = FetchAssocSelectData($queryGetRubriekInfo, $rubriekDetailParam);
 	
 	if (count($query) > 1) {

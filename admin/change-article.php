@@ -8,12 +8,23 @@ if(isset($errorMessageArticle)) {
 	$htmlVeranderVoorwerp .= '<p class="error error-warning">'.$errorMessageArticle.'</p>'; 
 } else if (isset($_GET['search-article'])){
 	$voorwerpNummer = $_GET['voorwerp'];
-	$parametersVoorwerp = array(':voorwerpnummer' => $voorwerpNummer-,
+	// echo gettype($voorwerpNummer);
+	// die();
+	if(is_numeric($voorwerpNummer)){
+		$parametersVoorwerp = array(':voorwerpnummer' => (int)$voorwerpNummer,
+		':titel' => null,
+		':prijs' => (float)$voorwerpNummer,
+		':verkoper' => null,
+		':plaats' => null,
+		':categorie' => null);
+	} else {
+		$parametersVoorwerp = array(':voorwerpnummer' => '-99999',
 		':titel' => "%".$voorwerpNummer."%",
-		':prijs' => "%".$voorwerpNummer."%",
-		':verkoper' => $voorwerpNummer,
+		':prijs' => '-10.00',
+		':verkoper' => "%".$voorwerpNummer."%",
 		':plaats' => "%".$voorwerpNummer."%",
 		':categorie' => "%".$voorwerpNummer."%");
+	}
 	$queryGetSearchResults = sortProducts();
 	$voorwerpen = handlequery($queryGetSearchResults, $parametersVoorwerp);	
 	$artikelResultaten = '<div class="row">

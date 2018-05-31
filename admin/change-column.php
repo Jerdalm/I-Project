@@ -19,8 +19,16 @@ if(isset($errorMessageColumn)) {
 	$htmlRubriek .= '<p class="error error-warning">'.$errorMessageColumn.'</p>'; 
 } else if (isset($_GET['search-column'])){
 	$rubriek = $_GET['rubriek'];
-	$parametersRubriek = array(':rubriek' => "%". $rubriek ."%",
+	if(is_numeric($rubriek)){
+		$parametersRubriek = array(':rubriek' => null,
 							   ':nummer' => (int)$rubriek);
+		echo "aanwezig";
+	} else {
+		echo "niet aanweizf";
+		$parametersRubriek = array(':rubriek' => "%".$rubriek."%",
+							   ':nummer' => '-1111');
+	}
+	print_r($parametersRubriek);
 	$rubrieken = handlequery("SELECT * 
 		FROM Rubriek 
 		WHERE rubrieknaam like :rubriek
