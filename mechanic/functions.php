@@ -360,6 +360,7 @@ function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLoc
 function loginControl($email, $wachtwoord){
 	$emailParam = array(':mailadres'=>$email);
 	$gebruiker = handleQuery("SELECT * FROM Gebruiker WHERE mailadres=:mailadres", $emailParam);
+	$message_login = '';
 
 	if (count($gebruiker) == 0) {
 		$message_login = "Verkeerd wachtwoord of onbekende e-mail, probeer opnieuw!";
@@ -385,7 +386,8 @@ function loginControl($email, $wachtwoord){
 			$_SESSION['vraag'] = $gebruiker[0]["vraag"];
 			$_SESSION['antwoordtekst'] = $gebruiker[0]["antwoordtekst"];
 			$_SESSION['soortGebruiker'] = $gebruiker[0]["soortGebruiker"];
-			header("location: ./account.php");
+			
+			redirectJS('account.php');
 		}
 		else {
 			$message_login = "Verkeerd wachtwoord of onbekende e-mail, probeer opnieuw!";

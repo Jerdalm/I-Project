@@ -137,7 +137,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
               </div>
               <p>Upload foto*</p>
               <div class="form-row">
-                <div class="custom-file col-md-4">
+                <div class="custom-file col-md-4" id="customFile">
                   <input id="fileToUpload" name="fileToUpload" class="custom-file-input" type="file" required>
                   <label class="custom-file-label" for="fileToUpload">Bestand kiezen</label>
                 </div>
@@ -150,7 +150,19 @@ if (isset($_SESSION['gebruikersnaam'])) {
         </div>
       </section>
     </main>;
-    
+    <script>
+        $('.custom-file-input').on('change',function(){
+            var fileName = $(this).val();
+            if (fileName) {
+                var startIndex = (fileName.indexOf('\\') >= 0 ? fileName.lastIndexOf('\\') : fileName.lastIndexOf('/'));
+                var filename = fileName.substring(startIndex);
+                if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+                    filename = filename.substring(1);
+                }
+                $(this).next('.custom-file-label').addClass("selected").html(filename);
+            }
+        })
+    </script>
  <?php  } else {
     header("Location: index.php"); // redirect naar index wanneer je niet ingelogd bent
     exit();
