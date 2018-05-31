@@ -1,5 +1,5 @@
 <?php
 session_start();
 session_destroy();
-redirectJS("./");
+header("Location: index.php");
 ?>

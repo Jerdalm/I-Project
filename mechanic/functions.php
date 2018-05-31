@@ -883,4 +883,8 @@ function checkNewPassword ($password, $passwordrepeat){
 		echo '<script>window.location.href = "'.$url.'"</script>';
 	}
 
+  function refreshPage() {
+    echo "<script>location.reload();</script>";
+  }
+
 ?>
