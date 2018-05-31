@@ -59,7 +59,8 @@ function Setquery($username, $vwNummer)
 				  WHERE V.rubriekOpLaagsteNiveau in(
     			  	select rubriekOpLaagsteNiveau from VoorwerpInRubriek R
 				  	where voorwerpnummer = $datalist
-				  	AND voorwerpnummer != $vwNummer)";
+				  	AND voorwerpnummer != $vwNummer)
+				  	ORDER BY NEWID()";
 
     return $Arrayquery;
 }
