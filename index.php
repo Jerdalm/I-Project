@@ -28,7 +28,7 @@ $_SESSION['email-registration'] = ' ';
 	  <div class="product-container">
       <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
          <div class="carousel-inner row w-100 mx-auto">
-             <?= showProducts(true, Setquery($_SESSION['gebruikersnaam'], 0); ?>
+             <?= showProducts(true, Setquery($_SESSION['gebruikersnaam'], 0)); ?>
          </div>
          <div class="clearfix">
             <div class="sliderbuttons">
