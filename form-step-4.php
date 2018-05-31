@@ -55,7 +55,7 @@ echo '
 <select name ="secretquestion" class="form-control" required>
 ';
 foreach ($questions as $key => $field) {
-	echo "<option value=" . key($questions).">".$field['vraag']."</option>";
+	echo "<option value=".$key.">".$field['vraag']."</option>";
 };
 echo'
 </select>
