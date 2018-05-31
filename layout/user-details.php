@@ -52,6 +52,8 @@ if(isset($_POST['submit-new-password'])){
                 <tbody>
                     <?php foreach($gebruiker as $key => $info ){
                    if($key == 'telefoonnummer'){
+                     echo "<tr>" . "<th scope='col'>" . $key . "</th" . "</tr>";
+                     echo "<td>" . $info . "</td>";
                     continue;
                    }
                         echo "<tr>" . "<th scope='col'>" . $key . "</th" . "</tr>";
