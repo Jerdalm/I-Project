@@ -66,7 +66,9 @@ if(isset($_POST['submit-new-password'])){
                         echo "<td>" . $nummer[0] . "</td>";
 
                           }
-                          } ?>
+                          } else {
+                        echo "<tr>" . "<th scope='col'>" . 'telefoonnummer' . "</th" . "</tr>";
+                     } ?>
                 </tbody>
             </table>
             <!-- Button trigger modal -->
