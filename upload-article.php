@@ -4,7 +4,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
   $username = $_SESSION['gebruikersnaam'];
   if ($_SESSION['soortGebruiker'] != 2) {
     header("Location: upgrade-user.php"); // redirect naar upgrade user wanneer je geen verkoper bent
-    die()
+    exit();
   }
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $filledin = array(
@@ -77,29 +77,27 @@ if (isset($_SESSION['gebruikersnaam'])) {
         </section></main>';
         die();
       }
-    }
-    echo '<main>
+    } ?>
+    
+    <main>
       <section class="uploadarticle">
         <div class="container">
-          <div class="row">
             <form method="POST" enctype="multipart/form-data">
               <legend>Voorwerp veilen!</legend>
               <p>Velden met een * zijn verplicht</p>
-              <div class="form-group">
-                <label class="col-md-12 control-label" for="titel">Titel voor veiling*</label>
-                <div class="col-md-12">
+              <div class="form-row">
+                <div class="form-group col-md-8">
+                  <label class="control-label" for="titel">Titel voor veiling*</label>
                   <input id="titel" name="titel" type="text" class="form-control input-md" required>
                 </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-12 control-label" for="beschrijving">Beschrijving*</label>
-                <div class="col-md-12">
+                <div class="form-group col-md-8">
+                  <label class="control-label" for="beschrijving">Beschrijving*</label>
                   <textarea class="form-control" id="beschrijving" name="beschrijving" required></textarea>
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-md-12 control-label" for="looptijd">Looptijd in dagen*</label>
-                <div class="col-md-4">
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label class="control-label" for="looptijd">Looptijd in dagen*</label>
                   <select id="looptijd" name="looptijd" class="form-control">
                     <option value="1">1</option>
                     <option value="3">3</option>
@@ -108,61 +106,54 @@ if (isset($_SESSION['gebruikersnaam'])) {
                     <option value="10">10</option>
                   </select>
                 </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-12 control-label" for="startprijs">Startprijs in euro&apos;s*</label>
-                <div class="col-md-5">
+                <div class="form-group col-md-4">
+                  <label class="control-label" for="startprijs">Startprijs in euro&apos;s*</label>
                   <input id="startprijs" name="startprijs" type="number" step="0.01" class="form-control input-md" required>
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-md-12 control-label" for="betalingswijze">Betalingswijze*</label>
-                <div class="col-md-6">
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label class="control-label" for="betalingswijze">Betalingswijze*</label>
                   <select id="betalingswijze" name="betalingswijze" class="form-control">
                     <option value="Credit Card">Credit Card</option>
                     <option value="iDeal">iDeal</option>
                     <option value="PayPal">PayPal</option>
                   </select>
                 </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-12 control-label" for="betalingsinstructie">Betalingsinstructie</label>
-                <div class="col-md-12">
+                <div class="form-group col-md-4">
+                  <label class="control-label" for="betalingsinstructie">Betalingsinstructie</label>
                   <input id="betalingsinstructie" name="betalingsinstructie" type="text" placeholder="Optioneel" class="form-control input-md">
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-md-12 control-label" for="verzendkosten">Verzendkosten</label>
-                <div class="col-md-12">
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label class="control-label" for="verzendkosten">Verzendkosten</label>
                   <input id="verzendkosten" name="verzendkosten" type="text" placeholder="Optioneel" class="form-control input-md">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-12 control-label" for="verzendinstructies">Verzendinstructies</label>
-                <div class="col-md-12">
+                  </div>
+                <div class="form-group col-md-4">
+                  <label class="control-label" for="verzendinstructies">Verzendinstructies</label>
                   <input id="verzendinstructies" name="verzendinstructies" type="text" placeholder="Optioneel" class="form-control input-md">
                 </div>
               </div>
-              <div class="form-group">
-                <label class="col-md-12 control-label" for="fileToUpload">Upload foto*</label>
-                <div class="col-md-12">
-                  <input id="fileToUpload" name="fileToUpload" class="input-file" type="file" required>
+              <p>Upload foto*</p>
+              <div class="form-row">
+                <div class="custom-file col-md-4">
+                  <input id="fileToUpload" name="fileToUpload" class="custom-file-input" type="file" required>
+                  <label class="custom-file-label" for="fileToUpload">Bestand kiezen</label>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-md-12 control-label" for="verzenden"></label>
-                <div class="col-md-12">
-                  <button id="sellitem" name="sellitem" type="submit" class="cta-orange">Verkopen!</button>
-                </div>
+                <label class="control-label" for="verzenden"></label>
+                <button id="sellitem" name="sellitem" type="submit" class="cta-orange">Verkopen!</button>
               </div>
             </form>
-          </div>
         </div>
       </section>
-    </main>';
-  } else {
+    </main>;
+    
+ <?php  } else {
     header("Location: index.php"); // redirect naar index wanneer je niet ingelogd bent
-    die();
+    exit();
     echo '<main><section>
     niet ingelogd > redirect naar?<br>
     nog geen verkoper > redirect naar verkoper worden?
