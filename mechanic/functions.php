@@ -435,6 +435,12 @@ function showMenuRubrieken($toplevel){
 }
 
 /* Deze functie returnt de rubriekenlijst in submenu's */
+/* performanceopties verder zijn:
+- image size reducen
+- procedure items laten berekenen wanneer gevraagd
+- zo min mogelijk query's in loop
+- lege rubrieken skippen
+*/
 function showRubriekenlist($toplevel){
 	
 	$html = '<ul class="list-group">';
@@ -442,8 +448,15 @@ function showRubriekenlist($toplevel){
 	$previouslevel = $rubrieken[0]['Lvl'];
 
 	foreach($rubrieken as $rubriek){
-		$subcata = getSubRubriek($rubriek['rubrieknummer']);
 		
+		if($rubriek['Lvl'] < $previouslevel){
+		$lvldif = $previouslevel - $rubriek['Lvl'];
+			for($teller = 0; $teller <  $lvldif; $teller++){
+			$html .= '</ul>';
+			}
+		}
+		
+		$subcata = getSubRubriek($rubriek['rubrieknummer']);
 		$amountInRubarr = handlequery("SELECT COUNT(voorwerpnummer) AS productaantal from VoorwerpInRubriek WHERE rubriekOpLaagsteNiveau IN ".$subcata."");
 		$amountInRub = $amountInRubarr[0]['productaantal'];
 		
@@ -451,14 +464,8 @@ function showRubriekenlist($toplevel){
 		
 		
 		$rubriekparameters = array(':rubriek' => $rubriek['rubrieknummer']);
-		$subrubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek = :rubriek",$rubriekparameters);
+		$subrubrieken = handlequery("SELECT TOP 1 rubrieknummer from dbo.Rubriek where Rubriek.hoofdrubriek = :rubriek",$rubriekparameters);
 
-		if($rubriek['Lvl'] < $previouslevel){
-		$lvldif = $previouslevel - $rubriek['Lvl'];
-			for($teller = 0; $teller <  $lvldif; $teller++){
-			$html .= '</ul>';
-			}
-		}
 
 		if($subrubrieken){
 			$html .= '<li class="list-group-item d-flex justify-content-between align-items-center">
@@ -698,7 +705,6 @@ function checkPriceFilter($min, $max){
 
 function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 	
-	
 	$birthdate = $get['geboortedag'];
 	$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
 	$geboortedag = $myDateTime->format('Y-m-d');
@@ -734,10 +740,8 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 	}  else {
 		handlequery("UPDATE Gebruikerstelefoon
 		SET telefoonnummer = :telefoonnummer
-		WHERE gebruikersnaam = :gebruikersnaam" , $telefoonnummerPara)
-}
-
-
+		WHERE gebruikersnaam = :gebruikersnaam" , $telefoonnummerPara);
+	}
 
 	if($gebruiker['telefoonnummer'] == null){
 		
@@ -808,6 +812,10 @@ function checkNewPassword ($password, $passwordrepeat){
 	
 	function logUserHistory($cookieName){
 
+	}
+	
+	function redirectJS($url){
+		echo '<script>window.location.href = "'.$url.'"</script>';
 	}
 	
 ?>
