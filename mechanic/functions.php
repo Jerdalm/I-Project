@@ -1,5 +1,59 @@
 <?php
 
+function AlterCookie($CookieName, $vwNummer, $vol = false)
+{
+    $ItemArray = unserialize($_COOKIE[$CookieName]);
+    $month_in_sec = 2592000;
+    if (!in_array($_GET['product'], $ItemArray)) {
+        if ($vol) {
+            array_shift($ItemArray);
+            $ItemArray[] = $_GET['product'];
+            setcookie($CookieName, serialize($ItemArray), time() + $month_in_sec);
+        } else {
+            $ItemArray[] = $_GET['product'];
+            //voeg cookie toe
+            setcookie($CookieName, serialize($ItemArray), time() + $month_in_sec);
+        }
+    }
+}
+
+function MakeCookie($CookieName)
+{
+    $month_in_sec = 2592000;
+    $ItemArray = array($_GET['product']);
+    setcookie($CookieName, serialize($ItemArray), time() + $month_in_sec);
+}
+
+function CheckCookieLengthSmallerThanSix($username)
+{
+    $data = unserialize($_COOKIE[$username]);
+    if (sizeof($data) < 6) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function Setquery($username, $vwNummer)
+{
+    $data = unserialize($_COOKIE[$username]);
+
+    $datalist = ($data[0][0] . ',' . $data[0][1] . ',' . $data[0][2] . ',' . $data[0][3] . ',' . $data[0][4] . ',' . $data[0][5]);
+    print_r($datalist);
+
+    $Arrayquery = "SELECT C.*
+                  FROM currentAuction C
+                  INNER JOIN VoorwerpInRubriek V
+                  ON V.voorwerpnummer = C.voorwerpnummer
+                  INNER JOIN rubriek R
+                  ON R.rubrieknummer = V.rubriekOpLaagsteNiveau
+                  WHERE C.voorwerpnummer IN ($datalist)/* cookie voorwerpen */
+                  AND C.voorwerpnummer != $vwNummer";/* Waarde huidig nummer */
+
+    print_r($data);
+    return $Arrayquery;
+}
+
 /* Deze functie zorgt voor de connectie met de Database */
 function ConnectToDatabase(){
 	$hostname = "localhost";
