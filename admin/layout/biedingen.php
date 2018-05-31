@@ -1,7 +1,7 @@
 <?php
 if (isset($_GET['voorwerpInfo'])) {
 	$htmlToonBiedingen = ' ';
-	$parametersbieding = array(':voorwerpnummer' => (int)$_GET['voorwerpInfo']);
+	$parametersbieding = array(':voorwerpnummer' => $_GET['voorwerpInfo']);
 	$biedingen = handlequery("SELECT * FROM Bod WHERE voorwerpNummer = :voorwerpnummer ORDER BY bodbedrag desc ", $parametersbieding);
 	$biedings = FetchAssocSelectData("SELECT voorwerpnummer, gebruikersnaam, bodbedrag, bodDag AS Datum, CONVERT(TIME(0), [bodTijdstip]) AS Tijd FROM Bod WHERE voorwerpNummer = :voorwerpnummer", $parametersbieding);
 	foreach($biedingen as $bieding){
@@ -29,13 +29,16 @@ if(isset($_GET['gebruikersnaam'])){
 	foreach($biedingen as $bieding){
 		$htmlToonBiedingen .= '<tr>
 		<td>
+		<p>'.$bieding['voorwerpnummer'].'</p>
+		</td>
+		<td>
 		<p>€'.$bieding['bodbedrag'].'</p>
 		</td>
 		<td>
 		<p>'.date_format(date_create($bieding['bodDag']), "d-m-Y").'</p>
 		</td>
 		<td>
-		<a type="button" href=&naam='.$bieding['gebruikersnaam'].'&bodBedrag='.$bieding['bodbedrag'].' class="btn btn btn-success btn-change-bid" data-toggle="modal" data-target="#changeBid" data-id="'.$bieding['bodbedrag'].'">Bewerk bod</a>
+		<a type="button" href=&naam='.$bieding['gebruikersnaam'].'&bodBedrag='.$bieding['bodbedrag'].' class="btn btn btn-success btn-change-bid" data-toggle="modal" data-target="#changeBid" data-id='.$bieding['bodbedrag'].'>Bewerk bod</a> 
 		</td>
 		</tr>';
 	}
@@ -47,6 +50,7 @@ if(isset($_GET['gebruikersnaam'])){
 		<h2>Biedingen</h2>
 		<table class="table striped">
 			<tr>
+				<?php if(isset($_GET['gebruikersnaam'])){echo '<th scope="col">Voorwerpnummer</th>'; } ?>
 				<th scope="col">Bedrag</th>
 				<?php if (isset($_GET['voorwerpInfo'])){ echo '<th scope="col">Gebruiker</th>';}?>
 				<th scope="col">Datum</th>

@@ -156,6 +156,9 @@ function showLoginAdminMenu(){
 		$htmlLogin .= '<a class="nav-link" href="./change-user.php">Gebruiker aanpassen</a>';
 		$htmlLogin .= '</li>';
 		$htmlLogin .= '<li class="nav-item">';
+		$htmlLogin .= '<a class="nav-link" href="./change-column.php">Rubriek aanpassen</a>';
+		$htmlLogin .= '</li>';
+		$htmlLogin .= '<li class="nav-item">';
 		$htmlLogin .= '<a class="nav-link" href="./logout.php">Uitloggen</a>';
 		$htmlLogin .= '</li>';
 		$htmlLogin .= '<li class="nav-item">';
@@ -180,6 +183,13 @@ function deleteArticle($artikel){
 	$deleteParam = array(':artikel' => $artikel);
 	handlequery("DELETE FROM Voorwerp WHERE voorwerpnummer = :artikel", $deleteParam);
 	header("Location: ./change-article.php");
+}
+
+/* Deze functie verwijderd het meegegeven rubriek uit de database */
+function deleteColumn($rubriek){
+	$deleteParam = array(':rubriek' => $rubriek);
+	handlequery("DELETE FROM Rubriek WHERE rubrieknaam = :rubriek", $deleteParam);
+	header("Location: ./change-column.php?rubriek=".$rubriek);
 }
 
 function changedFields($fieldsOld, $fieldsNew){
@@ -237,16 +247,12 @@ function updateBit($array){
 		':bedrag' => (float)$array['bodbedrag'],
 		':dag' => $datumBoddag,
 		':tijdstip' => $array['Tijd'],
-		':bedragOud' => $_GET['bodBedragOud']);
-	$changeBitCheckParam = array(':nummer' => $array['voorwerpnummer'],
-		':gebruikersnaam' => $array['gebruikersnaam'],
-		':bedrag' => (float)$array['bodbedrag'],
-		':dag' => $datumBoddag,
-		':tijdstip' => $array['Tijd']);
+		':bedragOud' => $array['bodBedragOud']);
 	$changeBitQuery = "UPDATE Bod SET bodbedrag = :bedrag, bodDag = :dag, bodTijdstip = :tijdstip WHERE bodbedrag = :bedragOud AND voorwerpnummer = :nummer";
 	handlequery($changeBitQuery, $changeBitParam);
-	$queryChangedBitCheck = handlequery("SELECT * FROM Bod WHERE voorwerpnummer = :nummer AND gebruikersnaam = :gebruikersnaam AND bodbedrag = :bedrag AND bodDag = :dag AND bodTijdstip = :tijdstip", $changeBitCheckParam);
-	header("Location: ./change-article.php?&voorwerpInfo=".$changeBitParam[':nummer']);
+	// echo $query;
+	// die();
+	// header("Refresh:0");
 }
 
 function returnSRCProduct($voorwernummer){
@@ -255,7 +261,6 @@ function returnSRCProduct($voorwernummer){
 	$return = '.'.$query['filenaam'];
 	return $return;
 }
-
 
 function sortProducts(){
 	$sort = "desc";
@@ -266,7 +271,7 @@ function sortProducts(){
 		on V.voorwerpnummer = R.voorwerpnummer
 		left outer join Rubriek Ru
 		on R.rubriekOpLaagsteNiveau = Ru.rubrieknummer
-		WHERE v.voorwerpnummer like :voorwerpnummer or V.verkoper like :verkoper or V.plaatsnaam like :plaats or V.titel like :titel or v.startprijs like :prijs
+		WHERE v.voorwerpnummer = :voorwerpnummer or V.verkoper like :verkoper or V.plaatsnaam like :plaats or V.titel like :titel or v.startprijs = :prijs
 		or Ru.rubrieknaam like :categorie
 		order by v.looptijd " . $sort;
 	return $return;
@@ -312,8 +317,7 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker){
 }
 
 function getUserData($user){
-	$return = handlequery("SELECT * FROM voorwerp v join gebruiker G on v.".$user." = g.gebruikersnaam WHERE looptijdEindeDag <= CONVERT(date, GETDATE()) 
-								 		  AND V.veilingGesloten = 0 AND looptijdEindeTijdstip < CONVERT(time, GETDATE());");
+	$return = handlequery("SELECT * FROM voorwerp v join gebruiker G on v.".$user." = g.gebruikersnaam WHERE looptijdEindeDag <= CONVERT(date, GETDATE())  AND V.veilingGesloten = 0 AND looptijdEindeTijdstip < CONVERT(time, GETDATE());");
 	return $return;
 }
 
@@ -339,5 +343,12 @@ function sendEmailClosedAuctions(){
 	}
 }
 
-
+function uploadColumn($get){
+	$laatste_nummer = FetchAssocSelectData("SELECT TOP 1 rubrieknummer FROM Rubriek ORDER BY rubrieknummer DESC");
+	$laatste_nummer = $laatste_nummer['rubrieknummer'] + 1; 
+	$paramUpload = array(':rubrieknaam' => $get['column-name'],
+						 ':nummer' => $laatste_nummer);
+	handlequery("INSERT INTO Rubriek(rubrieknummer, rubrieknaam) VALUES (:nummer, :rubrieknaam)", $paramUpload);
+	header("Location: ./change-column.php?rubriek=".$laatste_nummer);
+}
 ?>

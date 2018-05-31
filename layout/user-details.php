@@ -4,7 +4,7 @@ $emailParameters = array(':gebruikersnaam' => $gebruikersnaam);
 $messageNewPassword = ' ';
 // fetch alle data van de gebruiker inclusief de telefoonnummer
 $gebruiker = FetchAssocSelectData("SELECT Gebruiker.gebruikersnaam,voornaam,achternaam,adresregel1,adresregel2,postcode,plaatsnaam,land,geboortedag,mailadres,telefoonnummer FROM Gebruiker 
-   join Gebruikerstelefoon on Gebruiker.gebruikersnaam = Gebruikerstelefoon.gebruikersnaam
+   left join Gebruikerstelefoon on Gebruiker.gebruikersnaam = Gebruikerstelefoon.gebruikersnaam
    WHERE Gebruiker.gebruikersnaam = :gebruikersnaam", $emailParameters);
 
 $telefoonPara = array(':gebruikersnaam' => $gebruikersnaam);
@@ -52,17 +52,20 @@ if(isset($_POST['submit-new-password'])){
                 <tbody>
                     <?php foreach($gebruiker as $key => $info ){
                    if($key == 'telefoonnummer'){
+                     echo "<tr>" . "<th scope='col'>" . $key . "</th" . "</tr>";
+                     echo "<td>" . $info . "</td>";
                     continue;
                    }
                         echo "<tr>" . "<th scope='col'>" . $key . "</th" . "</tr>";
                         echo "<td>" . $info . "</td>";
                      } 
-                     print_r($telefoonnummers);
-                          foreach($telefoonnummers as $nummer){
+                     if($telefoonnummers != null){
+                        foreach($telefoonnummers as $nummer){
 
                         echo "<tr>" . "<th scope='col'>" . 'telefoonnummer' . "</th" . "</tr>";
                         echo "<td>" . $nummer[0] . "</td>";
 
+                          }
                           } ?>
                 </tbody>
             </table>
