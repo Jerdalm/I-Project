@@ -308,7 +308,7 @@ function checkUsernamePassword($username, $password, $passwordrepeat){
 				$password_hashed = password_hash($password , PASSWORD_DEFAULT);
 				$_SESSION['username'] = $username;
 				$_SESSION['password'] = $password_hashed;
-				header("Location: ./registreren.php?step=4");
+				redirectJS("./registreren.php?step=4");
 			} else if (strlen($password) < $passwordMinimumLength &&  0 === preg_match('~[0-9]~', $password)) {
 				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";
 			} else if (strlen($password) < $passwordMinimumLength) {
@@ -380,7 +380,7 @@ function insertRegistrationinfoInDB(){
 
 		session_destroy();
 		$message_registration = 'Registratie voltooit!';
-		header('Location: url=./user.php');
+		redirectJS('url=./user.php');
 	} else {
 		$message_registration = 'Het opgegeven telefoonnummer klopt niet.';
 	}
@@ -414,10 +414,10 @@ function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLoc
 	if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 		setCodeInDB($email, $randomVerificationCode_hashed);
 		sendMail($to, $subject, $message_body);
-		header("Location: ./".$headerLocationIf);
+		redirectJS("./".$headerLocationIf);
 	} else {
 		$_SESSION['error_upgrade'] = 'Geen geldig e-mailadres.';
-		header("Location: ./". $headerLocationElse);
+		redirectJS("./". $headerLocationElse);
 	}
 }
 
@@ -481,7 +481,7 @@ function insertUpgradeinfoInDB(){
 	$melding = handlequery("INSERT INTO Verkoper VALUES(:gebruikersnaam, :bank, :rekeningnummer, :controleOptie, :creditcardnumber)", $insertInfoParam);
 
 	$_SESSION['soortGebruiker'] = 2;
-	header("Location: /account.php");
+	redirectJS("/account.php");
 	exit();
 }
 

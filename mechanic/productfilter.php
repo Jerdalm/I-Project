@@ -36,10 +36,10 @@
 	
 	}
 	else{
-	header("Location:overview.php");
+	redirectJS("overview.php");
 	}
 	}else{
-	header("Location:overview.php");}
+	redirectJS("overview.php");}
 	
 	$zoekfilter = '';
 	

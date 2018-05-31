@@ -46,7 +46,7 @@ if(isset($_SESSION['gebruikersnaam'])){
 
 <?php
 
-}else{header('Location:user.php');}
+}else{redirectJS('user.php');}
 require_once 'footer.php';
 
 ?>
