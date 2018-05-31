@@ -47,7 +47,7 @@ function Setquery($username, $vwNummer)
     $datalist = $data[0] . ' or voorwerpnummer = ' . $data[1] . ' or voorwerpnummer = ' . $data[2]. ' or voorwerpnummer = ' . $data[3] . ' or voorwerpnummer = ' . $data[4] . ' or voorwerpnummer = ' . $data[5];
     //echo $datalist;
 
-    $Arrayquery = "SELECT C.*, Vo.plaatsnaam as plaats, V.rubriekOpLaagsteNiveau
+    $Arrayquery = "SELECT top 6 C.*, Vo.plaatsnaam as plaats, V.rubriekOpLaagsteNiveau
                   FROM currentAuction C
                   
                   INNER JOIN voorwerp Vo
