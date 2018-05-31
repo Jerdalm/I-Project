@@ -297,6 +297,7 @@ function checkUsernamePassword($username, $password, $passwordrepeat){
 	$passwordMinimumLength = 7;
 	$getUserParameters = array(':gebruikersnaam' => $username);
 	$getUserQuery =  handleQuery("SELECT * FROM Gebruiker WHERE gebruikersnaam = :gebruikersnaam", $getUserParameters);
+	$message_registration = "";
 
 	if(count($getUserQuery) > 0) {
 		$message_registration = "Uw ingevoerde gebruikersnaam bestaat al";
