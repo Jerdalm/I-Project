@@ -239,7 +239,7 @@ if(isset($_GET['product'])){
                 <div class="col-lg-12 product-container">
                     <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
                         <div class="carousel-inner row w-100 mx-auto">
-                            <?= showProducts(true); ?>      
+                            <?= showProducts(true, Setquery($_SESSION['gebruikersnaam'], $_GET['product']) ); ?>
                         </div>
                         <div class="clearfix">
                             <div class="sliderbuttons">
