@@ -168,10 +168,10 @@ if(isset($_GET['product'])){
                         <h2 class="alert-heading"> <strong> <?= $productdata['titel']?></strong></h2>
 
                         <?php if($productdata['startprijs'] != 0) { ?>
-                            <p>Startprijs: € <?=(float)$productdata['startprijs']?></p>
+                            <p>Startprijs: € <?=number_format($productdata['startprijs'], 2, ",", ".")?></p>
                         <?php } else { ?>
                             <p>Startprijs: € 0,00</p>
-                        <?php } if(isset($productdata['verzendkosten'])){ echo '<p>Verzendkosten: €' .(float)$productdata['verzendkosten'];} ?></p>
+                        <?php } if(isset($productdata['verzendkosten'])){ echo '<p>Verzendkosten: €' .number_format($productdata['verzendkosten'], 2, ",", ".");} ?></p>
                         <p>Productnummer: <?=$productdata['voorwerpnummer']?></p>
                         <?php if($productdata['veilingGesloten'] == 1) {
                             echo "veiling status: gesloten";
@@ -191,7 +191,7 @@ if(isset($_GET['product'])){
                                         echo '<thead>';
                                         foreach ($bodInfo as $bodkolom) {
                                             echo '<tr>';
-                                            echo '<th scope="col">€' .$bodkolom['bodbedrag']. '</th>';
+                                            echo '<th scope="col">€' .number_format($bodkolom['bodbedrag'], 2, ",", "."). '</th>';
                                             echo '<th scope="col">' .$bodkolom['gebruikersnaam']. '</th>';
                                             echo '<th scope="col">' .date_format(date_create($bodkolom['bodDag']), "d-m-Y"). '</th>';
                                             echo '<th scope="col">' .date_format(date_create($bodkolom['bodTijdstip']), "H:i"). '</th>';
