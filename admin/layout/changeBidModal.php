@@ -10,7 +10,15 @@
       <form method="get" class="form-inline edit-product-info">
         <div class="modal-body">
           <!-- echo om alle data in een formulier te zetten en te zorgen dat de gegevens aangepast kunnen worden. -->
-          <?php foreach ($biedings as $field => $value) { 
+
+          <?php
+          
+          // $amount = $_GET['bodBedragOud'];          
+
+            // echo "<pre>";
+            // print_r($biedings);
+            // echo "</pre>"; 
+          foreach ($biedings as $field => $value) { 
             echo '<div class="form-group">';
             echo '<label>'. $field. '</label>';
             switch ($field) {
@@ -31,6 +39,7 @@
             }
             echo '</div>';
           }
+
 
           ?>
           <div class="modal-footer">

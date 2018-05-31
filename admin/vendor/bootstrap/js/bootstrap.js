@@ -3904,3 +3904,12 @@ function revertToOriginalURL() {
 $('.modal').on('hidden.bs.modal', function () {
   revertToOriginalURL();
 });
+
+// $(document).ready(function(){
+//   $('.btn-change-bid').click(function(){
+//     $var = document.getElementById('bodbedrag').value;
+//     window.location.href += "&bodbedrag="+ $var+"#";
+    
+//     $('#changeBid').modal('show');
+//   })
+// });
