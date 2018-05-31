@@ -65,7 +65,6 @@ if (isset($_SESSION['gebruikersnaam'])) {
           die();
         }
       }
-    $redirect = "productpage.php?product=" . $voorwerpnummerUpload[0][0];
     redirectJS("productpage.php?product=" . $voorwerpnummerUpload[0][0]); // verwijzen naar nieuw
     die();
       } else {
