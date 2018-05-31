@@ -1,5 +1,69 @@
 <?php
 
+function AlterCookie($CookieName, $vwNummer, $vol = false)
+{
+    echo "dein mutti eins";
+    $ItemArray = unserialize($_COOKIE[$CookieName]);
+    $month_in_sec = 2592000;
+    if (!in_array($_GET['product'], $ItemArray)) {
+        if ($vol) {
+            echo "vol";
+            array_shift($ItemArray);
+            array_push($ItemArray, $_GET['product']);
+            setcookie($CookieName, serialize($ItemArray), time() + $month_in_sec);
+        } else {
+            echo "NIETvol";
+            array_push($ItemArray, $_GET['product']);
+            //voeg cookie toe
+            setcookie($CookieName, serialize($ItemArray), time() + $month_in_sec);
+        }
+    }
+}
+
+function MakeCookie($CookieName)
+{
+    echo "dein mutti zwei";
+    $month_in_sec = 2592000;
+    $ItemArray = array($_GET['product']);
+    setcookie($CookieName, serialize($ItemArray), time() + $month_in_sec);
+}
+
+function CheckCookieLengthSmallerThanSix($username)
+{
+    echo "dein mutti drei";
+    $data = unserialize($_COOKIE[$username]);
+    if (sizeof($data) < 6) {
+        return true;
+        echo $data;
+    } else {
+        return false;
+    }
+}
+
+function Setquery($username, $vwNummer)
+{
+    echo "dein mutti vier";
+    $data = unserialize($_COOKIE[$username]);
+
+    $datalist = ($data[0] . ',' . $data[1] . ',' . $data[2]. ',' . $data[3] . ',' . $data[4] . ',' . $data[5]);
+    echo $datalist;
+
+    $Arrayquery = "SELECT C.*, Vo.plaatsnaam as plaats
+                  FROM currentAuction C
+                  
+                  INNER JOIN voorwerp Vo
+                  ON C.voorwerpnummer = Vo.voorwerpnummer
+                  
+                  INNER JOIN VoorwerpInRubriek V
+                  ON V.voorwerpnummer = C.voorwerpnummer
+                  
+                  WHERE C.voorwerpnummer IN ($datalist)/* cookie voorwerpen */
+                  AND C.voorwerpnummer != $vwNummer";/* Waarde huidig nummer */
+
+    print_r($data);
+    return $Arrayquery;
+}
+
 /* Deze functie zorgt voor de connectie met de Database */
 function ConnectToDatabase(){
 	$hostname = "localhost";
