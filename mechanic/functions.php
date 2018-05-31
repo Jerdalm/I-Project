@@ -736,6 +736,7 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 		SET telefoonnummer = :telefoonnummer
 		WHERE gebruikersnaam = :gebruikersnaam" , $telefoonnummerPara)
 }
+}
 
 
 
