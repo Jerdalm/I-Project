@@ -3,9 +3,14 @@ $gebruikersnaam = $_SESSION['gebruikersnaam'];
 $emailParameters = array(':gebruikersnaam' => $gebruikersnaam);
 $messageNewPassword = ' ';
 // fetch alle data van de gebruiker inclusief de telefoonnummer
-$gebruiker = FetchAssocSelectData("SELECT TOP 1 Gebruiker.gebruikersnaam,voornaam,achternaam,adresregel1,adresregel2,postcode,plaatsnaam,land,geboortedag,mailadres,telefoonnummer FROM Gebruiker 
-   LEFT join Gebruikerstelefoon on Gebruiker.gebruikersnaam = Gebruikerstelefoon.gebruikersnaam
+$gebruiker = FetchAssocSelectData("SELECT Gebruiker.gebruikersnaam,voornaam,achternaam,adresregel1,adresregel2,postcode,plaatsnaam,land,geboortedag,mailadres,telefoonnummer FROM Gebruiker 
+   join Gebruikerstelefoon on Gebruiker.gebruikersnaam = Gebruikerstelefoon.gebruikersnaam
    WHERE Gebruiker.gebruikersnaam = :gebruikersnaam", $emailParameters);
+
+$telefoonPara = array(':gebruikersnaam' => $gebruikersnaam);
+$telefoonnummers = handlequery("SELECT telefoonnummer,volgnr FROM Gebruikerstelefoon WHERE gebruikersnaam = :gebruikersnaam",$telefoonPara);
+$aantalTelefoonNummers = count($telefoonnummers);
+
 
 $email = $gebruiker['mailadres'];
 $subject = 'Wachtwoord wijzigen';
@@ -46,10 +51,19 @@ if(isset($_POST['submit-new-password'])){
             <table class="table-striped table table-user-details"> 
                 <tbody>
                     <?php foreach($gebruiker as $key => $info ){
-                   
+                   if($key == 'telefoonnummer'){
+                    continue;
+                   }
                         echo "<tr>" . "<th scope='col'>" . $key . "</th" . "</tr>";
                         echo "<td>" . $info . "</td>";
-                     } ?>
+                     } 
+                     print_r($telefoonnummers);
+                          foreach($telefoonnummers as $nummer){
+
+                        echo "<tr>" . "<th scope='col'>" . 'telefoonnummer' . "</th" . "</tr>";
+                        echo "<td>" . $nummer[0] . "</td>";
+
+                          } ?>
                 </tbody>
             </table>
             <!-- Button trigger modal -->
@@ -75,7 +89,8 @@ if(isset($_POST['submit-new-password'])){
 
 		
        if (isset($_GET['bijwerken'])) {
-           UpdateInfoUser($_GET, $gebruikersnaam,$gebruiker);
+            print_r($telefoonnummers); 
+           UpdateInfoUser($_GET, $gebruikersnaam,$gebruiker,$telefoonnummers,$telefoonnummers);
        }?> 
 	   </div>
 	   
