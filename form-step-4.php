@@ -6,7 +6,7 @@ $questions = handlequery("SELECT vraag FROM vraag");
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (fieldsFilledIn($required)){
 		insertRegistrationinfoInDB();
-		mkdir("uploads/user/".$_SESSION['username']);
+		// mkdir("uploads/user/".$_SESSION['username']);
 		$message_registration = insertRegistrationinfoInDB();
 	} else {
 		$message_registration = "U moet alle velden invullen.";
