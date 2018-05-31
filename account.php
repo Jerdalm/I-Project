@@ -1,5 +1,5 @@
 <?php
-require_once 'header.php'; 
+require_once 'header.php';
 if(isset($_SESSION['gebruikersnaam'])){
 ?>
 <header id="account" class="header content-header">
@@ -13,18 +13,18 @@ if(isset($_SESSION['gebruikersnaam'])){
 </header>
 <section class="user-details">
     <div class="container">
-	<div class="col-lg-3 sidebar float-left"> 
+	<div class="col-lg-3 sidebar float-left">
     <div class="list-group" id="list-tab" role="tablist">
 
-    <a class="list-group-item list-group-item-action" id="list-offering-in" data-toggle="list" href="#content-offering-in" role="tab" aria-controls="offering-in">Geboden in</a>
+    <a class="list-group-item list-group-item-action" id="list-offering-in" data-toggle="list" href="#content-offering-in" role="tab" aria-controls="offering-in">Geboden op</a>
         <?php
         if($_SESSION['soortGebruiker'] > 1){ ?>
     <a class="list-group-item list-group-item-action" id="list-my-auctions" data-toggle="list" href="#content-my-auctions" role="tab" aria-controls="my-auctions">Mijn veilingen</a>
         <?php } ?>
 	<a class="list-group-item list-group-item-action" id="list-auctions-won" data-toggle="list" href="#content-auctions-won" role="tab" aria-controls="auctions-won">Gewonnen veilingen</a>
     <a class="list-group-item list-group-item-action active" id="list-user-details" data-toggle="list" href="#content-user-details" role="tab" aria-controls="user-details">Gebruikersgegevens</a>
-	
-	<?php 
+
+	<?php
 	if($_SESSION['soortGebruiker'] < 2){ ?>
 	<a class="list-group-item list-group-item-action" id="list-seller-registration" data-toggle="list" href="#content-seller-registration" role="tab" aria-controls="seller-registration">Verkoper registratie</a>
 	<?php } ?>
@@ -42,11 +42,11 @@ if(isset($_SESSION['gebruikersnaam'])){
     </div>
 	<div class="clearfix"></div>
    </div>
-</section>   
+</section>
 
-<?php 
+<?php
 
 }else{header('Location:user.php');}
-require_once 'footer.php'; 
+require_once 'footer.php';
 
 ?>
