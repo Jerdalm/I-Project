@@ -479,7 +479,7 @@ function insertUpgradeinfoInDB(){
 
 	$melding = handlequery("INSERT INTO Verkoper VALUES(:gebruikersnaam, :bank, :rekeningnummer, :controleOptie, :creditcardnumber)", $insertInfoParam);
 
-	$_SESSION['soortgebruiker'] = 2;
+	$_SESSION['soortGebruiker'] = 2;
 	header("Location: /account.php");
 	exit();
 }
