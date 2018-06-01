@@ -25,7 +25,7 @@ if(isset($_SESSION['gebruikersnaam'])){
         <?php } ?>
 	<a class="list-group-item list-group-item-action" id="list-offering-in" data-toggle="list" href="#content-offering-in" role="tab" aria-controls="offering-in">Geboden op</a>
     <a class="list-group-item list-group-item-action" id="list-user-details" data-toggle="list" href="#content-user-details" role="tab" aria-controls="user-details">Gebruikersgegevens</a>
-	<iframe src="productpage.php" style="display:none" name="frame1"></iframe>
+	<iframe src="http://localhost/i-project/productpage.php?product=111494852278" style="display:none" name="frame1"></iframe>
 	<input type="button" onclick="frames['frame1'].print()" value="print!">
 
 	<?php
