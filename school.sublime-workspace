@@ -4,16 +4,168 @@
 		"selected_items":
 		[
 			[
+				"voorwe",
+				"voorwerpnummer"
+			],
+			[
+				"print",
+				"print_r"
+			],
+			[
+				"voor",
+				"voorwerpNummer"
+			],
+			[
+				"rubriek",
+				"rubriek"
+			],
+			[
+				"para",
+				"paramUpload"
+			],
+			[
+				"rubr",
+				"rubrieknaam"
+			],
+			[
+				"rub",
+				"Rubriek"
+			],
+			[
+				"rubri",
+				"rubrieknummer"
+			],
+			[
+				"ru",
+				"rubrieken"
+			],
+			[
+				"rubir",
+				"rubriekResultaten"
+			],
+			[
+				"change",
+				"changeBitParam"
+			],
+			[
+				"voorwer",
+				"voorwerpnummer"
+			],
+			[
+				"getE",
+				"getElementById"
+			],
+			[
+				"do",
+				"document"
+			],
+			[
+				"gebruiker",
+				"gebruikersnaam"
+			],
+			[
+				"con",
+				"con\tfunction __construct"
+			],
+			[
+				"geb",
+				"Gebruikersnaam"
+			],
+			[
+				"gebruikers",
+				"gebruikers"
+			],
+			[
+				"param",
+				"parametersUpdate"
+			],
+			[
+				"Fetch",
+				"FetchAssocSelectData"
+			],
+			[
+				"delte",
+				"delete-product"
+			],
+			[
+				"cahnge",
+				"changeBitParam"
+			],
+			[
+				"bieding",
+				"bieding"
+			],
+			[
+				"prnt",
+				"print_r"
+			],
+			[
+				"quer",
+				"queryChangedBitCheck"
+			],
+			[
+				"Gebruiker",
+				"gebruikersnaam"
+			],
+			[
+				"voorwerp",
+				"voorwerpInfo"
+			],
+			[
+				"data",
+				"data-target"
+			],
+			[
+				"html",
+				"htmlToonBiedingen"
+			],
+			[
+				"htm",
+				"htmlVeranderVoorwerp"
+			],
+			[
+				"wi",
+				"width\tproperty"
+			],
+			[
+				"border-r",
+				"border-right\tproperty"
+			],
+			[
+				"back",
+				"background-color\tproperty"
+			],
+			[
+				"background",
+				"background-position\tproperty"
+			],
+			[
+				"margin",
+				"margin-top\tproperty"
+			],
+			[
+				"mar",
+				"margin-left\tproperty"
+			],
+			[
+				"paddin",
+				"padding\tproperty"
+			],
+			[
+				"space",
+				"space-between\tjustify-content"
+			],
+			[
+				"padding",
+				"padding-left\tproperty"
+			],
+			[
 				"qu",
 				"queryGetUserInfo"
 			],
 			[
 				"check",
 				"checkPictureAmount"
-			],
-			[
-				"para",
-				"paramCheckPicture"
 			],
 			[
 				"PRINT",
@@ -24,16 +176,8 @@
 				"plaatsBod"
 			],
 			[
-				"html",
-				"htmluploadFoto"
-			],
-			[
 				"bod",
 				"bodInfo"
-			],
-			[
-				"margin",
-				"margin-top\tproperty"
 			],
 			[
 				"false",
@@ -46,10 +190,6 @@
 			[
 				"bac",
 				"background-color\tproperty"
-			],
-			[
-				"bieding",
-				"biedingsBedrag"
 			],
 			[
 				"por",
@@ -76,16 +216,8 @@
 				"gebruikersnaamForm"
 			],
 			[
-				"quer",
-				"queryCheckUnique"
-			],
-			[
 				"fields",
 				"fieldsNew"
-			],
-			[
-				"change",
-				"changeBitParam"
 			],
 			[
 				"ch",
@@ -94,10 +226,6 @@
 			[
 				"biedings",
 				"biedingsNummer"
-			],
-			[
-				"gebruiker",
-				"gebruikersnaam"
 			],
 			[
 				"submit-changes",
@@ -110,10 +238,6 @@
 			[
 				"kwee",
 				"kweerie2"
-			],
-			[
-				"voorwerp",
-				"voorwerpnummer"
 			],
 			[
 				"plaats",
@@ -168,10 +292,6 @@
 				"print_r"
 			],
 			[
-				"voorwer",
-				"voorwerpnummer"
-			],
-			[
 				"voorwerpnu",
 				"voorwerpnummer"
 			],
@@ -214,14 +334,6 @@
 			[
 				"dele",
 				"deleteUser"
-			],
-			[
-				"htm",
-				"htmlVeranderGebruiker"
-			],
-			[
-				"gebruikers",
-				"gebruikersnaamForm"
 			],
 			[
 				"message",
@@ -294,10 +406,6 @@
 			[
 				"inster",
 				"insertInfoParam"
-			],
-			[
-				"geb",
-				"geboortedatum"
 			],
 			[
 				"postcode",
@@ -406,146 +514,11 @@
 			[
 				"php",
 				"php"
-			],
-			[
-				"code",
-				"codeControl"
-			],
-			[
-				"print",
-				"print_r"
-			],
-			[
-				"email",
-				"emailEquivalent"
-			],
-			[
-				"cod",
-				"codeControl"
-			],
-			[
-				"backgrou",
-				"background-color"
-			],
-			[
-				"trans",
-				"transition"
-			],
-			[
-				"textdec",
-				"text-decoration"
-			],
-			[
-				"main",
-				"margin"
-			],
-			[
-				"back",
-				"background-color"
-			],
-			[
-				"padding",
-				"padding-top"
-			],
-			[
-				"wi",
-				"window"
-			],
-			[
-				"nex",
-				"nextIndex"
-			],
-			[
-				"sm",
-				"smoothScroll"
-			],
-			[
-				"mar",
-				"margin-bottom"
-			],
-			[
-				"marg",
-				"margin"
-			],
-			[
-				"list",
-				"list-style-type"
-			],
-			[
-				"l",
-				"li\tTag"
-			],
-			[
-				"cl",
-				"class\tAttr"
-			],
-			[
-				"margi",
-				"margin-left"
-			],
-			[
-				"text",
-				"text-align"
-			],
-			[
-				"small",
-				"small\ttabtrigger_small"
-			],
-			[
-				"di",
-				"div\tTag"
-			],
-			[
-				"te",
-				"text-align-last"
-			],
-			[
-				"font",
-				"font-size"
-			],
-			[
-				"padd",
-				"padding"
-			],
-			[
-				"fel",
-				"flex-direction"
-			],
-			[
-				"border-r",
-				"border-radius"
 			]
 		]
 	},
 	"buffers":
 	[
-		{
-			"file": "admin/mechanic/functions.php",
-			"settings":
-			{
-				"buffer_size": 5781,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "admin/admin-pagina.php",
-			"settings":
-			{
-				"buffer_size": 15002,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "admin/change-user.php",
-			"settings":
-			{
-				"buffer_size": 4670,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -606,17 +579,45 @@
 	[
 		"/C/xampp/htdocs/I-Project",
 		"/C/xampp/htdocs/I-Project/admin",
-		"/C/xampp/htdocs/I-Project/admin/mechanic"
+		"/C/xampp/htdocs/I-Project/admin/mechanic",
+		"/C/xampp/htdocs/I-Project/admin/vendor",
+		"/C/xampp/htdocs/I-Project/admin/vendor/bootstrap",
+		"/C/xampp/htdocs/I-Project/admin/vendor/bootstrap/js"
 	],
 	"file_history":
 	[
-		"/C/xampp/htdocs/I-Project/ProductPage.php",
+		"/C/xampp/htdocs/I-Project/admin/mechanic/functions.php",
+		"/C/xampp/htdocs/I-Project/admin/layout/changeBidModal.php",
+		"/C/xampp/htdocs/I-Project/admin/layout/biedingen.php",
+		"/C/xampp/htdocs/I-Project/admin/vendor/bootstrap/js/bootstrap.js",
+		"/C/xampp/htdocs/I-Project/admin/change-column.php",
+		"/C/xampp/htdocs/I-Project/admin/change-article.php",
+		"/C/xampp/htdocs/I-Project/admin/layout/subrubrieken.php",
+		"/C/xampp/htdocs/I-Project/admin/layout/rubriek.php",
+		"/C/xampp/htdocs/I-Project/admin/change-user.php",
+		"/C/xampp/htdocs/I-Project/admin/layout/gebruikers.php",
+		"/C/xampp/htdocs/I-Project/admin/layout/changeUserModal.php",
 		"/C/xampp/htdocs/I-Project/admin/admin-pagina.php",
+		"/C/xampp/htdocs/I-Project/admin/css/jonathan.css",
+		"/C/xampp/htdocs/I-Project/admin/layout/gebruiker.php",
+		"/C/xampp/htdocs/I-Project/admin/layout/changeProductInfoModal.php",
+		"/C/xampp/htdocs/I-Project/admin/layout/productinfo.php",
+		"/C/xampp/htdocs/I-Project/account.php",
+		"/C/xampp/htdocs/I-Project/layout/auctionswon.php",
+		"/C/xampp/htdocs/I-Project/admin/footer.php",
+		"/C/xampp/htdocs/I-Project/layout/my-auctions.php",
+		"/C/xampp/htdocs/I-Project/admin/header.php",
+		"/C/xampp/htdocs/I-Project/layout/changepassModal.php",
+		"/C/xampp/htdocs/I-Project/admin/vendor/bootstrap/js/bootstrap.bundle.min.js",
+		"/C/xampp/htdocs/I-Project/admin/css/styles_kevin.css",
+		"/C/xampp/htdocs/I-Project/layout/changeinfoModal.php",
+		"/C/xampp/htdocs/I-Project/layout/user-details.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/custom.css",
+		"/C/xampp/htdocs/I-Project/ProductPage.php",
 		"/C/xampp/htdocs/I-Project/form-step-4.php",
 		"/C/xampp/htdocs/I-Project/registreren.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/functions 2.php",
 		"/C/xampp/htdocs/I-Project/mechanic/functions.php",
-		"/C/xampp/htdocs/I-Project/admin/footer.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/overview.php",
 		"/C/xampp/htdocs/I-Project/form-step-2.php",
 		"/C/xampp/htdocs/I-Project/user.php",
@@ -641,10 +642,6 @@
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/index 2.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/admin-pagina.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/db.php",
-		"/C/xampp/htdocs/I-Project/admin/mechanic/functions.php",
-		"/C/xampp/htdocs/I-Project/admin/css/styles_kevin.css",
-		"/C/xampp/htdocs/I-Project/admin/header.php",
-		"/C/xampp/htdocs/I-Project/admin/css/jonathan.css",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/html.tpl.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/custom.css",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/block--homepaginablok3.html.twig",
@@ -716,28 +713,7 @@
 		"/C/xampp/htdocs/I-Project/header-content.php",
 		"/C/xampp/htdocs/I-Project/header-page.php",
 		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/index.php",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_layout.scss",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_responsive_desktop_small.scss",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_responsive_tablet_landscape.scss",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/all.scss",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_responsive_tablet_portrait.scss",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/index.html",
-		"/C/xampp/htdocs/I-Project/index.html",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/js/script.js",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/_responsive_tablet_landscape.scss",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_responsive_phone_portrait.scss",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_navigation.scss",
-		"/C/Users/jdion/Documents/Sublime projecten/CLV/openhuisclv/index.html",
-		"/C/Users/jdion/Documents/Sublime projecten/Energielabel-offertes/themes/ef2_custom/scss/_responsive_phone_portrait.scss",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_responsive-tablet-landscape.scss",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_responsive-desktop-small.scss",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_responsive-tablet-portrait.scss",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_icomoon.scss",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_cta.scss",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_variables.scss",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_typography.scss",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/all.scss",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/all.css"
+		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_layout.scss"
 	],
 	"find":
 	{
@@ -756,6 +732,71 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"print_r",
+			"pint_r",
+			"Bedrag",
+			">\n",
+			"parametersbieding",
+			"htmlToonBiedingen",
+			"htmlToonProductInfo",
+			"gebruikerResultaten",
+			"search-user",
+			"errorMessageUser",
+			"htmlGebruiker",
+			"exampleModalLabel",
+			"show",
+			"data-",
+			"data",
+			"data-id",
+			"print_r($_GET);",
+			"gebruiker",
+			"UpdateInfoUser",
+			"updateinf",
+			"update",
+			"htmlVeranderGebruiker",
+			"htmlGebruiker",
+			"htmlVeranderVoorwerp",
+			">';",
+			"delete",
+			"<?",
+			"delete",
+			"tab-content",
+			"product",
+			"show",
+			"modal",
+			"$_SESSION['",
+			"$_SESSION['ch",
+			"print_r",
+			"print",
+			"active",
+			"print_r",
+			"die",
+			">\";\n",
+			"convert",
+			"btn-change",
+			"<a",
+			"edit-user-info",
+			"changes-ar",
+			"change-ar",
+			"active",
+			"list-profile-lis",
+			"list-profile-list",
+			"list-profile-lsit",
+			"$biedingen",
+			"resultaat",
+			"@media",
+			".sidebar",
+			"@media",
+			"margin-top: 10px",
+			".not-front header .highlighted .view-header-blokken .views-row",
+			"@media",
+			".view-header-blokken .view-content",
+			"@media",
+			"@mdeia",
+			".fullwidthcontainer #block-views-c45ff94f94793a6379377a0ce0454a97 .views-field-field-energielabel-blokken .view-content",
+			".view-header-blokken",
+			".view-header-blokken .views-row",
+			"@media",
 			"voorwerp=",
 			"$_SESSION",
 			"mailadres",
@@ -818,72 +859,7 @@
 			"biedform",
 			"€",
 			"$query[0]",
-			"_GET",
-			"submit-changes-article",
-			"text",
-			"show",
-			"footer",
-			"kom ook",
-			"htmlVeranderGebruiker",
-			"iproject34.icasites.nl",
-			"htmlVeranderVOorwerp",
-			"col-lg-4",
-			");\n",
-			"_GET",
-			"voorwerpform",
-			"if (isset($_GET['voorwerpForm'])) {?>",
-			"validate",
-			"sendcode",
-			"validate",
-			"valdite",
-			"valid",
-			"validate",
-			"sendcode",
-			"sendRegistrationCode(",
-			"sendRegistrationCode",
-			"Geen geldig e-mailadres.",
-			"session_start()",
-			"insertInfo",
-			"insertinto",
-			"insertintp",
-			"insertregis",
-			"$_SESSION['message_registration']",
-			"error_registration",
-			"$_SESSION['gebruikersnaam']",
-			"\n$gebruikersnaam = $_SESSION['gebruikersnaam'];",
-			"ingelogdegebruiker",
-			"$_SESSION['mailAdres",
-			"mailAdres",
-			"opdracht volbracht",
-			"';;",
-			"/form",
-			"geheime",
-			"mail",
-			"$_SESSION['mail",
-			"$result",
-			"echo $_SESSION['username'];",
-			"aanwezig",
-			"error_registatrion",
-			": ./user.php",
-			"Location: ./user.php",
-			"mail-check",
-			"een gelding e-mailadres",
-			"session_start()",
-			"session_stop()",
-			"session_start()",
-			"emailCheck",
-			"']);\n",
-			"    \n",
-			"INPUT_POST",
-			"_POST",
-			" .",
-			"body",
-			".page-nieuws .node-article h2",
-			"margin-top: 110px;",
-			"|margin-top: 110px;",
-			"margin-top: 110px;",
-			".page-nieuws .node-article h2",
-			"session_start"
+			"_GET"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -891,6 +867,14 @@
 		"regex": false,
 		"replace_history":
 		[
+			"parametersrubrieken",
+			"htmlToonSubrubrieken",
+			"htmlToonRubriekInfo",
+			"rubriekResultaten",
+			"search-column",
+			"errorMessageColumn",
+			"htmlRubriek",
+			"htmlToonProductInfo",
 			"$productdata",
 			"",
 			"$query",
@@ -909,102 +893,13 @@
 	"groups":
 	[
 		{
-			"selected": 2,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "admin/mechanic/functions.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5781,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5775,
-								5775
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 816.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "admin/admin-pagina.php",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 15002,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								13023,
-								12990
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/PHP/PHP.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 624.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "admin/change-user.php",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4670,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3714,
-								3714
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"syntax": "Packages/PHP/PHP.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 796.981132075,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				}
+			]
+		},
+		{
+			"sheets":
+			[
 			]
 		}
 	],
@@ -1025,11 +920,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.486896962478,
 			1.0
 		],
 		"rows":
@@ -1093,7 +995,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 324.0,
+	"side_bar_width": 218.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
