@@ -1,0 +1,88 @@
+/* Deze functie toont alle producten  || Filterwaarde ('afstand','false')*/
+function showProducts($carrousel = false, $query = false, $parameters = false, $showAccount = false, $lg = 4, $md = 6, $sm = 6, $xs = 12){
+
+	if( is_array($query)){
+		$producten = $query;
+	}
+	else{
+
+		if($query == false){
+			$query = "SELECT * from currentAuction";
+		}
+
+		if($parameters){
+			$producten = handlequery($query,$parameters);
+
+		}
+
+		else{
+			$producten = handlequery($query);
+
+		}
+	}
+
+	if($producten){
+	$beforeInput = '';
+	$afterInput = '';
+	$html = '';
+	$itemcount = 0;
+
+	if($carrousel){
+		$beforeFirstInput = '<div class="carousel-item col-lg-'.$lg.' col-md-'.$md.' col-sm-'.$sm.' col-xs-'.$xs.' active">';
+		$beforeInput = '<div class="carousel-item col-lg-'.$lg.' col-md-'.$md.' col-sm-'.$sm.' col-xs-'.$xs.'">';
+		$afterInput = '</div>';
+	}
+	else{
+		$beforeInput = '<div class="col-lg-'.$lg.' col-md-'.$md.' col-sm-'.$sm.' col-xs-'.$xs.'">';
+		$afterInput = '</div>';
+	}
+
+	foreach($producten as $product) {
+
+        $itemcount++;
+        if (!$product['bodbedrag']) {
+            $product['bodbedrag'] = 0;
+        }
+
+        if ($carrousel) {
+            if ($itemcount == 1) {
+                $html .= $beforeFirstInput;
+            } else {
+                $html .= $beforeInput;
+            }
+        } else {
+            $html .= $beforeInput;
+        }
+
+        $timediff = calculateTimeDiffrence(date('Y-m-d h:i:s'),
+            $product['einddag'] . ' ' . $product['eindtijdstip']
+        );
+
+        $html .= '
+		<div class="product card">
+		<img class="card-img-top img-fluid" src="img/products/' . $product['bestand'] . '" alt="">
+		<div class="card-body">
+		<h4 class="card-title">
+		' . $product['titel'] . '
+		</h4>';
+
+		if ($showAccount == false) {
+            $html .= '<h5 class="product-data" id = "' . $product['voorwerpnummer'] . '" ><span class="time" > ' . $timediff . '</span >|<span class="price" >&euro;' . $product['bodbedrag'] . ' </span ></h5 >';
+		}
+    $vwtest = 26;
+    $hoogsteBieder = handlequery('SELECT TOP 1 gebruikersnaam FROM Bod WHERE voorwerpnummer = '.$product['voorwerpnummer'].' ORDER BY bodbedrag DESC');
+		$html.='
+		<a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a>
+		</div>
+		<div class="card-footer text-center text-muted">
+    Huidige hoogste bod: €'.number_format($product['bodbedrag'], 2, ",", ".").'<br>
+    Geboden door:<br>'.$hoogsteBieder[0]['gebruikersnaam'].'
+		</div>
+		</div>
+		';
+		$html .= $afterInput;
+	}}
+	else{$html = '<div class="col-lg-12 text-center"><h4> Geen veilingen gevonden </h4></div>';}
+	/* Returns product cards html */
+	return $html;
+}

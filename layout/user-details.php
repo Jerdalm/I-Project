@@ -41,7 +41,7 @@ if(isset($_POST['submit-new-password'])){
 }
 ?>
 
-<div class="tab-pane fade show active col-lg-9 float-left" id="content-user-details" role="tabpanel" aria-labelledby="list-user-details">
+<div class="tab-pane fade col-lg-9 float-left" id="content-user-details" role="tabpanel" aria-labelledby="list-user-details">
 	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"><h3>Gebruikersgegevens</h3></div>
 		<div class="row justify-content-md-center">
         
