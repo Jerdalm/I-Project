@@ -3905,11 +3905,20 @@ $('.modal').on('hidden.bs.modal', function () {
   revertToOriginalURL();
 });
 
-// $(document).ready(function(){
-//   $('.btn-change-bid').click(function(){
-//     $var = document.getElementById('bodbedrag').value;
-//     window.location.href += "&bodbedrag="+ $var+"#";
-    
-//     $('#changeBid').modal('show');
-//   })
-// });
+$('#changeBid').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var vwnummer = button.data('voorwerpnummer')
+  var bodbedrag = button.data('id')
+  var datum = button.data('datum')
+  var tijd = button.data('tijd')
+   // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this)
+  modal.find('.modal-title').text(vwnummer)
+  modal.find('.modal-body input.voorwerpnummer').val(vwnummer)
+  modal.find('.modal-body input.bodbedrag').val(bodbedrag)
+  modal.find('.modal-body input.bodBedragOud').val(bodbedrag)
+  modal.find('.modal-body input.datum').val(datum)
+  modal.find('.modal-body input.tijd').val(tijd)
+})

@@ -10,44 +10,32 @@
       <form method="get" class="form-inline edit-product-info">
         <div class="modal-body">
           <!-- echo om alle data in een formulier te zetten en te zorgen dat de gegevens aangepast kunnen worden. -->
+          <div class="form-group">
+            <label>Voorwerpnummer</label>
+            <input class="voorwerpnummer" type="text" name="voorwerpnummer" value="" readonly><br>
+          </div>
 
-          <?php
-          
-          // $amount = $_GET['bodBedragOud'];          
+          <div class="form-group">
+            <label>Bedrag</label>
+            <input class="bodbedrag" type="number" name="bodbedrag" value=""  step=".01" min="0"><br>
+          </div>
 
-            // echo "<pre>";
-            // print_r($biedings);
-            // echo "</pre>"; 
-          foreach ($biedings as $field => $value) { 
-            echo '<div class="form-group">';
-            echo '<label>'. $field. '</label>';
-            switch ($field) {
-              case 'voorwerpnummer':
-              case 'gebruikersnaam':
-              echo '<input type="text" name="'. $field.'" value="'. $value.'" readonly><br>';
-              break;
-              case 'Datum':
-              echo '<input type="date" name="'. $field.'" value="'. $value.'"><br>';
-              break;
-              case 'Tijd':
-              echo '<input type="text" name="'. $field.'" value="'. $value.'"><br>';
-              break;
-              case 'bodbedrag':
-              echo '<input type="number" name="'. $field.'" id="'.$field.'" value="'. $value.'" step=".01" min="0"><br>';
-              echo '<input type="hidden" name="bodBedragOud" id="'.$field.'" value="'. $value.'" step=".01" min="0"><br>';
-              break;
-            }
-            echo '</div>';
-          }
+          <div class="form-group">
+            <label>Datum</label>
+            <input class="datum" type="date" name="datum" value=""><br>
+          </div>
 
-
-          ?>
+          <div class="form-group">
+            <label>Tijd</label>
+            <input class="tijd" type="text" name="tijd" value=""><br>
+          </div>
+          <input class="bodBedragOud" type="hidden" name="bodBedragOud" value="" step=".01" min="0"><br>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleren</button>
             <button type="submit" class="btn btn-primary" name="submit-bit">Bijwerken</button>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>

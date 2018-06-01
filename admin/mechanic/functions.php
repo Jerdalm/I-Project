@@ -240,13 +240,14 @@ function updateProductInfo($array){
 }
 
 function updateBit($array){
-	$dateBitDate = $array['Datum'];
+	print_r($array);
+	$dateBitDate = $array['datum'];
 	$myDateTimeBegin = DateTime::createFromFormat('Y-m-d', $dateBitDate);
 	$datumBoddag = $myDateTimeBegin->format('Y-m-d');
 	$changeBitParam = array(':nummer' => $array['voorwerpnummer'],
 		':bedrag' => (float)$array['bodbedrag'],
 		':dag' => $datumBoddag,
-		':tijdstip' => $array['Tijd'],
+		':tijdstip' => $array['tijd'],
 		':bedragOud' => $array['bodBedragOud']);
 	$changeBitQuery = "UPDATE Bod SET bodbedrag = :bedrag, bodDag = :dag, bodTijdstip = :tijdstip WHERE bodbedrag = :bedragOud AND voorwerpnummer = :nummer";
 	handlequery($changeBitQuery, $changeBitParam);
