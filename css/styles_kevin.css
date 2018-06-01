@@ -355,6 +355,14 @@ float:left;
 padding:20px;
 }
 
+.card-title{
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+	
+}
+
 /* slider */
 @media (min-width: 768px) {
   /* show 3 items */
@@ -599,10 +607,3 @@ border-color:#d8360e;
     box-shadow: 0 0 0 0.2rem rgba(242, 85, 44,0.5)
 }
 
-.card-title{
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-	
-}

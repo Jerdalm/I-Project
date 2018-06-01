@@ -44,7 +44,7 @@
                         }
                 ?>
                 </div>              
-                <button class="add_field_button">Add More Fields</button>
+                <button class="add_field_button btn btn-orange">Add More Fields</button>
                     
 
       </div>
@@ -71,7 +71,8 @@ $(document).ready(function() {
         e.preventDefault();
         if(x < max_fields){ //max input box allowed
             x++; //text box increment
-            $(wrapper).append('<div><input type="text" class=form-control name="telefoonnummer'+ counter +'"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+            $(wrapper).append('<div class="input-group"><input type="text" class=form-control name="telefoonnummer'+ counter +
+			'"/><div class="input-group-append"><a href="#" class="remove_field btn btn-danger"><i class="fas fa-times"></i></a> </div></div>'); //add input box
             counter++;
         }
     });
@@ -83,3 +84,5 @@ $(document).ready(function() {
 });
 
 </script>
+
+

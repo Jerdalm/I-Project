@@ -572,7 +572,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 	else{
 
 		if($query == false){
-			$query = "SELECT * from currentAuction";
+			$query = "SELECT * from dbo.currentAuction ";
 		}
 
 		if($parameters){
@@ -585,7 +585,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 
 		}
 	}
-
+	
 	if($producten){
 	$beforeInput = '';
 	$afterInput = '';
@@ -634,14 +634,12 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 		if ($showAccount == false) {
             $html .= '<h5 class="product-data" id = "' . $product['voorwerpnummer'] . '" ><span class="time" > ' . $timediff . '</span >|<span class="price" >&euro;' . $product['bodbedrag'] . ' </span ></h5 >';
 		}
-    $vwtest = 26;
-    $hoogsteBieder = handlequery('SELECT TOP 1 gebruikersnaam FROM Bod WHERE voorwerpnummer = '.$product['voorwerpnummer'].' ORDER BY bodbedrag DESC');
+
 		$html.='
 		<a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a>
 		</div>
 		<div class="card-footer text-center text-muted">
-    Huidige hoogste bod: €'.number_format($product['bodbedrag'], 2, ",", ".").'<br>
-    Geboden door:<br>'.$hoogsteBieder[0]['gebruikersnaam'].'
+		locatie: '.$product['plaats'].'
 		</div>
 		</div>
 		';
@@ -651,6 +649,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 	/* Returns product cards html */
 	return $html;
 }
+
 
 /* Deze functie berekend het verschil tussen 2 data */
 function calculateTimeDiffrence($timestamp1, $timestamp2){
