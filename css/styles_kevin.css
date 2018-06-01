@@ -355,7 +355,7 @@ float:left;
 padding:20px;
 }
 
-.card-title{
+section.products .card-title{
 
   white-space: nowrap;
   overflow: hidden;
@@ -572,6 +572,15 @@ text-decoration:none;
 
 .sidebar h4:not(:first-child) {
     margin-top:20px;
+}
+
+.input_fields_wrap{
+margin-bottom:10px;	
+}
+
+
+.input_fields_wrap .input-group{
+	margin:10px 0px;
 }
 
 /*Product details */
