@@ -1,11 +1,8 @@
 <?php require_once ('header.php');
 
-// als het startbedrag 0 is, dan staat er .00
-
-
 if(isset($_GET['product'])){
     if (isset($_COOKIE[$_SESSION['gebruikersnaam']])) {
-        if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam'])) {
+        if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam'])== false) {
             AlterCookie($_SESSION['gebruikersnaam'], $_GET['product'], true);
         } else if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam'])) {
             AlterCookie($_SESSION['gebruikersnaam'], $_GET['product']);
@@ -13,6 +10,7 @@ if(isset($_GET['product'])){
     } else {
         MakeCookie($_SESSION['gebruikersnaam']);
     }
+
     $htmluploadFoto = ' ';
     $paramvoorwerpnummer = array(':voorwerpnummer' => $_GET['product']);
 
@@ -42,7 +40,7 @@ if(isset($_GET['product'])){
 
     $images = handlequery("SELECT filenaam FROM Bestand WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
     $aangebodenDag = date("d-m-Y", strtotime($productdata['looptijdBeginDag']));
-    
+
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if(isset($_POST['submit-file'])){
             $target_dir = "./uploads/user/" . $productdata['verkoper'] . '/' . $productdata['voorwerpnummer']. '/';
@@ -61,7 +59,7 @@ if(isset($_GET['product'])){
                     $bestandsnaam = $target_file;
                     $uploadParameters = array(':voorwerpnummer' => $productdata['voorwerpnummer'] , ':bestandsnaam' => $bestandsnaam);
                     handlequery("insert into Bestand values (:bestandsnaam, :voorwerpnummer)",$uploadParameters);
-                    header("Refresh:0"); //Refresht de pagina zodat de foto's getoont worden 
+                    refreshPage(); //Refresht de pagina zodat de foto's getoont worden
                 } else {
                     echo "Sorry, Er is iets fout gegaan tijdens het uploaden van uw bestand.";
                 }
@@ -70,11 +68,11 @@ if(isset($_GET['product'])){
             $paramBod = array(':voorwerpnummer' => $_GET['product'], ':bedrag' => (float)$_POST['bidAmount'], ':gebruiker' => $_SESSION['gebruikersnaam']);
             $plaatsBod =  executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod); // functie in databse om het bod uit te brengen en te checken of het klopt
 
-            if ($_SESSION['gebruikersnaam'] != $productdata['gebruikersnaam']) {            
+            if ($_SESSION['gebruikersnaam'] != $productdata['gebruikersnaam']) {
                 if($plaatsBod == "Opdracht kon niet worden volbracht."){
                     echo 'Bod kan niet worden geplaats';
                 } else {
-                    executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod); 
+                    executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod);
                 }
             } else {
                 $message_bids = "U kunt niet bieden op uw eigen veilingen";
@@ -109,7 +107,7 @@ if(isset($_GET['product'])){
                     <figure class="figure col-md-12">
                         <div class="preview">
                             <div class="preview-pic tab-content">
-                                <?php  
+                                <?php
                                 $teller = 1;
                                 $skipFirst = true;
                                 foreach ($images as $image){
@@ -120,11 +118,11 @@ if(isset($_GET['product'])){
                                         continue;
                                     }
                                     echo '<div class="tab-pane" id="pic-'.$teller.'"><img src="' .$image['filenaam']. '" /></div>';
-                                    $teller++; 
+                                    $teller++;
                                 } ?>
                             </div>
                             <ul class="preview-thumbnail nav nav-tabs">
-                                <?php 
+                                <?php
                                 $teller = 1;
                                 $skipFirst = true;
                                 foreach ($images as $image){
@@ -135,7 +133,7 @@ if(isset($_GET['product'])){
                                         continue;
                                     }
                                     echo '<li><a data-target="#pic-'.$teller . '"data-toggle="tab"><img onerror="this.style.display=\'none\'"src="'.$image['filenaam'] . '" /></a></li>';
-                                    $teller++; 
+                                    $teller++;
                                 } ?>
                             </ul>
                         </div>
@@ -158,7 +156,7 @@ if(isset($_GET['product'])){
                         <dl class="dl-horizontal">
                             <dt>Beschrijving:</dt>
                             <br>
-                            <dd><?= $productdata['beschrijving'] ?></dd>                            
+                            <dd><?= $productdata['beschrijving'] ?></dd>
                         </dl>
                     </div>
                 </div>
@@ -170,10 +168,10 @@ if(isset($_GET['product'])){
                         <h2 class="alert-heading"> <strong> <?= $productdata['titel']?></strong></h2>
 
                         <?php if($productdata['startprijs'] != 0) { ?>
-                            <p>Startprijs: € <?=$productdata['startprijs']?></p>
+                            <p>Startprijs: € <?=number_format($productdata['startprijs'], 2, ",", ".")?></p>
                         <?php } else { ?>
                             <p>Startprijs: € 0,00</p>
-                        <?php } if(isset($productdata['verzendkosten'])){ echo '<p>Verzendkosten: €' .$productdata['verzendkosten'];} ?></p>
+                        <?php } if(isset($productdata['verzendkosten'])){ echo '<p>Verzendkosten: €' .number_format($productdata['verzendkosten'], 2, ",", ".");} ?></p>
                         <p>Productnummer: <?=$productdata['voorwerpnummer']?></p>
                         <?php if($productdata['veilingGesloten'] == 1) {
                             echo "veiling status: gesloten";
@@ -193,7 +191,7 @@ if(isset($_GET['product'])){
                                         echo '<thead>';
                                         foreach ($bodInfo as $bodkolom) {
                                             echo '<tr>';
-                                            echo '<th scope="col">€' .$bodkolom['bodbedrag']. '</th>';
+                                            echo '<th scope="col">€' .number_format($bodkolom['bodbedrag'], 2, ",", "."). '</th>';
                                             echo '<th scope="col">' .$bodkolom['gebruikersnaam']. '</th>';
                                             echo '<th scope="col">' .date_format(date_create($bodkolom['bodDag']), "d-m-Y"). '</th>';
                                             echo '<th scope="col">' .date_format(date_create($bodkolom['bodTijdstip']), "H:i"). '</th>';
@@ -266,8 +264,8 @@ $('.preview-thumbnail').load(document.URL +  ' .preview-thumbnail');
 $('.product-info').load(document.URL +  ' .product-info');
 $('.bids').load(document.URL +  ' .bids');
 $('.userInfo').load(document.URL +  ' .userInfo');
-   
-}, 1000); 
+
+}, 1000);
 </script>
 
 <style>
@@ -282,4 +280,3 @@ $('.userInfo').load(document.URL +  ' .userInfo');
            </main>';
 }
 require_once 'footer.php'; ?>
-

@@ -2,17 +2,17 @@
 
 function AlterCookie($CookieName, $vwNummer, $vol = false)
 {
-    echo "dein mutti eins";
+    //echo "testAlter";
     $ItemArray = unserialize($_COOKIE[$CookieName]);
     $month_in_sec = 2592000;
     if (!in_array($_GET['product'], $ItemArray)) {
         if ($vol) {
-            echo "vol";
+            //echo "vol";
             array_shift($ItemArray);
             array_push($ItemArray, $_GET['product']);
             setcookie($CookieName, serialize($ItemArray), time() + $month_in_sec);
         } else {
-            echo "NIETvol";
+            //echo "NIETvol";
             array_push($ItemArray, $_GET['product']);
             //voeg cookie toe
             setcookie($CookieName, serialize($ItemArray), time() + $month_in_sec);
@@ -22,15 +22,15 @@ function AlterCookie($CookieName, $vwNummer, $vol = false)
 
 function MakeCookie($CookieName)
 {
-    echo "dein mutti zwei";
+    //echo "testMake";
     $month_in_sec = 2592000;
-    $ItemArray = array($_GET['product']);
+    $ItemArray = array($_GET['product'],$_GET['product'],$_GET['product'],$_GET['product'],$_GET['product'],$_GET['product']);
     setcookie($CookieName, serialize($ItemArray), time() + $month_in_sec);
 }
 
 function CheckCookieLengthSmallerThanSix($username)
 {
-    echo "dein mutti drei";
+    //echo "testCheck";
     $data = unserialize($_COOKIE[$username]);
     if (sizeof($data) < 6) {
         return true;
@@ -42,25 +42,26 @@ function CheckCookieLengthSmallerThanSix($username)
 
 function Setquery($username, $vwNummer)
 {
-    echo "dein mutti vier";
+    //echo "testQuery";
     $data = unserialize($_COOKIE[$username]);
+    $datalist = $data[0] . ' or voorwerpnummer = ' . $data[1] . ' or voorwerpnummer = ' . $data[2]. ' or voorwerpnummer = ' . $data[3] . ' or voorwerpnummer = ' . $data[4] . ' or voorwerpnummer = ' . $data[5];
+    //echo $datalist;
 
-    $datalist = ($data[0] . ',' . $data[1] . ',' . $data[2]. ',' . $data[3] . ',' . $data[4] . ',' . $data[5]);
-    echo $datalist;
-
-    $Arrayquery = "SELECT C.*, Vo.plaatsnaam as plaats
+    $Arrayquery = "SELECT top 6 C.*, Vo.plaatsnaam as plaats, V.rubriekOpLaagsteNiveau
                   FROM currentAuction C
-                  
+
                   INNER JOIN voorwerp Vo
                   ON C.voorwerpnummer = Vo.voorwerpnummer
-                  
+
                   INNER JOIN VoorwerpInRubriek V
                   ON V.voorwerpnummer = C.voorwerpnummer
-                  
-                  WHERE C.voorwerpnummer IN ($datalist)/* cookie voorwerpen */
-                  AND C.voorwerpnummer != $vwNummer";/* Waarde huidig nummer */
 
-    print_r($data);
+				  WHERE V.rubriekOpLaagsteNiveau in(
+    			  	select rubriekOpLaagsteNiveau from VoorwerpInRubriek R
+				  	where voorwerpnummer = $datalist
+				  	AND voorwerpnummer != $vwNummer)
+				  	ORDER BY NEWID()";
+
     return $Arrayquery;
 }
 
@@ -229,7 +230,7 @@ function contains_capital($string){
 	return preg_match('/[A-Z]/', $string);
 }
 
-/* Deze functie checkt of het meegegeven bestand al bestaat */ 
+/* Deze functie checkt of het meegegeven bestand al bestaat */
 function checkExistingFile($file){
 	if (file_exists($file)) {
 		echo "Sorry, Het bestand bestaat al.";
@@ -276,11 +277,11 @@ function checkIfImage($file){
 function showLoginMenu(){
 	$htmlLogin = ' ';
 	if(isset($_SESSION['gebruikersnaam']) && !empty($_SESSION['gebruikersnaam'])){
-		
+
 		$htmlLogin .= '<li class="nav-item"><a class="nav-link" href="./account.php">Account</a></li>';
 		$htmlLogin .= '<li class="nav-item"><a class="nav-link" href="./logout.php">Uitloggen</a></li>';
 
-		
+
 	} else {
 		$htmlLogin .= '<li class="nav-item"><a class="nav-link" href="./user.php">Inloggen</a></li>';
 	}
@@ -308,7 +309,7 @@ function checkUsernamePassword($username, $password, $passwordrepeat){
 				$password_hashed = password_hash($password , PASSWORD_DEFAULT);
 				$_SESSION['username'] = $username;
 				$_SESSION['password'] = $password_hashed;
-				header("Location: ./registreren.php?step=4");
+				redirectJS("./registreren.php?step=4");
 			} else if (strlen($password) < $passwordMinimumLength &&  0 === preg_match('~[0-9]~', $password)) {
 				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";
 			} else if (strlen($password) < $passwordMinimumLength) {
@@ -380,7 +381,7 @@ function insertRegistrationinfoInDB(){
 
 		session_destroy();
 		$message_registration = 'Registratie voltooit!';
-		header('Location: url=./user.php');
+		redirectJS('./user.php');
 	} else {
 		$message_registration = 'Het opgegeven telefoonnummer klopt niet.';
 	}
@@ -414,10 +415,10 @@ function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLoc
 	if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 		setCodeInDB($email, $randomVerificationCode_hashed);
 		sendMail($to, $subject, $message_body);
-		header("Location: ./".$headerLocationIf);
+		redirectJS("./".$headerLocationIf);
 	} else {
 		$_SESSION['error_upgrade'] = 'Geen geldig e-mailadres.';
-		header("Location: ./". $headerLocationElse);
+		redirectJS("./". $headerLocationElse);
 	}
 }
 
@@ -451,7 +452,7 @@ function loginControl($email, $wachtwoord){
 			$_SESSION['vraag'] = $gebruiker[0]["vraag"];
 			$_SESSION['antwoordtekst'] = $gebruiker[0]["antwoordtekst"];
 			$_SESSION['soortGebruiker'] = $gebruiker[0]["soortGebruiker"];
-			
+
 			redirectJS('account.php');
 		}
 		else {
@@ -481,7 +482,7 @@ function insertUpgradeinfoInDB(){
 	$melding = handlequery("INSERT INTO Verkoper VALUES(:gebruikersnaam, :bank, :rekeningnummer, :controleOptie, :creditcardnumber)", $insertInfoParam);
 
 	$_SESSION['soortGebruiker'] = 2;
-	header("Location: /account.php");
+	redirectJS("/account.php");
 	exit();
 }
 
@@ -489,7 +490,7 @@ function insertUpgradeinfoInDB(){
 function showMenuRubrieken($toplevel){
 	if($toplevel == null){ $querypart = " is NULL ";}
 	else{ $querypart = " = $toplevel";}
-	
+
 	$html = '';
 	$rubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek ".$querypart."");
 
@@ -507,27 +508,27 @@ function showMenuRubrieken($toplevel){
 - lege rubrieken skippen
 */
 function showRubriekenlist($toplevel){
-	
+
 	$html = '<ul class="list-group">';
 	$rubrieken = FetchSelectData("EXECUTE dbo.SHOW_RUBRIEK_TREE @rubriek = $toplevel");
 	$previouslevel = $rubrieken[0]['Lvl'];
 
 	foreach($rubrieken as $rubriek){
-		
+
 		if($rubriek['Lvl'] < $previouslevel){
 		$lvldif = $previouslevel - $rubriek['Lvl'];
 			for($teller = 0; $teller <  $lvldif; $teller++){
 			$html .= '</ul>';
 			}
 		}
-		
+
 		$subcata = getSubRubriek($rubriek['rubrieknummer']);
 		$amountInRubarr = handlequery("SELECT COUNT(voorwerpnummer) AS productaantal from VoorwerpInRubriek WHERE rubriekOpLaagsteNiveau IN ".$subcata."");
 		$amountInRub = $amountInRubarr[0]['productaantal'];
-		
+
 		if(!$amountInRub){continue;}
-		
-		
+
+
 		$rubriekparameters = array(':rubriek' => $rubriek['rubrieknummer']);
 		$subrubrieken = handlequery("SELECT TOP 1 rubrieknummer from dbo.Rubriek where Rubriek.hoofdrubriek = :rubriek",$rubriekparameters);
 
@@ -584,7 +585,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 
 		}
 	}
-	
+
 	if($producten){
 	$beforeInput = '';
 	$afterInput = '';
@@ -769,7 +770,7 @@ function checkPriceFilter($min, $max){
 }
 
 function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
-	
+
 	$birthdate = $get['geboortedag'];
 	$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
 	$geboortedag = $myDateTime->format('Y-m-d');
@@ -798,10 +799,10 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 		$infoParameters);
 
 	if( $nummer['volgnr'] == null ){
-		
+
 		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer0'] , ':gebruikersnaam' => $gebruikersnaam);
 		handlequery("INSERT INTO Gebruikerstelefoon (telefoonnummer,gebruikersnaam) VALUES (:telefoonnummer,:gebruikersnaam )",$telefoonnummerPara);
-		
+
 	}  else {
 		handlequery("UPDATE Gebruikerstelefoon
 		SET telefoonnummer = :telefoonnummer
@@ -809,7 +810,7 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 	}
 
 	if($gebruiker['telefoonnummer'] == null){
-		
+
 	} else {
 		handlequery("UPDATE Gebruikerstelefoon
 		SET telefoonnummer = :telefoonnummer
@@ -827,7 +828,7 @@ function showButtonIndex(){
 		echo '<a href="upload-article.php" class="cta-orange">Verkoop voorwerp!</a>';
 	}
 	} else {
-		echo '<a href="registreren.php" class="cta-orange">Registreer je nu om mee te bieden!</a>';		
+		echo '<a href="registreren.php" class="cta-orange">Registreer je nu om mee te bieden!</a>';
 	}
 }
 
@@ -836,13 +837,13 @@ function checkNewPassword ($password, $passwordrepeat){
 	$messageReturn = '';
 	if ($password == $passwordrepeat) {
 		if (strlen($password) >= $passwordMinimumLength && contains_number($password)) {
-			$password_hashed = password_hash($password , PASSWORD_DEFAULT);	
+			$password_hashed = password_hash($password , PASSWORD_DEFAULT);
 			$_SESSION['password'] = $password_hashed;
-			$messageReturn = "Wachtwoord zit in de database";												
+			$messageReturn = "Wachtwoord zit in de database";
 		} else if (strlen($password) < $passwordMinimumLength &&  0 === preg_match('[0-9]', $password)) {
-			$messageReturn = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";	
+			$messageReturn = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";
 		} else if (strlen($password) < $passwordMinimumLength) {
-			$messageReturn = "Uw wachtwoord moet minstens 7 tekens bevatten.";	
+			$messageReturn = "Uw wachtwoord moet minstens 7 tekens bevatten.";
 		} else if (!contains_number($password)) {
 			$messageReturn = "Uw wachtwoord moet minimaal 1 cijfer bevatten.";
 		}
@@ -855,32 +856,36 @@ function checkNewPassword ($password, $passwordrepeat){
 	function pagination($array,$itemsperpage = 10){
 		$submenus =(sizeof($array) / $itemsperpage);
 		$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-		
+
 		if(isset($_GET['pagination'] ) && isset($_GET['perpage'] )){
 			$currentpagination = '&pagination='.$_GET['pagination'].'&perpage='.$_GET['perpage'];
 			$newUrl = str_replace($currentpagination, '', $actual_link);
 		}else{$newUrl = $actual_link; }
-		
+
 		$url_end = substr($actual_link, -3);
 		if($url_end == 'php'){$newUrl = $newUrl.'?';}
-		
+
 		if($submenus > 1){
-			
+
 			for($teller = 0; $teller < $submenus; $teller++){
 				$startvalue = $teller * $itemsperpage;
 				$visueel = $teller + 1;
-				
-				echo "<a class=\"btn btn3 \" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";	
+
+				echo "<a class=\"btn btn3 \" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";
 			}
-		}		
+		}
 	}
-	
+
 	function logUserHistory($cookieName){
 
 	}
-	
+
 	function redirectJS($url){
 		echo '<script>window.location.href = "'.$url.'"</script>';
 	}
-	
+
+  function refreshPage() {
+    echo "<script>location.reload();</script>";
+  }
+
 ?>

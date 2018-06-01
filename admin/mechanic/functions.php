@@ -182,14 +182,14 @@ function blockUser($gebruiker){
 function deleteArticle($artikel){
 	$deleteParam = array(':artikel' => $artikel);
 	handlequery("DELETE FROM Voorwerp WHERE voorwerpnummer = :artikel", $deleteParam);
-	header("Location: ./change-article.php");
+	redirectJS("./change-article.php");
 }
 
 /* Deze functie verwijderd het meegegeven rubriek uit de database */
 function deleteColumn($rubriek){
 	$deleteParam = array(':rubriek' => $rubriek);
 	handlequery("DELETE FROM Rubriek WHERE rubrieknaam = :rubriek", $deleteParam);
-	header("Location: ./change-column.php?rubriek=".$rubriek);
+	redirectJS("./change-column.php?rubriek=".$rubriek);
 }
 
 function changedFields($fieldsOld, $fieldsNew){
@@ -211,7 +211,7 @@ function cleanDB(){
 	executequery("EXEC prc_verschoonDatabase");
 	sendEmailClosedAuctions();
 	executequery("EXEC prc_veilingSluiten");
-	header("Location: ./admin-pagina.php");
+	redirectJS("./admin-pagina.php");
 }
 
 function updateProductInfo($array){
@@ -236,7 +236,7 @@ function updateProductInfo($array){
 		verzendinstructies = :verzendinstructies
 		WHERE voorwerpnummer = :voorwerpnummer",
 		$parametersUpdate);
-	header("Location: ./change-article.php?&voorwerpInfo=".$parametersUpdate[':voorwerpnummer']);
+	redirectJS("./change-article.php?&voorwerpInfo=".$parametersUpdate[':voorwerpnummer']);
 }
 
 function updateBit($array){
@@ -350,6 +350,6 @@ function uploadColumn($get){
 	$paramUpload = array(':rubrieknaam' => $get['column-name'],
 						 ':nummer' => $laatste_nummer);
 	handlequery("INSERT INTO Rubriek(rubrieknummer, rubrieknaam) VALUES (:nummer, :rubrieknaam)", $paramUpload);
-	header("Location: ./change-column.php?rubriek=".$laatste_nummer);
+	redirectJS("./change-column.php?rubriek=".$laatste_nummer);
 }
 ?>

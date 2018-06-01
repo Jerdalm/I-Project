@@ -244,7 +244,7 @@ function checkUsernamePassword($username, $password, $passwordrepeat){
 				$password_hashed = password_hash($password , PASSWORD_DEFAULT);
 				$_SESSION['username'] = $username;
 				$_SESSION['password'] = $password_hashed;
-				header("Location: ./user.php?step=4");											
+				redirectJS("./user.php?step=4");											
 			} else if (strlen($password) < $passwordMinimumLength &&  0 === preg_match('~[0-9]~', $password)) {
 				$message_registration = "Uw wachtwoord moet minstens 7 tekens bevatten.<br>Uw wachtwoord moet minimaal 1 cijfer bevatten.";	
 			} else if (strlen($password) < $passwordMinimumLength) {
@@ -350,10 +350,10 @@ function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLoc
 	if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 		setCodeInDB($email, $randomVerificationCode_hashed);
 		sendMail($to, $subject, $message_body, $message);
-		header("Location: ./".$headerLocationIf);      
+		redirectJS("./".$headerLocationIf);      
 	} else {
 		$_SESSION['error_upgrade'] = 'Geen geldig e-mailadres.';
-		header("Location: ./". $headerLocationElse);
+		redirectJS("./". $headerLocationElse);
 	}
 }
 
@@ -386,7 +386,7 @@ function loginControl($email, $wachtwoord){
 			$_SESSION['vraag'] = $gebruiker[0]["vraag"];
 			$_SESSION['antwoordtekst'] = $gebruiker[0]["antwoordtekst"];
 			$_SESSION['soortGebruiker'] = $gebruiker[0]["soortGebruiker"];			
-			header("location: ./user-details.php");
+			redirectJS("./user-details.php");
 		}
 		else {
 			$message_login = "Verkeerd wachtwoord of onbekende e-mail, probeer opnieuw!";

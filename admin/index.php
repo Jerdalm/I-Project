@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	if (isset($_POST['login-submit-admin'])) {
 		if(($_POST['email-login'] === "admin@root.com" || $_POST['email-login'] === "admin") && $_POST['wachtwoord'] == "iproject34"){
 			$_SESSION['gebruikersnaam'] = "admin";
-			header("Location: ./admin-pagina.php");
+			redirectJS("./admin-pagina.php");
 		} else {
 			$errorLoginAdmin = "Wachtwoord of email/gebruikersnaam klopt niet";
 		}

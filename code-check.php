@@ -14,7 +14,7 @@ $codeControl = trim($codeControl);
 if ($emailEquivalent['code'] == $codeControl){
 	$_SESSION["step2"] = false;
     $_SESSION["step3"] = true;
-    header("location: ./registratieScherm.php");
+    redirectJS("./registratieScherm.php");
 } 
 else{ 
 	echo '<script>alert("helaas")</script>';
