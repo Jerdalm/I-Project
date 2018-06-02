@@ -486,13 +486,18 @@ function insertUpgradeinfoInDB(){
 	exit();
 }
 
-/* Deze functie returnt de verschillende rubrieken voor in het submenu */
+/* Deze functie returnt de verschillende rubrieken voor in het submenu
+||Mocht er iets fout gaan,onderstaande regel terugzetten 
+$rubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek ".$querypart."");
+||
+*/
 function showMenuRubrieken($toplevel){
+
 	if($toplevel == null){ $querypart = " is NULL ";}
 	else{ $querypart = " = $toplevel";}
 
 	$html = '';
-	$rubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek ".$querypart."");
+	$rubrieken = handlequery("SELECT * from actieveRubrieken where hoofdrubriek ".$querypart."");
 
 	foreach($rubrieken as $rubriek){
 		$html .= '<a class="dropdown-item" href="overview.php?rub='.$rubriek['rubrieknummer'].'">'.$rubriek['rubrieknaam'].'</a>';
@@ -554,11 +559,13 @@ function showRubriekenlist($toplevel){
 
 		if ($rubriek === end($rubrieken)){
 			if($rubriek['Lvl'] > 1){
+				$lvldif = $rubriek['Lvl'] - 1;
+				for($teller = 0; $teller <= $lvldif; $teller++){
 				$html .= '</ul>';
+				}
 			}
 		}
 	}
-	$html .= '</ul>';
 	return $html;
 }
 
