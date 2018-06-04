@@ -55,8 +55,6 @@ if(isset($_GET['product'])){
         FROM gebruiker
         WHERE gebruikersnaam = :gebruikersnaam", $paramkoperdata);
 
-        //voorwerpnummer moet meegegeven worden vanuit de site
-
         $images = handlequery("SELECT filenaam FROM Bestand WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
         $aangebodenDag = date("d-m-Y", strtotime($productdata['looptijdBeginDag']));
 
@@ -71,14 +69,12 @@ if(isset($_GET['product'])){
             $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
             if(checkIfImage($_POST["submit-file"]) && checkAllowedFileTypes($imageFileType) && checkSizeFile(500000) && checkExistingFile($target_file)) {
-              // echo $bestandsnaam;
-              // die();
               if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
                 echo "Het bestand ". basename( $_FILES["fileToUpload"]["name"]). " is geüpload.";
                 $bestandsnaam = $target_file;
                 $uploadParameters = array(':voorwerpnummer' => $productdata['voorwerpnummer'] , ':bestandsnaam' => $bestandsnaam);
                 handlequery("insert into Bestand values (:bestandsnaam, :voorwerpnummer)",$uploadParameters);
-                refreshPage(); //Refresht de pagina zodat de foto's getoont worden
+                redirectJS('productpage.php?product=' . $productdata['voorwerpnummer']); //Refresht de pagina zodat de foto's getoont worden
               } else {
                 echo "Sorry, Er is iets fout gegaan tijdens het uploaden van uw bestand.";
               }
