@@ -1,5 +1,23 @@
-<?php 	
-
+<?php 
+	
+	$pagination_available = isset($_GET['pagination']) && !is_null($_GET['pagination']);
+	$perpage_available = isset($_GET['perpage']) && !empty($_GET['perpage']);
+	
+	if($pagination_available && $perpage_available){
+		if(is_numeric($_GET['pagination']) && is_numeric($_GET['perpage'])){
+			$start   = $_GET['pagination'];	
+			$perpage = $_GET['perpage'];
+		}
+		else{
+		$start = 0;
+		$perpage = 9;
+		}
+	}
+	else{ 
+	$start = 0;
+	$perpage = 9;
+	}
+	
 	/* Wanneer er op prijs word gezocht */
 	if(isset($_GET['min']) && isset($_GET['max'])){
 	$pricecheck = checkPriceFilter($_GET['min'],$_GET['max']);
@@ -18,11 +36,19 @@
 	
 	if(!$rubriekdata){$rubriekdata = '('.$rubriek.')';}
 	$parameters = false;
-
-	$query = "SELECT TOP 9 * from currentAuction 
+	
+	$productcount = handlequery("SELECT COUNT(*) as productaantal from currentAuction 
+	INNER JOIN VoorwerpinRubriek
+	ON VoorwerpinRubriek.voorwerpnummer = currentAuction.voorwerpnummer
+	Where rubriekOpLaagsteNiveau IN ".$rubriekdata. " AND ".$pricecheck."");
+	
+	$pagRows = $productcount[0]['productaantal'];
+	
+	$query = "SELECT * from currentAuction 
 	INNER JOIN VoorwerpinRubriek
 	ON VoorwerpinRubriek.voorwerpnummer = currentAuction.voorwerpnummer
 	Where rubriekOpLaagsteNiveau IN ".$rubriekdata. " AND ".$pricecheck."
+	ORDER by currentAuction.voorwerpnummer OFFSET ".$start." ROWS FETCH NEXT ".$perpage." ROWS ONLY
 	";
 	
 	$rubrieken = FetchSelectData("EXEC SHOW_RUBRIEK_TREE");
@@ -67,8 +93,12 @@
 	}
 		
 		$titel = "Zoekresultaten";
+		
 		//$parameters = array(":search" => "%" . $zoekfilter . "%");
-		$query = "SELECT TOP 9 * FROM currentAuction WHERE currentAuction.titel ".$searchstring." AND ".$pricecheck;
+		$productcount = handlequery("SELECT COUNT(*) as productaantal FROM currentAuction WHERE currentAuction.titel ".$searchstring." AND ".$pricecheck."",$parameters);
+		$pagRows = $productcount[0]['productaantal'];
+		$query = "SELECT * FROM currentAuction WHERE currentAuction.titel ".$searchstring." AND ".$pricecheck."
+		ORDER by voorwerpnummer OFFSET ".$start." ROWS FETCH NEXT ".$perpage." ROWS ONLY";
 	
 	}
 	
@@ -76,7 +106,9 @@
 	else{
 	$titel = $zoekfilter = "Alle veilingen";
 	$parameters = false;
-	$query = "SELECT TOP 9 * from currentAuction WHERE ".$pricecheck;
+	$productcount = handlequery("SELECT COUNT (*) as productaantal from currentAuction WHERE ".$pricecheck);
+	$pagRows = $productcount[0]['productaantal'];
+	$query = "SELECT * from currentAuction WHERE ".$pricecheck." ORDER by voorwerpnummer OFFSET ".$start." ROWS FETCH NEXT ".$perpage." ROWS ONLY";
 	}
 	
 	/* Afvangen afstand */

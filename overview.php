@@ -43,7 +43,7 @@ require 'layout/pricefilter.php';
  
 </div>
 <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 no-margin float-left" style=" display: flex; flex-wrap: wrap;">
-<?= showProducts(false,$query,$parameters); ?>
+<?= showProducts(false,$query,$parameters).pagination($pagRows,9,$start); ?>
 </div>
 
 <div class="clearfix"></div>

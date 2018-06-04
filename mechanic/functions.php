@@ -922,7 +922,7 @@ function checkNewPassword ($password, $passwordrepeat){
 	return $messageReturn;
 }
 
-	function pagination($array,$itemsperpage = 10){
+	function pagination($array,$itemsperpage = 10, $currentpag = 0){
 		if(is_array($array)){$submenus =(sizeof($array) / $itemsperpage);}
 		else{$submenus = $array / $itemsperpage;}
 		
@@ -938,13 +938,17 @@ function checkNewPassword ($password, $passwordrepeat){
 		if($url_end == 'php'){$newUrl = $newUrl.'?';}
 
 		if($submenus > 1){
-
+		$html .= '<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center"> ';
 			for($teller = 0; $teller < $submenus; $teller++){
 				$startvalue = $teller * $itemsperpage;
 				$visueel = $teller + 1;
-
+				if($startvalue == $currentpag){
+				$html .= "<a class=\"btn btn3\" style=\"font-weight:bold\" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";	
+				}else{
 				$html .= "<a class=\"btn btn3 \" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";
+				}
 			}
+		$html .= '</div>';
 		}
 	return $html;
 	}
