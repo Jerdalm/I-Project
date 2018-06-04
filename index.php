@@ -47,6 +47,7 @@ $_SESSION['email-registration'] = ' ';
    </div>
 </section>
 <section class="attention text-center">
+    <a style="margin-right:50px;" href="overview.php" class="cta-orange">Bekijk alle veilingen</a>
     <?= showButtonIndex();?>
 </section>
 <section class="userExperience">
