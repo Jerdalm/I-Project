@@ -86,13 +86,13 @@ if(isset($_GET['product'])){
               if (!empty($highestBid)) {
                 if ($_POST['bidAmount'] >= $minimumbid) {
                   executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod);
-                  //refreshPage();
+                  redirectJS('productpage.php?product=' . $productdata['voorwerpnummer']);
                 } else {
                   $message_bids = "Uw bod is te laag, probeer hoger te bieden";
                 }
               } elseif ($_POST['bidAmount'] >= $productdata['startprijs']) {
                 executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod);
-                //refreshPage();
+                redirectJS('productpage.php?product=' . $productdata['voorwerpnummer']);
               } else {
                 $message_bids = "Uw bod is te laag, probeer hoger te bieden";
               }
