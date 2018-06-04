@@ -1,10 +1,19 @@
 <?php
 $gebruiker = $_SESSION['gebruikersnaam'];
 
-$query = "SELECT *
-FROM currentAuction
-INNER JOIN voorwerp ON currentAuction.voorwerpnummer = voorwerp.voorwerpnummer
-WHERE voorwerp.koper = '$gebruiker'"
+$query = "SELECT Voorwerp.voorwerpnummer, max(Bestand.filenaam) AS bestand,
+	Voorwerp.titel, max(Bod.bodbedrag) AS 'bodbedrag',
+	max(voorwerp.looptijdEindeDag) AS 'einddag',
+	max(voorwerp.looptijdEindeTijdstip) AS 'eindtijdstip',
+	max(Gebruiker.plaatsnaam) AS 'plaats',
+	Voorwerp.veilingGesloten
+	FROM Voorwerp
+	INNER join Gebruiker ON gebruiker.gebruikersnaam = Voorwerp.verkoper
+	LEFT JOIN Bod on Bod.voorwerpnummer = Voorwerp.voorwerpnummer
+	LEFT JOIN Bestand on Bestand.voorwerpnummer = voorwerp.voorwerpnummer
+	WHERE voorwerp.koper = '$gebruiker'
+	GROUP BY voorwerp.voorwerpnummer, voorwerp.titel, voorwerp.veilingGesloten
+    ORDER BY voorwerp.veilingGesloten;"
 ?>
 
 <div class="tab-pane fade active show col-lg-9 float-left" id="content-auctions-won" role="tabpanel" aria-labelledby="list-profile-list">
