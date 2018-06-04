@@ -16,26 +16,31 @@ url('./img/header/horloge_header.jpg') center center no-repeat scroll;">
 </header>
 <section class="products text-center">
 <div class="row no-margin">
-<div class="col-lg-3"></div>
-<div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style=" display: flex; flex-wrap: wrap;">
-<ol class="breadcrumb">
-  <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-  
-  <?php if(!isset($rubriekBreadcrumb)){ ?>
-  <li class="breadcrumb-item active"><?=$zoekfilter ?></li>
-  <?php }else{
-	  echo createRubriekBreadcrumb($rubriekBreadcrumb);
-  } ?>
+    <div class="col-lg-3"></div>
+    <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style=" display: flex; flex-wrap: wrap;">
+        <div class="container header">
+            <form action="overview.php" method="get">
+                <input style ="background:#F4F4F4;" list="producten" name="search" placeholder="Zoek naar een veiling" maxlength="50" type="search">
+                <input value="zoeken" type="submit">
+            </form>
+        </div>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.php">Home</a></li>
 
-</ol>
-</div>
+          <?php if(!isset($rubriekBreadcrumb)){ ?>
+          <li class="breadcrumb-item active"><?=$zoekfilter ?></li>
+          <?php }else{
+              echo createRubriekBreadcrumb($rubriekBreadcrumb);
+          } ?>
+        </ol>
+    </div>
 </div>
 
 <div class="container">
 <div class="wrapper">
 <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 sidebar float-left" style="">
 <h4 class="text-center"> Rubrieken </h4>
-<?= showRubriekenlist(-1);
+<?= //showRubriekenlist(-1);
 require 'layout/distancefilter.php'; 
 require 'layout/pricefilter.php'; 
 ?>
