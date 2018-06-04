@@ -16,7 +16,8 @@ if (isset($_GET['voorwerpInfo'])) {
 		<p>'.date_format(date_create($bieding['bodDag']), "d-m-Y").'</p>
 		</td>
 		<td>
-		<a type="button" href=&naam='.$bieding['gebruikersnaam'].'&bodBedrag='.$bieding['bodbedrag'].' class="btn btn btn-success btn-change-bid" data-toggle="modal" data-target="#changeBid" data-id="'.$bieding['bodbedrag'].'">Bewerk bod</a>
+		<a type="button" href=&naam='.$bieding['gebruikersnaam'].'&bodBedrag='.$bieding['bodbedrag'].' class="btn btn btn-success btn-change-bid" data-toggle="modal" data-target="#changeBid" 
+		data-voorwerpnummer="' . $bieding['voorwerpnummer'] . '" data-id='.$bieding['bodbedrag'].' data-datum="' . $bieding['bodDag'] . '" data-tijd="' . $bieding['bodTijdstip'] . '">Bewerk bod</a> 
 		</td>
 		</tr>';
 	}

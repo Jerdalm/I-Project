@@ -3911,9 +3911,6 @@ $('#changeBid').on('show.bs.modal', function (event) {
   var bodbedrag = button.data('id')
   var datum = button.data('datum')
   var tijd = button.data('tijd')
-   // Extract info from data-* attributes
-  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
   var modal = $(this)
   modal.find('.modal-title').text(vwnummer)
   modal.find('.modal-body input.voorwerpnummer').val(vwnummer)
@@ -3921,4 +3918,14 @@ $('#changeBid').on('show.bs.modal', function (event) {
   modal.find('.modal-body input.bodBedragOud').val(bodbedrag)
   modal.find('.modal-body input.datum').val(datum)
   modal.find('.modal-body input.tijd').val(tijd)
+})
+
+$('#changeColumn').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var rubrieknaam = button.data('naam')
+  var rubrieknummer = button.data('nummer')
+  var modal = $(this)
+  modal.find('.modal-body input.columnname').val(rubrieknaam)
+  modal.find('.modal-body input.rubrieknummer').val(rubrieknummer)
+
 })

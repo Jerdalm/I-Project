@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"margin",
+				"margin-bottom\tproperty"
+			],
+			[
 				"voorwe",
 				"voorwerpnummer"
 			],
@@ -138,10 +142,6 @@
 			[
 				"background",
 				"background-position\tproperty"
-			],
-			[
-				"margin",
-				"margin-top\tproperty"
 			],
 			[
 				"mar",
@@ -579,19 +579,22 @@
 	[
 		"/C/xampp/htdocs/I-Project",
 		"/C/xampp/htdocs/I-Project/admin",
-		"/C/xampp/htdocs/I-Project/admin/mechanic",
 		"/C/xampp/htdocs/I-Project/admin/vendor",
 		"/C/xampp/htdocs/I-Project/admin/vendor/bootstrap",
 		"/C/xampp/htdocs/I-Project/admin/vendor/bootstrap/js"
 	],
 	"file_history":
 	[
+		"/C/xampp/htdocs/I-Project/admin/vendor/bootstrap/js/bootstrap.js",
+		"/C/xampp/htdocs/I-Project/admin/change-article.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/custom 2.css",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/custom.css",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/block--block--3.tpl.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/block--block--1.tpl.php",
 		"/C/xampp/htdocs/I-Project/admin/mechanic/functions.php",
 		"/C/xampp/htdocs/I-Project/admin/layout/changeBidModal.php",
 		"/C/xampp/htdocs/I-Project/admin/layout/biedingen.php",
-		"/C/xampp/htdocs/I-Project/admin/vendor/bootstrap/js/bootstrap.js",
 		"/C/xampp/htdocs/I-Project/admin/change-column.php",
-		"/C/xampp/htdocs/I-Project/admin/change-article.php",
 		"/C/xampp/htdocs/I-Project/admin/layout/subrubrieken.php",
 		"/C/xampp/htdocs/I-Project/admin/layout/rubriek.php",
 		"/C/xampp/htdocs/I-Project/admin/change-user.php",
@@ -643,7 +646,6 @@
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/admin-pagina.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/db.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/html.tpl.php",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/custom.css",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/block--homepaginablok3.html.twig",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/footer_ornament.png",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/page.tpl.php",
@@ -692,7 +694,6 @@
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/views-view-unformatted--projects.html.twig",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/views-view-fields--projects.html.twig",
 		"/C/xampp/htdocs/I-Project/mail-check.php",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/custom 2.css",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/custom 3.css",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/custom_oud.css",
 		"/C/xampp/htdocs/I-Project/registratieScherm.php",
@@ -711,9 +712,7 @@
 		"/C/xampp/htdocs/I-Project/header-content-page.php",
 		"/C/Users/jdion/AppData/Local/Temp/Rar$DRa17940.37728/FLETNIX/account.php",
 		"/C/xampp/htdocs/I-Project/header-content.php",
-		"/C/xampp/htdocs/I-Project/header-page.php",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/index.php",
-		"/C/Users/jdion/Documents/Sublime projecten/fiepkinderkleding/scss/_layout.scss"
+		"/C/xampp/htdocs/I-Project/header-page.php"
 	],
 	"find":
 	{
@@ -732,6 +731,14 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"media",
+			"@media",
+			"#block-views-header-blokken-block .view-header ul l",
+			"@media",
+			".view-header-blokken .views-row .views-field-field-header-link",
+			"@media",
+			"float: none",
+			"float:none",
 			"print_r",
 			"pint_r",
 			"Bedrag",
@@ -851,15 +858,7 @@
 			"mail",
 			"exec",
 			"delete",
-			"show",
-			"gebruikersnaamForm",
-			"biedform",
-			"biedingform",
-			"bied",
-			"biedform",
-			"€",
-			"$query[0]",
-			"_GET"
+			"show"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -931,7 +930,7 @@
 		"cols":
 		[
 			0.0,
-			0.486896962478,
+			0.5,
 			1.0
 		],
 		"rows":

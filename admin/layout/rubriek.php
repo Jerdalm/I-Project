@@ -21,22 +21,23 @@ if (isset($_GET['rubriek'])) {
 			$htmlToonRubriekInfo .= '<input type="text" name="'.$key.'" value="'.$value.'" readonly><br>';
 			$htmlToonRubriekInfo .= '</div>';
 		}
-		$htmlToonRubriekInfo .= '</form>';	?>
-
-		<div class="tab-pane fade show active col-lg-9 col-sm-12 float-left" id="rubriekinfo" role="tabpanel" aria-labelledby="list-columninfo">
+		$htmlToonRubriekInfo .= '</form>'; ?>
+		<div class="tab-pane fade show active col float-left" id="rubriekinfo" role="tabpanel" aria-labelledby="list-columninfo">
 			<div class="tab-pane fade show active" id="gebruikers" role="tabpanel" aria-labelledby="list-product-details">
-				<h2>Rubriekiformatie</h2>
+				<h2>Rubriekinformatie</h2>
 				<form class="form-group change-form" method="GET" action="">
 					<?php if(isset($htmlToonRubriekInfo)){ echo $htmlToonRubriekInfo;}?>
-					<button type="button" class="btn btn btn-success" data-toggle="modal" data-target="#changeUser">Bewerk gegevens</button>
-					<?php require 'layout/changeUserModal.php';?>
+					<button type="button" class="btn btn btn-success" data-toggle="modal" data-naam="<?=$query['rubrieknaam']?>" data-nummer="<?=$query['rubrieknummer']?>"  data-target="#changeColumn">Hernoem rubriek</button>		
+					<button type="button" class="btn btn btn-secondary" data-toggle="modal" data-target="#sortColumn">Sorteer product</button>					
+					<?php require 'layout/changeColumnModal.php';
+					 	require 'layout/sortColumnModal.php';?>
 				</form>
 			</div>
 		</div>
 	<?php 
-		// if (isset($_GET['bijwerken'])) {
-		// 	UpdateInfoUser($_GET, $_GET['gebruikersnaam'],$gebruiker);
-		// }
 	}
+}
+if (isset($_GET['change-column-name']) && isset($_GET['columnname']) && isset($_GET['rubrieknummer'])) {
+	updateColumnName($_GET);
 }
 ?>

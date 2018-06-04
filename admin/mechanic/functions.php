@@ -172,6 +172,7 @@ function showLoginAdminMenu(){
 	}
 	return $htmlLogin;
 }
+
 /* Deze functie blokkeerd de meegegeven gebruiker uit de database */
 function blockUser($gebruiker){
 	$deleteParam = array(':gebruikersnaam' => $gebruiker);
@@ -240,7 +241,6 @@ function updateProductInfo($array){
 }
 
 function updateBit($array){
-	print_r($array);
 	$dateBitDate = $array['datum'];
 	$myDateTimeBegin = DateTime::createFromFormat('Y-m-d', $dateBitDate);
 	$datumBoddag = $myDateTimeBegin->format('Y-m-d');
@@ -269,12 +269,12 @@ function sortProducts(){
 		$sort = "asc";
 	}
 	$return = "SELECT V.voorwerpnummer, V.verkoper, V.plaatsnaam, V.titel, V.startprijs, R.rubriekOpLaagsteNiveau, v.loopTijd FROM VoorwerpInRubriek R right outer join Voorwerp V 								        
-		on V.voorwerpnummer = R.voorwerpnummer
-		left outer join Rubriek Ru
-		on R.rubriekOpLaagsteNiveau = Ru.rubrieknummer
-		WHERE v.voorwerpnummer = :voorwerpnummer or V.verkoper like :verkoper or V.plaatsnaam like :plaats or V.titel like :titel or v.startprijs = :prijs
-		or Ru.rubrieknaam like :categorie
-		order by v.looptijd " . $sort;
+	on V.voorwerpnummer = R.voorwerpnummer
+	left outer join Rubriek Ru
+	on R.rubriekOpLaagsteNiveau = Ru.rubrieknummer
+	WHERE v.voorwerpnummer = :voorwerpnummer or V.verkoper like :verkoper or V.plaatsnaam like :plaats or V.titel like :titel or v.startprijs = :prijs
+	or Ru.rubrieknaam like :categorie
+	order by v.looptijd " . $sort;
 	return $return;
 }
 
@@ -311,8 +311,8 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker){
 		
 	} else {
 		handlequery("UPDATE Gebruikerstelefoon
-		SET telefoonnummer = :telefoonnummer
-		WHERE gebruikersnaam = :gebruikersnaam" , $telefoonnummerPara);
+			SET telefoonnummer = :telefoonnummer
+			WHERE gebruikersnaam = :gebruikersnaam" , $telefoonnummerPara);
 	}
 	echo '<script>window.location.replace("./change-user.php?gebruikersnaam='.$gebruikersnaam.'")</script>';
 }
@@ -333,7 +333,7 @@ function sendEmailClosedAuctions(){
 		}
 		sendMail($email,$subject,$message);
 	}
-			
+
 	foreach(getUserData("koper") as $gesloten){
 		if (!empty($gesloten['koper'])){
 			$subject = 'Gefeliciteerd u heeft veiling:' . $gesloten['titel'] . ' ' . 'Gewonnen!';
@@ -348,8 +348,58 @@ function uploadColumn($get){
 	$laatste_nummer = FetchAssocSelectData("SELECT TOP 1 rubrieknummer FROM Rubriek ORDER BY rubrieknummer DESC");
 	$laatste_nummer = $laatste_nummer['rubrieknummer'] + 1; 
 	$paramUpload = array(':rubrieknaam' => $get['column-name'],
-						 ':nummer' => $laatste_nummer);
+		':nummer' => $laatste_nummer);
 	handlequery("INSERT INTO Rubriek(rubrieknummer, rubrieknaam) VALUES (:nummer, :rubrieknaam)", $paramUpload);
 	redirectJS("./change-column.php?rubriek=".$laatste_nummer);
 }
-?>
+
+function setStatusColumn($rubriek, $status){
+	$param = array(':nummer' => $rubriek,
+		':status' => $status);
+	
+	$query = handlequery("UPDATE Rubriek 
+		SET status = :status
+		WHERE rubrieknummer = :nummer", $param);
+	header("Location: ./change-column.php?rubriek=".$rubriek);
+}
+
+function toonStatus($rubriek){
+	$rubriekDetailParam = array(':nummer' => $rubriek);
+	
+	$query = handlequery("SELECT * 
+		FROM rubriek 
+		WHERE rubrieknummer = :nummer",$rubriekDetailParam);
+	$return = ' ';
+	if ($query[0]['status'] == 0) {
+		$return = '<form method="get" class="btn-activate-product"><a class="btn btn-success" href="./change-column.php?rubriek='.$rubriek.'&activate-product=true">Activeer product</a></form>';
+		if(isset($_GET['activate-product'])){
+			if($_GET['activate-product'] == 'true'){
+				setStatusColumn($rubriek, 1);
+			}
+		}
+	} else if ($query[0]['status'] == 1) {
+		$return = '<form method="get" class="btn-deactivate-product"><a class="btn btn-danger" href="./change-column.php?rubriek='.$rubriek.'&deactivate-product=true">Deactiveer product</a></form>';
+		if(isset($_GET['deactivate-product'])){
+			if($_GET['deactivate-product'] == 'true'){
+				setStatusColumn($rubriek, 0);
+			}
+		}
+	}
+
+
+
+	return $return;
+}
+
+function updateColumnName($array){
+	$param = array(':nummer' => $array['rubrieknummer'],
+		':naam' => $array['columnname']);
+	handlequery("UPDATE Rubriek SET rubrieknaam = :naam WHERE rubrieknummer = :nummer", $param);
+	header("Location: ./change-column.php?rubriek=".$array['rubrieknummer']);
+}
+
+
+function returnColumns($parent){
+	$param = array(':nummer' => $parent);
+	return handlequery("SELECT * FROM rubriek WHERE hoofdrubriek = :nummer", $param);
+}

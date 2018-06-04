@@ -17,7 +17,7 @@ if (isset($_GET['rubriek'])) {
 		</tr>';
 	}?>
 
-	<div class="tab-pane fade show col-lg-9 col-sm-12 float-left" id="subrubrieken" role="tabpanel" aria-labelledby="list-subcolumns">
+	<div class="tab-pane fade show col float-left" id="subrubrieken" role="tabpanel" aria-labelledby="list-subcolumns">
 		<div class="tab-pane fade show active" id="gebruikers" role="tabpanel" aria-labelledby="list-product-details">
 			<h2>Subrubrieken</h2>
 			<table class="table striped">
