@@ -36,7 +36,7 @@ url('./img/header/horloge_header.jpg') center center no-repeat scroll;">
 <div class="wrapper">
 <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12 sidebar float-left" style="">
 <h4 class="text-center"> Rubrieken </h4>
-<?= //showRubriekenlist(-1);
+<?= showRubriekenlist(-1);
 require 'layout/distancefilter.php'; 
 require 'layout/pricefilter.php'; 
 ?>

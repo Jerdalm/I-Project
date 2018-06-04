@@ -923,7 +923,9 @@ function checkNewPassword ($password, $passwordrepeat){
 }
 
 	function pagination($array,$itemsperpage = 10){
-		$submenus =(sizeof($array) / $itemsperpage);
+		if(is_array($array)){$submenus =(sizeof($array) / $itemsperpage);}
+		else{$submenus = $array / $itemsperpage;}
+		
 		$html = '';
 		$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
