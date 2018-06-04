@@ -18,9 +18,6 @@ $_SESSION['email-registration'] = ' ';
    </div>
 </header>
 <!-- Pagina content -->
-<section class="attention text-center">
-    <?= showButtonIndex();?>
-</section>
 <section class="products">
    <div class="container">
       <div class="row">
@@ -48,6 +45,9 @@ $_SESSION['email-registration'] = ' ';
       </div>
    </div>
    </div>
+</section>
+<section class="attention text-center">
+    <?= showButtonIndex();?>
 </section>
 <section class="userExperience">
   <div class="container">
