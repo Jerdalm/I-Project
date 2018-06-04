@@ -53,19 +53,36 @@ if(isset($_GET['product'])){
             $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
             $uploadOk = 1;
             $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-            if(checkIfImage($_POST["submit-file"]) && checkAllowedFileTypes($imageFileType) && checkSizeFile(500000) && checkExistingFile($target_file)) {
-                    // echo $bestandsnaam;
-                    // die();
-                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                    echo "Het bestand ". basename( $_FILES["fileToUpload"]["name"]). " is geüpload.";
-                    $bestandsnaam = $target_file;
-                    $uploadParameters = array(':voorwerpnummer' => $productdata['voorwerpnummer'] , ':bestandsnaam' => $bestandsnaam);
-                    handlequery("insert into Bestand values (:bestandsnaam, :voorwerpnummer)",$uploadParameters);
-                    refreshPage(); //Refresht de pagina zodat de foto's getoont worden
+            if(isset($_POST["fileToUpload"])) {
+                if (checkIfImage($_POST["submit-file"])) {
+                    if (checkAllowedFileTypes($imageFileType)) {
+                        if (checkSizeFile(500000)) {
+                            if (checkExistingFile($target_file)) {
+                                // echo $bestandsnaam;
+                                // die();
+                                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                                    $bestandmelding = "Het bestand " . basename($_FILES["fileToUpload"]["name"]) . " is geüpload.";
+                                    $bestandsnaam = $target_file;
+                                    $uploadParameters = array(':voorwerpnummer' => $productdata['voorwerpnummer'], ':bestandsnaam' => $bestandsnaam);
+                                    handlequery("insert into Bestand values (:bestandsnaam, :voorwerpnummer)", $uploadParameters);
+                                    refreshPage(); //Refresht de pagina zodat de foto's getoont worden
+                                } else {
+                                    $bestandmelding = "Sorry, Er is iets fout gegaan tijdens het uploaden van uw bestand.";
+                                }
+                            } else {
+                                $bestandmelding = "Sorry, Het bestand bestaat al.";
+                            }
+                        } else {
+                            $bestandmelding = "Sorry, Uw bestand is te groot.";
+                        }
+                    } else {
+                        $bestandmelding = "Sorry, alleen JPG, JPEG & PNG files zijn toegestaan.";
+                    }
                 } else {
-                    echo "Sorry, Er is iets fout gegaan tijdens het uploaden van uw bestand.";
+                    $besetandmelding = "File is not an image.";
                 }
+            } else {
+                $bestandmelding = "u heeft geen foto ingevoerd";
             }
         } else if(isset($_POST['bidAmount-submit'])){
             $paramBod = array(':voorwerpnummer' => $_GET['product'], ':bedrag' => (float)$_POST['bidAmount'], ':gebruiker' => $_SESSION['gebruikersnaam']);
@@ -155,7 +172,12 @@ if(isset($_GET['product'])){
                                     </form>';
                                 }
                             }
-                        } ?>
+                        }
+
+                        if (isset($bestandmelding)){
+                            echo '<p class="error error-warning">' . $bestandmelding . '</p>';
+                        }?>
+
                         <dl class="dl-horizontal">
                             <dt>Beschrijving:</dt>
                             <br>
