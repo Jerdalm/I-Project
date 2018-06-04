@@ -18,7 +18,7 @@
 					  Alle veilingen
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-					<?php showMenuRubrieken(-1); ?>
+					<?= showMenuRubrieken(-1); ?>
 					</div>
 				  </li>
 			 <?= showLoginMenu(); ?>
