@@ -654,6 +654,10 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 	}}
 	else{$html = '<div class="col-lg-12 text-center"><h4> Geen producten gevonden </h4></div>';}
 	/* Returns product cards html */
+	
+	if(!$carrousel){
+	$html .= '<div class="col-lg-12 text-center">'.pagination($producten,9).'</div>';
+	}
 	return $html;
 }
 
@@ -782,6 +786,7 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 	$birthdate = $get['geboortedag'];
 	$myDateTime = DateTime::createFromFormat('Y-m-d', $birthdate);
 	$geboortedag = $myDateTime->format('Y-m-d');
+	$aantalTelefoonNummers = count($telefoonnummers);
 
 	$infoParameters = array(':gebruikersnaam' => $gebruikersnaam ,
 		':voornaam' => $get['voornaam'],
@@ -806,24 +811,80 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 		WHERE gebruikersnaam = :gebruikersnaam",
 		$infoParameters);
 
-	if( $nummer['volgnr'] == null ){
 
+
+	if( $aantalTelefoonNummers == 0){
+		if(isset($get['telefoonnummer0'])){
 		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer0'] , ':gebruikersnaam' => $gebruikersnaam);
 		handlequery("INSERT INTO Gebruikerstelefoon (telefoonnummer,gebruikersnaam) VALUES (:telefoonnummer,:gebruikersnaam )",$telefoonnummerPara);
+		}
+		if(isset($get['telefoonnummer1'])){
+		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer1'] , ':gebruikersnaam' => $gebruikersnaam);
+		handlequery("INSERT INTO Gebruikerstelefoon (telefoonnummer,gebruikersnaam) VALUES (:telefoonnummer,:gebruikersnaam )",$telefoonnummerPara);
+		}
+		if(isset($get['telefoonnummer2'])){
+		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer2'] , ':gebruikersnaam' => $gebruikersnaam);
+		handlequery("INSERT INTO Gebruikerstelefoon (telefoonnummer,gebruikersnaam) VALUES (:telefoonnummer,:gebruikersnaam )",$telefoonnummerPara);
+		}
 
-	}  else {
+	}  else if($aantalTelefoonNummers == 1){
+
+		if(isset($get['telefoonnummer0'])){
+		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer0'] , ':gebruikersnaam' => $gebruikersnaam , ':volgnr' => $telefoonnummers[0]['volgnr']);
 		handlequery("UPDATE Gebruikerstelefoon
 		SET telefoonnummer = :telefoonnummer
-		WHERE gebruikersnaam = :gebruikersnaam" , $telefoonnummerPara);
-	}
+		WHERE volgnr = :volgnr", $telefoonnummerPara);
+		}
+		if(isset($get['telefoonnummer1'])){
+		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer1'] , ':gebruikersnaam' => $gebruikersnaam);
+		handlequery("INSERT INTO Gebruikerstelefoon (telefoonnummer,gebruikersnaam) VALUES (:telefoonnummer,:gebruikersnaam )",$telefoonnummerPara);
+		}
+		if(isset($get['telefoonnummer2'])){
+		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer2'] , ':gebruikersnaam' => $gebruikersnaam);
+		handlequery("INSERT INTO Gebruikerstelefoon (telefoonnummer,gebruikersnaam) VALUES (:telefoonnummer,:gebruikersnaam )",$telefoonnummerPara);
+		}
 
-	if($gebruiker['telefoonnummer'] == null){
+	}  else if ($aantalTelefoonNummers == 2){
 
-	} else {
+		if(isset($get['telefoonnummer0'])){
+		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer0'] , ':gebruikersnaam' => $gebruikersnaam , ':volgnr' => $telefoonnummers[0]['volgnr']);
 		handlequery("UPDATE Gebruikerstelefoon
 		SET telefoonnummer = :telefoonnummer
-		WHERE gebruikersnaam = :gebruikersnaam" , $telefoonnummerPara);
+		WHERE volgnr = :volgnr", $telefoonnummerPara);
+		}
+		if(isset($get['telefoonnummer1'])){
+		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer1'] , ':gebruikersnaam' => $gebruikersnaam , ':volgnr' => $telefoonnummers[1]['volgnr']);
+		handlequery("UPDATE Gebruikerstelefoon
+		SET telefoonnummer = :telefoonnummer
+		WHERE volgnr = :volgnr", $telefoonnummerPara);
 	}
+		if(isset($get['telefoonnummer2'])){
+		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer2'] , ':gebruikersnaam' => $gebruikersnaam);
+		handlequery("INSERT INTO Gebruikerstelefoon (telefoonnummer,gebruikersnaam) VALUES (:telefoonnummer,:gebruikersnaam )",$telefoonnummerPara);
+		}
+	} else if ($aantalTelefoonNummers == 3){
+
+		if(isset($get['telefoonnummer0'])){
+		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer0'] , ':gebruikersnaam' => $gebruikersnaam , ':volgnr' => $telefoonnummers[0]['volgnr']);
+		handlequery("UPDATE Gebruikerstelefoon
+		SET telefoonnummer = :telefoonnummer
+		WHERE volgnr = :volgnr", $telefoonnummerPara);
+		}
+		if(isset($get['telefoonnummer1'])){
+		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer1'] , ':gebruikersnaam' => $gebruikersnaam , ':volgnr' => $telefoonnummers[1]['volgnr']);
+		handlequery("UPDATE Gebruikerstelefoon
+		SET telefoonnummer = :telefoonnummer
+		WHERE  volgnr = :volgnr", $telefoonnummerPara);
+		}
+		if(isset($get['telefoonnummer2'])){
+		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer2'] , ':gebruikersnaam' => $gebruikersnaam , ':volgnr' => $telefoonnummers[2]['volgnr']);
+		handlequery("UPDATE Gebruikerstelefoon
+		SET telefoonnummer = :telefoonnummer
+		WHERE volgnr = :volgnr", $telefoonnummerPara);
+	}
+}	
+
+
 	echo '<script>window.location.replace("./account.php")</script>';
 }
 
@@ -862,7 +923,10 @@ function checkNewPassword ($password, $passwordrepeat){
 }
 
 	function pagination($array,$itemsperpage = 10){
-		$submenus =(sizeof($array) / $itemsperpage);
+		if(is_array($array)){$submenus =(sizeof($array) / $itemsperpage);}
+		else{$submenus = $array / $itemsperpage;}
+		
+		$html = '';
 		$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
 		if(isset($_GET['pagination'] ) && isset($_GET['perpage'] )){
@@ -879,9 +943,10 @@ function checkNewPassword ($password, $passwordrepeat){
 				$startvalue = $teller * $itemsperpage;
 				$visueel = $teller + 1;
 
-				echo "<a class=\"btn btn3 \" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";
+				$html .= "<a class=\"btn btn3 \" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";
 			}
 		}
+	return $html;
 	}
 
 	function logUserHistory($cookieName){

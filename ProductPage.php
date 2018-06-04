@@ -1,103 +1,129 @@
 <?php require_once ('header.php');
 
 if(isset($_GET['product'])){
-    if (isset($_COOKIE[$_SESSION['gebruikersnaam']])) {
-        if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam'])== false) {
-            AlterCookie($_SESSION['gebruikersnaam'], $_GET['product'], true);
-        } else if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam'])) {
-            AlterCookie($_SESSION['gebruikersnaam'], $_GET['product']);
-        }
-    } else {
-        MakeCookie($_SESSION['gebruikersnaam']);
+  if (isset($_COOKIE[$_SESSION['gebruikersnaam']])) {
+    if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam'])== false) {
+      AlterCookie($_SESSION['gebruikersnaam'], $_GET['product'], true);
+    } else if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam'])) {
+      AlterCookie($_SESSION['gebruikersnaam'], $_GET['product']);
     }
+  } else {
+    MakeCookie($_SESSION['gebruikersnaam']);
+  }
 
-    $htmluploadFoto = ' ';
-    $paramvoorwerpnummer = array(':voorwerpnummer' => $_GET['product']);
 
-    $paramCheckPicture = array(':product' => $_GET['product']);
-    $checkPictureAmount = handlequery("SELECT * FROM bestand WHERE voorwerpnummer = :product", $paramCheckPicture);
+  $htmluploadFoto = ' ';
+  $paramvoorwerpnummer = array(':voorwerpnummer' => $_GET['product']);
 
-    $boddata = FetchAssocSelectData(
-            "SELECT MAX(bodbedrag) as hoogstebod
-            from bod
-            where voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
+  $paramCheckPicture = array(':product' => $_GET['product']);
+  $checkPictureAmount = handlequery("SELECT * FROM bestand WHERE voorwerpnummer = :product", $paramCheckPicture);
+
+  $highestBid = handlequery("SELECT TOP(1) bodbedrag FROM Bod WHERE voorwerpnummer = :voorwerpnummer ORDER BY bodbedrag DESC", $paramvoorwerpnummer);
+  if (!empty($highestBid)) {
+    if($highestBid[0]['bodbedrag'] < 1) {
+      $minimunraise = 0;
+    } elseif ($highestBid[0]['bodbedrag'] >= 1 && $highestBid[0]['bodbedrag'] < 50) {
+      $minimunraise = 0.50;
+    } elseif ($highestBid[0]['bodbedrag'] >= 50 && $highestBid[0]['bodbedrag'] < 500) {
+      $minimunraise = 1;
+    } elseif ($highestBid[0]['bodbedrag'] >= 500 && $highestBid[0]['bodbedrag'] < 1000) {
+      $minimunraise = 5;
+    } elseif ($highestBid[0]['bodbedrag'] >= 1000 && $highestBid[0]['bodbedrag'] < 5000) {
+      $minimunraise = 10;
+    } else {
+      $minimunraise = 50;
+    }
+    $minimumbid = ($minimunraise + $highestBid[0]['bodbedrag']);
+  }
+
+  $boddata = FetchAssocSelectData(
+    "SELECT MAX(bodbedrag) as hoogstebod
+    from bod
+    where voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
 
     $productdata = FetchAssocSelectData(
-        "SELECT V.verkoper, G.gebruikersnaam, V.voorwerpnummer, V.verzendkosten, V.verzendinstructies, G.voornaam, G.achternaam, G.plaatsnaam, G.soortGebruiker,
-        V.titel, V.startprijs, V.beschrijving, G.mailadres , GT.telefoonnummer, V.looptijdBeginTijdstip, V.looptijdBeginDag, V.veilingGesloten, V.koper
-        FROM Voorwerp V
-        JOIN gebruiker G on V.verkoper = G.gebruikersnaam
-        LEFT JOIN gebruikerstelefoon GT on G.gebruikersnaam = GT.gebruikersnaam
-        WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
+      "SELECT V.verkoper, G.gebruikersnaam, V.voorwerpnummer, V.verzendkosten, V.verzendinstructies, G.voornaam, G.achternaam, G.plaatsnaam, G.soortGebruiker,
+      V.titel, V.startprijs, V.beschrijving, G.mailadres , GT.telefoonnummer, V.looptijdBeginTijdstip, V.looptijdBeginDag, V.veilingGesloten, V.koper
+      FROM Voorwerp V
+      JOIN gebruiker G on V.verkoper = G.gebruikersnaam
+      LEFT JOIN gebruikerstelefoon GT on G.gebruikersnaam = GT.gebruikersnaam
+      WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
 
-    $paramkoperdata = array(':gebruikersnaam' => $productdata['koper']);
-    $koperdata = FetchAssocSelectData(
+      $paramkoperdata = array(':gebruikersnaam' => $productdata['koper']);
+      $koperdata = FetchAssocSelectData(
         "SELECT voornaam, achternaam, plaatsnaam, mailadres
-            FROM gebruiker
-            where gebruikersnaam = :gebruikersnaam", $paramkoperdata);
+        FROM gebruiker
+        WHERE gebruikersnaam = :gebruikersnaam", $paramkoperdata);
 
-        //voorwerpnummer moet meegegeven worden vanuit de site
+        $images = handlequery("SELECT filenaam FROM Bestand WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
+        $aangebodenDag = date("d-m-Y", strtotime($productdata['looptijdBeginDag']));
 
-    $images = handlequery("SELECT filenaam FROM Bestand WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
-    $aangebodenDag = date("d-m-Y", strtotime($productdata['looptijdBeginDag']));
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        if(isset($_POST['submit-file'])){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+          if(isset($_POST['submit-file'])){
             $target_dir = "./uploads/user/" . $productdata['verkoper'] . '/' . $productdata['voorwerpnummer']. '/';
             if (!file_exists($target_dir)){
-                mkdir('uploads/user/'. $productdata['verkoper'] . '/' . $productdata['voorwerpnummer'] , 02202, true);
+              mkdir('uploads/user/'. $productdata['verkoper'] . '/' . $productdata['voorwerpnummer'] , 02202, true);
             }
             $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
             $uploadOk = 1;
             $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
             if(checkIfImage($_POST["submit-file"]) && checkAllowedFileTypes($imageFileType) && checkSizeFile(500000) && checkExistingFile($target_file)) {
-                    // echo $bestandsnaam;
-                    // die();
-                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                    echo "Het bestand ". basename( $_FILES["fileToUpload"]["name"]). " is geüpload.";
-                    $bestandsnaam = $target_file;
-                    $uploadParameters = array(':voorwerpnummer' => $productdata['voorwerpnummer'] , ':bestandsnaam' => $bestandsnaam);
-                    handlequery("insert into Bestand values (:bestandsnaam, :voorwerpnummer)",$uploadParameters);
-                    refreshPage(); //Refresht de pagina zodat de foto's getoont worden
-                } else {
-                    echo "Sorry, Er is iets fout gegaan tijdens het uploaden van uw bestand.";
-                }
+              if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                echo "Het bestand ". basename( $_FILES["fileToUpload"]["name"]). " is geüpload.";
+                $bestandsnaam = $target_file;
+                $uploadParameters = array(':voorwerpnummer' => $productdata['voorwerpnummer'] , ':bestandsnaam' => $bestandsnaam);
+                handlequery("insert into Bestand values (:bestandsnaam, :voorwerpnummer)",$uploadParameters);
+                redirectJS('productpage.php?product=' . $productdata['voorwerpnummer']); //Refresht de pagina zodat de foto's getoont worden
+              } else {
+                echo "Sorry, Er is iets fout gegaan tijdens het uploaden van uw bestand.";
+              }
             }
-        } else if(isset($_POST['bidAmount-submit'])){
+          } else if(isset($_POST['bidAmount-submit'])){
             $paramBod = array(':voorwerpnummer' => $_GET['product'], ':bedrag' => (float)$_POST['bidAmount'], ':gebruiker' => $_SESSION['gebruikersnaam']);
-            $plaatsBod =  executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod); // functie in databse om het bod uit te brengen en te checken of het klopt
-
-            if ($_SESSION['gebruikersnaam'] != $productdata['gebruikersnaam']) {
-                if($plaatsBod == "Opdracht kon niet worden volbracht."){
-                    echo 'Bod kan niet worden geplaats';
+            //$plaatsBod =  executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod); // functie in databse om het bod uit te brengen en te checken of het klopt
+            if ($_SESSION['gebruikersnaam'] != $productdata['verkoper']) {
+              if (!empty($highestBid)) {
+                if ($_POST['bidAmount'] >= $minimumbid) {
+                  executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod);
+                  redirectJS('productpage.php?product=' . $productdata['voorwerpnummer']);
                 } else {
-                    executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod);
+                  $message_bids = "Uw bod is te laag, probeer hoger te bieden";
                 }
+              } elseif ($_POST['bidAmount'] >= $productdata['startprijs']) {
+                executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod);
+                redirectJS('productpage.php?product=' . $productdata['voorwerpnummer']);
+              } else {
+                $message_bids = "Uw bod is te laag, probeer hoger te bieden";
+              }
             } else {
-                $message_bids = "U kunt niet bieden op uw eigen veilingen";
+              $message_bids = "U kunt niet bieden op uw eigen veilingen";
             }
+          }
         }
-    }
- if($productdata['veilingGesloten'] == 0) {
-     if (isset($_SESSION['gebruikersnaam'])) {
-         $htmluploadFoto = '<form method="post" action="">
-        <div class="form-row align-items-center">
-        <div class="col-sm-12">
-        <input type="number" step="0.01" class="form-control" name="bidAmount" id="colFormLabelLg" placeholder="Geef uw gewenste bedrag in">
-        <input type="submit" name="bidAmount-submit" Value="Bied!" class="biedenKnop cta-orange btn">
-        ';
-         if (isset($message_bids)) {
-             $htmluploadFoto .= '<p class="error error-warning">' . $message_bids . '</p>';
-         };
-         $htmluploadFoto .= '</div>
-        </div>
-        </form>';
-     } else {
-         $htmluploadFoto = '<a href="./user.php">Log in om te kunnen bieden!</a>';
-     }
-}
-?>
+
+        if($productdata['veilingGesloten'] == 0) {
+          if (isset($_SESSION['gebruikersnaam'])) {
+            if (!isset($minimumbid)) {
+              $minimumbid = $productdata['startprijs'];
+            }
+            $htmluploadFoto = '<form method="post" action="">
+            <div class="form-row align-items-center">
+            <div class="col-sm-12">
+            <input type="number" step="0.01" class="form-control" name="bidAmount" id="colFormLabelLg" placeholder="Minimum bieding: €'. number_format($minimumbid, 2, ",", ".") .'">
+            <input type="submit" name="bidAmount-submit" Value="Bied!" class="biedenKnop cta-orange btn">
+            ';
+            if (isset($message_bids)) {
+              $htmluploadFoto .= '<p class="error error-warning">' . $message_bids . '</p>';
+            };
+            $htmluploadFoto .= '</div>
+            </div>
+            </form>';
+          } else {
+            $htmluploadFoto = '<a href="./user.php">Log in om te kunnen bieden!</a>';
+          }
+        }
+        ?>
 
 <main>
     <section class="productpage">
@@ -168,15 +194,15 @@ if(isset($_GET['product'])){
                         <h2 class="alert-heading"> <strong> <?= $productdata['titel']?></strong></h2>
 
                         <?php if($productdata['startprijs'] != 0) { ?>
-                            <p>Startprijs: € <?=number_format($productdata['startprijs'], 2, ",", ".")?></p>
+                            <p>Startprijs: €<?=number_format($productdata['startprijs'], 2, ",", ".")?></p>
                         <?php } else { ?>
                             <p>Startprijs: € 0,00</p>
                         <?php } if(isset($productdata['verzendkosten'])){ echo '<p>Verzendkosten: €' .number_format($productdata['verzendkosten'], 2, ",", ".");} ?></p>
                         <p>Productnummer: <?=$productdata['voorwerpnummer']?></p>
                         <?php if($productdata['veilingGesloten'] == 1) {
-                            echo "veiling status: gesloten";
+                            echo "Veiling status: gesloten";
                         } else {
-                            echo "veiling status: open";
+                            echo "Veiling status: open";
                         }?>
                         <hr>
 					</div>
@@ -218,7 +244,7 @@ if(isset($_GET['product'])){
                             <div class="row">
                                 <div class="col-lg-9">
                                     <p> Aangeboden door:</p>
-                                    <p><b><?= $productdata['voornaam']. " " .$productdata['achternaam'] ?></b> te <?=$productdata['plaatsnaam']?></p><br>
+                                    <p><b><?= $productdata['verkoper'] ?></b> te <?=$productdata['plaatsnaam']?></p><br>
                                     <p><a href=<?='"mailto:' .$productdata['mailadres']. '?SUBJECT=' . $productdata['titel'] . '"'?>> <i class="fas fa-envelope"></i> &nbsp;&nbsp;&nbsp;<?=$productdata['mailadres']?></a></p>
                                 </div>
                             </div>

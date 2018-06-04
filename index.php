@@ -46,6 +46,10 @@ $_SESSION['email-registration'] = ' ';
    </div>
    </div>
 </section>
+<section class="attention text-center">
+    <a style="margin-right:50px;" href="overview.php" class="cta-orange btn">Bekijk alle veilingen</a>
+    <?= showButtonIndex();?>
+</section>
 <section class="userExperience">
   <div class="container">
     <div class="row text-center">
@@ -61,9 +65,6 @@ $_SESSION['email-registration'] = ' ';
       </div>
     </div>
   </div>
-</section>
-<section class="attention text-center">
-  <?= showButtonIndex();?>
 </section>
 <script>
 setInterval(function()
