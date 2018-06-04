@@ -15,5 +15,5 @@
       </div>
    </div>
 </header>
-
+<?php require 'footer.php'; ?>
 

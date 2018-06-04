@@ -153,7 +153,7 @@ nav {
 }
 
 #errorpage .container{
-	top:50%;	
+	top:40%;	
 }
 
 #errorpage .container h1{
@@ -161,6 +161,7 @@ nav {
 }
 #errorpage .container p{
 	margin:20px;
+	line-height: 20px;
 }
 
 
@@ -353,6 +354,14 @@ position:static;
 width: 50%;
 float:left;
 padding:20px;
+}
+
+section.products .card-title{
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+	
 }
 
 /* slider */
@@ -566,6 +575,15 @@ text-decoration:none;
     margin-top:20px;
 }
 
+.input_fields_wrap{
+margin-bottom:10px;	
+}
+
+
+.input_fields_wrap .input-group{
+	margin:10px 0px;
+}
+
 /*Product details */
 section.user-details{
 	background: white;
@@ -599,10 +617,3 @@ border-color:#d8360e;
     box-shadow: 0 0 0 0.2rem rgba(242, 85, 44,0.5)
 }
 
-.card-title{
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-	
-}

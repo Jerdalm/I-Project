@@ -486,13 +486,18 @@ function insertUpgradeinfoInDB(){
 	exit();
 }
 
-/* Deze functie returnt de verschillende rubrieken voor in het submenu */
+/* Deze functie returnt de verschillende rubrieken voor in het submenu
+||Mocht er iets fout gaan,onderstaande regel terugzetten 
+$rubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek ".$querypart."");
+||
+*/
 function showMenuRubrieken($toplevel){
+
 	if($toplevel == null){ $querypart = " is NULL ";}
 	else{ $querypart = " = $toplevel";}
 
 	$html = '';
-	$rubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek ".$querypart."");
+	$rubrieken = handlequery("SELECT * from actieveRubrieken where hoofdrubriek ".$querypart."");
 
 	foreach($rubrieken as $rubriek){
 		$html .= '<a class="dropdown-item" href="overview.php?rub='.$rubriek['rubrieknummer'].'">'.$rubriek['rubrieknaam'].'</a>';
@@ -554,11 +559,13 @@ function showRubriekenlist($toplevel){
 
 		if ($rubriek === end($rubrieken)){
 			if($rubriek['Lvl'] > 1){
+				$lvldif = $rubriek['Lvl'] - 1;
+				for($teller = 0; $teller <= $lvldif; $teller++){
 				$html .= '</ul>';
+				}
 			}
 		}
 	}
-	$html .= '</ul>';
 	return $html;
 }
 
@@ -572,7 +579,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 	else{
 
 		if($query == false){
-			$query = "SELECT * from currentAuction";
+			$query = "SELECT * from dbo.currentAuction ";
 		}
 
 		if($parameters){
@@ -585,7 +592,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 
 		}
 	}
-
+	
 	if($producten){
 	$beforeInput = '';
 	$afterInput = '';
@@ -634,14 +641,12 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 		if ($showAccount == false) {
             $html .= '<h5 class="product-data" id = "' . $product['voorwerpnummer'] . '" ><span class="time" > ' . $timediff . '</span >|<span class="price" >&euro;' . $product['bodbedrag'] . ' </span ></h5 >';
 		}
-    $vwtest = 26;
-    $hoogsteBieder = handlequery('SELECT TOP 1 gebruikersnaam FROM Bod WHERE voorwerpnummer = '.$product['voorwerpnummer'].' ORDER BY bodbedrag DESC');
+
 		$html.='
 		<a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a>
 		</div>
 		<div class="card-footer text-center text-muted">
-    Huidige hoogste bod: €'.number_format($product['bodbedrag'], 2, ",", ".").'<br>
-    Geboden door:<br>'.$hoogsteBieder[0]['gebruikersnaam'].'
+		locatie: '.$product['plaats'].'
 		</div>
 		</div>
 		';
@@ -651,6 +656,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 	/* Returns product cards html */
 	return $html;
 }
+
 
 /* Deze functie berekend het verschil tussen 2 data */
 function calculateTimeDiffrence($timestamp1, $timestamp2){

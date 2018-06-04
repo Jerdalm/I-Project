@@ -15,9 +15,11 @@
 	if(is_numeric($rubriek)){
 	$rubriekdata = getSubRubriek($rubriek);
 	
-	$parameters = false;
 	
-	$query = "SELECT TOP 5* from currentAuction 
+	if(!$rubriekdata){$rubriekdata = '('.$rubriek.')';}
+	$parameters = false;
+
+	$query = "SELECT TOP 5 * from currentAuction 
 	INNER JOIN VoorwerpinRubriek
 	ON VoorwerpinRubriek.voorwerpnummer = currentAuction.voorwerpnummer
 	Where rubriekOpLaagsteNiveau IN ".$rubriekdata. " AND ".$pricecheck."
