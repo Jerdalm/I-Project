@@ -1,14 +1,17 @@
 <?php require_once ('header.php');
 
 if(isset($_GET['product'])){
-    if (isset($_COOKIE[$_SESSION['gebruikersnaam']])) {
-        if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam'])== false) {
-            AlterCookie($_SESSION['gebruikersnaam'], $_GET['product'], true);
-        } else if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam'])) {
-            AlterCookie($_SESSION['gebruikersnaam'], $_GET['product']);
+
+    if (isset($_SESSION['gebruikersnaam'])) {
+        if (isset($_COOKIE[$_SESSION['gebruikersnaam']])) {
+            if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam'])== false) {
+                AlterCookie($_SESSION['gebruikersnaam'], $_GET['product'], true);
+            } else if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam'])) {
+                AlterCookie($_SESSION['gebruikersnaam'], $_GET['product']);
+            }
+        } else {
+            MakeCookie($_SESSION['gebruikersnaam']);
         }
-    } else {
-        MakeCookie($_SESSION['gebruikersnaam']);
     }
 
     $htmluploadFoto = ' ';
@@ -237,7 +240,14 @@ if(isset($_GET['product'])){
                 <div class="col-lg-12 product-container">
                     <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
                         <div class="carousel-inner row w-100 mx-auto">
-                            <?= showProducts(true, Setquery($_SESSION['gebruikersnaam'], $_GET['product']) ); ?>
+
+                            <?php
+                            if(isset($_SESSION['gebruikersnaam'])) {
+                            showProducts(true, Setquery($_SESSION['gebruikersnaam'], $_GET['product']) );
+                            } else {
+                                showProducts(true, "SELECT TOP 6 * from currentAuction");
+                            }
+                            ?>
                         </div>
                         <div class="clearfix">
                             <div class="sliderbuttons">
