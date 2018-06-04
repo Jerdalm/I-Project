@@ -654,6 +654,10 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 	}}
 	else{$html = '<div class="col-lg-12 text-center"><h4> Geen producten gevonden </h4></div>';}
 	/* Returns product cards html */
+	
+	if(!$carrousel){
+	$html .= '<div class="col-lg-12 text-center">'.pagination($producten,9).'</div>';
+	}
 	return $html;
 }
 
@@ -863,6 +867,7 @@ function checkNewPassword ($password, $passwordrepeat){
 
 	function pagination($array,$itemsperpage = 10){
 		$submenus =(sizeof($array) / $itemsperpage);
+		$html = '';
 		$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
 		if(isset($_GET['pagination'] ) && isset($_GET['perpage'] )){
@@ -879,9 +884,10 @@ function checkNewPassword ($password, $passwordrepeat){
 				$startvalue = $teller * $itemsperpage;
 				$visueel = $teller + 1;
 
-				echo "<a class=\"btn btn3 \" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";
+				$html .= "<a class=\"btn btn3 \" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";
 			}
 		}
+	return $html;
 	}
 
 	function logUserHistory($cookieName){
