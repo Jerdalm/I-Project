@@ -19,10 +19,6 @@ url('./img/header/horloge_header.jpg') center center no-repeat scroll;">
     <div class="col-lg-3"></div>
     <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style=" display: flex; flex-wrap: wrap;">
         <div class="container header">
-            <form action="overview.php" method="get">
-                <input style ="background:#F4F4F4;" list="producten" name="search" placeholder="Zoek naar een veiling" maxlength="50" type="search">
-                <input value="zoeken" type="submit">
-            </form>
         </div>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="index.php">Home</a></li>
