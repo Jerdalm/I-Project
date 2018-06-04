@@ -18,7 +18,10 @@ $message = 'U heeft aangegeven dat u het wachtwoord wilt wijzigen. Uw nieuwe cod
 
 $nieuwePassword = ''; 
 $messageCode = $message . $nieuwePassword;
-
+echo '<pre>';
+ print_r($telefoonnummers);
+ echo '</pre>';
+ echo $aantalTelefoonNummers;
 $correct = false;
 // checkt de input van de nieuwe wachtwoord en checkt ook of de nieuwe wachtwoord voldoet aan de eisen. Ook checkt dit gedeelte of het huidige wachtwoord juist is.
 if(isset($_POST['submit-new-password'])){
@@ -52,8 +55,7 @@ if(isset($_POST['submit-new-password'])){
                 <tbody>
                     <?php foreach($gebruiker as $key => $info ){
                    if($key == 'telefoonnummer'){
-                     echo "<tr>" . "<th scope='col'>" . $key . "</th" . "</tr>";
-                     echo "<td>" . $info . "</td>";
+                    
                     continue;
                    }
                         echo "<tr>" . "<th scope='col'>" . $key . "</th" . "</tr>";
@@ -68,6 +70,7 @@ if(isset($_POST['submit-new-password'])){
                           }
                           } else {
                         echo "<tr>" . "<th scope='col'>" . 'telefoonnummer' . "</th" . "</tr>";
+                        echo "<td>"  . "</td>";
                      } ?>
                 </tbody>
             </table>
@@ -90,12 +93,12 @@ if(isset($_POST['submit-new-password'])){
 		<?php require 'changeinfoModal.php'; ?>
 		</div>
         <?php 		
-		
+		  
 
 		
        if (isset($_GET['bijwerken'])) {
-            print_r($telefoonnummers); 
-           UpdateInfoUser($_GET, $gebruikersnaam,$gebruiker,$telefoonnummers,$telefoonnummers);
+
+           UpdateInfoUser($_GET, $gebruikersnaam,$gebruiker,$telefoonnummers);
        }?> 
 	   </div>
 	   
