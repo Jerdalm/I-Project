@@ -44,8 +44,15 @@ function Setquery($username, $vwNummer)
 {
     //echo "testQuery";
     $data = unserialize($_COOKIE[$username]);
-    $datalist = $data[0] . ' or voorwerpnummer = ' . $data[1] . ' or voorwerpnummer = ' . $data[2]. ' or voorwerpnummer = ' . $data[3] . ' or voorwerpnummer = ' . $data[4] . ' or voorwerpnummer = ' . $data[5];
-    //echo $datalist;
+    if(count($data) > 0) {
+        $datalist = "$data[0]";
+    }
+
+    array_slice($data, 1);
+
+    foreach($data as $value) {
+        $datalist.= " or voorwerpnummer = " . $value;
+    }
 
     $Arrayquery = "SELECT top 6 C.*, Vo.plaatsnaam as plaats, V.rubriekOpLaagsteNiveau
                   FROM currentAuction C
@@ -487,7 +494,7 @@ function insertUpgradeinfoInDB(){
 }
 
 /* Deze functie returnt de verschillende rubrieken voor in het submenu
-||Mocht er iets fout gaan,onderstaande regel terugzetten 
+||Mocht er iets fout gaan,onderstaande regel terugzetten
 $rubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek ".$querypart."");
 ||
 */
@@ -592,7 +599,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 
 		}
 	}
-	
+
 	if($producten){
 	$beforeInput = '';
 	$afterInput = '';
@@ -632,7 +639,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 
         $html .= '
 		<div class="product card">
-		<img class="card-img-top img-fluid" src="img/products/' . $product['bestand'] . '" alt="">
+		<img class="card-img-top img-fluid" src="' . $product['bestand'] . '" alt="">
 		<div class="card-body">
 		<h4 class="card-title">
 		' . $product['titel'] . '
@@ -654,7 +661,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 	}}
 	else{$html = '<div class="col-lg-12 text-center"><h4> Geen producten gevonden </h4></div>';}
 	/* Returns product cards html */
-	
+
 	if(!$carrousel){
 	$html .= '<div class="col-lg-12 text-center">'.pagination($producten,9).'</div>';
 	}
@@ -793,7 +800,7 @@ function updateStatementUser($telefoonnummer,$gebruikersnaam,$volgnr){
 		$telefoonnummerPara = array(':telefoonnummer' => $telefoonnummer , ':gebruikersnaam' => $gebruikersnaam , ':volgnr' => $volgnr);
 		handlequery("UPDATE Gebruikerstelefoon
 		SET telefoonnummer = :telefoonnummer
-		WHERE volgnr = :volgnr", $telefoonnummerPara);
+		WHERE gebruikersnaam = :gebruikersnaam AND volgnr = :volgnr", $telefoonnummerPara);
 
 }
 
@@ -874,7 +881,7 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 		if(isset($get['telefoonnummer2'])){
 		updateStatementUser($get['telefoonnummer2'],$gebruikersnaam,$telefoonnummers[2]['volgnr']);
 	}
-}	
+}
 
 
 	echo '<script>window.location.replace("./account.php")</script>';
@@ -884,12 +891,12 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 function showButtonIndex(){
 	if(isset($_SESSION['gebruikersnaam'])){
 		if($_SESSION['soortGebruiker'] != 2) {
-		echo '<a href="upgrade-user.php" class="cta-orange">Wordt verkoper!</a>';
+		echo '<a href="upgrade-user.php" class="cta-orange btn">Wordt verkoper!</a>';
 	} else {
-		echo '<a href="upload-article.php" class="cta-orange">Verkoop voorwerp!</a>';
+		echo '<a href="upload-article.php" class="cta-orange btn">Verkoop voorwerp!</a>';
 	}
 	} else {
-		echo '<a href="registreren.php" class="cta-orange">Registreer je nu om mee te bieden!</a>';
+		echo '<a href="registreren.php" class="cta-orange btn">Registreer je nu om mee te bieden!</a>';
 	}
 }
 
@@ -917,7 +924,7 @@ function checkNewPassword ($password, $passwordrepeat){
 	function pagination($array,$itemsperpage = 10, $currentpag = 0){
 		if(is_array($array)){$submenus =(sizeof($array) / $itemsperpage);}
 		else{$submenus = $array / $itemsperpage;}
-		
+
 		$html = '';
 		$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
@@ -935,7 +942,7 @@ function checkNewPassword ($password, $passwordrepeat){
 				$startvalue = $teller * $itemsperpage;
 				$visueel = $teller + 1;
 				if($startvalue == $currentpag){
-				$html .= "<a class=\"btn btn3\" style=\"font-weight:bold\" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";	
+				$html .= "<a class=\"btn btn3\" style=\"font-weight:bold\" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";
 				}else{
 				$html .= "<a class=\"btn btn3 \" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";
 				}
