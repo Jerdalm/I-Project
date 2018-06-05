@@ -18,10 +18,6 @@ $message = 'U heeft aangegeven dat u het wachtwoord wilt wijzigen. Uw nieuwe cod
 
 $nieuwePassword = ''; 
 $messageCode = $message . $nieuwePassword;
-echo '<pre>';
- print_r($telefoonnummers);
- echo '</pre>';
- echo $aantalTelefoonNummers;
 $correct = false;
 // checkt de input van de nieuwe wachtwoord en checkt ook of de nieuwe wachtwoord voldoet aan de eisen. Ook checkt dit gedeelte of het huidige wachtwoord juist is.
 if(isset($_POST['submit-new-password'])){
@@ -63,8 +59,8 @@ if(isset($_POST['submit-new-password'])){
                      } 
                      if($telefoonnummers != null){
                         foreach($telefoonnummers as $nummer){
-
-                        echo "<tr>" . "<th scope='col'>" . 'telefoonnummer' . "</th" . "</tr>";
+                       
+                        echo "<tr>" . "<th scope='col'>" . 'telefoonnummer'. "</th" . "</tr>";
                         echo "<td>" . $nummer[0] . "</td>";
 
                           }

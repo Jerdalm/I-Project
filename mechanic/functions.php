@@ -793,7 +793,7 @@ function updateStatementUser($telefoonnummer,$gebruikersnaam,$volgnr){
 		$telefoonnummerPara = array(':telefoonnummer' => $telefoonnummer , ':gebruikersnaam' => $gebruikersnaam , ':volgnr' => $volgnr);
 		handlequery("UPDATE Gebruikerstelefoon
 		SET telefoonnummer = :telefoonnummer
-		WHERE volgnr = :volgnr", $telefoonnummerPara);
+		WHERE gebruikersnaam = :gebruikersnaam AND volgnr = :volgnr", $telefoonnummerPara);
 
 }
 
@@ -886,7 +886,7 @@ function showButtonIndex(){
 		if($_SESSION['soortGebruiker'] != 2) {
 		echo '<a href="upgrade-user.php" class="cta-orange">Wordt verkoper!</a>';
 	} else {
-		echo '<a href="upload-article.php" class="cta-orange">Verkoop voorwerp!</a>';
+		echo '<a href="upload-article.php" class="cta-orange btn">Verkoop voorwerp!</a>';
 	}
 	} else {
 		echo '<a href="registreren.php" class="cta-orange">Registreer je nu om mee te bieden!</a>';
