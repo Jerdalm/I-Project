@@ -1,16 +1,17 @@
 <?php require_once ('header.php');
-
 if(isset($_GET['product'])){
-  if (isset($_COOKIE[$_SESSION['gebruikersnaam']])) {
-    if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam'])== false) {
-      AlterCookie($_SESSION['gebruikersnaam'], $_GET['product'], true);
-    } else if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam'])) {
-      AlterCookie($_SESSION['gebruikersnaam'], $_GET['product']);
-    }
-  } else {
-    MakeCookie($_SESSION['gebruikersnaam']);
-  }
 
+if (isset($_SESSION['gebruikersnaam'])) {
+    if (isset($_COOKIE[$_SESSION['gebruikersnaam']])) {
+        if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam']) == false) {
+            AlterCookie($_SESSION['gebruikersnaam'], $_GET['product'], true);
+        } else if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam'])) {
+            AlterCookie($_SESSION['gebruikersnaam'], $_GET['product']);
+        }
+    } else {
+            MakeCookie($_SESSION['gebruikersnaam']);
+    }
+    }
 
   $htmluploadFoto = ' ';
   $paramvoorwerpnummer = array(':voorwerpnummer' => $_GET['product']);
@@ -67,18 +68,33 @@ if(isset($_GET['product'])){
             $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
             $uploadOk = 1;
             $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-            if(checkIfImage($_POST["submit-file"]) && checkAllowedFileTypes($imageFileType) && checkSizeFile(500000) && checkExistingFile($target_file)) {
-              if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                echo "Het bestand ". basename( $_FILES["fileToUpload"]["name"]). " is geüpload.";
-                $bestandsnaam = $target_file;
-                $uploadParameters = array(':voorwerpnummer' => $productdata['voorwerpnummer'] , ':bestandsnaam' => $bestandsnaam);
-                handlequery("insert into Bestand values (:bestandsnaam, :voorwerpnummer)",$uploadParameters);
-                redirectJS('productpage.php?product=' . $productdata['voorwerpnummer']); //Refresht de pagina zodat de foto's getoont worden
-              } else {
-                echo "Sorry, Er is iets fout gegaan tijdens het uploaden van uw bestand.";
+              if(!empty($_FILES["fileToUpload"]["name"])) {
+                  if (checkIfImage($_POST["submit-file"])) {
+                      if (checkAllowedFileTypes($imageFileType)) {
+                          if (checkSizeFile(500000)) {
+                              if (checkExistingFile($target_file)) {
+                                  if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                                      $bestandmelding = "Het bestand " . basename($_FILES["fileToUpload"]["name"]) . " is geüpload.";
+                                      $bestandsnaam = $target_file;
+                                      $uploadParameters = array(':voorwerpnummer' => $productdata['voorwerpnummer'], ':bestandsnaam' => $bestandsnaam);
+                                      handlequery("insert into Bestand values (:bestandsnaam, :voorwerpnummer)", $uploadParameters);
+                                      redirectJS('productpage.php?product=' . $productdata['voorwerpnummer']); //Refresht de pagina zodat de foto's getoont worden
+                                  } else {
+                                      $bestandmelding = "Sorry, Er is iets fout gegaan tijdens het uploaden van uw bestand.";
+                                  }
+                              } else {
+                                  $bestandmelding = "Sorry, Het bestand bestaat al.";
+                              }
+                          } else {
+                              $bestandmelding = "Sorry, Uw bestand is te groot.";
+                          }
+                      } else {
+                          $bestandmelding = "Sorry, alleen JPG, JPEG & PNG files zijn toegestaan.";
+                      }
+                  } else {
+                      $besetandmelding = "File is not an image.";
+                  }
               }
-            }
           } else if(isset($_POST['bidAmount-submit'])){
             $paramBod = array(':voorwerpnummer' => $_GET['product'], ':bedrag' => (float)$_POST['bidAmount'], ':gebruiker' => $_SESSION['gebruikersnaam']);
             //$plaatsBod =  executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod); // functie in databse om het bod uit te brengen en te checken of het klopt
@@ -178,7 +194,11 @@ if(isset($_GET['product'])){
                                     </form>';
                                 }
                             }
-                        } ?>
+                        }
+                        if (isset($bestandmelding)){
+                            echo '<p class="error error-warning">' . $bestandmelding . '</p>';
+                        }
+                        ?>
                         <dl class="dl-horizontal">
                             <dt>Beschrijving:</dt>
                             <br>
@@ -263,7 +283,13 @@ if(isset($_GET['product'])){
                 <div class="col-lg-12 product-container">
                     <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
                         <div class="carousel-inner row w-100 mx-auto">
-                            <?= showProducts(true, Setquery($_SESSION['gebruikersnaam'], $_GET['product']) ); ?>
+                            <?php
+                            if (isset($_SESSION['gebruikersnaam'])) {
+                                showProducts(true, Setquery($_SESSION['gebruikersnaam'], $_GET['product']));
+                            } else {
+                                showProducts();
+                            }
+                            ?>
                         </div>
                         <div class="clearfix">
                             <div class="sliderbuttons">
