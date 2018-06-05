@@ -6,7 +6,7 @@ $randomVerificationCode = createrandompassword();
 //$randomVerificationCode = 111111;
 $subject = 'Activatiecode';
 $body = 'Bedankt voor het registreren,
-voer de volgende activatiecode in op de site: ' . $randomVerificationCode;
+voer de volgende activatiecode in op de site: <b>' . $randomVerificationCode.'</b>.';
 $headerLocationIf = "registreren.php?step=2";
 $headerLocationElse = "registreren.php";
 
