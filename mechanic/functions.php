@@ -487,7 +487,7 @@ function insertUpgradeinfoInDB(){
 }
 
 /* Deze functie returnt de verschillende rubrieken voor in het submenu
-||Mocht er iets fout gaan,onderstaande regel terugzetten 
+||Mocht er iets fout gaan,onderstaande regel terugzetten
 $rubrieken = handlequery("SELECT * from Rubriek where Rubriek.hoofdrubriek ".$querypart."");
 ||
 */
@@ -592,7 +592,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 
 		}
 	}
-	
+
 	if($producten){
 	$beforeInput = '';
 	$afterInput = '';
@@ -632,7 +632,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 
         $html .= '
 		<div class="product card">
-		<img class="card-img-top img-fluid" src="img/products/' . $product['bestand'] . '" alt="">
+		<img class="card-img-top img-fluid" src="' . $product['bestand'] . '" alt="">
 		<div class="card-body">
 		<h4 class="card-title">
 		' . $product['titel'] . '
@@ -654,7 +654,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 	}}
 	else{$html = '<div class="col-lg-12 text-center"><h4> Geen producten gevonden </h4></div>';}
 	/* Returns product cards html */
-	
+
 	if(!$carrousel){
 	$html .= '<div class="col-lg-12 text-center">'.pagination($producten,9).'</div>';
 	}
@@ -874,7 +874,7 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 		if(isset($get['telefoonnummer2'])){
 		updateStatementUser($get['telefoonnummer2'],$gebruikersnaam,$telefoonnummers[2]['volgnr']);
 	}
-}	
+}
 
 
 	echo '<script>window.location.replace("./account.php")</script>';
@@ -917,7 +917,7 @@ function checkNewPassword ($password, $passwordrepeat){
 	function pagination($array,$itemsperpage = 10, $currentpag = 0){
 		if(is_array($array)){$submenus =(sizeof($array) / $itemsperpage);}
 		else{$submenus = $array / $itemsperpage;}
-		
+
 		$html = '';
 		$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
@@ -935,7 +935,7 @@ function checkNewPassword ($password, $passwordrepeat){
 				$startvalue = $teller * $itemsperpage;
 				$visueel = $teller + 1;
 				if($startvalue == $currentpag){
-				$html .= "<a class=\"btn btn3\" style=\"font-weight:bold\" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";	
+				$html .= "<a class=\"btn btn3\" style=\"font-weight:bold\" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";
 				}else{
 				$html .= "<a class=\"btn btn3 \" href=\"$newUrl&pagination=$startvalue&perpage=$itemsperpage\">$visueel</a>";
 				}

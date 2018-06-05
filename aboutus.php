@@ -7,6 +7,7 @@
       <li>Eduard</li>
       <li>Jeremy</li>
       <li>Jonathan</li>
+      <li>Kevin</li>
       <li>Timo</li>
   </section>
 </main>

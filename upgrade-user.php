@@ -1,5 +1,9 @@
 <?php
 require_once 'header.php';
+if (!isset($_SESSION['gebruikersnaam'])) {
+  redirectJS('index.php');
+  die();
+}
 
 $_SESSION['email-upgradeDB'] = handleQuery("SELECT * FROM Gebruiker WHERE gebruikersnaam = :gebruikersnaam",array(':gebruikersnaam' => $_SESSION['gebruikersnaam']));
 $_SESSION['email-upgrade'] = $_SESSION['email-upgradeDB'][0]['mailadres'];
