@@ -253,7 +253,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
                                 <?php
                                 echo " met een bod van €" .$boddata['hoogstebod'];
                                 } else {
-                                    echo "helaas, niemand heeft binnen de tijd geboden op dit product.";
+                                    echo "Helaas, niemand heeft binnen de tijd geboden op dit product.";
                                 }
                                 ?>
                             </table>
