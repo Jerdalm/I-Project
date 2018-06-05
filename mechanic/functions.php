@@ -884,12 +884,12 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 function showButtonIndex(){
 	if(isset($_SESSION['gebruikersnaam'])){
 		if($_SESSION['soortGebruiker'] != 2) {
-		echo '<a href="upgrade-user.php" class="cta-orange">Wordt verkoper!</a>';
+		echo '<a href="upgrade-user.php" class="cta-orange btn">Wordt verkoper!</a>';
 	} else {
 		echo '<a href="upload-article.php" class="cta-orange btn">Verkoop voorwerp!</a>';
 	}
 	} else {
-		echo '<a href="registreren.php" class="cta-orange">Registreer je nu om mee te bieden!</a>';
+		echo '<a href="registreren.php" class="cta-orange btn">Registreer je nu om mee te bieden!</a>';
 	}
 }
 
