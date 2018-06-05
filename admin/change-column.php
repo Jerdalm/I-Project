@@ -24,10 +24,11 @@ if(isset($errorMessageColumn)) {
 				':nummer' => '-1111');
 		}
 	}
-	$rubrieken = handlequery("SELECT * 
-		FROM Rubriek 
-		WHERE rubrieknaam like :rubriek
-		OR rubrieknummer = :nummer	
+	$rubrieken = handlequery("SELECT r.rubrieknummer, r.rubrieknaam, r2.rubrieknaam as hoofdrubriek FROM rubriek r LEFT JOIN rubriek r2 on r2.rubrieknummer = r.hoofdrubriek 
+		WHERE r.rubrieknaam LIKE :rubriek
+		OR r.rubrieknummer = :nummer	
+		GROUP BY r.rubrieknummer, r.rubrieknaam, r2.rubrieknaam
+		ORDER BY r.rubrieknummer ASC
 		",$parametersRubriek);
 	$rubriekResultaten = '<div class="col-lg-9 col-sm-12">
 	<table class="table table-responsive search-results">

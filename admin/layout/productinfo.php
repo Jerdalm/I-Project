@@ -37,8 +37,10 @@ if (isset($_GET['voorwerpInfo'])) {
 				<h2>Productinformatie</h2>
 				<form class="form-group change-form" method="GET" action="">
 					<?php if(isset($htmlToonProductInfo)){ echo $htmlToonProductInfo;}?>
-					<button type="button" class="btn btn btn-success" data-toggle="modal" data-target="#changeInfo">Bewerk gegevens</button>
+						<button type="button" class="btn btn btn-success" data-toggle="modal" data-target="#changeInfo">Bewerk gegevens</button>
+						<button type="button" class="btn btn btn-success" data-toggle="modal" data-target="#sortColumn">Hersorteer product</button>
 					<?php require 'layout/changeProductInfoModal.php';?>
+					<?php require 'layout/sortColumnModal.php';?>
 				</form>
 			</div>
 		</div>

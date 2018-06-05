@@ -83,7 +83,11 @@ if(isset($errorMessageArticle)) {
 	<a class="list-group-item list-group-item-action active" id="list-product-list" data-toggle="list" href="#productinfo" role="tab" aria-controls="productinfo">Productinformatie</a>
 	<a class="list-group-item list-group-item-action" id="list-change-bid" data-toggle="list" href="#bids" role="tab" aria-controls="list-change-bid">Biedingen</a>
 	</div>
-	<form method="get" class="btn-delete-product"><input type="hidden" name="product" value="'. $_GET['voorwerpInfo'] .'"><button type="submit" class="btn btn-danger" value="delete-product" name="delete-product">Verwijder artikel</button></form>
+	<form method="get" class="btn-delete-product"><input type="hidden" name="product" value="'. $_GET['voorwerpInfo'] .'"><button type="submit" class="btn btn-danger" value="delete-product" name="delete-product">Verwijder veiling</button>';
+	
+	$htmlVeranderVoorwerp .= buttonsArticle($_GET);
+	
+	$htmlVeranderVoorwerp .= '</form>
 	<div class="preview-img">
 		<img src="'.returnSRCProduct($_GET['voorwerpInfo']).'" />
 	</div>
@@ -101,7 +105,12 @@ if(isset($errorMessageArticle)) {
 	sortProductsDESC();
 } else if (isset($_GET['filter-time-asc'])){
 	sortProductsASC();
+} else if (isset($_GET['block-auction'])){
+	statusAuction($_GET, false);
+} else if (isset($_GET['activate-auction'])){
+	statusAuction($_GET, true);
 }
+
 ?>
 
 <main class="beheerdersomgeving">
