@@ -285,9 +285,11 @@ if (isset($_SESSION['gebruikersnaam'])) {
                         <div class="carousel-inner row w-100 mx-auto">
                             <?php
                             if (isset($_SESSION['gebruikersnaam'])) {
+                                $data = unserialize($_COOKIE[$_SESSION['gebruikersnaam']]);
+
                                 showProducts(true, Setquery($_SESSION['gebruikersnaam'], $_GET['product']));
                             } else {
-                                showProducts();
+                                showProducts(true, "SELECT TOP 6 * from currentAuction");
                             }
                             ?>
                         </div>

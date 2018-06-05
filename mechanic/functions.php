@@ -44,8 +44,15 @@ function Setquery($username, $vwNummer)
 {
     //echo "testQuery";
     $data = unserialize($_COOKIE[$username]);
-    $datalist = $data[0] . ' or voorwerpnummer = ' . $data[1] . ' or voorwerpnummer = ' . $data[2]. ' or voorwerpnummer = ' . $data[3] . ' or voorwerpnummer = ' . $data[4] . ' or voorwerpnummer = ' . $data[5];
-    //echo $datalist;
+    if(count($data) > 0) {
+        $datalist = "$data[0]";
+    }
+
+    array_slice($data, 1);
+
+    foreach($data as $value) {
+        $datalist.= " or voorwerpnummer = " . $value;
+    }
 
     $Arrayquery = "SELECT top 6 C.*, Vo.plaatsnaam as plaats, V.rubriekOpLaagsteNiveau
                   FROM currentAuction C
