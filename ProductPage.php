@@ -249,8 +249,9 @@ if (isset($_SESSION['gebruikersnaam'])) {
                                     echo "Gewonnen door:";
                                  ?>
                                     <p><b><?= $koperdata['voornaam']. " " .$koperdata['achternaam'] ?></b> te <?=$koperdata['plaatsnaam']?></p><br>
+                                    <?php if($productdata['verkoper'] == $_SESSION['gebruikersnaam']) { ?>
                                     <p><a href=<?='"mailto:' .$koperdata['mailadres']. '?SUBJECT=' . $productdata['titel'] . '"'?>> <i class="fas fa-envelope"></i> &nbsp;&nbsp;&nbsp;<?=$koperdata['mailadres']?></a></p>
-                                <?php
+                                <?php }
                                 echo " Met een bod van €" .$boddata['hoogstebod'];
                                 } else {
                                     echo "Helaas, niemand heeft binnen de tijd geboden op dit product.";
@@ -284,12 +285,12 @@ if (isset($_SESSION['gebruikersnaam'])) {
                     <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
                         <div class="carousel-inner row w-100 mx-auto">
                             <?php
-                            if (isset($_SESSION['gebruikersnaam'])) {
+                            if(isset($_SESSION['gebruikersnaam'])) {
                                 $data = unserialize($_COOKIE[$_SESSION['gebruikersnaam']]);
-
-                                showProducts(true, Setquery($_SESSION['gebruikersnaam'], $_GET['product']));
+                                
+                                echo showProducts(true, Setquery($_SESSION['gebruikersnaam'], $_GET['product']));
                             } else {
-                                showProducts(true, "SELECT TOP 6 * from currentAuction");
+                            echo showProducts(true,"SELECT TOP 6 * from currentAuction");
                             }
                             ?>
                         </div>
