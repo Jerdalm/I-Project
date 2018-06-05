@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once 'header.php';
 $_SESSION['email-registration'] = ' ';
 ?>
@@ -7,7 +7,7 @@ $_SESSION['email-registration'] = ' ';
    <div class="container">
       <div class="row text-center">
          <div class="col-lg-12 " >
-            <img src="img/logo/logo.svg" alt="Logo" class="logo" > 
+            <img src="img/logo/logo.svg" alt="Logo" class="logo" >
             <h1 class="display-3 text-center text-white"> <b>Eenmaal</b> andermaal</h1>
             <form action="overview.php" method="get">
                <input list="films" name="search" placeholder="Het gewenste product" maxlength="50" type="search">
@@ -68,13 +68,12 @@ $_SESSION['email-registration'] = ' ';
 </section>
 <script>
 setInterval(function()
-{	
+{
 	$('.product-data').each(function() {
 	$('#'+ this.id).load('index.php #' + this.id);
 });
-}, 1000); 
+}, 1000);
 </script>
 <script src="vendor/bootstrap/js/popup.header.js"></script>
 <!-- /.container -->
 <?php require_once './footer.php'; ?>
-

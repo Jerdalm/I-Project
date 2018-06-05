@@ -3,18 +3,14 @@ require_once './head.php';
 require_once './db.php';
 
 // de code is standaard 222 voor het testen
-$randomVerificationCode = 222;
+$randomVerificationCode = createrandompassword();
 // $randomVerificsendRegistrationCodeationCode = generateRandomCode();
 
-$subjectText = 'upgraden account';
+$subjectText = 'Word verkoper!';
 $bodyText = '
-Beste gebruiker,
-
-Hier is uw verificatiecode voor het upgraden van uw account naar verkoper
-
-'.$randomVerificationCode. '
-
-U kunt deze code invullen in het upgrade formulier.
+Beste '.$_SESSION['gebruikersnaam'].', <br><br>
+Om verkoper te worden is de volgende persoonlijke verificatiecode nodig: <b>'.$randomVerificationCode.'</br>.
+U kunt deze code invullen in het upgrade formulier. Daarna kunt u voorwerpen aanbieden om te veilen!
 ';
 
 $headerLocationIf ='upgrade-user.php?step=2';
@@ -55,13 +51,13 @@ echo '
         <label for="input-bank"> Bank </label>
         <input type="textarea" class="form-control" name="bank" id="user-bank">
     </div>
-    
-    
+
+
     <div class="form-group">
         <label for="input-banknumber"> Rekeningnummer </label>
         <input type="textarea" class="form-control" name="banknumber" id="user-banknumber">
     </div>
-    
+
     <p>Verificatie methode</p>
     <div class="form-check">
         <input class="form-check-input" type="radio" name="verificationMethod" id="verificationMethodSelect1" value="Credit Card" checked>
@@ -78,7 +74,7 @@ echo '
     </div>
     <br>
     <button type="submit" name="submit-upgrade" class="btn btn-primary btn-sm"> Doorgaan </button>
-</form> 
+</form>
 ';
 
 ?>
