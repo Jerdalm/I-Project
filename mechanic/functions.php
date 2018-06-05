@@ -781,6 +781,22 @@ function checkPriceFilter($min, $max){
 	return $returnwaarde;
 }
 
+function insertStatementUser($telefoonnummer,$gebruikersnaam){
+
+		$telefoonnummerPara = array(':telefoonnummer' => $telefoonnummer , ':gebruikersnaam' => $gebruikersnaam);
+		handlequery("INSERT INTO Gebruikerstelefoon (telefoonnummer,gebruikersnaam) VALUES (:telefoonnummer,:gebruikersnaam )",$telefoonnummerPara);
+
+}
+
+function updateStatementUser($telefoonnummer,$gebruikersnaam,$volgnr){
+
+		$telefoonnummerPara = array(':telefoonnummer' => $telefoonnummer , ':gebruikersnaam' => $gebruikersnaam , ':volgnr' => $volgnr);
+		handlequery("UPDATE Gebruikerstelefoon
+		SET telefoonnummer = :telefoonnummer
+		WHERE volgnr = :volgnr", $telefoonnummerPara);
+
+}
+
 function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 
 	$birthdate = $get['geboortedag'];
@@ -815,72 +831,48 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 
 	if( $aantalTelefoonNummers == 0){
 		if(isset($get['telefoonnummer0'])){
-		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer0'] , ':gebruikersnaam' => $gebruikersnaam);
-		handlequery("INSERT INTO Gebruikerstelefoon (telefoonnummer,gebruikersnaam) VALUES (:telefoonnummer,:gebruikersnaam )",$telefoonnummerPara);
+		insertStatementUser($get['telefoonnummer0'],$gebruikersnaam);
 		}
 		if(isset($get['telefoonnummer1'])){
-		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer1'] , ':gebruikersnaam' => $gebruikersnaam);
-		handlequery("INSERT INTO Gebruikerstelefoon (telefoonnummer,gebruikersnaam) VALUES (:telefoonnummer,:gebruikersnaam )",$telefoonnummerPara);
+		insertStatementUser($get['telefoonnummer1'],$gebruikersnaam);
 		}
 		if(isset($get['telefoonnummer2'])){
-		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer2'] , ':gebruikersnaam' => $gebruikersnaam);
-		handlequery("INSERT INTO Gebruikerstelefoon (telefoonnummer,gebruikersnaam) VALUES (:telefoonnummer,:gebruikersnaam )",$telefoonnummerPara);
+		insertStatementUser($get['telefoonnummer2'],$gebruikersnaam);
 		}
 
 	}  else if($aantalTelefoonNummers == 1){
 
 		if(isset($get['telefoonnummer0'])){
-		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer0'] , ':gebruikersnaam' => $gebruikersnaam , ':volgnr' => $telefoonnummers[0]['volgnr']);
-		handlequery("UPDATE Gebruikerstelefoon
-		SET telefoonnummer = :telefoonnummer
-		WHERE volgnr = :volgnr", $telefoonnummerPara);
+		updateStatementUser($get['telefoonnummer0'],$gebruikersnaam,$telefoonnummers[0]['volgnr']);
 		}
 		if(isset($get['telefoonnummer1'])){
-		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer1'] , ':gebruikersnaam' => $gebruikersnaam);
-		handlequery("INSERT INTO Gebruikerstelefoon (telefoonnummer,gebruikersnaam) VALUES (:telefoonnummer,:gebruikersnaam )",$telefoonnummerPara);
+		insertStatementUser($get['telefoonnummer1'],$gebruikersnaam);
 		}
 		if(isset($get['telefoonnummer2'])){
-		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer2'] , ':gebruikersnaam' => $gebruikersnaam);
-		handlequery("INSERT INTO Gebruikerstelefoon (telefoonnummer,gebruikersnaam) VALUES (:telefoonnummer,:gebruikersnaam )",$telefoonnummerPara);
+		insertStatementUser($get['telefoonnummer2'],$gebruikersnaam);
 		}
 
 	}  else if ($aantalTelefoonNummers == 2){
 
 		if(isset($get['telefoonnummer0'])){
-		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer0'] , ':gebruikersnaam' => $gebruikersnaam , ':volgnr' => $telefoonnummers[0]['volgnr']);
-		handlequery("UPDATE Gebruikerstelefoon
-		SET telefoonnummer = :telefoonnummer
-		WHERE volgnr = :volgnr", $telefoonnummerPara);
+		updateStatementUser($get['telefoonnummer0'],$gebruikersnaam,$telefoonnummers[0]['volgnr']);
 		}
 		if(isset($get['telefoonnummer1'])){
-		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer1'] , ':gebruikersnaam' => $gebruikersnaam , ':volgnr' => $telefoonnummers[1]['volgnr']);
-		handlequery("UPDATE Gebruikerstelefoon
-		SET telefoonnummer = :telefoonnummer
-		WHERE volgnr = :volgnr", $telefoonnummerPara);
+		updateStatementUser($get['telefoonnummer1'],$gebruikersnaam,$telefoonnummers[1]['volgnr']);
 	}
 		if(isset($get['telefoonnummer2'])){
-		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer2'] , ':gebruikersnaam' => $gebruikersnaam);
-		handlequery("INSERT INTO Gebruikerstelefoon (telefoonnummer,gebruikersnaam) VALUES (:telefoonnummer,:gebruikersnaam )",$telefoonnummerPara);
+		insertStatementUser($get['telefoonnummer2'],$gebruikersnaam);
 		}
 	} else if ($aantalTelefoonNummers == 3){
 
 		if(isset($get['telefoonnummer0'])){
-		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer0'] , ':gebruikersnaam' => $gebruikersnaam , ':volgnr' => $telefoonnummers[0]['volgnr']);
-		handlequery("UPDATE Gebruikerstelefoon
-		SET telefoonnummer = :telefoonnummer
-		WHERE volgnr = :volgnr", $telefoonnummerPara);
+		updateStatementUser($get['telefoonnummer0'],$gebruikersnaam,$telefoonnummers[0]['volgnr']);
 		}
 		if(isset($get['telefoonnummer1'])){
-		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer1'] , ':gebruikersnaam' => $gebruikersnaam , ':volgnr' => $telefoonnummers[1]['volgnr']);
-		handlequery("UPDATE Gebruikerstelefoon
-		SET telefoonnummer = :telefoonnummer
-		WHERE  volgnr = :volgnr", $telefoonnummerPara);
+		updateStatementUser($get['telefoonnummer1'],$gebruikersnaam,$telefoonnummers[1]['volgnr']);
 		}
 		if(isset($get['telefoonnummer2'])){
-		$telefoonnummerPara = array(':telefoonnummer' => $get['telefoonnummer2'] , ':gebruikersnaam' => $gebruikersnaam , ':volgnr' => $telefoonnummers[2]['volgnr']);
-		handlequery("UPDATE Gebruikerstelefoon
-		SET telefoonnummer = :telefoonnummer
-		WHERE volgnr = :volgnr", $telefoonnummerPara);
+		updateStatementUser($get['telefoonnummer2'],$gebruikersnaam,$telefoonnummers[2]['volgnr']);
 	}
 }	
 
