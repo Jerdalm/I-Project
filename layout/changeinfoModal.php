@@ -38,6 +38,7 @@
                         foreach($telefoonnummers as $nummer){
                          echo '
                               <div><input value="'.$nummer[0]. '" class="form-control" type="text" name="telefoonnummer'.$increment .'"></div>
+                              
                               ';
                               $increment++;
                         }

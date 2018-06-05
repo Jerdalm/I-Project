@@ -74,10 +74,10 @@ function Setquery($username, $vwNummer)
 
 /* Deze functie zorgt voor de connectie met de Database */
 function ConnectToDatabase(){
-	$hostname = "localhost";
+	$hostname = "mssql2.iproject.icasites.nl";
 	$dbname = "iproject34";
-	$dbusername = "sa";
-	$dbpw = "12345";
+	$dbusername = "iproject34";
+	$dbpw = "Q43bdM5d9r";
 
 	try {$pdo = new PDO("sqlsrv:Server=$hostname;Database=$dbname;
 		ConnectionPooling=0", "$dbusername", "$dbpw");
@@ -159,10 +159,11 @@ function sendMail($to, $subject, $body, $message = "Fout"){
 	$emailTo      = $to;
 	$subjectEmail = $subject;
 	$message_body = $body;
+	$header = 'From: EenmaalAndermaal <noreply@iproject34.icasites.nl>' . "\r\n" . 'Reply-To: service@iproject34.icasites.nl' . "\r\n" . 
+			   'X-Mailer: PHP/' . phpversion() . '\r\n' . 'Content-type:text/html;charset=UTF-8';
 
-
-	// mail( $emailTo, $subjectEmail, $message_body );
-    echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
+	mail( $emailTo, $subjectEmail, $message_body,$header );
+    // echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
 
 	$_SESSION['message'] = $message;
 }
@@ -297,7 +298,7 @@ function showLoginMenu(){
 
 /* Deze functie genereert een random code */
 function generateRandomCode(){
-	return uniqueid(rand(100000,900000),true);
+	return uniqid(rand(100000,900000),true);
 }
 
 /* Deze functie checkt of de username nog niet bestaat, en of de wachtwoorden overeen komen, en aan de regels voldoen */

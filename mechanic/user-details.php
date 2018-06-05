@@ -70,7 +70,14 @@ if(isset($_POST['submit-new-password'])){
                      } ?>
                 </tbody>
             </table>
-           
+            <form method="POST">
+                <input type="submit" name="TEST" value="TESTT">
+            </form>
+            <?php
+            if(isset($_POST['TEST'])){
+            sendMail('edi_bakouev@hotmail.nl','testtt','TESTTTTT');
+            }
+            ?>
             <!-- Button trigger modal -->
 		</div>
 		<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12 text-center">
