@@ -385,9 +385,6 @@ function toonStatus($rubriek){
 			}
 		}
 	}
-
-
-
 	return $return;
 }
 
@@ -402,4 +399,34 @@ function updateColumnName($array){
 function returnColumns($parent){
 	$param = array(':nummer' => $parent);
 	return handlequery("SELECT * FROM rubriek WHERE hoofdrubriek = :nummer", $param);
+}
+
+function buttonsArticle($get){
+	$return = ' ';
+	$param = array(':nummer' => $get['voorwerpInfo']);
+	$queryGetArticleStatus = FetchAssocSelectData("SELECT veilingGesloten FROM Voorwerp WHERE voorwerpnummer = :nummer", $param);
+
+	if ($queryGetArticleStatus['veilingGesloten'] == 0) {
+		$return = '<button type="submit" class="btn btn-danger" value="block-product" name="block-auction">Blokkeer veiling</button>';
+	} else {
+		$return = '<button type="submit" class="btn btn-success" value="activate-auction" name="activate-auction">Activeer veiling</button>';
+	}
+	return $return;
+}
+
+function statusAuction($get, $state) {
+	$param = array(':nummer' => $get['product']);
+	$queryCheckDate = handlequery("SELECT * FROM Voorwerp WHERE (CAST(looptijdEindeTijdstip AS DATETIME) + CAST(looptijdEindeDag AS DATETIME)) < CONVERT(datetime, GETDATE()) AND voorwerpnummer = :nummer", $param);
+	if($state = true) {
+		if (count($queryCheckDate) == 1) {
+			handlequery("UPDATE voorwerp SET veilingGesloten = 0 WHERE voorwerpnummer = :nummer", $param);
+		} else {
+			$return = "Deze veiling kan niet geactiveerd worden, omdat deze al verlopen is.";
+		}
+	} else {
+		handlequery("UPDATE voorwerp SET veilingGesloten = 1 WHERE voorwerpnummer = :nummer", $param);
+	}
+	// print_r($get);
+	// die();
+	header("Location: ./change-article.php?voorwerpInfo=".$get['product']);
 }
