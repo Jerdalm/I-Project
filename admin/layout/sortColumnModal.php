@@ -17,19 +17,20 @@
 						<option class="select" selected value="Maak een keuze...">Maak een keuze...</option>						
 						<?php 
 						foreach (returnColumns(-1) as $key) {
-							echo '<option value="'.$key.'">'.$key['rubrieknaam'].'</option>';		
+							echo '<option value="'.$key['rubrieknummer'].'">'.$key['rubrieknaam'].'</option>';		
 						}
 						?>
 					</select>
 
 					<select name="select2" id="select2">
+						<option class="select" selected value="Maak een keuze...">Maak een keuze...</option>	
 						<?php 
 						foreach (returnColumns(1) as $key) {
-							echo '<option value="'.$key.'">'.$key['rubrieknaam'].'</option>';		
+							echo '<option value="'.$key['rubrieknummer'].'">'.$key['rubrieknaam'].'</option>';		
 						}
 						?>
 					</select>
-
+					<button name="btn-sort" id="btn-sort" class="btn btn-success btn-sort">Sorteer op deze categorie</button>
 				</form>
 			</div>
 		</div>
@@ -39,12 +40,16 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#select2").hide();
+		$("#btn-sort").hide();
 
 		$("#select1").change(function(){
-			if($(this).val() != "Maak een keuze..."){
+			if ($(this).val() != "Maak een keuze..."){
 				$("#select2").show();
-			}else{
+				$("#btn-sort").show();
+				var value = $("#select1 option:selected").val();
+			} else {
 				$("#select2").hide();
+				$("#btn-sort").hide();
 			}
 
 		});
