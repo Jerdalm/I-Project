@@ -92,7 +92,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
                           $bestandmelding = "Sorry, alleen JPG, JPEG & PNG files zijn toegestaan.";
                       }
                   } else {
-                      $besetandmelding = "File is not an image.";
+                      $besetandmelding = "Het bestand is geen afbeelding";
                   }
               }
           } else if(isset($_POST['bidAmount-submit'])){
@@ -251,7 +251,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
                                     <p><b><?= $koperdata['voornaam']. " " .$koperdata['achternaam'] ?></b> te <?=$koperdata['plaatsnaam']?></p><br>
                                     <p><a href=<?='"mailto:' .$koperdata['mailadres']. '?SUBJECT=' . $productdata['titel'] . '"'?>> <i class="fas fa-envelope"></i> &nbsp;&nbsp;&nbsp;<?=$koperdata['mailadres']?></a></p>
                                 <?php
-                                echo " met een bod van €" .$boddata['hoogstebod'];
+                                echo " Met een bod van €" .$boddata['hoogstebod'];
                                 } else {
                                     echo "Helaas, niemand heeft binnen de tijd geboden op dit product.";
                                 }
