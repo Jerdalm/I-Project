@@ -86,10 +86,13 @@ function sendMail($to, $subject, $body, $message = "Fout"){
 	$emailTo      = $to;
 	$subjectEmail = $subject;
 	$message_body = $body;
+	$header = 'From: EenmaalAndermaal <noreply@iproject34.icasites.nl>' . "\r\n" . 'Reply-To: service@iproject34.icasites.nl' . "\r\n" . 
+			   'X-Mailer: PHP/' . phpversion() . '\r\n' . 'Content-type:text/html;charset=UTF-8';
 
 
-    //mail( $emailTo, $subjectEmail, $message_body ); moet uiteindelijk wel aan!
-    echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
+
+    mail( $emailTo, $subjectEmail, $message_body,$header); 
+    //echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
 
     $_SESSION['message'] = $message;
 }
@@ -325,19 +328,19 @@ function getUserData($user){
 function sendEmailClosedAuctions(){
 	foreach(getUserData("verkoper") as $gesloten){
 		$email = $gesloten['mailadres'];
-		$subject = 'veiling:' . $gesloten['titel'] . 'is gesloten';
+		$subject = 'Veiling: ' . $gesloten['titel'] . 'is gesloten';
 		if(!empty ($gesloten['koper'])) {
-			$message = 'De veiling' .' '. $gesloten['titel'] .' '. 'is Gesloten. de veiling is gewonnen door:' . $gesloten['koper'] . '.Bekijk de veiling op:http://iproject34.icasites.nl/productpage.php?product=' . $gesloten['voorwerpnummer'];
+			$message = 'De veiling '. $gesloten['titel'] .' is gesloten. De veiling is gewonnen door: ' . $gesloten['koper'] . '. Bekijk de veiling op: http://iproject34.icasites.nl/productpage.php?product=' . $gesloten['voorwerpnummer'];
 		} else {
-			$message = 'De veiling' .' '. $gesloten['titel'] .' '. 'is Gesloten. Uw veiling heeft jammer genoeg geen koper. Bekijk de veiling op: http://iproject34.icasites.nl/productpage.php?product=' . $gesloten['voorwerpnummer'];
+			$message = 'De veiling '. $gesloten['titel'] .' is gesloten. Uw veiling heeft jammer genoeg geen koper. Bekijk de veiling op: http://iproject34.icasites.nl/productpage.php?product=' . $gesloten['voorwerpnummer'];
 		}
 		sendMail($email,$subject,$message);
 	}
 
 	foreach(getUserData("koper") as $gesloten){
 		if (!empty($gesloten['koper'])){
-			$subject = 'Gefeliciteerd u heeft veiling:' . $gesloten['titel'] . ' ' . 'Gewonnen!';
-			$message = 'De veiling' .' '. $gesloten['titel'] .' '. 'is Gesloten. Gefeliciteerd! U bent de winnaar van deze Veiling. Bekijk de veiling op: http://iproject34.icasites.nl/productpage.php?product=' . $gesloten['voorwerpnummer'];
+			$subject = 'Gefeliciteerd u heeft de veiling: ' . $gesloten['titel'] .' gewonnen!';
+			$message = 'De veiling '. $gesloten['titel'] .' is gesloten. Gefeliciteerd! U bent de winnaar van deze veiling. Bekijk de veiling op: http://iproject34.icasites.nl/productpage.php?product=' . $gesloten['voorwerpnummer'];
 			$email = $gesloten['mailadres'];
 			sendMail($email,$subject,$message);
 		}
