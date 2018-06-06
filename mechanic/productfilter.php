@@ -61,7 +61,6 @@
 	$key = array_search(''.$rubrieknaam.'', array_column($rubrieken, 'rubrieknaam'));
 	$rubriekBreadcrumb = getRubriekPath($rubrieken,$key);
 	
-	
 	}
 	else{
 	redirectJS("overview.php");

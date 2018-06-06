@@ -1,7 +1,7 @@
 <?php
 $gebruiker = $_SESSION['gebruikersnaam'];
 
-$query = "SELECT top 1 Voorwerp.voorwerpnummer, max(Bestand.filenaam) AS bestand,
+$query = " SELECT Voorwerp.voorwerpnummer, max(Bestand.filenaam) AS bestand,
 	Voorwerp.titel, max(Bod.bodbedrag) AS 'bodbedrag',
 	max(voorwerp.looptijdEindeDag) AS 'einddag',
 	max(voorwerp.looptijdEindeTijdstip) AS 'eindtijdstip',
@@ -12,8 +12,7 @@ $query = "SELECT top 1 Voorwerp.voorwerpnummer, max(Bestand.filenaam) AS bestand
 	LEFT JOIN Bod on Bod.voorwerpnummer = Voorwerp.voorwerpnummer
 	LEFT JOIN Bestand on Bestand.voorwerpnummer = voorwerp.voorwerpnummer
 	WHERE Bod.gebruikersnaam = '$gebruiker'
-	GROUP BY voorwerp.voorwerpnummer, voorwerp.titel, voorwerp.veilingGesloten, bod.bodbedrag
-    ORDER BY bod.bodbedrag DESC";
+	GROUP BY voorwerp.voorwerpnummer, voorwerp.titel, voorwerp.veilingGesloten, bod.voorwerpnummer";
 ?>
 
 <div class="tab-pane fade col-lg-9 float-left" id="content-offering-in" role="tabpanel" aria-labelledby="list-offering-in">

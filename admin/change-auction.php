@@ -1,6 +1,7 @@
 <?php 
 require_once './header.php'; 
-if (isset($_SESSION['gebruikersnaam'])){
+print_r($_SESSION);
+if (isset($_SESSION['gebruikersnaam']) && $_SESSION['gebruikersnaam'] == 'admin'){
 	$htmlVeranderVoorwerp = '<form class="form-group" method="GET" action=""> 
 	<input type="text" name="voorwerp" placeholder="Geef: voorwerpnummer, verkoper, plaats, titel, startprijs, rubriek" min="0"> <br>
 	<input class="cta-orange" name="search-article" type="submit" value="Zoeken">
