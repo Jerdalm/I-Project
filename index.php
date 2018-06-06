@@ -28,7 +28,15 @@ $_SESSION['email-registration'] = ' ';
 	  <div class="product-container">
       <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
          <div class="carousel-inner row w-100 mx-auto">
-             <?= showProducts(true, "SELECT TOP 6 * from currentAuction"); ?>
+             <?php
+             if(isset($_SESSION['gebruikersnaam']) && isset($_GET['product'])) {
+                 $data = unserialize($_COOKIE[$_SESSION['gebruikersnaam']]);
+
+                 echo showProducts(true, Setquery($_SESSION['gebruikersnaam'], $_GET['product']));
+             } else {
+                 echo showProducts(true,"SELECT TOP 10 * from currentAuction ORDER BY NEWID()");
+             }
+             ?>
          </div>
          <div class="clearfix">
             <div class="sliderbuttons">
