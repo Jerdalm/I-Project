@@ -3891,19 +3891,6 @@ exports.Tooltip = Tooltip;
 Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-$('button[data-dismiss="modal"]').click(function(){
- var original = window.location.href.substr(0, window.location.href.indexOf('#'))
- history.replaceState({}, document.title, original);
-});
-
-function revertToOriginalURL() {
-  var original = window.location.href.substr(0, window.location.href.indexOf('#'))
-  history.replaceState({}, document.title, original);
-}
-
-$('.modal').on('hidden.bs.modal', function () {
-  revertToOriginalURL();
-});
 
 $('#changeBid').on('show.bs.modal', function (event) {
   var button = $(event.relatedTarget) // Button that triggered the modal
@@ -3927,5 +3914,4 @@ $('#changeColumn').on('show.bs.modal', function (event) {
   var modal = $(this)
   modal.find('.modal-body input.columnname').val(rubrieknaam)
   modal.find('.modal-body input.rubrieknummer').val(rubrieknummer)
-
 })
