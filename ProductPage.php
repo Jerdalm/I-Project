@@ -50,6 +50,15 @@ if (isset($_SESSION['gebruikersnaam'])) {
     from bod
     where voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
 
+    $querybreadcrumbs = FetchAssocSelectData(
+        "SELECT *
+         FROM VoorwerpInRubriek V
+         INNER JOIN rubriek R
+         ON V.rubriekOpLaagsteNiveau = R.rubrieknummer
+         INNER JOIN Voorwerp Vo
+         ON Vo.voorwerpnummer = V.voorwerpnummer
+         WHERE V.voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
+    
     $productdata = FetchAssocSelectData(
       "SELECT V.verkoper, G.gebruikersnaam, V.voorwerpnummer, V.verzendkosten, V.verzendinstructies, G.voornaam, G.achternaam, G.plaatsnaam, G.soortGebruiker,
       V.titel, V.startprijs, V.beschrijving, G.mailadres , GT.telefoonnummer, V.looptijdBeginTijdstip, V.looptijdBeginDag, V.veilingGesloten, V.koper
