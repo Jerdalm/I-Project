@@ -87,14 +87,7 @@ function sendMail($to, $subject, $body, $message = "Fout"){
 	$subjectEmail = $subject;
 	$message_body = $body;
 	$header = 'From: EenmaalAndermaal <noreply@iproject34.icasites.nl>' . "\r\n" . 'Reply-To: service@iproject34.icasites.nl' . "\r\n" . 
-<<<<<<< HEAD
 			   'X-Mailer: PHP/' . phpversion() . "\r\n" . 'Content-type:text/html;charset=UTF-8';
-=======
-	'X-Mailer: PHP/' . phpversion() . '\r\n' . 'Content-type:text/html;charset=UTF-8';
->>>>>>> 0a754a9235479a0d8254b3b0203e7fb9d28dce78
-
-
-
 	mail( $emailTo, $subjectEmail, $message_body,$header); 
     //echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
 
