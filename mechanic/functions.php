@@ -654,7 +654,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 		<a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a>
 		</div>
 		<div class="card-footer text-center text-muted">
-		locatie: '.$product['plaats'].'
+		Locatie: '.$product['plaats'].'
 		</div>
 		</div>
 		';
@@ -890,10 +890,10 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 
 /* toont goede button aan de hand van ingelogt zijn of niet */
 function showButtonIndex(){
-	$html = '<a style="margin-right:50px;" href="overview.php" class="ghostbtn btn">Bekijk alle veilingen</a>';
+	$html = '<a href="overview.php" class="ghostbtn btn">Bekijk alle veilingen</a>';
 	if(isset($_SESSION['gebruikersnaam'])){
 		if($_SESSION['soortGebruiker'] != 2) {
-			$html .= '<a href="upgrade-user.php" class="ghostbtn btn">Wordt verkoper!</a>';
+			$html .= '<a href="upgrade-user.php" class="ghostbtn btn">Word verkoper!</a>';
 		} else {
 			$html .= '<a href="upload-article.php" class="ghostbtn btn">Verkoop voorwerp!</a>';
 		}
