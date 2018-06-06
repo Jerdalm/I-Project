@@ -5,7 +5,7 @@ require_once './db.php';
 if (isset($_POST['submit-code-registration'])){
 
 	if (checkIfFieldsFilledIn()) {
-       $_SESSION['hashedcode'] = md5($_POST['code']);
+       $_SESSION['hashedcode'] = $_POST['code'];
        if (validateCode($_POST['code'], $_SESSION['email-registration'])){
            redirectJS("./registreren.php?step=3");
        } else {
