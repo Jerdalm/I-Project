@@ -11,20 +11,19 @@ $queryGetColumns = handlequery("SELECT * FROM rubriek ORDER BY rubrieknaam asc")
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body">
-				
-				<form>
-					
-					<select class="selectpicker" data-live-search="true">
-						<option value="Maak een keuze...">Maak een keuze...</option>
+			<div class="modal-body">				
+				<form>				
+					<select class="form-control" name="resort-column">
+						<option value="Maak een keuze..." disabled selected>Maak een keuze...</option>
 						<?php 
-
 						foreach ($queryGetColumns as $option => $value) {			
-							echo '<option data-tokens="'.$value['rubrieknaam']	.'" val="'.$value['rubrieknummer'].'">'.$value['rubrieknaam'].'</option>';
+							echo '<option value="'.$value['rubrieknummer'].'">'.$value['rubrieknaam'].'</option>';
 						}
 						?>
 					</select>
-
+					<br>
+					<input type="hidden" class="rubrieknummer" name="rubrieknummer" value="">
+					<button class="btn btn-success">Sorteer veiling</button>
 				</form>
 			</div>
 		</div>

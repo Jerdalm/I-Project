@@ -1,5 +1,7 @@
 <?php 
 require_once './header.php'; 
+$queryGetColumns = handlequery("SELECT * FROM rubriek ORDER BY rubrieknaam asc");
+
 $htmlRubriek = '<div class="col-lg-9"><form class="form-group" method="GET" action=""> 
 <input type="text" name="rubrieken" placeholder="Geef: Rubriek of rubrieknummer"> <br>
 <button class="btn cta-orange" name="search-column" type="submit" value="zoeken">Zoeken</button>
@@ -8,6 +10,12 @@ $htmlRubriek = '<div class="col-lg-9"><form class="form-group" method="GET" acti
 <div class="col-lg-3">
 <form method="get" class="form-group">
 <input name="column-name" placeholder="Voeg rubriek toe"><br>
+<select name="column-head">
+<option value="" disabled selected>Kies een hoofdsubriek...</option>';
+foreach ($queryGetColumns as $option => $value) {
+	$htmlRubriek .= '<option value="'.$value['rubrieknummer'].'">'.$value['rubrieknaam'].'</option>';
+}
+$htmlRubriek .= '</select><br>
 <button class="btn btn-primary" name="upload-column" value="upload-column">Maak nieuw rubriek aan</button>
 </form>
 </div>';

@@ -1,13 +1,16 @@
 <?php 
 require_once './header.php'; 
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-	if (isset($_POST['login-submit-admin'])) {
-		if(($_POST['email-login'] === "admin@root.com" || $_POST['email-login'] === "admin") && $_POST['wachtwoord'] == "iproject34"){
-			$_SESSION['gebruikersnaam'] = "admin";
-			redirectJS("./admin-pagina.php");
-		} else {
-			$errorLoginAdmin = "Wachtwoord of email/gebruikersnaam klopt niet";
+if (isset($_SESSION['gebruikersnaam'])){
+	redirectJS("change-article.php");
+} else {
+	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+		if (isset($_POST['login-submit-admin'])) {
+			if(($_POST['email-login'] === "admin@root.com" || $_POST['email-login'] === "admin") && $_POST['wachtwoord'] == "iproject34"){
+				$_SESSION['gebruikersnaam'] = "admin";
+				redirectJS("./admin-pagina.php");
+			} else {
+				$errorLoginAdmin = "Wachtwoord of email/gebruikersnaam klopt niet";
+			}
 		}
 	}
 }

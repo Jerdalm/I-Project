@@ -1,6 +1,14 @@
 <?php require_once ('header.php');
 if(isset($_GET['product'])){
 
+    $breadcrumbspara = $_GET['product'];
+    $querybreadcrumbs = "select *
+from VoorwerpInRubriek V
+INNER JOIN rubriek R
+ON v.rubriekOpLaagsteNiveau = R.rubrieknummer";
+
+    $breadcrumbs = handlequery($querybreadcrumbs, $breadcrumbspara);
+    print_r($breadcrumbs);
 if (isset($_SESSION['gebruikersnaam'])) {
     if (isset($_COOKIE[$_SESSION['gebruikersnaam']])) {
         if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam']) == false) {
@@ -139,6 +147,8 @@ if (isset($_SESSION['gebruikersnaam'])) {
             $htmluploadFoto = '<a href="./user.php">Log in om te kunnen bieden!</a>';
           }
         }
+
+
         ?>
 
 <main>
