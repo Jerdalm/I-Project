@@ -159,7 +159,7 @@ function sendMail($to, $subject, $body, $message = "Fout"){
 	$emailTo      = $to;
 	$subjectEmail = $subject;
 	$message_body = $body;
-	$header = 'From: EenmaalAndermaal <noreply@iproject34.icasites.nl>' . "\r\n" . 'Reply-To: service@iproject34.icasites.nl' . "\r\n" . 
+	$header = 'From: EenmaalAndermaal <noreply@iproject34.icasites.nl>' . "\r\n" . 'Reply-To: service@iproject34.icasites.nl' . "\r\n" .
 			   'X-Mailer: PHP/' . phpversion() . "\r\n" . 'Content-type:text/html;charset=UTF-8';
 
 	mail( $emailTo, $subjectEmail, $message_body,$header );
@@ -418,10 +418,9 @@ function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLoc
 	$subject = $subjectText;
 	$message_body = $bodyText;
 
-	$randomVerificationCode_hashed = md5($randomVerificationCode);
 
 	if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		setCodeInDB($email, $randomVerificationCode_hashed);
+		setCodeInDB($email, $randomVerificationCode);
 		sendMail($to, $subject, $message_body);
 		redirectJS("./".$headerLocationIf);
 	} else {
