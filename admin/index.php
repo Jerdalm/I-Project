@@ -1,7 +1,7 @@
 <?php 
 require_once './header.php'; 
 if (isset($_SESSION['gebruikersnaam'])){
-	redirectJS("change-article.php");
+	redirectJS("./change-article.php");
 } else {
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		if (isset($_POST['login-submit-admin'])) {

@@ -94,6 +94,10 @@ header{
 .beheerdersomgeving .table.striped th{
 	background-color: rgba(255,255,255,0.5);
 }
+
+#filter button:first-of-type{
+	margin-bottom: 5px;
+}
 @media screen and (max-width: 500px){
 	.beheerdersomgeving .row{
 		margin-top: 40px;
