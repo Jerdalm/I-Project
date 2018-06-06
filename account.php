@@ -24,9 +24,9 @@ if(isset($_SESSION['gebruikersnaam'])){
     <a class="list-group-item list-group-item-action" id="list-my-auctions" data-toggle="list" href="#content-my-auctions" role="tab" aria-controls="my-auctions">Mijn veilingen</a>
     <a class="list-group-item list-group-item-action" id="list-upload-article" data-toggle="list" href="#content-upload-article" role="tab" aria-controls="upload-article">Verkoop voorwerp</a>
         <?php } ?>
-	<a class="list-group-item list-group-item-action" id="list-offering-in" data-toggle="list" href="#content-offering-in" role="tab" aria-controls="offering-in">Geboden op</a>
+	  <a class="list-group-item list-group-item-action" id="list-offering-in" data-toggle="list" href="#content-offering-in" role="tab" aria-controls="offering-in">Geboden op</a>
     <a class="list-group-item list-group-item-action" id="list-user-details" data-toggle="list" href="#content-user-details" role="tab" aria-controls="user-details">Gebruikersgegevens</a>
-	<iframe src="http://localhost/i-project/productpage.php?product=111494852278" style="display:none" name="frame1"></iframe>
+
 	<input type="button" onclick="frames['frame1'].print()" value="print!">
 
 	<?php
@@ -41,8 +41,8 @@ if(isset($_SESSION['gebruikersnaam'])){
 	 require 'layout/auctionswon.php';
      require 'layout/my-auctions.php';
      require 'layout/offering-in.php';
-	 require 'layout/seller-registration.php';
    require 'layout/upload-article-tab.php';
+   require 'layout/seller-registration.php';
 
 	 ?>
     </div>
