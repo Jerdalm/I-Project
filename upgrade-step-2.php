@@ -30,7 +30,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if($_SESSION['verificationMethod'] == 'Credit Card') {
         if (isset($_POST['creditcardnumber']) && !empty($_POST['creditcardnumber']) ) {
-            echo 'mooi';
             $_SESSION['creditcardnumber'] = $_POST['creditcardnumber'];
             insertUpgradeinfoInDB();
         } else {
