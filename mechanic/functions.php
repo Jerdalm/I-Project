@@ -685,9 +685,8 @@ function validateCode($inputCode, $email){
 	$emailParameters = array(':mailadres' => "$email");
 	$emailEquivalent = handleQuery("SELECT * FROM ActivatieCode WHERE mailadres = :mailadres",$emailParameters)[0];
 	// $emailEquivalent['code'] =  trim($emailEquivalent['code']);
-	$hashedCode = md5($inputCode); //hashed de code, zodat deze gecontroleerd kan worden met de gesahesde code binnen de database
 
-	if ($emailEquivalent['code'] == $hashedCode){
+	if ($emailEquivalent['code'] == $inputCode){
 		$state = true;
 	} else {
 		$state = false;
