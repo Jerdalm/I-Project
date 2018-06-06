@@ -1,4 +1,5 @@
-<?php require_once 'header.php';
+<div class="tab-pane fade float-left col-lg-9 " id="content-upload-article" role="tabpanel" aria-labelledby="upload-article">
+	<?php require_once 'header.php';
 
 if (isset($_SESSION['gebruikersnaam'])) {
   $username = $_SESSION['gebruikersnaam'];
@@ -79,8 +80,8 @@ if (isset($_SESSION['gebruikersnaam'])) {
       }
     } ?>
 
-    <main>
-      <section class="uploadarticle">
+   
+      
         <div class="container">
             <form method="POST" enctype="multipart/form-data">
               <legend>Voorwerp veilen!</legend>
@@ -108,7 +109,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
                 </div>
                 <div class="form-group col-md-4">
                   <label class="control-label" for="startprijs">Startprijs in euro&apos;s*</label>
-                  <input id="startprijs" name="startprijs" type="number" min="0" step="0.01" class="form-control input-md" required>
+                  <input id="startprijs" name="startprijs" type="number" step="0.01" min="0" class="form-control input-md" required>
                 </div>
               </div>
               <div class="form-row">
@@ -128,7 +129,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
               <div class="form-row">
                 <div class="form-group col-md-4">
                   <label class="control-label" for="verzendkosten">Verzendkosten</label>
-                  <input id="verzendkosten" name="verzendkosten" min="0" type="number" placeholder="Optioneel" class="form-control input-md">
+                  <input id="verzendkosten" name="verzendkosten" type="number" min="0" placeholder="Optioneel" class="form-control input-md">
                   </div>
                 <div class="form-group col-md-4">
                   <label class="control-label" for="verzendinstructies">Verzendinstructies</label>
@@ -144,12 +145,12 @@ if (isset($_SESSION['gebruikersnaam'])) {
               </div>
               <div class="form-group">
                 <label class="control-label" for="verzenden"></label>
-                <button id="sellitem" name="sellitem" type="submit" class="cta-orange">Verkopen!</button>
+                <button id="sellitem" name="sellitem" type="submit" class="cta-orange btn">Verkopen!</button>
               </div>
             </form>
         </div>
-      </section>
-    </main>;
+    
+    
     <script>
         $('.custom-file-input').on('change',function(){
             var fileName = $(this).val();
@@ -171,5 +172,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
     nog geen verkoper > redirect naar verkoper worden?
     </section></main>';
   }
+?>
 
-  require_once 'footer.php' ?>
+</div>
+

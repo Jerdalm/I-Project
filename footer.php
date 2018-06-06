@@ -6,7 +6,7 @@
 
 		 <h2><b>Eenmaal</b></h2>
 		 <img class="logo" src="img/logo/logo.svg">
-		 <h2> andermaal</h2>
+		 <h2> Andermaal</h2>
 
 		</div>
 		<div class="col-lg-1 col-lg-1"></div>

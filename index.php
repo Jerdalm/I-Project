@@ -8,7 +8,7 @@ $_SESSION['email-registration'] = ' ';
       <div class="row text-center">
          <div class="col-lg-12 " >
             <img src="img/logo/logo.svg" alt="Logo" class="logo" >
-            <h1 class="display-3 text-center text-white"> <b>Eenmaal</b> andermaal</h1>
+            <h1 class="display-3 text-center text-white"> <b>Eenmaal</b> Andermaal</h1>
             <form action="overview.php" method="get">
                <input list="films" name="search" placeholder="Het gewenste product" maxlength="50" type="search">
                <input value="zoeken" type="submit">
@@ -28,7 +28,15 @@ $_SESSION['email-registration'] = ' ';
 	  <div class="product-container">
       <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
          <div class="carousel-inner row w-100 mx-auto">
-             <?= showProducts(true, "SELECT TOP 6 * from currentAuction"); ?>
+             <?php
+             if(isset($_SESSION['gebruikersnaam']) && isset($_GET['product'])) {
+                 $data = unserialize($_COOKIE[$_SESSION['gebruikersnaam']]);
+
+                 echo showProducts(true, Setquery($_SESSION['gebruikersnaam'], $_GET['product']));
+             } else {
+                 echo showProducts(true,"SELECT TOP 10 * from currentAuction ORDER BY NEWID()");
+             }
+             ?>
          </div>
          <div class="clearfix">
             <div class="sliderbuttons">
@@ -47,7 +55,6 @@ $_SESSION['email-registration'] = ' ';
    </div>
 </section>
 <section class="attention text-center">
-    <a style="margin-right:50px;" href="overview.php" class="cta-orange btn">Bekijk alle veilingen</a>
     <?= showButtonIndex();?>
 </section>
 <section class="userExperience">
@@ -56,16 +63,18 @@ $_SESSION['email-registration'] = ' ';
       <div class="col-lg-1">
       </div>
       <div class="col-lg-3">
-        <img  class="rounded-circle" src="https://media.nu.nl/m/o5mx3i7aqf41_wd640.jpeg">
+        <img  class="rounded-circle" src="https://media.licdn.com/dms/image/C5603AQEw87fpxGbWxg/profile-displayphoto-shrink_200_200/0?e=1533772800&v=beta&t=r9OJ4eFVUOsFzktAPy054Us6l7BZTqdraWBySWvzZBg">
       </div>
       <div class="col-lg-5">
-        <h2> "We have the BEST website!"</h2>
+        <h2> "Het is erg eenvoudig om je gewenste product te vinden"</h2>
       </div>
       <div class="col-lg-3">
       </div>
     </div>
   </div>
 </section>
+
+<!--
 <script>
 setInterval(function()
 {
@@ -74,6 +83,7 @@ setInterval(function()
 });
 }, 1000);
 </script>
+-->
 <script src="vendor/bootstrap/js/popup.header.js"></script>
 <!-- /.container -->
 <?php require_once './footer.php'; ?>

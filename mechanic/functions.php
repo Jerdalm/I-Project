@@ -74,10 +74,10 @@ function Setquery($username, $vwNummer)
 
 /* Deze functie zorgt voor de connectie met de Database */
 function ConnectToDatabase(){
-	$hostname = "mssql2.iproject.icasites.nl";
+	$hostname = "localhost";
 	$dbname = "iproject34";
-	$dbusername = "iproject34";
-	$dbpw = "Q43bdM5d9r";
+	$dbusername = "sa";
+	$dbpw = "12345";
 
 	try {$pdo = new PDO("sqlsrv:Server=$hostname;Database=$dbname;
 		ConnectionPooling=0", "$dbusername", "$dbpw");
@@ -159,8 +159,8 @@ function sendMail($to, $subject, $body, $message = "Fout"){
 	$emailTo      = $to;
 	$subjectEmail = $subject;
 	$message_body = $body;
-	$header = 'From: EenmaalAndermaal <noreply@iproject34.icasites.nl>' . "\r\n" . 'Reply-To: service@iproject34.icasites.nl' . "\r\n" . 
-			   'X-Mailer: PHP/' . phpversion() . '\r\n' . 'Content-type:text/html;charset=UTF-8';
+	$header = 'From: EenmaalAndermaal <noreply@iproject34.icasites.nl>' . "\r\n" . 'Reply-To: service@iproject34.icasites.nl' . "\r\n" .
+			   'X-Mailer: PHP/' . phpversion() . "\r\n" . 'Content-type:text/html;charset=UTF-8';
 
 	mail( $emailTo, $subjectEmail, $message_body,$header );
     // echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
@@ -418,10 +418,9 @@ function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLoc
 	$subject = $subjectText;
 	$message_body = $bodyText;
 
-	$randomVerificationCode_hashed = md5($randomVerificationCode);
 
 	if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		setCodeInDB($email, $randomVerificationCode_hashed);
+		setCodeInDB($email, $randomVerificationCode);
 		sendMail($to, $subject, $message_body);
 		redirectJS("./".$headerLocationIf);
 	} else {
@@ -654,7 +653,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 		<a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a>
 		</div>
 		<div class="card-footer text-center text-muted">
-		locatie: '.$product['plaats'].'
+		Locatie: '.$product['plaats'].'
 		</div>
 		</div>
 		';
@@ -890,15 +889,17 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 
 /* toont goede button aan de hand van ingelogt zijn of niet */
 function showButtonIndex(){
+	$html = '<a href="overview.php" class="ghostbtn btn">Bekijk alle veilingen</a>';
 	if(isset($_SESSION['gebruikersnaam'])){
 		if($_SESSION['soortGebruiker'] != 2) {
-		echo '<a href="upgrade-user.php" class="cta-orange btn">Wordt verkoper!</a>';
+			$html .= '<a href="upgrade-user.php" class="ghostbtn btn">Word verkoper!</a>';
+		} else {
+			$html .= '<a href="upload-article.php" class="ghostbtn btn">Verkoop voorwerp!</a>';
+		}
 	} else {
-		echo '<a href="upload-article.php" class="cta-orange btn">Verkoop voorwerp!</a>';
+		$html .= '<a href="registreren.php" class="ghostbtn btn">Registreer je nu om mee te bieden!</a>';
 	}
-	} else {
-		echo '<a href="registreren.php" class="cta-orange btn">Registreer je nu om mee te bieden!</a>';
-	}
+	return $html;
 }
 
 function checkNewPassword ($password, $passwordrepeat){

@@ -1,7 +1,7 @@
 <?php require_once './header.php'; ?>
 
 <main>
-    <section>
+    <section class="register">
         <div class="container">
             <div class="row">
                 <?php

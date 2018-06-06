@@ -17,15 +17,17 @@ if(isset($_SESSION['gebruikersnaam'])){
     <div class="list-group" id="list-tab" role="tablist">
 
 	
-	<a class="list-group-item list-group-item-action active" id="list-auctions-won" data-toggle="list" href="#content-auctions-won" role="tab" aria-controls="auctions-won">Gewonnen veilingen</a>
+  <a class="list-group-item list-group-item-action active" id="list-user-details" data-toggle="list" href="#content-user-details" role="tab" aria-controls="user-details">Gebruikersgegevens</a>
+  
     
         <?php
         if($_SESSION['soortGebruiker'] > 1){ ?>
     <a class="list-group-item list-group-item-action" id="list-my-auctions" data-toggle="list" href="#content-my-auctions" role="tab" aria-controls="my-auctions">Mijn veilingen</a>
+    <a class="list-group-item list-group-item-action" id="list-upload-article" data-toggle="list" href="#content-upload-article" role="tab" aria-controls="upload-article">Verkoop voorwerp</a>
         <?php } ?>
-	<a class="list-group-item list-group-item-action" id="list-offering-in" data-toggle="list" href="#content-offering-in" role="tab" aria-controls="offering-in">Geboden op</a>
-    <a class="list-group-item list-group-item-action" id="list-user-details" data-toggle="list" href="#content-user-details" role="tab" aria-controls="user-details">Gebruikersgegevens</a>
-	<iframe src="http://localhost/i-project/productpage.php?product=111494852278" style="display:none" name="frame1"></iframe>
+    <a class="list-group-item list-group-item-action" id="list-offering-in" data-toggle="list" href="#content-offering-in" role="tab" aria-controls="offering-in">Geboden op</a>
+    <a class="list-group-item list-group-item-action" id="list-auctions-won" data-toggle="list" href="#content-auctions-won" role="tab" aria-controls="auctions-won">Gewonnen veilingen</a>
+
 	<input type="button" onclick="frames['frame1'].print()" value="print!">
 
 	<?php
@@ -36,11 +38,12 @@ if(isset($_SESSION['gebruikersnaam'])){
 </div>
 	<div class="tab-content" id="nav-tabContent">
      <?php
-	 require 'layout/user-details.php';
-	 require 'layout/auctionswon.php';
+   require 'layout/user-details.php';
+   require 'layout/auctionswon.php';
+   require 'layout/upload-article-tab.php';
      require 'layout/my-auctions.php';
      require 'layout/offering-in.php';
-	 require 'layout/seller-registration.php';
+   require 'layout/seller-registration.php';
 
 	 ?>
     </div>

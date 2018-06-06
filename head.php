@@ -23,6 +23,7 @@ $head = <<<HEAD
 		<link rel="stylesheet" type="text/css" href="css/style_timo.css">
 		<link rel="stylesheet" type="text/css" href="css/styles_kevin.css">
 		<link rel="stylesheet" type="text/css" href="css/mobile.css">
+		<link rel="stylesheet" type="text/css" href="css/Jeremy.css">
 
 
 		<title>EenmaalAndermaal</title>

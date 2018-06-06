@@ -1,14 +1,13 @@
 <?php require_once ('header.php');
 if(isset($_GET['product'])){
 
-    $breadcrumbspara = $_GET['product'];
-    $querybreadcrumbs = "select *
-from VoorwerpInRubriek V
+    $breadcrumbspara = array($_GET['product']);
+    $querybreadcrumbs = "SELECT *
+FROM VoorwerpInRubriek V
 INNER JOIN rubriek R
 ON v.rubriekOpLaagsteNiveau = R.rubrieknummer";
 
     $breadcrumbs = handlequery($querybreadcrumbs, $breadcrumbspara);
-    print_r($breadcrumbs);
 if (isset($_SESSION['gebruikersnaam'])) {
     if (isset($_COOKIE[$_SESSION['gebruikersnaam']])) {
         if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam']) == false) {
@@ -46,9 +45,18 @@ if (isset($_SESSION['gebruikersnaam'])) {
   }
 
   $boddata = FetchAssocSelectData(
-    "SELECT MAX(bodbedrag) as hoogstebod
-    from bod
-    where voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
+    "SELECT MAX(bodbedrag) AS hoogstebod
+    FROM bod
+    WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
+
+    $querybreadcrumbs = FetchAssocSelectData(
+        "SELECT *
+         FROM VoorwerpInRubriek V
+         INNER JOIN rubriek R
+         ON V.rubriekOpLaagsteNiveau = R.rubrieknummer
+         INNER JOIN Voorwerp Vo
+         ON Vo.voorwerpnummer = V.voorwerpnummer
+         WHERE V.voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
 
     $productdata = FetchAssocSelectData(
       "SELECT V.verkoper, G.gebruikersnaam, V.voorwerpnummer, V.verzendkosten, V.verzendinstructies, G.voornaam, G.achternaam, G.plaatsnaam, G.soortGebruiker,
@@ -85,7 +93,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
                                       $bestandmelding = "Het bestand " . basename($_FILES["fileToUpload"]["name"]) . " is geüpload.";
                                       $bestandsnaam = $target_file;
                                       $uploadParameters = array(':voorwerpnummer' => $productdata['voorwerpnummer'], ':bestandsnaam' => $bestandsnaam);
-                                      handlequery("insert into Bestand values (:bestandsnaam, :voorwerpnummer)", $uploadParameters);
+                                      handlequery("INSERT INTO Bestand VALUES (:bestandsnaam, :voorwerpnummer)", $uploadParameters);
                                       redirectJS('productpage.php?product=' . $productdata['voorwerpnummer']); //Refresht de pagina zodat de foto's getoont worden
                                   } else {
                                       $bestandmelding = "Sorry, Er is iets fout gegaan tijdens het uploaden van uw bestand.";
@@ -105,7 +113,6 @@ if (isset($_SESSION['gebruikersnaam'])) {
               }
           } else if(isset($_POST['bidAmount-submit'])){
             $paramBod = array(':voorwerpnummer' => $_GET['product'], ':bedrag' => (float)$_POST['bidAmount'], ':gebruiker' => $_SESSION['gebruikersnaam']);
-            //$plaatsBod =  executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod); // functie in databse om het bod uit te brengen en te checken of het klopt
             if ($_SESSION['gebruikersnaam'] != $productdata['verkoper']) {
               if (!empty($highestBid)) {
                 if ($_POST['bidAmount'] >= $minimumbid) {
@@ -221,7 +228,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
                     <div class="alert alert-dark" role="alert">
 					<div class="product-info">
                         <p class="beginTijdstip"><i>Aangeboden op: <?= $aangebodenDag  ?> </i></p>
-                        <h2 class="alert-heading"> <strong> <?= $productdata['titel']?></strong></h2>
+                        <h2 class="alert-heading wraptext"> <strong> <?= $productdata['titel']?></strong></h2>
 
                         <?php if($productdata['startprijs'] != 0) { ?>
                             <p>Startprijs: €<?=number_format($productdata['startprijs'], 2, ",", ".")?></p>
@@ -297,7 +304,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
                             <?php
                             if(isset($_SESSION['gebruikersnaam'])) {
                                 $data = unserialize($_COOKIE[$_SESSION['gebruikersnaam']]);
-                                
+
                                 echo showProducts(true, Setquery($_SESSION['gebruikersnaam'], $_GET['product']));
                             } else {
                             echo showProducts(true,"SELECT TOP 6 * from currentAuction");
