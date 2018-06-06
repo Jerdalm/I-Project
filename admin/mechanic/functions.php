@@ -150,24 +150,24 @@ function showLoginAdminMenu(){
 	$htmlLogin = ' ';
 	if(isset($_SESSION['gebruikersnaam']) && !empty($_SESSION['gebruikersnaam'])){
 		$htmlLogin = '<li class="nav-item">';
-		$htmlLogin .= '<a class="nav-link" href="./change-article.php">Voorwerp aanpassen</a>';
+		$htmlLogin .= '<a class="nav-link" href="./change-auction.php">Veiling</a>';
 		$htmlLogin .= '</li>';
 		$htmlLogin .= '<li class="nav-item">';
-		$htmlLogin .= '<a class="nav-link" href="./change-user.php">Gebruiker aanpassen</a>';
+		$htmlLogin .= '<a class="nav-link" href="./change-user.php">Gebruiker</a>';
 		$htmlLogin .= '</li>';
 		$htmlLogin .= '<li class="nav-item">';
-		$htmlLogin .= '<a class="nav-link" href="./change-column.php">Rubriek aanpassen</a>';
+		$htmlLogin .= '<a class="nav-link" href="./change-column.php">Rubriek</a>';
 		$htmlLogin .= '</li>';
 		$htmlLogin .= '<li class="nav-item">';
 		$htmlLogin .= '<a class="nav-link" href="./logout.php">Uitloggen</a>';
 		$htmlLogin .= '</li>';
 		$htmlLogin .= '<li class="nav-item">';
 		$htmlLogin .= '<a href="admin-pagina.php?cleanDatabase=true" class="btn btn-danger">Verschoon database</a>';
-		if (isset($_GET['cleanDatabase'])) { cleanDB();}
+		if (isset($_GET['cleanDatabase']))  cleanDB();
 		$htmlLogin .= '</li>';
 	} else {
 		$htmlLogin = '<li class="nav-item">';
-		$htmlLogin .= '<a class="nav-link" href="./user.php">Inloggen</a>';
+		$htmlLogin .= '<a class="nav-link" href="./">Inloggen</a>';
 		$htmlLogin .= '</li>';
 	}
 	return $htmlLogin;

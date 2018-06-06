@@ -1,6 +1,6 @@
 <?php 
 require_once './header.php';
-if (isset($_SESSION['gebruikersnaam'])){
+if (isset($_SESSION['gebruikersnaam']) && $_SESSION['gebruikersnaam'] == 'admin'){
 	$queryGetColumns = handlequery("SELECT * FROM rubriek ORDER BY rubrieknaam asc");
 
 	$htmlRubriek = '<div class="col-lg-6"><form class="form-group" method="GET" action=""><div class="form-group"> 

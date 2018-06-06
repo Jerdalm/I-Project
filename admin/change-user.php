@@ -1,6 +1,6 @@
 <?php 
 require_once './header.php'; 
-if (isset($_SESSION['gebruikersnaam'])){
+if (isset($_SESSION['gebruikersnaam']) && $_SESSION['gebruikersnaam'] == 'admin'){
 	$htmlGebruiker = '<form class="form-group" method="GET" action=""> 
 	<input type="text" name="gebruiker" placeholder="Geef: Gebruikersnaam, E-mailadres, Plaats" min="0"> <br>
 	<button class="btn cta-orange" name="search-user" type="submit" value="zoeken">Zoeken</button>
