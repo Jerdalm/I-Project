@@ -109,7 +109,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
                 </div>
                 <div class="form-group col-md-4">
                   <label class="control-label" for="startprijs">Startprijs in euro&apos;s*</label>
-                  <input id="startprijs" name="startprijs" type="number" step="0.01" class="form-control input-md" required>
+                  <input id="startprijs" name="startprijs" type="number" step="0.01" min="0" class="form-control input-md" required>
                 </div>
               </div>
               <div class="form-row">
@@ -129,7 +129,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
               <div class="form-row">
                 <div class="form-group col-md-4">
                   <label class="control-label" for="verzendkosten">Verzendkosten</label>
-                  <input id="verzendkosten" name="verzendkosten" type="text" placeholder="Optioneel" class="form-control input-md">
+                  <input id="verzendkosten" name="verzendkosten" type="number" min="0" placeholder="Optioneel" class="form-control input-md">
                   </div>
                 <div class="form-group col-md-4">
                   <label class="control-label" for="verzendinstructies">Verzendinstructies</label>
