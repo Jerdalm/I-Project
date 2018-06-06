@@ -21,10 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $message_upgrade = '';
                 insertUpgradeinfoInDB();
             } else {
-                $message_upgrade = 'upgradeCode komt niet overeen met de toegestuurde code';
+                $message_upgrade = 'Code komt niet overeen met de toegestuurde code';
             }
         } else {
-            $message_upgrade = 'upgradeCode niet ingevoerd';
+            $message_upgrade = 'Code niet ingevoerd';
         }
     }
 
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['creditcardnumber'] = $_POST['creditcardnumber'];
             insertUpgradeinfoInDB();
         } else {
-        $message_upgrade = 'creditcardnummer niet ingevoerd';
+        $message_upgrade = 'Creditcardnummer niet ingevoerd';
         }
     }
 }

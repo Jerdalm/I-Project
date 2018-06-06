@@ -9,13 +9,14 @@ $body = 'Bedankt voor het registreren,
 voer de volgende activatiecode in op de site: <b>' . $randomVerificationCode.'</b>.';
 $headerLocationIf = "registreren.php?step=2";
 $headerLocationElse = "registreren.php";
+$soortCode = 0;
 
 if (isset($_POST['submit-mail'])){
 	if (checkIfFieldsFilledIn()) {
 		if (checkEmailUnique($_POST['email'])) {
 			if (filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
 				$_SESSION['email-registration'] = $_POST['email'];
-				sendCode($_POST['email'], $subject, $body, $headerLocationIf, $headerLocationElse, $randomVerificationCode);
+				sendCode($_POST['email'], $subject, $body, $headerLocationIf, $headerLocationElse, $randomVerificationCode,$soortCode);
 			} else {
 				$message_registration = 'Dit is geen geldig e-mailadres';
 			}

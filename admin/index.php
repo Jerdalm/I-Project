@@ -1,13 +1,13 @@
 <?php 
 require_once './header.php'; 
-if (isset($_SESSION['gebruikersnaam'])){
-	redirectJS("./change-article.php");
-} else {
+if (isset($_SESSION['gebruikersnaam']) && $_SESSION['gebruikersnaam'] == 'admin'){
+	redirectJS("./overview.php");
+} else if (!isset($_SESSION['gebruikersnaam'])) {
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		if (isset($_POST['login-submit-admin'])) {
 			if(($_POST['email-login'] === "admin@root.com" || $_POST['email-login'] === "admin") && $_POST['wachtwoord'] == "iproject34"){
 				$_SESSION['gebruikersnaam'] = "admin";
-				redirectJS("./admin-pagina.php");
+				redirectJS("./overview.php");
 			} else {
 				$errorLoginAdmin = "Wachtwoord of email/gebruikersnaam klopt niet";
 			}
@@ -36,5 +36,6 @@ if (isset($_SESSION['gebruikersnaam'])){
 </main>
 
 <?php 
+
 require_once './footer.php'; 
 ?>
