@@ -24,6 +24,8 @@ echo '
 </div>
 
 <button type="submit" name="submit-code-registration" value="Register" class="btn btn-primary btn-sm">Code invoeren</button>
+<br><br>
+Geen code ontvangen? Geen paniek. Het kan tot tien minuten duren voor u de code ontvangt.
 </form>
 ';
 ?>
