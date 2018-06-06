@@ -55,7 +55,6 @@ $_SESSION['email-registration'] = ' ';
    </div>
 </section>
 <section class="attention text-center">
-    <a style="margin-right:50px;" href="overview.php" class="cta-orange btn">Bekijk alle veilingen</a>
     <?= showButtonIndex();?>
 </section>
 <section class="userExperience">
@@ -64,16 +63,18 @@ $_SESSION['email-registration'] = ' ';
       <div class="col-lg-1">
       </div>
       <div class="col-lg-3">
-        <img  class="rounded-circle" src="https://media.nu.nl/m/o5mx3i7aqf41_wd640.jpeg">
+        <img  class="rounded-circle" src="https://media.licdn.com/dms/image/C5603AQEw87fpxGbWxg/profile-displayphoto-shrink_200_200/0?e=1533772800&v=beta&t=r9OJ4eFVUOsFzktAPy054Us6l7BZTqdraWBySWvzZBg">
       </div>
       <div class="col-lg-5">
-        <h2> "We have the BEST website!"</h2>
+        <h2> "Het is erg eenvoudig om je gewenste product te vinden"</h2>
       </div>
       <div class="col-lg-3">
       </div>
     </div>
   </div>
 </section>
+
+<!--
 <script>
 setInterval(function()
 {
@@ -82,6 +83,7 @@ setInterval(function()
 });
 }, 1000);
 </script>
+-->
 <script src="vendor/bootstrap/js/popup.header.js"></script>
 <!-- /.container -->
 <?php require_once './footer.php'; ?>

@@ -58,7 +58,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
          INNER JOIN Voorwerp Vo
          ON Vo.voorwerpnummer = V.voorwerpnummer
          WHERE V.voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
-    
+
     $productdata = FetchAssocSelectData(
       "SELECT V.verkoper, G.gebruikersnaam, V.voorwerpnummer, V.verzendkosten, V.verzendinstructies, G.voornaam, G.achternaam, G.plaatsnaam, G.soortGebruiker,
       V.titel, V.startprijs, V.beschrijving, G.mailadres , GT.telefoonnummer, V.looptijdBeginTijdstip, V.looptijdBeginDag, V.veilingGesloten, V.koper
@@ -230,7 +230,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
                     <div class="alert alert-dark" role="alert">
 					<div class="product-info">
                         <p class="beginTijdstip"><i>Aangeboden op: <?= $aangebodenDag  ?> </i></p>
-                        <h2 class="alert-heading"> <strong> <?= $productdata['titel']?></strong></h2>
+                        <h2 class="alert-heading wraptext"> <strong> <?= $productdata['titel']?></strong></h2>
 
                         <?php if($productdata['startprijs'] != 0) { ?>
                             <p>Startprijs: €<?=number_format($productdata['startprijs'], 2, ",", ".")?></p>
