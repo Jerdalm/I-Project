@@ -1,14 +1,13 @@
 <?php require_once ('header.php');
 if(isset($_GET['product'])){
 
-    $breadcrumbspara = $_GET['product'];
-    $querybreadcrumbs = "select *
-from VoorwerpInRubriek V
+    $breadcrumbspara = array($_GET['product']);
+    $querybreadcrumbs = "SELECT *
+FROM VoorwerpInRubriek V
 INNER JOIN rubriek R
 ON v.rubriekOpLaagsteNiveau = R.rubrieknummer";
 
     $breadcrumbs = handlequery($querybreadcrumbs, $breadcrumbspara);
-    print_r($breadcrumbs);
 if (isset($_SESSION['gebruikersnaam'])) {
     if (isset($_COOKIE[$_SESSION['gebruikersnaam']])) {
         if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam']) == false) {
@@ -46,9 +45,9 @@ if (isset($_SESSION['gebruikersnaam'])) {
   }
 
   $boddata = FetchAssocSelectData(
-    "SELECT MAX(bodbedrag) as hoogstebod
-    from bod
-    where voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
+    "SELECT MAX(bodbedrag) AS hoogstebod
+    FROM bod
+    WHERE voorwerpnummer = :voorwerpnummer", $paramvoorwerpnummer);
 
     $querybreadcrumbs = FetchAssocSelectData(
         "SELECT *
@@ -114,7 +113,6 @@ if (isset($_SESSION['gebruikersnaam'])) {
               }
           } else if(isset($_POST['bidAmount-submit'])){
             $paramBod = array(':voorwerpnummer' => $_GET['product'], ':bedrag' => (float)$_POST['bidAmount'], ':gebruiker' => $_SESSION['gebruikersnaam']);
-            //$plaatsBod =  executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod); // functie in databse om het bod uit te brengen en te checken of het klopt
             if ($_SESSION['gebruikersnaam'] != $productdata['verkoper']) {
               if (!empty($highestBid)) {
                 if ($_POST['bidAmount'] >= $minimumbid) {
