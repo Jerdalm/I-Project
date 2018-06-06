@@ -104,27 +104,34 @@ if (isset($_SESSION['gebruikersnaam'])) {
                       $besetandmelding = "Het bestand is geen afbeelding";
                   }
               }
-          } else if(isset($_POST['bidAmount-submit'])){
-            $paramBod = array(':voorwerpnummer' => $_GET['product'], ':bedrag' => (float)$_POST['bidAmount'], ':gebruiker' => $_SESSION['gebruikersnaam']);
-            if ($_SESSION['gebruikersnaam'] != $productdata['verkoper']) {
-              if (!empty($highestBid)) {
-                if ($_POST['bidAmount'] >= $minimumbid) {
-                  executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod);
-                  redirectJS('productpage.php?product=' . $productdata['voorwerpnummer']);
-                } else {
-                  $message_bids = "Uw bod is te laag, probeer hoger te bieden";
-                }
-              } elseif ($_POST['bidAmount'] >= $productdata['startprijs']) {
-                executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod);
-                redirectJS('productpage.php?product=' . $productdata['voorwerpnummer']);
+          } else if(isset($_POST['bidAmount-submit'])) {
+
+              if ($_POST['bidAmount'] < 100000000) {
+
+                  $paramBod = array(':voorwerpnummer' => $_GET['product'], ':bedrag' => (float)$_POST['bidAmount'], ':gebruiker' => $_SESSION['gebruikersnaam']);
+                  if ($_SESSION['gebruikersnaam'] != $productdata['verkoper']) {
+                      if (!empty($highestBid)) {
+                          if ($_POST['bidAmount'] >= $minimumbid) {
+                              executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod);
+                              redirectJS('productpage.php?product=' . $productdata['voorwerpnummer']);
+                          } else {
+                              $message_bids = "Uw bod is te laag, probeer hoger te bieden";
+                          }
+                      } elseif ($_POST['bidAmount'] >= $productdata['startprijs']) {
+                          executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod);
+                          redirectJS('productpage.php?product=' . $productdata['voorwerpnummer']);
+                      } else {
+                          $message_bids = "Uw bod is te laag, probeer hoger te bieden";
+                      }
+                  } else {
+                      $message_bids = "U kunt niet bieden op uw eigen veilingen";
+                  }
               } else {
-                $message_bids = "Uw bod is te laag, probeer hoger te bieden";
+                  $message_bids = "Sorry, u heeft te veel geld..";
               }
-            } else {
-              $message_bids = "U kunt niet bieden op uw eigen veilingen";
-            }
           }
         }
+
 
         if($productdata['veilingGesloten'] == 0) {
           if (isset($_SESSION['gebruikersnaam'])) {
