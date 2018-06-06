@@ -37,6 +37,9 @@ echo '
 
 <button type="submit" name="submit-mail" value="send-code" class="btn btn-primary btn-sm">Code sturen</button>
 </form>
+<div>
+<p>Let op: Deze E-mail zal gebruikt worden om te kunnen inloggen met uw account. Op deze E-mail krijgt u ook een activatiecode die nodig is om uw account te verifiëren.</p>
+</div>
 ';
 
 ?>
