@@ -60,7 +60,6 @@
 	$titel = $rubrieknaam = $rubriekgegevens[0][0];
 	$key = array_search(''.$rubrieknaam.'', array_column($rubrieken, 'rubrieknaam'));
 	$rubriekBreadcrumb = getRubriekPath($rubrieken,$key);
-	print_r($rubriekBreadcrumb);
 	
 	}
 	else{
