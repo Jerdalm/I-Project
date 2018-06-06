@@ -162,7 +162,7 @@ function sendMail($to, $subject, $body, $template = false){
 	if($template){
 	$message_body = file_get_contents('layout/mail/template_top.php');
 	$message_body .='<h2 class="mc-toc-title"><span style="font-family:open sans,helvetica neue,helvetica,arial,sans-serif"><strong><span style="color:#808080">'.$subject.'</span></strong></span></h2>
-    <span style="font-family:open sans,helvetica neue,helvetica,arial,sans-serif">'.$body.'</span>'                                                                  
+    <span style="font-family:open sans,helvetica neue,helvetica,arial,sans-serif">'.$body.'</span>';                                                                  
 	}
 	else{
 	$message_body = $body;
