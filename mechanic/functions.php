@@ -435,7 +435,7 @@ function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLoc
 
 	if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 		setCodeInDB($email, $randomVerificationCode);
-		sendMail($to, $subject, $message_body);
+		sendMail($to, $subject, $message_body,true);
 		redirectJS("./".$headerLocationIf);
 	} else {
 		$_SESSION['error_upgrade'] = 'Geen geldig e-mailadres.';
