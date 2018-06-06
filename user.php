@@ -10,7 +10,7 @@
                     echo '<p class="error error-warning">' . $message_login . '</p>';
                 }
                 ?>
-                <a href="./registreren.php" class="cta-orange">Klik hier om je te registreren!</a>
+                <a href="./registreren.php" class="cta-orange btn">Klik hier om je te registreren!</a>
             </div>
         </div>
     </section>
