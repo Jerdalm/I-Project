@@ -617,3 +617,17 @@ border-color:#d8360e;
     box-shadow: 0 0 0 0.2rem rgba(242, 85, 44,0.5)
 }
 
+.ghostbtn{
+	margin-right: 50px;
+	padding:10px;
+   	color:rgb(102, 102, 102);
+    border: 2px solid white;
+    font-size: 22px;
+	background-color:white;
+}
+
+section.attention .ghostbtn:hover{
+	
+
+}
+

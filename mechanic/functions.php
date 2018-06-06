@@ -890,15 +890,17 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 
 /* toont goede button aan de hand van ingelogt zijn of niet */
 function showButtonIndex(){
+	$html = '<a style="margin-right:50px;" href="overview.php" class="ghostbtn btn">Bekijk alle veilingen</a>';
 	if(isset($_SESSION['gebruikersnaam'])){
 		if($_SESSION['soortGebruiker'] != 2) {
-		echo '<a href="upgrade-user.php" class="cta-orange btn">Wordt verkoper!</a>';
+			$html .= '<a href="upgrade-user.php" class="ghostbtn btn">Wordt verkoper!</a>';
+		} else {
+			$html .= '<a href="upload-article.php" class="ghostbtn btn">Verkoop voorwerp!</a>';
+		}
 	} else {
-		echo '<a href="upload-article.php" class="cta-orange btn">Verkoop voorwerp!</a>';
+		$html .= '<a href="registreren.php" class="ghostbtn btn">Registreer je nu om mee te bieden!</a>';
 	}
-	} else {
-		echo '<a href="registreren.php" class="cta-orange btn">Registreer je nu om mee te bieden!</a>';
-	}
+	return $html;
 }
 
 function checkNewPassword ($password, $passwordrepeat){
