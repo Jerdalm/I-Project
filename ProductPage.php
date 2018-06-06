@@ -156,7 +156,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style=" display: flex; flex-wrap: wrap;">
             <div class="container header">
             </div>
-            <ol class="breadcrumb">
+            <ol style="background-color:#D9D9D9;" class="breadcrumb">
                 <li class="breadcrumb-item"><a href="overview.php?rub= <?= $querybreadcrumbs['rubriekOpLaagsteNiveau']?>"> <?=$querybreadcrumbs['rubrieknaam']?></a></li>
                 <li class="breadcrumb-item"> <?= $productdata['titel'] ?> </li>
             </ol>
