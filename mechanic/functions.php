@@ -411,7 +411,7 @@ function insertRegistrationinfoInDB(){
 }
 
 /* Deze functie zet de code in de database */
-function setCodeInDB($email, $hashed_code){
+function setCodeInDB($email, $hashed_code,$soortCode){
 	$parameters = array(':mailadres' => "$email");
 	$emailUnique = handleQuery("SELECT * FROM ActivatieCode WHERE mailadres = :mailadres", $parameters);
 
@@ -421,20 +421,20 @@ function setCodeInDB($email, $hashed_code){
 			SET code = :verifycode, tijdAangevraagd = GETDATE()
 			WHERE mailadres = :mailadres", $parameters);
 	} else {
-		$parameters = array(':mailadres' => "$email", ':verifycode' => "$hashed_code");
-		handleQuery("INSERT INTO ActivatieCode VALUES (0 ,:verifycode ,:mailadres, GETDATE())",$parameters);
+		$parameters = array(':mailadres' => "$email", ':verifycode' => "$hashed_code" , ':soortCode' => "$soortCode");
+		handleQuery("INSERT INTO ActivatieCode VALUES (:soortCode ,:verifycode ,:mailadres, GETDATE())",$parameters);
 	}
 }
 
 /* Deze functie verzendt de code naar de klant (email) */
-function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLocationElse, $randomVerificationCode){
+function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLocationElse, $randomVerificationCode,$soortCode){
 	$to      = $email;
 	$subject = $subjectText;
 	$message_body = $bodyText;
 
 
 	if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		setCodeInDB($email, $randomVerificationCode);
+		setCodeInDB($email, $randomVerificationCode,$soortCode);
 		sendMail($to, $subject, $message_body,true);
 		redirectJS("./".$headerLocationIf);
 	} else {
