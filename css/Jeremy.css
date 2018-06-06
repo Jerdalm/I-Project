@@ -1,3 +1,6 @@
 section.register p{
     margin: 20px 0;
 }
+
+/* See here the legendary code of Jeremy nogwat */
+.navbar input[type="search"]::placeholder{color:white;}

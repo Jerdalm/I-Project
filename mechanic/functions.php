@@ -155,12 +155,26 @@ function handlequery($sql, $parameters = false){
 }
 
 /* Deze functie verzend een mail naar de aangegeven parameters */
-function sendMail($to, $subject, $body, $message = "Fout"){
+function sendMail($to, $subject, $body, $template = false){
+	
 	$emailTo      = $to;
-	$subjectEmail = $subject;
+	
+	if($template){
+	$message_body = file_get_contents('layout/mail/template_top.php');
+	$message_body .='<h2 class="mc-toc-title"><span style="font-family:open sans,helvetica neue,helvetica,arial,sans-serif"><strong><span style="color:#808080">'.$subject.'</span></strong></span></h2>
+    <span style="font-family:open sans,helvetica neue,helvetica,arial,sans-serif">'.$body.'</span>';                                                                  
+	}
+	else{
 	$message_body = $body;
-	$header = 'From: EenmaalAndermaal <noreply@iproject34.icasites.nl>' . "\r\n" . 'Reply-To: service@iproject34.icasites.nl' . "\r\n" .
+	}
+
+	$subjectEmail = $subject;
+	$header = 'From: EenmaalAndermaal <noreply@iproject34.icasites.nl>' . "\r\n" . 'Reply-To: service@iproject34.icasites.nl' . "\r\n" . 
 			   'X-Mailer: PHP/' . phpversion() . "\r\n" . 'Content-type:text/html;charset=UTF-8';
+			   
+	if($template){
+	$message_body = file_get_contents('layout/mail/template_bottom.php');	
+	}
 
 	mail( $emailTo, $subjectEmail, $message_body,$header );
     // echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
@@ -421,7 +435,7 @@ function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLoc
 
 	if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
 		setCodeInDB($email, $randomVerificationCode);
-		sendMail($to, $subject, $message_body);
+		sendMail($to, $subject, $message_body,true);
 		redirectJS("./".$headerLocationIf);
 	} else {
 		$_SESSION['error_upgrade'] = 'Geen geldig e-mailadres.';
@@ -685,9 +699,8 @@ function validateCode($inputCode, $email){
 	$emailParameters = array(':mailadres' => "$email");
 	$emailEquivalent = handleQuery("SELECT * FROM ActivatieCode WHERE mailadres = :mailadres",$emailParameters)[0];
 	// $emailEquivalent['code'] =  trim($emailEquivalent['code']);
-	$hashedCode = md5($inputCode); //hashed de code, zodat deze gecontroleerd kan worden met de gesahesde code binnen de database
 
-	if ($emailEquivalent['code'] == $hashedCode){
+	if ($emailEquivalent['code'] == $inputCode){
 		$state = true;
 	} else {
 		$state = false;

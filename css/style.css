@@ -1,4 +1,8 @@
 /* CSS Document */
+::placeholder {
+	color: white;
+	opacity: 1;
+}
 
 body {background-color: e5e7ec;}
 
