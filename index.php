@@ -8,7 +8,7 @@ $_SESSION['email-registration'] = ' ';
       <div class="row text-center">
          <div class="col-lg-12 " >
             <img src="img/logo/logo.svg" alt="Logo" class="logo" >
-            <h1 class="display-3 text-center text-white"> <b>Eenmaal</b> andermaal</h1>
+            <h1 class="display-3 text-center text-white"> <b>Eenmaal</b> Andermaal</h1>
             <form action="overview.php" method="get">
                <input list="films" name="search" placeholder="Het gewenste product" maxlength="50" type="search">
                <input value="zoeken" type="submit">

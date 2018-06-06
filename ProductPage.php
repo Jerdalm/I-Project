@@ -85,7 +85,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
                                       $bestandmelding = "Het bestand " . basename($_FILES["fileToUpload"]["name"]) . " is geüpload.";
                                       $bestandsnaam = $target_file;
                                       $uploadParameters = array(':voorwerpnummer' => $productdata['voorwerpnummer'], ':bestandsnaam' => $bestandsnaam);
-                                      handlequery("insert into Bestand values (:bestandsnaam, :voorwerpnummer)", $uploadParameters);
+                                      handlequery("INSERT INTO Bestand VALUES (:bestandsnaam, :voorwerpnummer)", $uploadParameters);
                                       redirectJS('productpage.php?product=' . $productdata['voorwerpnummer']); //Refresht de pagina zodat de foto's getoont worden
                                   } else {
                                       $bestandmelding = "Sorry, Er is iets fout gegaan tijdens het uploaden van uw bestand.";
@@ -297,7 +297,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
                             <?php
                             if(isset($_SESSION['gebruikersnaam'])) {
                                 $data = unserialize($_COOKIE[$_SESSION['gebruikersnaam']]);
-                                
+
                                 echo showProducts(true, Setquery($_SESSION['gebruikersnaam'], $_GET['product']));
                             } else {
                             echo showProducts(true,"SELECT TOP 6 * from currentAuction");
