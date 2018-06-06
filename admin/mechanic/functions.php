@@ -87,7 +87,7 @@ function sendMail($to, $subject, $body, $message = "Fout"){
 	$subjectEmail = $subject;
 	$message_body = $body;
 	$header = 'From: EenmaalAndermaal <noreply@iproject34.icasites.nl>' . "\r\n" . 'Reply-To: service@iproject34.icasites.nl' . "\r\n" . 
-			   'X-Mailer: PHP/' . phpversion() . '\r\n' . 'Content-type:text/html;charset=UTF-8';
+			   'X-Mailer: PHP/' . phpversion() . "\r\n" . 'Content-type:text/html;charset=UTF-8';
 
 
 
