@@ -3,7 +3,7 @@ require_once './head.php';
 require_once './db.php';
 
 // de code is standaard 222 voor het testen
-$randomVerificationCode = generateRandomCode();
+$randomVerificationCode = createrandompassword();
 $soortCode = 1;
 // $randomVerificsendRegistrationCodeationCode = generateRandomCode();
 

@@ -618,10 +618,6 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 
 	foreach($producten as $product) {
 
-        $voorwerpnummer = $product['voorwerpnummer'];
-        $queryStartPrijs = "SELECT * FROM voorwerp WHERE voorwerpnummer = $voorwerpnummer";
-        $startprijs = handlequery($queryStartPrijs);
-
         $itemcount++;
         if (!$product['bodbedrag']) {
             $product['bodbedrag'] = 0;
@@ -650,12 +646,8 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 		</h4>';
 
 		if ($showAccount == false) {
-            if ($product['bodbedrag'] == 0) {
-                $html .= '<h5 class="product-data" id = "' . $product['voorwerpnummer'] . '" ><span class="time" > ' . $timediff . '</span >|<span class="price" >&euro;' . $startprijs[0]['startprijs'] . ' </span ></h5 >';
-            } else {
-                $html .= '<h5 class="product-data" id = "' . $product['voorwerpnummer'] . '" ><span class="time" > ' . $timediff . '</span >|<span class="price" >&euro;' . $product['bodbedrag'] . ' </span ></h5 >';
-            }
-        }
+            $html .= '<h5 class="product-data" id = "' . $product['voorwerpnummer'] . '" ><span class="time" > ' . $timediff . '</span >|<span class="price" >&euro;' . $product['bodbedrag'] . ' </span ></h5 >';
+		}
 
 		$html.='
 		<a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a>
