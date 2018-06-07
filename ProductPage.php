@@ -140,7 +140,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
             }
             $htmluploadFoto = '<form method="post" action="">
             <div class="form-row align-items-center">
-            <div class="col-sm-12">
+            <div class="col-sm-12 mimimumbid">
             <input type="number" step="0.01" class="form-control" name="bidAmount" id="colFormLabelLg" placeholder="Minimum bieding: €'. number_format($minimumbid, 2, ",", ".") .'">
             <input type="submit" name="bidAmount-submit" Value="Bied!" class="biedenKnop cta-orange btn">
             ';
@@ -348,7 +348,7 @@ setInterval(function()
 $('.preview-thumbnail').load(document.URL +  ' .preview-thumbnail');
 $('.product-info').load(document.URL +  ' .product-info');
 $('.bids').load(document.URL +  ' .bids');
-$('.userInfo').load(document.URL +  ' .userInfo');
+// $('.userInfo').load(document.URL +  ' .userInfo');
 
 }, 1000);
 </script>
