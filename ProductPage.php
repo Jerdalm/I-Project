@@ -53,7 +53,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
 
     $productdata = FetchAssocSelectData(
       "SELECT V.verkoper, G.gebruikersnaam, V.voorwerpnummer, V.verzendkosten, V.verzendinstructies, G.voornaam, G.achternaam, G.plaatsnaam, G.soortGebruiker,
-      V.titel, V.startprijs, V.beschrijving, G.mailadres , GT.telefoonnummer, V.looptijdBeginTijdstip, V.looptijdBeginDag, V.veilingGesloten, V.koper
+      V.titel, V.startprijs, V.beschrijving, G.mailadres , GT.telefoonnummer, V.looptijdBeginTijdstip, V.looptijdBeginDag, V.looptijdEindeTijdstip, V.looptijdEindeDag, V.veilingGesloten, V.koper
       FROM Voorwerp V
       JOIN gebruiker G on V.verkoper = G.gebruikersnaam
       LEFT JOIN gebruikerstelefoon GT on G.gebruikersnaam = GT.gebruikersnaam
@@ -245,6 +245,9 @@ if (isset($_SESSION['gebruikersnaam'])) {
                             <p>Startprijs: € 0,00</p>
                         <?php } if(isset($productdata['verzendkosten'])){ echo '<p>Verzendkosten: €' .number_format($productdata['verzendkosten'], 2, ",", ".");} ?></p>
                         <p>Productnummer: <?=$productdata['voorwerpnummer']?></p>
+                        <p>Resterende looptijd: <br><b><?= calculateTimeDiffrence(date('Y-m-d H:i:s'),
+                            $productdata['looptijdEindeDag'] . ' ' . $productdata['looptijdEindeTijdstip']
+                        ); ?></b></p>
                         <?php if($productdata['veilingGesloten'] == 1) {
                             echo "Veiling status: gesloten";
                         } else {
