@@ -78,7 +78,9 @@ if (isset($_SESSION['gebruikersnaam'])) {
         die();
       }
     } ?>
+<style>
 
+</style>
     <main>
       <section class="uploadarticle">
         <div class="container">
@@ -135,6 +137,11 @@ if (isset($_SESSION['gebruikersnaam'])) {
                   <input id="verzendinstructies" name="verzendinstructies" type="text" placeholder="Optioneel" class="form-control input-md">
                 </div>
               </div>
+			  <div class="form-group col-md-12">
+                <label class="control-label" for="verzendinstructies">Rubriek</label>
+                <input id="verzendinstructies" name="typeahead" type="text" placeholder="Optioneel" class="form-control input-md">
+              </div>
+              </div>
               <p>Upload foto*</p>
               <div class="form-row">
                 <div class="custom-file col-md-4" id="customFile">
@@ -162,14 +169,16 @@ if (isset($_SESSION['gebruikersnaam'])) {
                 $(this).next('.custom-file-label').addClass("selected").html(filename);
             }
         })
+    $(document).ready(function(){
+    $('input.typeahead').typeahead({
+        name: 'typeahead',
+        remote:'search.php?key=%QUERY',
+        limit : 10
+    });
+	});
     </script>
  <?php  } else {
     redirectJS("index.php"); // redirect naar index wanneer je niet ingelogd bent
-    exit();
-    echo '<main><section>
-    niet ingelogd > redirect naar?<br>
-    nog geen verkoper > redirect naar verkoper worden?
-    </section></main>';
   }
 
   require_once 'footer.php' ?>

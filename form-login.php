@@ -1,14 +1,28 @@
 <?php
+$t=time();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['login-submit'])) {
-        $_SESSION['email-login'] = $_POST['email-login'];
-        $_SESSION['wachtwoord'] = $_POST['wachtwoord'];
-        $message_login = loginControl($_POST['email-login'], $_POST['wachtwoord']);
-        loginControl($_POST['email-login'], $_POST['wachtwoord']);
+        if(($t - $_SESSION['fifthloginattempt_time']) > 30 && $_SESSION['fifthloginattempt_time'] != 0 ) {
+            $_SESSION['login-attempts'] = 0;
+        }
+
+        if ($_SESSION['login-attempts'] < 4) {
+
+                $_SESSION['email-login'] = $_POST['email-login'];
+                $_SESSION['wachtwoord'] = $_POST['wachtwoord'];
+                $message_login = loginControl($_POST['email-login'], $_POST['wachtwoord']);
+                loginControl($_POST['email-login'], $_POST['wachtwoord']);
+
+                $_SESSION['fifthloginattempt_time'] = 0;
+                $_SESSION['login-attempts']++;
+
+        } else {
+            $_SESSION['fifthloginattempt_time'] = $t;
+            $message_login = "E-mail of wachtwoord is 5 keer verkeerd ingevoerd, wacht 30sec voordat u opnieuw iets invoerd";
+        }
     }
-}
-?>
+} ?>
 
 <div class="col-md-4">
     <div class="card">

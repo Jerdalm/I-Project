@@ -1,5 +1,7 @@
 <?php
 require_once 'header.php';
+$_SESSION['login-attempts'] = 0;
+$_SESSION['fifthloginattempt_time'] = 0;
 $_SESSION['email-registration'] = ' ';
 ?>
 <!-- promotie header -->
@@ -35,9 +37,7 @@ $_SESSION['email-registration'] = ' ';
                  echo showProducts(true, Setquery($_SESSION['gebruikersnaam'], $_GET['product']));
              } else {
                  echo showProducts(true,"
-					SELECT TOP 10 *, Vo.startprijs from currentAuction C
-					INNER JOIN voorwerp Vo
-					ON C.voorwerpnummer = Vo.voorwerpnummer
+					SELECT TOP 10 * FROM currentAuction
 					ORDER BY NEWID()");
              }
              ?>
