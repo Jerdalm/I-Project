@@ -28,7 +28,7 @@ if(isset($_SESSION['gebruikersnaam'])){
     <a class="list-group-item list-group-item-action" id="list-offering-in" data-toggle="list" href="#content-offering-in" role="tab" aria-controls="offering-in">Geboden op</a>
     <a class="list-group-item list-group-item-action" id="list-auctions-won" data-toggle="list" href="#content-auctions-won" role="tab" aria-controls="auctions-won">Gewonnen veilingen</a>
 
-	<input type="button" onclick="frames['frame1'].print()" value="print!">
+
 
 	<?php
 	if($_SESSION['soortGebruiker'] < 2){ ?>
