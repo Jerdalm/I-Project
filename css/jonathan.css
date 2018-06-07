@@ -1,3 +1,9 @@
+#login {
+	background: url(../img/bg-login.jpg) no-repeat;
+	background-size: cover;
+	background-position: center center;
+}
+
 .upload-file{
 	margin-top: 10px;
 }
@@ -71,8 +77,8 @@ body{
 }
 
 main{
-	margin-top: 6vh;
-	min-height: 78vh;
+	padding-top: 4.9vh;
+    min-height: 85.5vh;
 }
 
 
@@ -129,5 +135,9 @@ main{
 		width: 100%;
 		margin-left: 0px;
 		margin-right: 0px;
+	}
+
+	.productpage .userInfo p {
+		margin-left: 0px;
 	}
 }
