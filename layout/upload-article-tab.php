@@ -2,8 +2,9 @@
 	<?php require_once 'header.php';
 
 if (isset($_SESSION['gebruikersnaam'])) {
+	$categories = handlequery("SELECT r.rubrieknaam AS 'hoofd', l.rubrieknaam AS 'laag' FROM laagsteRubrieken l JOIN Rubriek r ON r.rubrieknummer = l.hoofdrubriek ORDER BY r.rubrieknaam, l.rubrieknaam");
   $username = $_SESSION['gebruikersnaam'];
-  
+
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $filledin = array(
     'titel',
@@ -39,11 +40,16 @@ if (isset($_SESSION['gebruikersnaam'])) {
       ':land' => $plaats[0]['land'],
       ':verkoper' => $_SESSION['gebruikersnaam']
     );
+		$uploadRubriek = array(
+			':voorwerpnummer' => $voorwerpnummerUpload[0][0],
+			':rubriek' => $_POST['categorie']
+		);
 
     handlequery('INSERT INTO Voorwerp (voorwerpnummer, titel, beschrijving, startprijs, betalingswijze, betalingsinstructie, plaatsnaam,
       land, looptijd, looptijdBeginDag, looptijdBeginTijdstip, verzendkosten, verzendinstructies, verkoper, veilingGesloten)
       VALUES (:voorwerpnummer, :titel, :beschrijving, :startprijs, :betalingswijze, :betalingsinstructie, :plaatsnaam, :land, :looptijd,
       GETDATE(), GETDATE(), :verzendkosten, :verzendinstructies, :verkoper, 0)', $uploadItem);
+		handlequery('INSERT INTO VoorwerpInRubriek VALUES (:voorwerpnummer, :rubriek)', $uploadRubriek);
 
       $target_dir = "./uploads/" . $username . '/' . $voorwerpnummerUpload[0][0]. '/';
       if (!file_exists($target_dir)){
@@ -128,8 +134,8 @@ if (isset($_SESSION['gebruikersnaam'])) {
 
 }
 </style>
-   
-      
+
+
         <div class="container">
             <form method="POST" enctype="multipart/form-data">
               <legend>Voorwerp veilen!</legend>
@@ -143,11 +149,15 @@ if (isset($_SESSION['gebruikersnaam'])) {
                   <label class="control-label" for="beschrijving">Beschrijving*</label>
                   <textarea class="form-control" id="beschrijving" name="beschrijving" required></textarea>
                 </div>
-				<div class="form-group col-md-8">
-					<label class="control-label" for="verzendinstructies">Rubriek</label>
-					<input id="verzendinstructies" id="typeahead" name="typeahead" type="text" placeholder="typ het product en kies een categorie" class="form-control input-md">  
-				</div>
-              </div>			  
+								<div class="form-group col-md-8">
+                  <label class="control-label" for="beschrijving">Categorie*</label>
+                  <select id="categorie" name="categorie" type="select" class="form-control input-md">
+                    <?php foreach ($categories as $key => $categorie) {
+                      echo '<option value=' .$categorie['rubrieknummer'].'>'.$categorie['hoofd'].' / '.$categorie['laag'].'</option>';
+                    } ?>
+                  </select>
+                </div>
+              </div>
               <div class="form-row">
                 <div class="form-group col-md-4">
                   <label class="control-label" for="looptijd">Looptijd in dagen*</label>
@@ -201,8 +211,8 @@ if (isset($_SESSION['gebruikersnaam'])) {
               </div>
             </form>
         </div>
-    
-    
+
+
     <script>
         $('.custom-file-input').on('change',function(){
             var fileName = $(this).val();
@@ -222,4 +232,3 @@ if (isset($_SESSION['gebruikersnaam'])) {
 ?>
 
 </div>
-

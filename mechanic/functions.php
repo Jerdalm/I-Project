@@ -614,15 +614,14 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 	foreach($producten as $product) {
 
         $itemcount++;
-        if($showAccount == false) {
-
+        if(!$showAccount){
         if (empty($product['bodbedrag'])){
             $product['bodbedrag'] = $product['startprijs'];
-        }
-      }
+			}
+		}
 
-        if ($carrousel) {
-            if ($itemcount == 1) {
+        if ($carrousel){
+            if ($itemcount == 1){
                 $html .= $beforeFirstInput;
             } else {
                 $html .= $beforeInput;
@@ -643,36 +642,33 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 		' . $product['titel'] . '
 		</h4>';
 
-		if ($showAccount == false) {
-            $html .= '<h5 class="product-data" id = "' . $product['voorwerpnummer'] . '" ><span class="time" > ' . $timediff . '</span >|<span class="price" >&euro;' . $product['bodbedrag'] . ' </span ></h5 >';
-            $html.='
-        		<a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a>
-        		</div>
-        		<div class="card-footer text-center text-muted">
-        		Locatie: '.$product['plaats'].'
-        		</div>
-        		</div>
-        		';
-    }
-    if ($showAccount) {
-      $hoogsteBieder = handlequery('SELECT TOP 1 gebruikersnaam FROM Bod WHERE voorwerpnummer = '.$product['voorwerpnummer'].' ORDER BY bodbedrag DESC');
-      if (isset($hoogsteBieder[0]['gebruikersnaam'])) {
+		if (!$showAccount) {
+        $html .= '
+		<h5 class="product-data" id = "' . $product['voorwerpnummer'] . '" >
+			<span class="time" > ' . $timediff . '</span >|<span class="price" >&euro;' . $product['bodbedrag'] . ' </span ></h5 >
+				<a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a>
+        </div>
+		<div class="card-footer text-center text-muted">
+        Locatie: '.$product['plaats'].'</div></div>';
+		}
+		
+		if ($showAccount) {
+		$hoogsteBieder = handlequery('SELECT TOP 1 gebruikersnaam FROM Bod WHERE voorwerpnummer = '.$product['voorwerpnummer'].' ORDER BY bodbedrag DESC');
+		
+		if (isset($hoogsteBieder[0]['gebruikersnaam'])) {
         $bieder = "Geboden door:<br>".$hoogsteBieder[0]['gebruikersnaam'];
-      } else {
+		} 
+		else {
         $bieder = '';
-      }
-      $html.='
-  		<a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a>
-  		</div>
-  		<div class="card-footer text-center text-muted">
-      Huidige hoogste bod: €'.number_format($product['bodbedrag'], 2, ",", ".").'<br>
-      '.$bieder.'
-  		</div>
-  		</div>
-  		';
+		}
+		
+      $html.='<a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a></div>
+		<div class="card-footer text-center text-muted">Huidige hoogste bod: €'.number_format($product['bodbedrag'], 2, ",", ".").'<br>'.$bieder.'</div></div>';
     }
+		
 		$html .= $afterInput;
-	}}
+	}
+	}
 	else{$html = '<div class="col-lg-12 text-center"><h4> Geen producten gevonden </h4></div>';}
 	/* Returns product cards html */
 

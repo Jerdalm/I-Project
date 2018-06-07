@@ -287,8 +287,9 @@ if (isset($_SESSION['gebruikersnaam'])) {
                       </table>
                     </div>
                     <?='<p>'.$htmluploadFoto.'</p>'?>
-                    <hr>
-                    <div class="userInfo">
+
+                    <div style="margin-top:-25px;" class="userInfo alert-dark">
+                        <hr>
                         <div class="row">
                             <div class="col-lg-9">
                                 <p> Aangeboden door:</p>
