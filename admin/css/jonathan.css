@@ -98,6 +98,30 @@ header{
 #filter button:first-of-type{
 	margin-bottom: 5px;
 }
+
+.icon-auction:before, .icon-user:before, .icon-column:before{
+	content: '';
+	padding-left: 24px;
+	margin-right: 5px;
+	width: 10px;
+	height: 10px;
+}
+
+.icon-auction:before{
+	background: url(../icon/gavel.svg) no-repeat;
+	background-size: 100%;
+}
+
+.icon-user:before{
+	background: url(../icon/account.svg) no-repeat;
+	background-size: 100%;
+}
+
+.icon-column:before{
+	background: url(../icon/column.svg) no-repeat;
+	background-size: 100%;
+}
+
 @media screen and (max-width: 500px){
 	.beheerdersomgeving .row{
 		margin-top: 40px;

@@ -1,13 +1,6 @@
 <?php require_once ('header.php');
 if(isset($_GET['product'])){
 
-    $breadcrumbspara = array($_GET['product']);
-    $querybreadcrumbs = "SELECT *
-FROM VoorwerpInRubriek V
-INNER JOIN rubriek R
-ON v.rubriekOpLaagsteNiveau = R.rubrieknummer";
-
-    $breadcrumbs = handlequery($querybreadcrumbs, $breadcrumbspara);
 if (isset($_SESSION['gebruikersnaam'])) {
     if (isset($_COOKIE[$_SESSION['gebruikersnaam']])) {
         if (CheckCookieLengthSmallerThanSix($_SESSION['gebruikersnaam']) == false) {
@@ -111,27 +104,34 @@ if (isset($_SESSION['gebruikersnaam'])) {
                       $besetandmelding = "Het bestand is geen afbeelding";
                   }
               }
-          } else if(isset($_POST['bidAmount-submit'])){
-            $paramBod = array(':voorwerpnummer' => $_GET['product'], ':bedrag' => (float)$_POST['bidAmount'], ':gebruiker' => $_SESSION['gebruikersnaam']);
-            if ($_SESSION['gebruikersnaam'] != $productdata['verkoper']) {
-              if (!empty($highestBid)) {
-                if ($_POST['bidAmount'] >= $minimumbid) {
-                  executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod);
-                  redirectJS('productpage.php?product=' . $productdata['voorwerpnummer']);
-                } else {
-                  $message_bids = "Uw bod is te laag, probeer hoger te bieden";
-                }
-              } elseif ($_POST['bidAmount'] >= $productdata['startprijs']) {
-                executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod);
-                redirectJS('productpage.php?product=' . $productdata['voorwerpnummer']);
+          } else if(isset($_POST['bidAmount-submit'])) {
+
+              if ($_POST['bidAmount'] < 100000000) {
+
+                  $paramBod = array(':voorwerpnummer' => $_GET['product'], ':bedrag' => (float)$_POST['bidAmount'], ':gebruiker' => $_SESSION['gebruikersnaam']);
+                  if ($_SESSION['gebruikersnaam'] != $productdata['verkoper']) {
+                      if (!empty($highestBid)) {
+                          if ($_POST['bidAmount'] >= $minimumbid) {
+                              executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod);
+                              redirectJS('productpage.php?product=' . $productdata['voorwerpnummer']);
+                          } else {
+                              $message_bids = "Uw bod is te laag, probeer hoger te bieden";
+                          }
+                      } elseif ($_POST['bidAmount'] >= $productdata['startprijs']) {
+                          executequery("EXEC prc_hogerBod :bedrag, :voorwerpnummer, :gebruiker", $paramBod);
+                          redirectJS('productpage.php?product=' . $productdata['voorwerpnummer']);
+                      } else {
+                          $message_bids = "Uw bod is te laag, probeer hoger te bieden";
+                      }
+                  } else {
+                      $message_bids = "U kunt niet bieden op uw eigen veilingen";
+                  }
               } else {
-                $message_bids = "Uw bod is te laag, probeer hoger te bieden";
+                  $message_bids = "Sorry, u heeft te veel geld..";
               }
-            } else {
-              $message_bids = "U kunt niet bieden op uw eigen veilingen";
-            }
           }
         }
+
 
         if($productdata['veilingGesloten'] == 0) {
           if (isset($_SESSION['gebruikersnaam'])) {
@@ -160,6 +160,15 @@ if (isset($_SESSION['gebruikersnaam'])) {
 
 <main>
     <section class="productpage">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12" style=" display: flex; flex-wrap: wrap;">
+            <div class="container header">
+            </div>
+            <ol style="background-color:#D9D9D9;" class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+                <li class="breadcrumb-item"><a href="overview.php?rub= <?= $querybreadcrumbs['rubriekOpLaagsteNiveau']?>"> <?=$querybreadcrumbs['rubrieknaam']?></a></li>
+                <li class="breadcrumb-item"> <?= $productdata['titel'] ?> </li>
+            </ol>
+        </div>
         <div class="container border-primary">
             <div class="row">
                 <div class="col-lg-7 p-3 bg-secondary text-white">

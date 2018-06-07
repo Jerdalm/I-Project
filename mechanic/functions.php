@@ -155,26 +155,12 @@ function handlequery($sql, $parameters = false){
 }
 
 /* Deze functie verzend een mail naar de aangegeven parameters */
-function sendMail($to, $subject, $body, $template = false){
-	
+function sendMail($to, $subject, $body, $message = "Fout"){
 	$emailTo      = $to;
-	
-	if($template){
-	$message_body = file_get_contents('layout/mail/template_top.php');
-	$message_body .='<h2 class="mc-toc-title"><span style="font-family:open sans,helvetica neue,helvetica,arial,sans-serif"><strong><span style="color:#808080">'.$subject.'</span></strong></span></h2>
-    <span style="font-family:open sans,helvetica neue,helvetica,arial,sans-serif">'.$body.'</span>';                                                                  
-	}
-	else{
-	$message_body = $body;
-	}
-
 	$subjectEmail = $subject;
-	$header = 'From: EenmaalAndermaal <noreply@iproject34.icasites.nl>' . "\r\n" . 'Reply-To: service@iproject34.icasites.nl' . "\r\n" . 
-			   'X-Mailer: PHP/' . phpversion() . "\r\n" . 'Content-type:text/html;charset=UTF-8';
-			   
-	if($template){
-	$message_body = file_get_contents('layout/mail/template_bottom.php');	
-	}
+	$message_body = $body;
+    $header = 'From: EenmaalAndermaal <noreply@iproject34.icasites.nl>' . "\r\n" . 'Reply-To: service@iproject34.icasites.nl' . "\r\n" .
+        'X-Mailer: PHP/' . phpversion() . "\r\n" . 'Content-type:text/html;charset=UTF-8';
 
 	mail( $emailTo, $subjectEmail, $message_body,$header );
     // echo '<script> alert("'.$body.'")</script>'; //geeft binnen een alert-box de body aan, wat eigenlijk binnen de mail staat
@@ -312,7 +298,7 @@ function showLoginMenu(){
 
 /* Deze functie genereert een random code */
 function generateRandomCode(){
-	return uniqid(rand(100000,900000),true);
+	return rand(100000,900000);
 }
 
 /* Deze functie checkt of de username nog niet bestaat, en of de wachtwoorden overeen komen, en aan de regels voldoen */
@@ -411,36 +397,36 @@ function insertRegistrationinfoInDB(){
 }
 
 /* Deze functie zet de code in de database */
-function setCodeInDB($email, $hashed_code){
-	$parameters = array(':mailadres' => "$email");
-	$emailUnique = handleQuery("SELECT * FROM ActivatieCode WHERE mailadres = :mailadres", $parameters);
+function setCodeInDB($email, $hashed_code,$soortCode){
+    $parameters = array(':mailadres' => "$email");
+    $emailUnique = handleQuery("SELECT * FROM ActivatieCode WHERE mailadres = :mailadres", $parameters);
 
-	if (count($emailUnique) > 0){ //kijkt of de email al bestaat in het tabel activatiecode, indien ja: update het mialadres met een
-		$parameters = array(':mailadres' => "$email", ':verifycode' => "$hashed_code"); //nieuwe code & de nieuwe tijd
-		handleQuery("UPDATE ActivatieCode
+    if (count($emailUnique) > 0){ //kijkt of de email al bestaat in het tabel activatiecode, indien ja: update het mialadres met een
+        $parameters = array(':mailadres' => "$email", ':verifycode' => "$hashed_code"); //nieuwe code & de nieuwe tijd
+        handleQuery("UPDATE ActivatieCode
 			SET code = :verifycode, tijdAangevraagd = GETDATE()
 			WHERE mailadres = :mailadres", $parameters);
-	} else {
-		$parameters = array(':mailadres' => "$email", ':verifycode' => "$hashed_code");
-		handleQuery("INSERT INTO ActivatieCode VALUES (0 ,:verifycode ,:mailadres, GETDATE())",$parameters);
-	}
+    } else {
+        $parameters = array(':mailadres' => "$email", ':verifycode' => "$hashed_code" , ':soortCode' => "$soortCode");
+        handleQuery("INSERT INTO ActivatieCode VALUES (:soortCode ,:verifycode ,:mailadres, GETDATE())",$parameters);
+    }
 }
 
 /* Deze functie verzendt de code naar de klant (email) */
-function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLocationElse, $randomVerificationCode){
-	$to      = $email;
-	$subject = $subjectText;
-	$message_body = $bodyText;
+function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLocationElse, $randomVerificationCode,$soortCode){
+    $to      = $email;
+    $subject = $subjectText;
+    $message_body = $bodyText;
 
 
-	if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		setCodeInDB($email, $randomVerificationCode);
-		sendMail($to, $subject, $message_body,true);
-		redirectJS("./".$headerLocationIf);
-	} else {
-		$_SESSION['error_upgrade'] = 'Geen geldig e-mailadres.';
-		redirectJS("./". $headerLocationElse);
-	}
+    if (filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        setCodeInDB($email, $randomVerificationCode,$soortCode);
+        sendMail($to, $subject, $message_body,true);
+        redirectJS("./".$headerLocationIf);
+    } else {
+        $_SESSION['error_upgrade'] = 'Geen geldig e-mailadres.';
+        redirectJS("./". $headerLocationElse);
+    }
 }
 
 /* Deze functie controleert of de email en wachtwoord kloppen */
@@ -647,7 +633,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
             $html .= $beforeInput;
         }
 
-        $timediff = calculateTimeDiffrence(date('Y-m-d h:i:s'),
+        $timediff = calculateTimeDiffrence(date('Y-m-d H:i:s'),
             $product['einddag'] . ' ' . $product['eindtijdstip']
         );
 
@@ -698,8 +684,9 @@ function calculateTimeDiffrence($timestamp1, $timestamp2){
 function validateCode($inputCode, $email){
 	$emailParameters = array(':mailadres' => "$email");
 	$emailEquivalent = handleQuery("SELECT * FROM ActivatieCode WHERE mailadres = :mailadres",$emailParameters)[0];
-	// $emailEquivalent['code'] =  trim($emailEquivalent['code']);
 
+	$emailEquivalent['code'] = trim($emailEquivalent['code']);
+	$inputCode = trim($inputCode);
 	if ($emailEquivalent['code'] == $inputCode){
 		$state = true;
 	} else {
@@ -902,17 +889,15 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 
 /* toont goede button aan de hand van ingelogt zijn of niet */
 function showButtonIndex(){
-	$html = '<a href="overview.php" class="ghostbtn btn">Bekijk alle veilingen</a>';
 	if(isset($_SESSION['gebruikersnaam'])){
 		if($_SESSION['soortGebruiker'] != 2) {
-			$html .= '<a href="upgrade-user.php" class="ghostbtn btn">Word verkoper!</a>';
-		} else {
-			$html .= '<a href="upload-article.php" class="ghostbtn btn">Verkoop voorwerp!</a>';
-		}
+		echo '<a href="upgrade-user.php" class="cta-orange btn">Wordt verkoper!</a>';
 	} else {
-		$html .= '<a href="registreren.php" class="ghostbtn btn">Registreer je nu om mee te bieden!</a>';
+		echo '<a href="upload-article.php" class="cta-orange btn">Verkoop voorwerp!</a>';
 	}
-	return $html;
+	} else {
+		echo '<a href="registreren.php" class="cta-orange btn">Registreer je nu om mee te bieden!</a>';
+	}
 }
 
 function checkNewPassword ($password, $passwordrepeat){

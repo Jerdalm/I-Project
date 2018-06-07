@@ -3,10 +3,7 @@
 
 if (isset($_SESSION['gebruikersnaam'])) {
   $username = $_SESSION['gebruikersnaam'];
-  if ($_SESSION['soortGebruiker'] != 2) {
-    redirectJS("upgrade-user.php"); // redirect naar upgrade user wanneer je geen verkoper bent
-    die();
-  }
+  
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $filledin = array(
     'titel',

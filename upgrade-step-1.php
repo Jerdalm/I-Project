@@ -4,6 +4,7 @@ require_once './db.php';
 
 // de code is standaard 222 voor het testen
 $randomVerificationCode = createrandompassword();
+$soortCode = 1;
 // $randomVerificsendRegistrationCodeationCode = generateRandomCode();
 
 $subjectText = 'Word verkoper!';
@@ -34,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') { // nadat er op de knop gedrukt wordt
         } else {
             $_SESSION['verificationMethod'] = $_POST['verificationMethod'];
             $message_upgrade = '';
-            sendCode($_SESSION['email-upgrade'], $subjectText, $bodyText, $headerLocationIf, $headerLocationElse, $randomVerificationCode);
+            sendCode($_SESSION['email-upgrade'], $subjectText, $bodyText, $headerLocationIf, $headerLocationElse, $randomVerificationCode,$soortCode);
         }
     }
 
