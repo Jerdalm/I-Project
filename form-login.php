@@ -3,7 +3,7 @@ $t=time();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['login-submit'])) {
-        if(($t - $_SESSION['fifthloginattempt_time']) > 5 && $_SESSION['fifthloginattempt_time'] != 0 ) {
+        if(($t - $_SESSION['fifthloginattempt_time']) > 30 && $_SESSION['fifthloginattempt_time'] != 0 ) {
             $_SESSION['login-attempts'] = 0;
         }
 
