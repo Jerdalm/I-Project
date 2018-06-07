@@ -1,9 +1,8 @@
 <?php require_once 'header.php'; 
-$emailAdres='';
-$_SESSION['mailAdres'] = '';
+
 if (isset($_POST['check'])) {
-	$_SESSION['mailAdres'] = $_POST['mailadres'];
 	$emailAdres = $_POST['mailadres'];
+    $_SESSION['mailAdres'] = $emailAdres;
 }
 $emailParameters = array(':mailadres' => "$emailAdres");
 $gebruiker = handlequery("SELECT * FROM Gebruiker JOIN Vraag ON Gebruiker.vraag = Vraag.vraagnummer WHERE mailadres = :mailadres 
@@ -11,9 +10,9 @@ $gebruiker = handlequery("SELECT * FROM Gebruiker JOIN Vraag ON Gebruiker.vraag 
 
 // $_SESSION['mailadres'] = $gebruiker['mailadres']; 
 
-$email = $emailAdres;
+
 $subject = 'Wachtwoord wijzigen';
-$message = 'U heeft aangegeven dat u het wachtwoord wilt wijzigen. Uw nieuwe code is =';
+$message = 'U heeft aangegeven dat u het wachtwoord wilt wijzigen. Uw nieuwe wachtwoord is = ';
 
 $randomPassword = createRandomPassword(); 
 $messageCode = $message . $randomPassword;
@@ -26,7 +25,7 @@ $messageCode = $message . $randomPassword;
      <!--  de form om te checken of de e-mail adres klopt -->
     <form id="formMail" method="POST" class="form-group">
         <label for="E-mailadres">Voer hier uw E-mailadres in: </label>
-        <input type="text" name="mailadres" class="form-control" id="mailadres" placeholder="E-mailadres" value="<?= $_SESSION['mailAdres'] ?>" >
+        <input type="text" name="mailadres" class="form-control" id="mailadres" placeholder="E-mailadres" value=<?= '"' .$_SESSION['mailAdres'].'"' ?> >
         <input class="cta-orange btn" type="submit" name="check" value="Controlleer">
  </div>
         <?php 
@@ -50,11 +49,13 @@ $messageCode = $message . $randomPassword;
             $antwoord = handlequery("SELECT antwoordtekst FROM Gebruiker WHERE antwoordtekst = :antwoord AND mailadres = :mailadres", $answerParameters);
         // hier word gecheckt of het antwoord klopt
             if (count($antwoord) == 1) {
-                sendMail($email,$subject,$messageCode);
-                handlequery("UPDATE Gebruiker SET wachtwoord = '$randomPassword' WHERE mailadres = '$emailAdres' ");
+            $randomPassword = trim($randomPassword);
+                sendMail($emailAdres,$subject,$messageCode);
+                $updatePasswordParameters = array(':mailadres' => $emailAdres,':wachtwoord' => $randomPassword);
+                handlequery("UPDATE Gebruiker SET wachtwoord = :wachtwoord WHERE mailadres = :mailAdres",$updatePasswordParameters);
 
             } else {
-                echo 'foutmelding';
+                echo 'Er is iets fout gegaan bij het wijzigen van uw wachtwoord!';
             }
         }
         ?>
