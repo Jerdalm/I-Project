@@ -73,7 +73,6 @@ $_SESSION['email-registration'] = ' ';
     </div>
   </div>
 </section>
-
 <!--
 <script>
 setInterval(function()
