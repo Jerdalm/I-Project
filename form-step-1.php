@@ -2,7 +2,7 @@
 require_once './head.php';
 require_once './db.php';
 
-$randomVerificationCode = generateRandomCode();
+$randomVerificationCode = rand(100000,900000);
 //$randomVerificationCode = 111111;
 $subject = 'Activatiecode';
 $body = 'Bedankt voor het registreren,
