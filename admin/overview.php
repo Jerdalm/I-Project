@@ -3,7 +3,9 @@ require_once './header.php';
 if (isset($_SESSION['gebruikersnaam']) && $_SESSION['gebruikersnaam'] == 'admin'){
 	$queryNumberUser = FetchAssocSelectData("SELECT COUNT(gebruikersnaam) AS aantal FROM Gebruiker");
 	$queryNumberSellers = FetchAssocSelectData("SELECT COUNT(gebruikersnaam) AS aantal FROM Gebruiker WHERE soortGebruiker = 2");
-	$queryNumberAdmin = FetchAssocSelectData("SELECT COUNT(gebruikersnaam) AS aantal FROM Gebruiker WHERE soortGebruiker = 3");
+	$queryNumberBlokked = FetchAssocSelectData("SELECT COUNT(gebruikersnaam) AS aantal FROM Gebruiker WHERE soortGebruiker = 3");
+	$queryNumberAuctions = FetchAssocSelectData("SELECT COUNT(voorwerpnummer) AS aantal FROM voorwerp");
+	$queryNumberAuctionsOpen = FetchAssocSelectData("SELECT COUNT(voorwerpnummer) AS aantal FROM voorwerp WHERE veilingGesloten = 0");
 	// print_r($queryNumberAdmin);
 	?>
 
@@ -11,7 +13,7 @@ if (isset($_SESSION['gebruikersnaam']) && $_SESSION['gebruikersnaam'] == 'admin'
 		<div class="container">
 			<section>
 				<div class="row">
-					<div class="col-lg-3 col-sm-12 float-left sidebar"> 
+					<div class="col-lg-3 col-sm-12 float-left"> 
 						<div class="list-group" id="list-tab" role="tablist">
 							<a class="list-group-item list-group-item-action icon-auction" href="./change-auction.php">Veiling</a>
 							<a class="list-group-item list-group-item-action icon-user" href="./change-user.php">Gebruiker</a>
@@ -37,15 +39,30 @@ if (isset($_SESSION['gebruikersnaam']) && $_SESSION['gebruikersnaam'] == 'admin'
 							<li class="media">
 								<!-- <img class="mr-3" src="..." alt="Generic placeholder image"> -->
 								<div class="media-body">
-									<h5 class="mt-0 mb-1">List-based media object</h5>
+									<h5 class="mt-0 mb-1">Aantal geblokkeerde gebruikers: <?=$queryNumberBlokked['aantal']?></h5>
 									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
 								</div>
 							</li>
+							<li class="media my-4">
+								<!-- <img class="mr-3" src="..." alt="Generic placeholder image"> -->
+								<div class="media-body">
+									<h5 class="mt-0 mb-1">Aantal veilingen: <?=$queryNumberAuctions['aantal']?></h5>
+									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+								</div>
+							</li>
+							<li class="media">
+								<!-- <img class="mr-3" src="..." alt="Generic placeholder image"> -->
+								<div class="media-body">
+									<h5 class="mt-0 mb-1">Aantal open veilingen: <?=$queryNumberAuctionsOpen['aantal']?></h5>
+									Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+								</div>
+							</li>
+
 						</ul>	
 					</div>
 				</div>
 				<div class="row">
-					<
+					
 				</div>
 			</section>
 		</div>
