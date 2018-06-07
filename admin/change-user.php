@@ -18,15 +18,6 @@ if (isset($_SESSION['gebruikersnaam']) && $_SESSION['gebruikersnaam'] == 'admin'
 			OR mailadres like :mail
 			OR plaatsnaam like :plaats",$parametersGebruiker);
 		$gebruikerResultaten = '<div class="row">
-		<div class="sidebar col-lg-3 col-sm-12">
-		<p><b>Filter op de looptijd</b></p>
-		<form method="get">
-		<input name="gebruiker" type="hidden" value="'.$_GET['gebruiker'].'">
-		<input name="search-user" type="hidden" value="'.$_GET['search-user'].'">										
-		<button class="btn btn-primary" value="filter-desc" name="filter-time-desc">Filter producten aflopend</button>
-		<button class="btn btn-secondary" value="filter-asc" name="filter-time-asc">Filter producten oplopend</button>
-		</form>
-		</div>
 		<div class="col-lg-9 col-sm-12">
 		<table class="table table-responsive search-results">
 		<tr>
@@ -58,7 +49,10 @@ if (isset($_SESSION['gebruikersnaam']) && $_SESSION['gebruikersnaam'] == 'admin'
 		<a class="list-group-item list-group-item-action active" id="list-product-list" data-toggle="list" href="#gebruikers" role="tab" aria-controls="userinfo">Geburikersinformatie</a>
 		<a class="list-group-item list-group-item-action" id="list-change-bid" data-toggle="list" href="#bids" role="tab" aria-controls="list-change-bid">Biedingen</a>
 		</div>
-		<form method="get" class="btn-delete-product"><input type="hidden" name="product" value="'. $_GET['gebruikersnaam'] .'"><button type="submit" class="btn btn-danger" value="delete-product" name="delete-product">Blokkeer gebruiker</button></form>
+		<form method="get" class="btn-delete-product">
+			<input type="hidden" name="gebruikersnaam" value="'. $_GET['gebruikersnaam'] .'">
+			<button type="submit" class="btn btn-danger" value="block-user" name="block-user">Blokkeer gebruiker</button>
+		</form>
 		</div>';
 
 		$gebruikerResultaten = ' ';
@@ -91,6 +85,11 @@ if (isset($_SESSION['gebruikersnaam']) && $_SESSION['gebruikersnaam'] == 'admin'
 
 
 	<?php  
+if(isset($_GET['block-user'])) {
+	blockUser($_GET['gebruikersnaam']);
+	redirectJS("./change-user.php?gebruikersnaam=".$_GET['gebruikersnaam']);
+}
+
 } else {
 	redirectJS("./404.php");
 }

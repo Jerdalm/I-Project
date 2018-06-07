@@ -30,6 +30,7 @@
             <input class="tijd" type="text" name="tijd" value=""><br>
           </div>
           <input class="bodBedragOud" type="hidden" name="bodBedragOud" value="" step=".01" min="0"><br>
+          <input class="gebruikersnaam" type="hidden" name="gebruikersnaam" value=""><br>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuleren</button>
             <button type="submit" class="btn btn-primary" name="submit-bit">Bijwerken</button>

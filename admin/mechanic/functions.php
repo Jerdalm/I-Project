@@ -148,7 +148,7 @@ function contains_capital($string){
 /* Deze functie toont tekst en link wordt bepaalt a.d.h.v. of je ingelogt of uitlogt bent */
 function showLoginAdminMenu(){
 	$htmlLogin = ' ';
-	if(isset($_SESSION['gebruikersnaam']) && !empty($_SESSION['gebruikersnaam'])){
+	if(isset($_SESSION['gebruikersnaam']) && !empty($_SESSION['gebruikersnaam']) && $_SESSION['gebruikersnaam'] == "admin"){
 		$htmlLogin = '<li class="nav-item">';
 		$htmlLogin .= '<a class="nav-link" href="./change-auction.php">Veiling</a>';
 		$htmlLogin .= '</li>';
