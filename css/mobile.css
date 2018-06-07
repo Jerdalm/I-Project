@@ -91,6 +91,8 @@
 	 padding: 10px 15px;
     font-size: 18px;
 	}
+	
+	section.attention .cta-orange{font-size:16px; padding:10px;}
 }
 	
 
