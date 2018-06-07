@@ -581,7 +581,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 	else{
 
 		if($query == false){
-			$query = "SELECT * from dbo.currentAuction ";
+			$query = "SELECT * FROM dbo.currentAuction";
 		}
 
 		if($parameters){
@@ -610,13 +610,16 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 		$beforeInput = '<div class="col-lg-'.$lg.' col-md-'.$md.' col-sm-'.$sm.' col-xs-'.$xs.'">';
 		$afterInput = '</div>';
 	}
-
+  
 	foreach($producten as $product) {
 
         $itemcount++;
+        if($showAccount == false) {
+
         if (empty($product['bodbedrag'])){
             $product['bodbedrag'] = $product['startprijs'];
         }
+      }
 
         if ($carrousel) {
             if ($itemcount == 1) {
@@ -655,6 +658,8 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
       $hoogsteBieder = handlequery('SELECT TOP 1 gebruikersnaam FROM Bod WHERE voorwerpnummer = '.$product['voorwerpnummer'].' ORDER BY bodbedrag DESC');
       if (isset($hoogsteBieder[0]['gebruikersnaam'])) {
         $bieder = "Geboden door:<br>".$hoogsteBieder[0]['gebruikersnaam'];
+      } else {
+        $bieder = '';
       }
       $html.='
   		<a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a>
