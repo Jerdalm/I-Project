@@ -54,7 +54,7 @@ function Setquery($username, $vwNummer)
         $datalist.= " or voorwerpnummer = " . $value;
     }
 
-    $Arrayquery = "SELECT top 6 C.*, Vo.plaatsnaam as plaats, V.rubriekOpLaagsteNiveau
+    $Arrayquery = "SELECT top 6 C.*, Vo.plaatsnaam as plaats, V.rubriekOpLaagsteNiveau, Vo.startprijs
                   FROM currentAuction C
 
                   INNER JOIN voorwerp Vo
@@ -614,8 +614,8 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 	foreach($producten as $product) {
 
         $itemcount++;
-        if (!$product['bodbedrag']) {
-            $product['bodbedrag'] = 0;
+        if (empty($product['bodbedrag'])){
+            $product['bodbedrag'] = $product['startprijs'];
         }
 
         if ($carrousel) {
