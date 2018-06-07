@@ -673,11 +673,13 @@ function calculateTimeDiffrence($timestamp1, $timestamp2){
 
 
     if($interval->format('%d') == 1){
-        $dagAantal = 'dag';
-    } else{
-        $dagAantal = 'dagen';
+        $dagAantal = '%d dag';
+    } elseif ($interval->format('%d') == 0) {
+      $dagAantal = '';
+    } else {
+        $dagAantal = '%d dagen';
     }
-    return $interval->format('%d '.$dagAantal.'<br> %H:%i:%s uur');
+    return $interval->format($dagAantal.'<br> %H:%i:%s uur');
 
 //	return $interval->format('%d dagen <br> %H:%i:%s uur');
 
