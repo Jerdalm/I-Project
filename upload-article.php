@@ -1,6 +1,7 @@
 <?php require_once 'header.php';
 
 if (isset($_SESSION['gebruikersnaam'])) {
+  $categories = handlequery("SELECT rubrieknummer, rubrieknaam FROM laagsteRubrieken ORDER BY rubrieknaam");
   $username = $_SESSION['gebruikersnaam'];
   if ($_SESSION['soortGebruiker'] != 2) {
     redirectJS("upgrade-user.php"); // redirect naar upgrade user wanneer je geen verkoper bent
@@ -95,6 +96,14 @@ if (isset($_SESSION['gebruikersnaam'])) {
                 <div class="form-group col-md-8">
                   <label class="control-label" for="beschrijving">Beschrijving*</label>
                   <textarea class="form-control" id="beschrijving" name="beschrijving" required></textarea>
+                </div>
+                <div class="form-group col-md-8">
+                  <label class="control-label" for="beschrijving">Categorie*</label>
+                  <select id="Categorie" name="Categorie" type="select" class="form-control input-md" required>
+                    <?php foreach ($categories as $key => $categorie) {
+                      echo '<option value=' .$categorie['rubrieknummer'].'>'.$categorie['rubrieknaam'].'</option>';
+                    } ?>
+                  </select>
                 </div>
               </div>
               <div class="form-row">
