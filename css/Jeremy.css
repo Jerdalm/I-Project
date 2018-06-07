@@ -1,13 +1,10 @@
 section.register p{
-     margin: 20px 0;
- }
+    margin: 20px 0;
+}
 
 .error-warning {
     margin-top: 100px;
 }
-
-/* See here the legendary code of Jeremy the Godly */
-.navbar input[type="search":]:placeholder{color:white;}
 
 /* See here the legendary code of Jeremy nogwat */
 .navbar input[type="search"]::placeholder{color:white; opacity:1;}
