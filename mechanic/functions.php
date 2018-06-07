@@ -667,11 +667,19 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 /* Deze functie berekend het verschil tussen 2 data */
 function calculateTimeDiffrence($timestamp1, $timestamp2){
 
-	$datetime1 = new DateTime($timestamp1);//start time
-	$datetime2 = new DateTime($timestamp2);//end time
-	$interval = $datetime1->diff($datetime2);
+    $datetime1 = new DateTime($timestamp1);//start time
+    $datetime2 = new DateTime($timestamp2);//end time
+    $interval = $datetime1->diff($datetime2);
 
-	return $interval->format('%d dagen <br> %H:%i:%s uur');
+
+    if($interval->format('%d') == 1){
+        $dagAantal = 'dag';
+    } else{
+        $dagAantal = 'dagen';
+    }
+    return $interval->format('%d '.$dagAantal.'<br> %H:%i:%s uur');
+
+//	return $interval->format('%d dagen <br> %H:%i:%s uur');
 
 }
 
