@@ -3,14 +3,13 @@
 <main id="login">
     <section>
         <div class="container">
-            <div class="row">
+            <div class="row justify-content-md-center">
                 <?php
                 require_once './form-login.php';
                 if (isset($message_login)){
                     echo '<p class="error error-warning">' . $message_login . '</p>';
                 }
                 ?>
-                <a href="./registreren.php" class="cta-orange btn ">Klik hier om je te registreren!</a>
             </div>
         </div>
     </section>
