@@ -37,7 +37,7 @@ $messageCode = $message . $randomPassword;
                         <form method="post">
                             <div class="form-group">
                                 <label>E-mail</label>
-                                <input  value=<?= '"' .$_SESSION['mailAdres'].'"' ?> class="form-control" placeholder="Voer uw email adres in..." type="text"  id="email-check" name="mailadres">
+                                <input  value=<?= '"' .$_SESSION['mailAdres'].'"' ?> class="form-control" placeholder="Voer uw emailadres in..." type="text"  id="email-check" name="mailadres">
                             </div>
                             <div class="form-group">
                                 <button type="submit" name="check" class="btn btn-primary btn-block"> Controlleer </button>
