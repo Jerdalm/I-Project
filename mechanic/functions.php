@@ -633,7 +633,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
             $html .= $beforeInput;
         }
 
-        $timediff = calculateTimeDiffrence(date('Y-m-d h:i:s'),
+        $timediff = calculateTimeDiffrence(date('Y-m-d H:i:s'),
             $product['einddag'] . ' ' . $product['eindtijdstip']
         );
 
@@ -653,7 +653,7 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 		<a href="productpage.php?product='.$product['voorwerpnummer'].'" class="btn cta-white">Bekijk nu</a>
 		</div>
 		<div class="card-footer text-center text-muted">
-		locatie: '.$product['plaats'].'
+		Locatie: '.$product['plaats'].'
 		</div>
 		</div>
 		';
