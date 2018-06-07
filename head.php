@@ -11,6 +11,7 @@ $head = <<<HEAD
 
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
 		<link rel="shortcut icon" type="image/png" href="img/logo/logo.svg"/>
+		<link rel="icon" type="image/png" href="img/logo/logo.svg"/>
 
 		<script src="vendor/jquery/jquery.min.js"></script>
 
