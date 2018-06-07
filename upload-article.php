@@ -1,7 +1,7 @@
 <?php require_once 'header.php';
 
 if (isset($_SESSION['gebruikersnaam'])) {
-  $categories = handlequery("SELECT rubrieknummer, rubrieknaam FROM laagsteRubrieken ORDER BY rubrieknaam");
+  $categories = handlequery("SELECT r.rubrieknaam AS 'hoofd', l.rubrieknaam AS 'laag' FROM laagsteRubrieken l JOIN Rubriek r ON r.rubrieknummer = l.hoofdrubriek ORDER BY r.rubrieknaam, l.rubrieknaam");
   $username = $_SESSION['gebruikersnaam'];
   if ($_SESSION['soortGebruiker'] != 2) {
     redirectJS("upgrade-user.php"); // redirect naar upgrade user wanneer je geen verkoper bent
@@ -42,11 +42,16 @@ if (isset($_SESSION['gebruikersnaam'])) {
       ':land' => $plaats[0]['land'],
       ':verkoper' => $_SESSION['gebruikersnaam']
     );
+    $uploadRubriek = array(
+      ':voorwerpnummer' => $voorwerpnummerUpload[0][0],
+      ':rubriek' => $_POST['categorie']
+    );
 
     handlequery('INSERT INTO Voorwerp (voorwerpnummer, titel, beschrijving, startprijs, betalingswijze, betalingsinstructie, plaatsnaam,
       land, looptijd, looptijdBeginDag, looptijdBeginTijdstip, verzendkosten, verzendinstructies, verkoper, veilingGesloten)
       VALUES (:voorwerpnummer, :titel, :beschrijving, :startprijs, :betalingswijze, :betalingsinstructie, :plaatsnaam, :land, :looptijd,
       GETDATE(), GETDATE(), :verzendkosten, :verzendinstructies, :verkoper, 0)', $uploadItem);
+    handlequery('INSERT INTO VoorwerpInRubriek VALUES (:voorwerpnummer, :rubriek)', $uploadRubriek);
 
       $target_dir = "./uploads/" . $username . '/' . $voorwerpnummerUpload[0][0]. '/';
       if (!file_exists($target_dir)){
@@ -99,9 +104,9 @@ if (isset($_SESSION['gebruikersnaam'])) {
                 </div>
                 <div class="form-group col-md-8">
                   <label class="control-label" for="beschrijving">Categorie*</label>
-                  <select id="Categorie" name="Categorie" type="select" class="form-control input-md" required>
+                  <select id="categorie" name="categorie" type="select" class="form-control input-md" required>
                     <?php foreach ($categories as $key => $categorie) {
-                      echo '<option value=' .$categorie['rubrieknummer'].'>'.$categorie['rubrieknaam'].'</option>';
+                      echo '<option value=' .$categorie['rubrieknummer'].'>'.$categorie['hoofd'].' / '.$categorie['laag'].'</option>';
                     } ?>
                   </select>
                 </div>
@@ -146,11 +151,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
                   <input id="verzendinstructies" name="verzendinstructies" type="text" placeholder="Optioneel" class="form-control input-md">
                 </div>
               </div>
-			  <div class="form-group col-md-12">
-                <label class="control-label" for="verzendinstructies">Rubriek</label>
-                <input id="verzendinstructies" name="typeahead" type="text" placeholder="Optioneel" class="form-control input-md">
-              </div>
-              </div>
+              <div class="form-group col-md-16">
               <p>Upload foto*</p>
               <div class="form-row">
                 <div class="custom-file col-md-4" id="customFile">
@@ -164,6 +165,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
               </div>
             </form>
         </div>
+      </div>
       </section>
     </main>;
     <script>

@@ -694,7 +694,7 @@ function calculateTimeDiffrence($timestamp1, $timestamp2){
     } else {
         $dagAantal = '%d dagen';
     }
-    return $interval->format($dagAantal.'<br> %H:%i:%s uur');
+    return $interval->format($dagAantal.'<br><span> %H:%i:%s uur </span>');
 
 //	return $interval->format('%d dagen <br> %H:%i:%s uur');
 
