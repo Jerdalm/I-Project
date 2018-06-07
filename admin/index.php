@@ -21,7 +21,7 @@ if (isset($_SESSION['gebruikersnaam']) && $_SESSION['gebruikersnaam'] == 'admin'
 	<div class="container">
 		<form method="post" id="login-form">
 			<div class="form-group">
-				<label for="inputEmail">Email</label>
+				<label for="inputEmail">Gebruikersnaam</label>
 				<input type="text" class="form-control" id="email-login" name="email-login">
 			</div>
 			<div class="form-group">

@@ -232,74 +232,74 @@ if (isset($_SESSION['gebruikersnaam'])) {
                         </dl>
                     </div>
                 </div>
-
                 <div class="col-lg-5 p-3 bg-secondary text-white">
-                    <div class="alert alert-dark" role="alert">
-					<div class="product-info">
-                        <p class="beginTijdstip"><i>Aangeboden op: <?= $aangebodenDag  ?> </i></p>
-                        <h2 class="alert-heading wraptext"> <strong> <?= $productdata['titel']?></strong></h2>
-
-                        <?php if($productdata['startprijs'] != 0) { ?>
-                            <p>Startprijs: €<?=number_format($productdata['startprijs'], 2, ",", ".")?></p>
-                        <?php } else { ?>
-                            <p>Startprijs: € 0,00</p>
-                        <?php } if(isset($productdata['verzendkosten'])){ echo '<p>Verzendkosten: €' .number_format($productdata['verzendkosten'], 2, ",", ".");} ?></p>
-                        <p>Productnummer: <?=$productdata['voorwerpnummer']?></p>
-                        <p>Resterende looptijd: <br><b><?= calculateTimeDiffrence(date('Y-m-d H:i:s'),
-                            $productdata['looptijdEindeDag'] . ' ' . $productdata['looptijdEindeTijdstip']
-                        ); ?></b></p>
-                        <?php if($productdata['veilingGesloten'] == 1) {
-                            echo "Veiling status: gesloten";
-                        } else {
-                            echo "Veiling status: open";
-                        }?>
-                        <hr>
-					</div>
-                        <div class="bids">
-                            <table class="table table-responsive">
-                                <?php
-                                if($productdata['veilingGesloten'] == 0) {
-                                    $bodInfo = handlequery("SELECT top 10 * FROM Bod WHERE voorwerpnummer = :voorwerpnummer ORDER BY bodbedrag DESC", $paramvoorwerpnummer);
-                                    if(count($bodInfo) == 0){
-                                        echo "Er zijn nog geen biedingen.";
-                                    } else {
-                                        echo '<thead>';
-                                        foreach ($bodInfo as $bodkolom) {
-                                            echo '<tr>';
-                                            echo '<th scope="col">€' .number_format($bodkolom['bodbedrag'], 2, ",", "."). '</th>';
-                                            echo '<th scope="col">' .$bodkolom['gebruikersnaam']. '</th>';
-                                            echo '<th scope="col">' .date_format(date_create($bodkolom['bodDag']), "d-m-Y"). '</th>';
-                                            echo '<th scope="col">' .date_format(date_create($bodkolom['bodTijdstip']), "H:i"). '</th>';
-                                            echo '</tr>';
-                                        }
-                                        echo '</thead>';
-                                    }
-                                } elseif($boddata['hoogstebod'] != NULL) {
-                                    echo "Gewonnen door:";
-                                 ?>
-                                    <p><b><?= $koperdata['voornaam']. " " .$koperdata['achternaam'] ?></b> te <?=$koperdata['plaatsnaam']?></p><br>
-                                    <?php if($productdata['verkoper'] == $_SESSION['gebruikersnaam']) { ?>
-                                    <p><a href=<?='"mailto:' .$koperdata['mailadres']. '?SUBJECT=' . $productdata['titel'] . '"'?>> <i class="fas fa-envelope"></i> &nbsp;&nbsp;&nbsp;<?=$koperdata['mailadres']?></a></p>
-                                <?php }
-                                echo " Met een bod van €" .$boddata['hoogstebod'];
-                                } else {
-                                    echo "Helaas, niemand heeft binnen de tijd geboden op dit product.";
+                  <div class="alert alert-dark" role="alert">
+					          <div class="product-info">
+                      <p class="beginTijdstip"><i>Aangeboden op: <?= $aangebodenDag  ?> </i></p>
+                      <h2 class="alert-heading wraptext"> <strong> <?= $productdata['titel']?></strong></h2>
+                      <?php 
+                      if($productdata['startprijs'] != 0) {
+                          echo '<p>Startprijs: €'.number_format($productdata['startprijs'], 2, ",", ".").'</p>';
+                      } else {
+                          echo '<p>Startprijs: € 0,00</p>';
+                      } if(isset($productdata['verzendkosten'])) { 
+                        echo '<p>Verzendkosten: €' .number_format($productdata['verzendkosten'], 2, ",", ".").'</p>';
+                      }
+                      echo '<p>Productnummer: '.$productdata['voorwerpnummer'].'</p>';
+                      echo '<p>Resterende looptijd: <br><b>'.calculateTimeDiffrence(date('Y-m-d H:i:s'),$productdata['looptijdEindeDag'],$productdata['looptijdEindeTijdstip']).'</b></p>';
+                      if($productdata['veilingGesloten'] == 1) {
+                          echo "Veiling status: gesloten";
+                      } else {
+                          echo "Veiling status: open";
+                      }
+                      ?>
+                      <hr>
+					          </div>
+                    <div class="bids">
+                      <table class="table table-responsive">
+                        <?php
+                        if($productdata['veilingGesloten'] == 0) {
+                            $bodInfo = handlequery("SELECT top 10 * FROM Bod WHERE voorwerpnummer = :voorwerpnummer ORDER BY bodbedrag DESC", $paramvoorwerpnummer);
+                            if(count($bodInfo) == 0){
+                                echo "Er zijn nog geen biedingen.";
+                            } else {
+                                echo '<thead>';
+                                foreach ($bodInfo as $bodkolom) {
+                                    echo '<tr>';
+                                    echo '<th scope="col">€' .number_format($bodkolom['bodbedrag'], 2, ",", "."). '</th>';
+                                    echo '<th scope="col">' .$bodkolom['gebruikersnaam']. '</th>';
+                                    echo '<th scope="col">' .date_format(date_create($bodkolom['bodDag']), "d-m-Y"). '</th>';
+                                    echo '<th scope="col">' .date_format(date_create($bodkolom['bodTijdstip']), "H:i"). '</th>';
+                                    echo '</tr>';
                                 }
-                                ?>
-                            </table>
-                        </div>
-                        <?='<p>'.$htmluploadFoto.'</p>'?>
-                        <hr>
-                        <div class="userInfo">
-                            <div class="row">
-                                <div class="col-lg-9">
-                                    <p> Aangeboden door:</p>
-                                    <p><b><?= $productdata['verkoper'] ?></b> te <?=$productdata['plaatsnaam']?></p><br>
-                                    <p><a href=<?='"mailto:' .$productdata['mailadres']. '?SUBJECT=' . $productdata['titel'] . '"'?>> <i class="fas fa-envelope"></i> &nbsp;&nbsp;&nbsp;<?=$productdata['mailadres']?></a></p>
-                                </div>
+                                echo '</thead>';
+                            }
+                          } elseif($boddata['hoogstebod'] != NULL) {
+                              echo "Gewonnen door:";
+                            ?>
+                              <p><b><?= $koperdata['voornaam']. " " .$koperdata['achternaam'] ?></b> te <?=$koperdata['plaatsnaam']?></p><br>
+                              <?php if($productdata['verkoper'] == $_SESSION['gebruikersnaam']) { ?>
+                              <p><a href=<?='"mailto:' .$koperdata['mailadres']. '?SUBJECT=' . $productdata['titel'] . '"'?>> <i class="fas fa-envelope"></i> &nbsp;&nbsp;&nbsp;<?=$koperdata['mailadres']?></a></p>
+                          <?php }
+                          echo " Met een bod van €" .$boddata['hoogstebod'];
+                          } else {
+                              echo "Helaas, niemand heeft binnen de tijd geboden op dit product.";
+                          }
+                          ?>
+                      </table>
+                    </div>
+                    <?='<p>'.$htmluploadFoto.'</p>'?>
+                    <hr>
+                    <div class="userInfo">
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <p> Aangeboden door:</p>
+                                <p><b><?= $productdata['verkoper'] ?></b> te <?=$productdata['plaatsnaam']?></p><br>
+                                <p><a href=<?='"mailto:' .$productdata['mailadres']. '?SUBJECT=' . $productdata['titel'] . '"'?>> <i class="fas fa-envelope"></i> &nbsp;&nbsp;&nbsp;<?=$productdata['mailadres']?></a></p>
                             </div>
                         </div>
                     </div>
+                  </div>
                 </div>
             </div>
         </div>
@@ -319,11 +319,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
 
                                 echo showProducts(true, Setquery($_SESSION['gebruikersnaam'], $_GET['product']));
                             } else {
-                            echo showProducts(true,"
-					SELECT TOP 10 *, Vo.startprijs from currentAuction C
-					INNER JOIN voorwerp Vo
-					ON C.voorwerpnummer = Vo.voorwerpnummer
-					ORDER BY NEWID()");
+                            echo showProducts(true," SELECT TOP 10 *, Vo.startprijs from currentAuction C INNER JOIN voorwerp Vo ON C.voorwerpnummer = Vo.voorwerpnummer					ORDER BY NEWID()");
                             }
                             ?>
                         </div>
@@ -345,6 +341,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
        </div>
    </section>
 </main>
+
 <script>
 setInterval(function()
 {

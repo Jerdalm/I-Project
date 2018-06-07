@@ -3894,6 +3894,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 $('#changeBid').on('show.bs.modal', function (event) {
   var button = $(event.relatedTarget) // Button that triggered the modal
+  var gebruiker = button.data('gebruiker')
   var vwnummer = button.data('voorwerpnummer')
   var bodbedrag = button.data('id')
   var datum = button.data('datum')
@@ -3905,6 +3906,7 @@ $('#changeBid').on('show.bs.modal', function (event) {
   modal.find('.modal-body input.bodBedragOud').val(bodbedrag)
   modal.find('.modal-body input.datum').val(datum)
   modal.find('.modal-body input.tijd').val(tijd)
+  modal.find('.modal-body input.gebruikersnaam').val(gebruiker)
 })
 
 $('#changeColumn').on('show.bs.modal', function (event) {
