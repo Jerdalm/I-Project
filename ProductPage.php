@@ -237,22 +237,20 @@ if (isset($_SESSION['gebruikersnaam'])) {
 					          <div class="product-info">
                       <p class="beginTijdstip"><i>Aangeboden op: <?= $aangebodenDag  ?> </i></p>
                       <h2 class="alert-heading wraptext"> <strong> <?= $productdata['titel']?></strong></h2>
-                      <?php 
-                      if($productdata['startprijs'] != 0) {
-                          echo '<p>Startprijs: €'.number_format($productdata['startprijs'], 2, ",", ".").'</p>';
-                      } else {
-                          echo '<p>Startprijs: € 0,00</p>';
-                      } if(isset($productdata['verzendkosten'])) { 
-                        echo '<p>Verzendkosten: €' .number_format($productdata['verzendkosten'], 2, ",", ".").'</p>';
-                      }
-                      echo '<p>Productnummer: '.$productdata['voorwerpnummer'].'</p>';
-                      echo '<p>Resterende looptijd: <br><b>'.calculateTimeDiffrence(date('Y-m-d H:i:s'),$productdata['looptijdEindeDag'],$productdata['looptijdEindeTijdstip']).'</b></p>';
-                      if($productdata['veilingGesloten'] == 1) {
-                          echo "Veiling status: gesloten";
-                      } else {
-                          echo "Veiling status: open";
-                      }
-                      ?>
+                                  <?php if($productdata['startprijs'] != 0) { ?>
+                                      <p>Startprijs: <b>€<?=number_format($productdata['startprijs'], 2, ",", ".")?></b></p>
+                                  <?php } else { ?>
+                                  <p>Startprijs:<b> € 0,00</b></p>
+                                  <?php } if(isset($productdata['verzendkosten'])){ echo '<p>Verzendkosten: €' .number_format($productdata['verzendkosten'], 2, ",", ".");} ?></p>
+                                  <p>Productnummer: <b><?=$productdata['voorwerpnummer']?></b></p>
+                                  <p>Resterende looptijd: <b><?= calculateTimeDiffrence(date('Y-m-d H:i:s'),
+                                              $productdata['looptijdEindeDag'] . ' ' . $productdata['looptijdEindeTijdstip']
+                                          ); ?></b></p>
+                                  <?php if($productdata['veilingGesloten'] == 1) {
+                                      echo "Veiling status: gesloten";
+                                  } else {
+                                      echo "Veiling status: <b>open</b>";
+                                  }?>
                       <hr>
 					          </div>
                     <div class="bids">

@@ -5,6 +5,10 @@ section.register p{
 .error-warning {
     margin-top: 20px;
 }
+.product-info p span{
+    margin-top: 7px;
+    display: block;
+}
 
 /* See here the legendary code of Jeremy nogwat */
 .navbar input[type="search"]::placeholder{color:white; opacity:1;}

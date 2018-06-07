@@ -2,7 +2,6 @@
 $emailAdres = '';
 $_SESSION['mailAdres'] = $emailAdres;
 
-
 if (isset($_POST['check'])) {
     $emailAdres = $_POST['mailadres'];
     $_SESSION['mailAdres'] = $emailAdres;
@@ -15,7 +14,7 @@ $gebruiker = handlequery("SELECT * FROM Gebruiker JOIN Vraag ON Gebruiker.vraag 
 
 $wachtwoordGereset = false;
 $subject = 'Wachtwoord wijzigen';
-$message = 'U heeft aangegeven dat u het wachtwoord bent vergeten. U krijgt van ons een nieuw wachtwoord waarmee u kunt inloggen en vervolgens kunt u op uw accountgegevenspagina weer wijzigen. 
+$message = 'U heeft aangegeven dat u het wachtwoord bent vergeten. U krijgt van ons een nieuw wachtwoord waarmee u kunt inloggen en vervolgens kunt u deze op uw accountgegevenspagina weer wijzigen. 
 Uw nieuwe wachtwoord is = ';
 
 $randomPassword = createRandomPassword(); 
@@ -31,12 +30,10 @@ $messageCode = $message . $randomPassword;
                     <article class="card-body">
 
                         <h4 class="card-title mb-4 mt-1">Wachtwoord vergeten</h4>
-                        <?php if (isset($message_login)){
-                            echo '<p class="error error-warning">' . $message_login . '</p>';
-                        }?>
                         <form method="post">
                             <div class="form-group">
                                 <label>E-mail</label>
+                                <?php if(isset($errormessage)) echo $errormessage ?>
                                 <input  value=<?= '"' .$_SESSION['mailAdres'].'"' ?> class="form-control" placeholder="Voer uw emailadres in..." type="text"  id="email-check" name="mailadres">
                             </div>
                             <div class="form-group">
@@ -49,15 +46,18 @@ $messageCode = $message . $randomPassword;
                             </div>
                             <div>
                              <button name="verzenden" class="btn btn-primary btn-block"> Verzenden</button>
-                         </div>  
-                         <?php } ?>
+                            </div>  
+                         <?php } else{ 
+                            $errormessage = 'E-mail adres is onjuist!';
+                        }
+                            ?>
                      </form>
                  </article>
              </div>
          </div>
      <?php 
         // als op de knop verzenden word geklikt dan word de onderstaande query uitgevoerd
-if ($wachtwoordGereset == false){
+
      if (isset ($_POST['verzenden'])){
         $antwoordtekst = $_POST['antwoord'];
         $emailAdres = $_POST['mailadres'];
@@ -71,10 +71,10 @@ if ($wachtwoordGereset == false){
             $updatePasswordParameters = array(':mailadres' => $emailAdres,':wachtwoord' => $newPassword);
             handlequery("UPDATE Gebruiker SET wachtwoord = :wachtwoord WHERE mailadres = :mailadres",$updatePasswordParameters);
         } else {
-            echo 'Er is iets fout gegaan bij het wijzigen van uw wachtwoord!';
+          $errormessage = 'Antwoord is onjuist!';
         }
     }
-}
+
     ?>
         <?php if($wachtwoordGereset){ 
             echo '<div class="row">
