@@ -344,7 +344,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
 setInterval(function()
 {
 $('.preview-thumbnail').load(document.URL +  ' .preview-thumbnail');
-$('.product-info').load(document.URL +  ' .product-info');
+// $('.product-info').load(document.URL +  ' .product-info');
 $('.bids').load(document.URL +  ' .bids');
 // $('.userInfo').load(document.URL +  ' .userInfo');
 

@@ -4,8 +4,92 @@
 		"selected_items":
 		[
 			[
+				"gebruiekr",
+				"gebruikersnaam"
+			],
+			[
+				"backgroud",
+				"background-size\tproperty"
+			],
+			[
 				"margin",
-				"margin-bottom\tproperty"
+				"margin-right\tproperty"
+			],
+			[
+				"backgrou",
+				"background-size\tproperty"
+			],
+			[
+				"no",
+				"no-repeat"
+			],
+			[
+				"font",
+				"font-size\tproperty"
+			],
+			[
+				"pritn",
+				"print_r"
+			],
+			[
+				"q",
+				"queryNumberAdmin"
+			],
+			[
+				"req",
+				"req1\trequire_once …"
+			],
+			[
+				"form",
+				"form-group"
+			],
+			[
+				"rubriek",
+				"rubrieknummer"
+			],
+			[
+				"quer",
+				"queryCheckDate"
+			],
+			[
+				"voo",
+				"voorwerpInfo"
+			],
+			[
+				"html",
+				"htmlVeranderVoorwerp"
+			],
+			[
+				"vieling",
+				"veilingGesloten"
+			],
+			[
+				"veiling",
+				"veilingGesloten"
+			],
+			[
+				"sele",
+				"selected"
+			],
+			[
+				"rubri",
+				"rubrieknummer"
+			],
+			[
+				"rubrie",
+				"rubrieknummer"
+			],
+			[
+				"array",
+				"array"
+			],
+			[
+				"in",
+				"input\tTag"
+			],
+			[
+				"rubrieken",
+				"rubrieken"
 			],
 			[
 				"voorwe",
@@ -20,10 +104,6 @@
 				"voorwerpNummer"
 			],
 			[
-				"rubriek",
-				"rubriek"
-			],
-			[
 				"para",
 				"paramUpload"
 			],
@@ -34,10 +114,6 @@
 			[
 				"rub",
 				"Rubriek"
-			],
-			[
-				"rubri",
-				"rubrieknummer"
 			],
 			[
 				"ru",
@@ -104,10 +180,6 @@
 				"print_r"
 			],
 			[
-				"quer",
-				"queryChangedBitCheck"
-			],
-			[
 				"Gebruiker",
 				"gebruikersnaam"
 			],
@@ -118,10 +190,6 @@
 			[
 				"data",
 				"data-target"
-			],
-			[
-				"html",
-				"htmlToonBiedingen"
 			],
 			[
 				"htm",
@@ -312,10 +380,6 @@
 				"_GET"
 			],
 			[
-				"array",
-				"array"
-			],
-			[
 				"su",
 				"submit-changes-user"
 			],
@@ -416,14 +480,6 @@
 				"field"
 			],
 			[
-				"pritn",
-				"printf"
-			],
-			[
-				"req",
-				"required"
-			],
-			[
 				"insert",
 				"insertTelParam"
 			],
@@ -458,62 +514,6 @@
 			[
 				"for",
 				"foreach\tforeach …"
-			],
-			[
-				"coun",
-				"country"
-			],
-			[
-				"pass",
-				"password-repeat"
-			],
-			[
-				"_S",
-				"_SESSION"
-			],
-			[
-				"SESSO",
-				"_SESSION"
-			],
-			[
-				"pas",
-				"passowrd-repeat"
-			],
-			[
-				"password",
-				"password"
-			],
-			[
-				"mail",
-				"mailadres"
-			],
-			[
-				"emai",
-				"emailUnique"
-			],
-			[
-				"rand",
-				"randomVerificationCode"
-			],
-			[
-				"sessio",
-				"session_start"
-			],
-			[
-				"session_",
-				"session_destroy"
-			],
-			[
-				"tr",
-				"trim"
-			],
-			[
-				"em",
-				"emailaddress"
-			],
-			[
-				"php",
-				"php"
 			]
 		]
 	},
@@ -579,58 +579,65 @@
 	[
 		"/C/xampp/htdocs/I-Project",
 		"/C/xampp/htdocs/I-Project/admin",
-		"/C/xampp/htdocs/I-Project/admin/vendor",
-		"/C/xampp/htdocs/I-Project/admin/vendor/bootstrap",
-		"/C/xampp/htdocs/I-Project/admin/vendor/bootstrap/js"
+		"/C/xampp/htdocs/I-Project/admin/layout"
 	],
 	"file_history":
 	[
+		"/C/xampp/htdocs/I-Project/ProductPage.php",
+		"/C/xampp/htdocs/I-Project/admin/layout/gebruikers.php",
+		"/C/xampp/htdocs/I-Project/admin/change-user.php",
+		"/C/xampp/htdocs/I-Project/admin/layout/changeBidModal.php",
+		"/C/xampp/htdocs/I-Project/admin/layout/biedingen.php",
 		"/C/xampp/htdocs/I-Project/admin/vendor/bootstrap/js/bootstrap.js",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/index.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/functions.php",
+		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/functions 2.php",
+		"/C/xampp/htdocs/I-Project/admin/index.php",
+		"/C/xampp/htdocs/I-Project/form-login.php",
+		"/C/xampp/htdocs/I-Project/admin/mechanic/functions.php",
+		"/C/xampp/htdocs/I-Project/user.php",
+		"/C/xampp/htdocs/I-Project/css/jonathan.css",
+		"/C/xampp/htdocs/I-Project/header.php",
+		"/C/xampp/htdocs/I-Project/mechanic/functions.php",
+		"/C/xampp/htdocs/I-Project/admin/css/jonathan.css",
+		"/C/xampp/htdocs/I-Project/admin/change-auction.php",
+		"/C/xampp/htdocs/I-Project/admin/overview.php",
+		"/C/xampp/htdocs/I-Project/admin/change-column.php",
+		"/C/xampp/htdocs/I-Project/admin/logout.php",
+		"/C/xampp/htdocs/I-Project/form-step-4.php",
 		"/C/xampp/htdocs/I-Project/admin/change-article.php",
+		"/C/xampp/htdocs/I-Project/admin/footer.php",
+		"/C/xampp/htdocs/I-Project/admin/layout/sortColumnModal.php",
+		"/C/xampp/htdocs/I-Project/admin/layout/rubriek.php",
+		"/C/xampp/htdocs/I-Project/admin/layout/productinfo.php",
+		"/C/xampp/htdocs/I-Project/admin/layout/livesearch.php",
+		"/C/xampp/htdocs/I-Project/layout/changeinfoModal.php",
+		"/C/xampp/htdocs/I-Project/admin/layout/changeColumnModal.php",
+		"/C/xampp/htdocs/I-Project/admin/layout/subrubrieken.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/custom 2.css",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/custom.css",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/block--block--3.tpl.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/block--block--1.tpl.php",
-		"/C/xampp/htdocs/I-Project/admin/mechanic/functions.php",
-		"/C/xampp/htdocs/I-Project/admin/layout/changeBidModal.php",
-		"/C/xampp/htdocs/I-Project/admin/layout/biedingen.php",
-		"/C/xampp/htdocs/I-Project/admin/change-column.php",
-		"/C/xampp/htdocs/I-Project/admin/layout/subrubrieken.php",
-		"/C/xampp/htdocs/I-Project/admin/layout/rubriek.php",
-		"/C/xampp/htdocs/I-Project/admin/change-user.php",
-		"/C/xampp/htdocs/I-Project/admin/layout/gebruikers.php",
 		"/C/xampp/htdocs/I-Project/admin/layout/changeUserModal.php",
 		"/C/xampp/htdocs/I-Project/admin/admin-pagina.php",
-		"/C/xampp/htdocs/I-Project/admin/css/jonathan.css",
 		"/C/xampp/htdocs/I-Project/admin/layout/gebruiker.php",
 		"/C/xampp/htdocs/I-Project/admin/layout/changeProductInfoModal.php",
-		"/C/xampp/htdocs/I-Project/admin/layout/productinfo.php",
 		"/C/xampp/htdocs/I-Project/account.php",
 		"/C/xampp/htdocs/I-Project/layout/auctionswon.php",
-		"/C/xampp/htdocs/I-Project/admin/footer.php",
 		"/C/xampp/htdocs/I-Project/layout/my-auctions.php",
 		"/C/xampp/htdocs/I-Project/admin/header.php",
 		"/C/xampp/htdocs/I-Project/layout/changepassModal.php",
 		"/C/xampp/htdocs/I-Project/admin/vendor/bootstrap/js/bootstrap.bundle.min.js",
 		"/C/xampp/htdocs/I-Project/admin/css/styles_kevin.css",
-		"/C/xampp/htdocs/I-Project/layout/changeinfoModal.php",
 		"/C/xampp/htdocs/I-Project/layout/user-details.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/custom.css",
-		"/C/xampp/htdocs/I-Project/ProductPage.php",
-		"/C/xampp/htdocs/I-Project/form-step-4.php",
 		"/C/xampp/htdocs/I-Project/registreren.php",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/functions 2.php",
-		"/C/xampp/htdocs/I-Project/mechanic/functions.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/overview.php",
 		"/C/xampp/htdocs/I-Project/form-step-2.php",
-		"/C/xampp/htdocs/I-Project/user.php",
-		"/C/xampp/htdocs/I-Project/admin/index.php",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/functions.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/html.html.twig",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/favicon.ico",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/html.html.twig",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/robots.txt",
-		"/C/xampp/htdocs/I-Project/css/jonathan.css",
 		"/C/xampp/htdocs/I-Project/upload-article.php",
 		"/C/xampp/htdocs/I-Project/ProductPageNieuw.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/registreren.php",
@@ -649,7 +656,6 @@
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/block--homepaginablok3.html.twig",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/footer_ornament.png",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/page.tpl.php",
-		"/C/Users/jdion/AppData/Local/Temp/fz3temp-2/index.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/registreren.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/form-step-2.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/form-step-3.php",
@@ -668,9 +674,7 @@
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/footer.php",
 		"/C/Users/jdion/AppData/Local/Temp/fz3temp-3/head.php",
 		"/C/xampp/htdocs/I-Project/css/stylesheet_Edje.css",
-		"/C/xampp/htdocs/I-Project/header.php",
 		"/C/xampp/htdocs/I-Project/form-step-3.php",
-		"/C/xampp/htdocs/I-Project/form-login.php",
 		"/C/xampp/htdocs/I-Project/login.php",
 		"/C/xampp/htdocs/I-Project/mechanic/test.php",
 		"/C/xampp/htdocs/I-Project/footer.php",
@@ -706,13 +710,7 @@
 		"/C/Users/jdion/AppData/Local/Temp/Rar$DRa17940.47079/FLETNIX/php/db.php",
 		"/C/Users/jdion/AppData/Local/Temp/Rar$DRa14916.22295/verify.php",
 		"/C/Users/jdion/AppData/Local/Temp/Rar$DRa14916.40705/register.php",
-		"/C/Users/jdion/AppData/Local/Temp/Rar$DRa17940.22266/FLETNIX/account.php",
-		"/C/Users/jdion/AppData/Local/Temp/Rar$DRa17940.27129/FLETNIX/php/registratie.php",
-		"/C/Users/jdion/AppData/Local/Temp/Rar$DRa17940.26313/FLETNIX/php/login.php",
-		"/C/xampp/htdocs/I-Project/header-content-page.php",
-		"/C/Users/jdion/AppData/Local/Temp/Rar$DRa17940.37728/FLETNIX/account.php",
-		"/C/xampp/htdocs/I-Project/header-content.php",
-		"/C/xampp/htdocs/I-Project/header-page.php"
+		"/C/Users/jdion/AppData/Local/Temp/Rar$DRa17940.22266/FLETNIX/account.php"
 	],
 	"find":
 	{
@@ -731,6 +729,45 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"placeholder",
+			"userinfo",
+			"block",
+			"showlog",
+			"ahow",
+			"loginC",
+			"login",
+			"loginc",
+			"logincont",
+			"showlogin",
+			"genera",
+			"status",
+			"block",
+			"setinterval",
+			"bid",
+			"login",
+			"show",
+			"land",
+			"search-article",
+			" ",
+			"redi",
+			">';\n",
+			"showlogin",
+			"redirectJS",
+			"redirect",
+			"upload",
+			"maak nieuw",
+			"maak nieuwe",
+			"maak nieuw",
+			"sendEmailClosedAuctions",
+			"clean",
+			"bewerk",
+			"verwijder artikel",
+			"add_field_button",
+			"\".add_field_button\"",
+			"modal",
+			"rubriek",
+			"search-column",
+			"x",
 			"media",
 			"@media",
 			"#block-views-header-blokken-block .view-header ul l",
@@ -819,46 +856,7 @@
 			"UPDATE\\",
 			"user.php",
 			"uploadfoto",
-			"form",
-			"</form>",
-			"</form?",
-			"sellitem",
-			"aanwezig",
-			"niet alle velden",
-			"file",
-			"file\\",
-			"file",
-			"verzend",
-			"$productdata[0]",
-			"bidAmount",
-			"het bestand bestaat al",
-			"placeholder",
-			"geef het ",
-			"voorwerpnummer",
-			"pic-4",
-			"tel:",
-			"tel",
-			"beschrijving",
-			"neem contact",
-			"file",
-			"hoogste",
-			"hoogtste",
-			"thead",
-			"InsertPhoto",
-			"imageFileType",
-			"$_FILES[\"fileToUpload\"][\"size\"]",
-			"aangeboden",
-			"/I-Project",
-			"getdate",
-			"fieldsfilledin",
-			"calculateTimeDiffrence",
-			"calcutetimedifference",
-			"<<<<<",
-			"$_SESSION[",
-			"mail",
-			"exec",
-			"delete",
-			"show"
+			"form"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -895,16 +893,11 @@
 			"sheets":
 			[
 			]
-		},
-		{
-			"sheets":
-			[
-			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 34.0
+		"height": 35.0
 	},
 	"input":
 	{
@@ -919,18 +912,11 @@
 				0,
 				1,
 				1
-			],
-			[
-				1,
-				0,
-				2,
-				1
 			]
 		],
 		"cols":
 		[
 			0.0,
-			0.5,
 			1.0
 		],
 		"rows":
@@ -994,7 +980,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 218.0,
+	"side_bar_width": 266.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
