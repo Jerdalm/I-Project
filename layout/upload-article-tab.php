@@ -151,7 +151,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
                 </div>
 								<div class="form-group col-md-8">
                   <label class="control-label" for="beschrijving">Categorie*</label>
-                  <select id="categorie" name="categorie" type="select" class="form-control input-md" required>
+                  <select id="categorie" name="categorie" type="select" class="form-control input-md">
                     <?php foreach ($categories as $key => $categorie) {
                       echo '<option value=' .$categorie['rubrieknummer'].'>'.$categorie['hoofd'].' / '.$categorie['laag'].'</option>';
                     } ?>
