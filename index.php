@@ -34,7 +34,11 @@ $_SESSION['email-registration'] = ' ';
 
                  echo showProducts(true, Setquery($_SESSION['gebruikersnaam'], $_GET['product']));
              } else {
-                 echo showProducts(true,"SELECT TOP 10 * from currentAuction ORDER BY NEWID()");
+                 echo showProducts(true,"
+					SELECT TOP 10 *, Vo.startprijs from currentAuction C
+					INNER JOIN voorwerp Vo
+					ON C.voorwerpnummer = Vo.voorwerpnummer
+					ORDER BY NEWID()");
              }
              ?>
          </div>
