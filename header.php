@@ -20,13 +20,13 @@
 					  Alle veilingen
 					</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-					
+
 					</div>
 				  </li>
 			 <?= showLoginMenu(); ?>
   			<li class="no_hover">
   				<form action="overview.php" method="get">
-  					<input list="producten" name="search" placeholder="Uw product" maxlength="50" type="search">
+  					<input list="producten" name="search" placeholder="Uw product" maxlength="50" type="search" required>
   					<input value="zoeken" type="submit">
   				</form>
   			</li>
