@@ -296,11 +296,6 @@ function showLoginMenu(){
 	return $htmlLogin;
 }
 
-/* Deze functie genereert een random code */
-function generateRandomCode(){
-	return rand(100000,900000);
-}
-
 /* Deze functie checkt of de username nog niet bestaat, en of de wachtwoorden overeen komen, en aan de regels voldoen */
 function checkUsernamePassword($username, $password, $passwordrepeat){
 	$passwordMinimumLength = 7;
@@ -431,12 +426,12 @@ function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLoc
 
 /* Deze functie controleert of de email en wachtwoord kloppen */
 function loginControl($email, $wachtwoord){
-	$emailParam = array(':mailadres'=>$email);
-	$gebruiker = handleQuery("SELECT * FROM Gebruiker WHERE mailadres=:mailadres", $emailParam);
+	$emailParam = array(':mailadres' => $email, ':username' => $email);
+	$gebruiker = handleQuery("SELECT * FROM Gebruiker WHERE mailadres= :mailadres OR gebruikersnaam = :username", $emailParam);
 	$message_login = '';
 
 	if (count($gebruiker) == 0) {
-		$message_login = "Verkeerd wachtwoord of onbekende e-mail, probeer opnieuw!";
+		$message_login = "Verkeerd wachtwoord of onbekende e-mail/gebruikersnaam, probeer opnieuw!";
 	} else {
 		$wachtwoord = trim($wachtwoord);
 		$gebruiker['wachtwoord'] = trim($gebruiker[0]['wachtwoord']);
@@ -889,15 +884,17 @@ function UpdateInfoUser($get, $gebruikersnaam,$gebruiker,$telefoonnummers){
 
 /* toont goede button aan de hand van ingelogt zijn of niet */
 function showButtonIndex(){
+$html = '<a href="overview.php" class="cta-orange">Alle veilingen!</a>';
 	if(isset($_SESSION['gebruikersnaam'])){
 		if($_SESSION['soortGebruiker'] != 2) {
-		echo '<a href="upgrade-user.php" class="cta-orange btn">Wordt verkoper!</a>';
+		$html .= '<a href="upgrade-user.php" class="cta-orange">Wordt verkoper!</a>';
 	} else {
-		echo '<a href="upload-article.php" class="cta-orange btn">Verkoop voorwerp!</a>';
+		$html .= '<a href="upload-article.php" class="cta-orange">Verkoop voorwerp!</a>';
 	}
 	} else {
-		echo '<a href="registreren.php" class="cta-orange btn">Registreer je nu om mee te bieden!</a>';
+		$html .= '<a href="registreren.php" class="cta-orange">Registreer je nu om mee te bieden!</a>';
 	}
+	return $html;
 }
 
 function checkNewPassword ($password, $passwordrepeat){

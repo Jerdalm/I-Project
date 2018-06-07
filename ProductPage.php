@@ -145,7 +145,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
             <input type="submit" name="bidAmount-submit" Value="Bied!" class="biedenKnop cta-orange btn">
             ';
             if (isset($message_bids)) {
-              $htmluploadFoto .= '<p class="error error-warning">' . $message_bids . '</p>';
+              $htmluploadFoto .= '<div class="row"></div><p class="error error-warning">' . $message_bids . '</p></div>';
             };
             $htmluploadFoto .= '</div>
             </div>
