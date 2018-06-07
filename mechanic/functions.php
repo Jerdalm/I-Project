@@ -54,7 +54,7 @@ function Setquery($username, $vwNummer)
         $datalist.= " or voorwerpnummer = " . $value;
     }
 
-    $Arrayquery = "SELECT top 6 C.*, Vo.plaatsnaam as plaats, V.rubriekOpLaagsteNiveau
+    $Arrayquery = "SELECT top 6 C.*, Vo.plaatsnaam as plaats, V.rubriekOpLaagsteNiveau, Vo.startprijs
                   FROM currentAuction C
 
                   INNER JOIN voorwerp Vo
@@ -614,8 +614,8 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 	foreach($producten as $product) {
 
         $itemcount++;
-        if (!$product['bodbedrag']) {
-            $product['bodbedrag'] = 0;
+        if (empty($product['bodbedrag'])){
+            $product['bodbedrag'] = $product['startprijs'];
         }
 
         if ($carrousel) {
@@ -667,11 +667,19 @@ function showProducts($carrousel = false, $query = false, $parameters = false, $
 /* Deze functie berekend het verschil tussen 2 data */
 function calculateTimeDiffrence($timestamp1, $timestamp2){
 
-	$datetime1 = new DateTime($timestamp1);//start time
-	$datetime2 = new DateTime($timestamp2);//end time
-	$interval = $datetime1->diff($datetime2);
+    $datetime1 = new DateTime($timestamp1);//start time
+    $datetime2 = new DateTime($timestamp2);//end time
+    $interval = $datetime1->diff($datetime2);
 
-	return $interval->format('%d dagen <br> %H:%i:%s uur');
+
+    if($interval->format('%d') == 1){
+        $dagAantal = 'dag';
+    } else{
+        $dagAantal = 'dagen';
+    }
+    return $interval->format('%d '.$dagAantal.'<br> %H:%i:%s uur');
+
+//	return $interval->format('%d dagen <br> %H:%i:%s uur');
 
 }
 

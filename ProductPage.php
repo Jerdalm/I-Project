@@ -316,7 +316,11 @@ if (isset($_SESSION['gebruikersnaam'])) {
 
                                 echo showProducts(true, Setquery($_SESSION['gebruikersnaam'], $_GET['product']));
                             } else {
-                            echo showProducts(true,"SELECT TOP 6 * from currentAuction");
+                            echo showProducts(true,"
+					SELECT TOP 10 *, Vo.startprijs from currentAuction C
+					INNER JOIN voorwerp Vo
+					ON C.voorwerpnummer = Vo.voorwerpnummer
+					ORDER BY NEWID()");
                             }
                             ?>
                         </div>
