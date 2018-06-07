@@ -263,12 +263,27 @@ function returnSRCProduct($voorwernummer){
 	return $return;
 }
 
+// function sortProducts(){
+// 	$sort = "desc";
+// 	if (isset($_GET['filter-time-asc'])){
+// 		$sort = "asc";
+// 	}
+// 	$return = "SELECT V.voorwerpnummer, V.verkoper, V.plaatsnaam, V.titel, V.startprijs, R.rubriekOpLaagsteNiveau, DATEDIFF(second,CAST(v.looptijdEindeTijdstip AS DATETIME) + CAST(v.looptijdEindeDag AS DATETIME), GETDATE()) AS looptijd FROM VoorwerpInRubriek R right outer join Voorwerp V 								        
+// 	on V.voorwerpnummer = R.voorwerpnummer
+// 	left outer join Rubriek Ru
+// 	on R.rubriekOpLaagsteNiveau = Ru.rubrieknummer
+// 	WHERE v.voorwerpnummer = :voorwerpnummer or V.verkoper like :verkoper or V.plaatsnaam like :plaats or V.titel like :titel or v.startprijs = :prijs
+// 	or Ru.rubrieknaam like :categorie
+// 	order by v.looptijd " . $sort;
+// 	return $return;
+// }
+
 function sortProducts(){
 	$sort = "desc";
 	if (isset($_GET['filter-time-asc'])){
 		$sort = "asc";
 	}
-	$return = "SELECT V.voorwerpnummer, V.verkoper, V.plaatsnaam, V.titel, V.startprijs, R.rubriekOpLaagsteNiveau, v.loopTijd FROM VoorwerpInRubriek R right outer join Voorwerp V 								        
+	$return = "SELECT V.voorwerpnummer, V.verkoper, V.plaatsnaam, V.titel, V.startprijs, R.rubriekOpLaagsteNiveau, DATEDIFF(day, (CAST(v.looptijdEindeTijdstip AS DATETIME) + CAST(v.looptijdEindeDag AS DATETIME)), GETDATE()) AS looptijd FROM VoorwerpInRubriek R right outer join Voorwerp V 								        
 	on V.voorwerpnummer = R.voorwerpnummer
 	left outer join Rubriek Ru
 	on R.rubriekOpLaagsteNiveau = Ru.rubrieknummer
@@ -361,7 +376,7 @@ function setStatusColumn($rubriek, $status){
 	$query = handlequery("UPDATE Rubriek 
 		SET status = :status
 		WHERE rubrieknummer = :nummer", $param);
-	header("Location: ./change-column.php?rubriek=".$rubriek);
+	redirectJS("change-auction.php?rubriek=".$rubriek);
 }
 
 function toonStatus($rubriek){
@@ -396,7 +411,6 @@ function updateColumnName($array){
 	header("Location: ./change-column.php?rubriek=".$array['rubrieknummer']);
 }
 
-
 function returnColumns($parent){
 	$param = array(':nummer' => $parent);
 	return handlequery("SELECT * FROM rubriek WHERE hoofdrubriek = :nummer", $param);
@@ -427,7 +441,7 @@ function statusAuction($get, $state) {
 	} else {
 		handlequery("UPDATE voorwerp SET veilingGesloten = 1 WHERE voorwerpnummer = :nummer", $param);
 	}
-	header("Location: ./change-article.php?voorwerpInfo=".$get['product']);
+	redirectJS("./change-auction.php?voorwerpInfo=".$get['product']);
 }
 
 function redirectJS($url){

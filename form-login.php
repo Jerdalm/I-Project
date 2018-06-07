@@ -12,8 +12,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 echo '
 <form method="post" id="login-form">
     <div class="form-group">
-        <label for="inputEmail">Email</label>
-        <input type="email" class="form-control" id="email-login" name="email-login">
+        <label for="inputEmail">Email of Gebruikersnaam</label>
+        <input type="text" class="form-control" id="email-login" name="email-login">
     </div>
     <div class="form-group">
         <label for="inputPassword">Wachtwoord</label>

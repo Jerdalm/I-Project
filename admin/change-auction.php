@@ -1,10 +1,9 @@
 <?php 
 require_once './header.php'; 
-print_r($_SESSION);
 if (isset($_SESSION['gebruikersnaam']) && $_SESSION['gebruikersnaam'] == 'admin'){
 	$htmlVeranderVoorwerp = '<form class="form-group" method="GET" action=""> 
 	<input type="text" name="voorwerp" placeholder="Geef: voorwerpnummer, verkoper, plaats, titel, startprijs, rubriek" min="0"> <br>
-	<input class="cta-orange" name="search-article" type="submit" value="Zoeken">
+	<button class="btn cta-orange" name="search-article" type="submit" value="zoeken">Zoeken</button>
 	</form>';
 	if(isset($errorMessageArticle)) { 
 		$htmlVeranderVoorwerp .= '<p class="error error-warning">'.$errorMessageArticle.'</p>'; 
@@ -48,7 +47,9 @@ if (isset($_SESSION['gebruikersnaam']) && $_SESSION['gebruikersnaam'] == 'admin'
 		<th scope="col">Gebruiker</th>
 		<th scope="col">Looptijd</th>
 		</tr>';
-		foreach($voorwerpen as $voorwerp){
+		foreach($voorwerpen as $voorwerp){		
+
+			
 			$artikelResultaten .= "<tr>
 			<td>
 			<a href='?&voorwerpInfo=" . $voorwerp['voorwerpnummer'] . "'>
@@ -56,24 +57,27 @@ if (isset($_SESSION['gebruikersnaam']) && $_SESSION['gebruikersnaam'] == 'admin'
 			</a>
 			</td>
 			<td>
-			<p><a href='?&voorwerpInfo=" . $voorwerp['voorwerpnummer'] . "'>" . $voorwerp['voorwerpnummer'] ."</a></p>
+			<p><a href='?&voorwerpInfo=" .$voorwerp['voorwerpnummer']. "'>" .$voorwerp['voorwerpnummer']."</a></p>
 			</td>
 			<td>
-			<p><a href='?&voorwerpInfo=" . $voorwerp['voorwerpnummer'] . "'>" . $voorwerp['titel'] ."</a></p>
+			<p><a href='?&voorwerpInfo=" .$voorwerp['voorwerpnummer']. "'>" .$voorwerp['titel']."</a></p>
 			</td>
 			<td>
-			<p><a href='?&voorwerpInfo=" . $voorwerp['voorwerpnummer'] . "'>€" . $voorwerp['startprijs'] ."</a></p>
+			<p><a href='?&voorwerpInfo=" .$voorwerp['voorwerpnummer']. "'>€" .$voorwerp['startprijs']."</a></p>
 			</td>
 			<td>
-			<p><a href='?&voorwerpInfo=" . $voorwerp['voorwerpnummer'] . "'>" . $voorwerp['plaatsnaam'] ."</a></p>
+			<p><a href='?&voorwerpInfo=" .$voorwerp['voorwerpnummer']. "'>" .$voorwerp['plaatsnaam']."</a></p>
 			</td>
 			<td>
-			<p><a href='?&voorwerpInfo=" . $voorwerp['voorwerpnummer'] . "'>" . $voorwerp['verkoper'] ."</a></p>
+			<p><a href='?&voorwerpInfo=" .$voorwerp['voorwerpnummer']. "'>" .$voorwerp['verkoper']."</a></p>
 			</td>
-			<td>
-			<p><a href='?&voorwerpInfo=" . $voorwerp['voorwerpnummer'] . "'>" . $voorwerp['loopTijd'] ."</a></p>
-			</td>
-			</tr>"; 
+			<td>";
+			if ($voorwerp['looptijd'] < 0){
+				$artikelResultaten .= "<p id=auction-time><a href='?&voorwerpInfo=" .$voorwerp['voorwerpnummer']. "'>Verlopen</a></p>";
+			} else {
+				$artikelResultaten .= "<p id=auction-time><a href='?&voorwerpInfo=" .$voorwerp['voorwerpnummer']. "'>" .$voorwerp['looptijd']. " dag(en)</a></p>";
+			}
+			$artikelResultaten .= "</td></tr>"; 
 		} 
 		$artikelResultaten .= '</tr></table></div></div>';
 	} else if (isset($_GET['voorwerpInfo'])){
@@ -143,3 +147,12 @@ if (isset($_SESSION['gebruikersnaam']) && $_SESSION['gebruikersnaam'] == 'admin'
 	redirectJS("./404.php");
 }
 require_once './footer.php';
+?>
+
+<!-- <script type="text/javascript">
+	setInterval(function()
+	{
+		$('#auction-time').load(document.URL +  ' #auction-time');
+
+	}, 1000);
+</script> -->

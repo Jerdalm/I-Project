@@ -296,11 +296,6 @@ function showLoginMenu(){
 	return $htmlLogin;
 }
 
-/* Deze functie genereert een random code */
-function generateRandomCode(){
-	return rand(100000,900000);
-}
-
 /* Deze functie checkt of de username nog niet bestaat, en of de wachtwoorden overeen komen, en aan de regels voldoen */
 function checkUsernamePassword($username, $password, $passwordrepeat){
 	$passwordMinimumLength = 7;
@@ -431,12 +426,12 @@ function sendCode($email, $subjectText, $bodyText, $headerLocationIf, $headerLoc
 
 /* Deze functie controleert of de email en wachtwoord kloppen */
 function loginControl($email, $wachtwoord){
-	$emailParam = array(':mailadres'=>$email);
-	$gebruiker = handleQuery("SELECT * FROM Gebruiker WHERE mailadres=:mailadres", $emailParam);
+	$emailParam = array(':mailadres' => $email, ':username' => $email);
+	$gebruiker = handleQuery("SELECT * FROM Gebruiker WHERE mailadres= :mailadres OR gebruikersnaam = :username", $emailParam);
 	$message_login = '';
 
 	if (count($gebruiker) == 0) {
-		$message_login = "Verkeerd wachtwoord of onbekende e-mail, probeer opnieuw!";
+		$message_login = "Verkeerd wachtwoord of onbekende e-mail/gebruikersnaam, probeer opnieuw!";
 	} else {
 		$wachtwoord = trim($wachtwoord);
 		$gebruiker['wachtwoord'] = trim($gebruiker[0]['wachtwoord']);
