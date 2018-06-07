@@ -1,7 +1,7 @@
 <?php
 if (isset($_GET['gebruikersnaam'])) {
 	$gebruikerDetailParam = array(':naam' => $_GET['gebruikersnaam']);
-	$queryGetUserInfo = "SELECT gebruikersnaam, voornaam, achternaam, plaatsnaam, land, geboortedag, mailadres 
+	$queryGetUserInfo = "SELECT gebruikersnaam, voornaam, achternaam, plaatsnaam, land, geboortedag, mailadres, soortGebruiker
 	FROM Gebruiker 
 	WHERE gebruikersnaam = :naam";
 	$query = FetchAssocSelectData($queryGetUserInfo, $gebruikerDetailParam);

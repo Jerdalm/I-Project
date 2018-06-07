@@ -76,7 +76,58 @@ if (isset($_SESSION['gebruikersnaam'])) {
         die();
       }
     } ?>
+<style>
+.tt-query,
+.tt-hint {
+    width: 396px;
+    height: 30px;
+    padding: 8px 12px;
+    font-size: 24px;
+    line-height: 30px;
+    border: 2px solid #ccc;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    outline: none;
+}
 
+.tt-query {
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.tt-hint {
+    color: #999
+}
+
+.tt-dropdown-menu {
+    width: 422px;
+    margin-top: 12px;
+    padding: 8px 0;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+}
+
+.tt-suggestion {
+    padding: 3px 20px;
+    font-size: 18px;
+    line-height: 24px;
+}
+
+.tt-suggestion.tt-is-under-cursor {
+    color: #fff;
+    background-color: #0097cf;
+
+}
+</style>
    
       
         <div class="container">
@@ -92,7 +143,11 @@ if (isset($_SESSION['gebruikersnaam'])) {
                   <label class="control-label" for="beschrijving">Beschrijving*</label>
                   <textarea class="form-control" id="beschrijving" name="beschrijving" required></textarea>
                 </div>
-              </div>
+				<div class="form-group col-md-8">
+					<label class="control-label" for="verzendinstructies">Rubriek</label>
+					<input id="verzendinstructies" id="typeahead" name="typeahead" type="text" placeholder="typ het product en kies een categorie" class="form-control input-md">  
+				</div>
+              </div>			  
               <div class="form-row">
                 <div class="form-group col-md-4">
                   <label class="control-label" for="looptijd">Looptijd in dagen*</label>
@@ -126,7 +181,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
               <div class="form-row">
                 <div class="form-group col-md-4">
                   <label class="control-label" for="verzendkosten">Verzendkosten</label>
-                  <input id="verzendkosten" name="verzendkosten" type="number" min="0" placeholder="Optioneel" class="form-control input-md">
+                  <input id="verzendkosten" name="verzendkosten" type="number" min="0" step="0.01" placeholder="Optioneel" class="form-control input-md">
                   </div>
                 <div class="form-group col-md-4">
                   <label class="control-label" for="verzendinstructies">Verzendinstructies</label>
@@ -163,11 +218,6 @@ if (isset($_SESSION['gebruikersnaam'])) {
     </script>
  <?php  } else {
     redirectJS("index.php"); // redirect naar index wanneer je niet ingelogd bent
-    exit();
-    echo '<main><section>
-    niet ingelogd > redirect naar?<br>
-    nog geen verkoper > redirect naar verkoper worden?
-    </section></main>';
   }
 ?>
 

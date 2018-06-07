@@ -39,8 +39,7 @@ if(isset($_GET['gebruikersnaam'])){
 		<p>'.date_format(date_create($bieding['bodDag']), "d-m-Y").'</p>
 		</td>
 		<td>
-		<a type="button" href=&naam='.$bieding['gebruikersnaam'].'&bodBedrag='.$bieding['bodbedrag'].' class="btn btn btn-success btn-change-bid" data-toggle="modal" data-target="#changeBid" 
-		data-voorwerpnummer="' . $bieding['voorwerpnummer'] . '" data-id='.$bieding['bodbedrag'].' data-datum="' . $bieding['bodDag'] . '" data-tijd="' . $bieding['bodTijdstip'] . '">Bewerk bod</a> 
+		<a type="button" href=&naam='.$bieding['gebruikersnaam'].'&bodBedrag='.$bieding['bodbedrag'].' class="btn btn btn-success btn-change-bid" data-toggle="modal" data-target="#changeBid" data-gebruiker="'.$bieding['gebruikersnaam'].'" data-voorwerpnummer="' . $bieding['voorwerpnummer'] . '" data-id='.$bieding['bodbedrag'].' data-datum="' . $bieding['bodDag'] . '" data-tijd="' .date_format(date_create($bieding['bodTijdstip']), "H:i:s").' ">Bewerk bod</a> 
 		</td>
 		</tr>';
 	}
@@ -67,4 +66,5 @@ if(isset($_GET['gebruikersnaam'])){
 <?php 
 if (isset($_GET['submit-bit']) && isset($_GET['bodBedragOud'])) {
 	updateBit($_GET);
+	redirectJS("./change-user.php?gebruikersnaam=".$_GET['gebruikersnaam']);
 }?>
