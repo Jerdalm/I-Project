@@ -3,4 +3,4 @@ section.register p{
 }
 
 /* See here the legendary code of Jeremy nogwat */
-.navbar input[type="search"]::placeholder{color:white;}
+.navbar input[type="search"]::placeholder{color:white; opacity:1;}
