@@ -1,7 +1,7 @@
 <?php require_once 'header.php';
 
 if (isset($_SESSION['gebruikersnaam'])) {
-  $categories = handlequery("SELECT rubrieknummer, rubrieknaam FROM laagsteRubrieken ORDER BY rubrieknaam");
+  $categories = handlequery("SELECT r.rubrieknaam AS 'hoofd', l.rubrieknaam AS 'laag' FROM laagsteRubrieken l JOIN Rubriek r ON r.rubrieknummer = l.hoofdrubriek ORDER BY r.rubrieknaam, l.rubrieknaam");
   $username = $_SESSION['gebruikersnaam'];
   if ($_SESSION['soortGebruiker'] != 2) {
     redirectJS("upgrade-user.php"); // redirect naar upgrade user wanneer je geen verkoper bent
@@ -106,7 +106,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
                   <label class="control-label" for="beschrijving">Categorie*</label>
                   <select id="categorie" name="categorie" type="select" class="form-control input-md" required>
                     <?php foreach ($categories as $key => $categorie) {
-                      echo '<option value=' .$categorie['rubrieknummer'].'>'.$categorie['rubrieknaam'].'</option>';
+                      echo '<option value=' .$categorie['rubrieknummer'].'>'.$categorie['hoofd'].' / '.$categorie['laag'].'</option>';
                     } ?>
                   </select>
                 </div>
