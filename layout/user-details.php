@@ -9,7 +9,7 @@ $gebruiker = FetchAssocSelectData("SELECT Gebruiker.gebruikersnaam,voornaam,acht
 $telefoonPara = array(':gebruikersnaam' => $gebruikersnaam);
 $telefoonnummers = handlequery("SELECT telefoonnummer,volgnr FROM Gebruikerstelefoon WHERE gebruikersnaam = :gebruikersnaam",$telefoonPara);
 $aantalTelefoonNummers = count($telefoonnummers);
-$messageCode = $message . $nieuwePassword;
+
 $correct = false;
 // checkt de input van de nieuwe wachtwoord en checkt ook of de nieuwe wachtwoord voldoet aan de eisen. Ook checkt dit gedeelte of het huidige wachtwoord juist is.
 if(isset($_POST['submit-new-password'])){
@@ -20,8 +20,9 @@ if(isset($_POST['submit-new-password'])){
 
   if (count($antwoord) == 1){
     if (checkNewPassword($_POST['password'], $_POST['password-repeat']) == "Wachtwoord zit in de database") {
-      $nieuwePassword = $_POST['password'];
-      handlequery("UPDATE Gebruiker SET wachtwoord = '$nieuwePassword' WHERE gebruikersnaam = '$gebruikersnaam'");
+      $nieuwPassword = $_POST['password'];
+      $messageCode = $message . $nieuwPassword;
+      handlequery("UPDATE Gebruiker SET wachtwoord = '$nieuwPassword' WHERE gebruikersnaam = '$gebruikersnaam'");
       $messageNewPass = checkNewPassword($_POST['password'], $_POST['password-repeat']);
     } else {
       $messageNewPass = checkNewPassword($_POST['password'], $_POST['password-repeat']);
