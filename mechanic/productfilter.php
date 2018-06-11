@@ -73,7 +73,7 @@
 	}
 	
 	/* Wanneer er word gezocht op woord */
-	else if(isset($_GET['search'])){ 
+	else if(isset($_GET['search'])&& !empty($_GET['search'])){ 
 	$zoekfilter = $_GET['search'];
 	
 	//$parameters = array(":search" => "%" . $zoekfilter . "%");

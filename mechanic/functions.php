@@ -530,7 +530,9 @@ function showRubriekenlist($toplevel){
 		}
 
 		$subcata = getSubRubriek($rubriek['rubrieknummer']);
-		$amountInRubarr = handlequery("SELECT COUNT(voorwerpnummer) AS productaantal from VoorwerpInRubriek WHERE rubriekOpLaagsteNiveau IN ".$subcata."");
+		$amountInRubarr = handlequery("SELECT COUNT(VoorwerpInRubriek.voorwerpnummer) AS productaantal from VoorwerpInRubriek
+		RIGHT JOIN currentAuction on VoorwerpInRubriek.voorwerpnummer = currentAuction.voorwerpnummer
+		WHERE rubriekOpLaagsteNiveau IN ".$subcata."");
 		$amountInRub = $amountInRubarr[0]['productaantal'];
 
 		if(!$amountInRub){continue;}
