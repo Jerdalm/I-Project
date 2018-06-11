@@ -1,57 +1,51 @@
 <?php require_once 'header.php';
 
 if (isset($_SESSION['gebruikersnaam'])) {
-  $categories = handlequery("SELECT r.rubrieknaam AS 'hoofd', l.rubrieknaam AS 'laag' FROM laagsteRubrieken l JOIN Rubriek r ON r.rubrieknummer = l.hoofdrubriek ORDER BY r.rubrieknaam, l.rubrieknaam");
+  $categories = handlequery("SELECT l.rubrieknummer, r.rubrieknaam AS 'hoofd', l.rubrieknaam AS 'laag' FROM laagsteRubrieken l JOIN Rubriek r ON r.rubrieknummer = l.hoofdrubriek ORDER BY r.rubrieknaam, l.rubrieknaam");
   $username = $_SESSION['gebruikersnaam'];
   if ($_SESSION['soortGebruiker'] != 2) {
     redirectJS("upgrade-user.php"); // redirect naar upgrade user wanneer je geen verkoper bent
     die();
   }
   if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $filledin = array(
-    'titel',
-    'beschrijving',
-    'looptijd',
-    'startprijs',
-    'betalingswijze'
-  );
-
-  if (isset($_POST['sellitem']) && fieldsFilledIn($filledin) && $_FILES["fileToUpload"]["size"] != 0) {
-    if (empty($_POST['betalingsinstructie'])) {
-      $_POST['betalingsinstructie'] = NULL;
-    } if (empty($_POST['verzendkosten'])) {
-      $_POST['verzendkosten'] = 0.00;
-    } if (empty($_POST['verzendinstructies'])) {
-      $_POST['verzendinstructies'] = NULL;
-    }
-
-    $voorwerpnummerUpload = handlequery("SELECT dbo.fnc_voorwerpnummer()");
-
-    $plaats = handlequery("SELECT plaatsnaam, land FROM Gebruiker WHERE gebruikersnaam = '".$username."'");
-    $uploadItem = array(
-      ':voorwerpnummer' => $voorwerpnummerUpload[0][0],
-      ':titel' => $_POST['titel'],
-      ':beschrijving' => $_POST['beschrijving'],
-      ':looptijd' => $_POST['looptijd'],
-      ':startprijs' => (float)$_POST['startprijs'],
-      ':betalingswijze' => $_POST['betalingswijze'],
-      ':betalingsinstructie' => $_POST['betalingsinstructie'],
-      ':verzendkosten' => (float)$_POST['verzendkosten'],
-      ':verzendinstructies' => $_POST['verzendinstructies'],
-      ':plaatsnaam' => $plaats[0]['plaatsnaam'],
-      ':land' => $plaats[0]['land'],
-      ':verkoper' => $_SESSION['gebruikersnaam']
-    );
-    $uploadRubriek = array(
-      ':voorwerpnummer' => $voorwerpnummerUpload[0][0],
-      ':rubriek' => $_POST['categorie']
+    $filledin = array(
+      'titel',
+      'beschrijving',
+      'looptijd',
+      'startprijs',
+      'betalingswijze'
     );
 
-    handlequery('INSERT INTO Voorwerp (voorwerpnummer, titel, beschrijving, startprijs, betalingswijze, betalingsinstructie, plaatsnaam,
-      land, looptijd, looptijdBeginDag, looptijdBeginTijdstip, verzendkosten, verzendinstructies, verkoper, veilingGesloten)
-      VALUES (:voorwerpnummer, :titel, :beschrijving, :startprijs, :betalingswijze, :betalingsinstructie, :plaatsnaam, :land, :looptijd,
-      GETDATE(), GETDATE(), :verzendkosten, :verzendinstructies, :verkoper, 0)', $uploadItem);
-    handlequery('INSERT INTO VoorwerpInRubriek VALUES (:voorwerpnummer, :rubriek)', $uploadRubriek);
+    if (isset($_POST['sellitem']) && fieldsFilledIn($filledin) && $_FILES["fileToUpload"]["size"] != 0) {
+      if (empty($_POST['betalingsinstructie'])) {
+        $_POST['betalingsinstructie'] = NULL;
+      } if (empty($_POST['verzendkosten'])) {
+        $_POST['verzendkosten'] = 0.00;
+      } if (empty($_POST['verzendinstructies'])) {
+        $_POST['verzendinstructies'] = NULL;
+      }
+
+      $voorwerpnummerUpload = handlequery("SELECT dbo.fnc_voorwerpnummer()");
+
+      $plaats = handlequery("SELECT plaatsnaam, land FROM Gebruiker WHERE gebruikersnaam = '".$username."'");
+      $uploadItem = array(
+        ':voorwerpnummer' => $voorwerpnummerUpload[0][0],
+        ':titel' => $_POST['titel'],
+        ':beschrijving' => $_POST['beschrijving'],
+        ':looptijd' => $_POST['looptijd'],
+        ':startprijs' => (float)$_POST['startprijs'],
+        ':betalingswijze' => $_POST['betalingswijze'],
+        ':betalingsinstructie' => $_POST['betalingsinstructie'],
+        ':verzendkosten' => (float)$_POST['verzendkosten'],
+        ':verzendinstructies' => $_POST['verzendinstructies'],
+        ':plaatsnaam' => $plaats[0]['plaatsnaam'],
+        ':land' => $plaats[0]['land'],
+        ':verkoper' => $_SESSION['gebruikersnaam']
+      );
+      $uploadRubriek = array(
+        ':voorwerpnummer' => $voorwerpnummerUpload[0][0],
+        ':rubriek' => $_POST['categorie']
+      );
 
       $target_dir = "./uploads/" . $username . '/' . $voorwerpnummerUpload[0][0]. '/';
       if (!file_exists($target_dir)){
@@ -61,29 +55,26 @@ if (isset($_SESSION['gebruikersnaam'])) {
       $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
       $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
-      if(checkIfImage($_POST["sellitem"]) && checkAllowedFileTypes($imageFileType) && checkSizeFile(1000000) && checkExistingFile($target_file)) {
+      if(checkIfImage($_POST["sellitem"]) && checkAllowedFileTypes($imageFileType) && checkSizeFile(5242880) && checkExistingFile($target_file)) {
         if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
           $uploadFoto = array(':voorwerpnummer' => $voorwerpnummerUpload[0][0] , ':filenaam' => $target_file);
+          handlequery('INSERT INTO Voorwerp (voorwerpnummer, titel, beschrijving, startprijs, betalingswijze, betalingsinstructie, plaatsnaam,
+            land, looptijd, looptijdBeginDag, looptijdBeginTijdstip, verzendkosten, verzendinstructies, verkoper, veilingGesloten)
+            VALUES (:voorwerpnummer, :titel, :beschrijving, :startprijs, :betalingswijze, :betalingsinstructie, :plaatsnaam, :land, :looptijd,
+              GETDATE(), GETDATE(), :verzendkosten, :verzendinstructies, :verkoper, 0)', $uploadItem);
+          handlequery('INSERT INTO VoorwerpInRubriek VALUES (:voorwerpnummer, :rubriek)', $uploadRubriek);
           handlequery("INSERT INTO Bestand (filenaam, voorwerpnummer) VALUES (:filenaam, :voorwerpnummer)", $uploadFoto);
+          redirectJS("productpage.php?product=" . $voorwerpnummerUpload[0][0]); // verwijzen naar nieuw
+            } else {
+              $errorUploadArticle = "Sorry, Er is iets fout gegaan tijdens het uploaden van uw bestand.";
+            }
+          } else {
+            $errorUploadArticle = "Sorry, uw bestand is te groot.";
+          }
+        } else {
+          $errorUploadArticle = "Sorry, niet alle velden zijn ingevuld.";
         }
-        else {
-          echo "Sorry, Er is iets fout gegaan tijdens het uploaden van uw bestand.";
-          die();
-        }
-      }
-    redirectJS("productpage.php?product=" . $voorwerpnummerUpload[0][0]); // verwijzen naar nieuw
-    die();
-      } else {
-        echo '<main><section><div class="container">
-        Niet alle velden zijn ingevuld <br><br>
-        <form action="upload-article.php" method="get">
-        <input type="submit" value="Opnieuw proberen"
-        name="Submit" id="frm1_submit"/></div>
-        </form>
-        </section></main>';
-        die();
-      }
-    } ?>
+      } ?>
 <style>
 
 </style>
@@ -159,6 +150,7 @@ if (isset($_SESSION['gebruikersnaam'])) {
                   <label class="custom-file-label" for="fileToUpload">Bestand kiezen</label>
                 </div>
               </div>
+              <?php if (isset($errorUploadArticle)) { echo '<p  class="error error-warning">'.$errorUploadArticle.'</p>';} ?>
               <div class="form-group">
                 <label class="control-label" for="verzenden"></label>
                 <button id="sellitem" name="sellitem" type="submit" class="cta-orange">Verkopen!</button>

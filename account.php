@@ -22,21 +22,20 @@ if(isset($_SESSION['gebruikersnaam'])){
       <?php
       if($_SESSION['soortGebruiker'] > 1){ ?>
       <a class="list-group-item list-group-item-action" id="list-my-auctions"    data-toggle="list" href="#content-my-auctions" role="tab" aria-controls="my-auctions">Mijn veilingen</a>
-      <a class="list-group-item list-group-item-action" id="list-upload-article" data-toggle="list" href="#content-upload-article" role="tab" aria-controls="upload-article">Verkoop voorwerp</a>
+      <a class="list-group-item list-group-item-action" id="list-upload-article" href="./upload-article.php" role="tab" aria-controls="upload-article">Verkoop voorwerp</a>
       <?php } ?>
 
       <?php
       if($_SESSION['soortGebruiker'] < 2){ ?>
       <a class="list-group-item list-group-item-action" id="list-seller-registration" data-toggle="list" href="#content-seller-registration" role="tab" aria-controls="seller-registration">Verkoper registratie</a>
       <?php } ?>
-      
+
     </div>
   </div>
   <div class="tab-content" id="nav-tabContent">
    <?php
    require 'layout/user-details.php';
    require 'layout/auctionswon.php';
-   require 'layout/upload-article-tab.php';
    require 'layout/my-auctions.php';
    require 'layout/offering-in.php';
    require 'layout/seller-registration.php';
