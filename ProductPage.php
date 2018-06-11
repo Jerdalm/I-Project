@@ -288,7 +288,11 @@ if (isset($_SESSION['gebruikersnaam'])) {
                     </div>
                     <?='<p>'.$htmluploadFoto.'</p>'?>
 
-                    <div style="margin-top:-25px;" class="userInfo alert-dark">
+                      <?php if(!isset($_SESSION['gebruikersnaam'])) { ?>
+                    <div class="userInfo alert-dark">
+                        <?php } else { ?>
+                        <div style="margin-top:-25px;" class="userInfo alert-dark">
+                        <?php } ?>
                         <hr>
                         <div class="row">
                             <div class="col-lg-9">
