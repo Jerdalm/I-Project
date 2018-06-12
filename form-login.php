@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 } ?>
 
-<div class="col-md-4">
+<div class="col-lg-4 col-md-8">
     <div class="card">
         <article class="card-body">
             <a href="./registreren.php" class="float-right btn btn-outline-primary">Registreer nu!</a>
